@@ -1,3 +1,24 @@
+# env
+
+| tool  | version    |
+| ----- | ---------- |
+| volta | 1.1.1      |
+| node  | 18.17.1 ※1 |
+| pnpm  | 8.6.12     |
+
+※1 volta を利用している場合は nodejs のバージョンが自動で切り替わります
+
+# start
+
+> pnpm install
+> pnpm dev
+
+---
+
+---
+
+---
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
