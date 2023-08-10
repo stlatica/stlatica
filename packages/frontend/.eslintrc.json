@@ -1,0 +1,250 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "jest/globals": true
+  },
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:import/typescript",
+    "airbnb",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/strict",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    // prettierと競合するeslintの設定を除外する
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "eslint-plugin-jsdoc",
+    "jest",
+    "html",
+    "promise"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "src",
+          "backend",
+          "amplify/backend",
+          "backend-common"
+        ],
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      },
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
+  },
+  "overrides": [
+    // TODO: これ機能しているか？要検証
+    {
+      "files": [
+        "**/*.test.*"
+      ],
+      "plugins": [
+        "jest"
+      ],
+      "extends": [
+        "plugin:jest/recommended"
+      ],
+      "rules": {
+        "jest/prefer-expect-assertions": "off"
+      }
+    },
+    {
+      "files": [
+        "*/**/*.ts"
+      ],
+      "rules": {
+        // .tsファイルではtsdocを必須に
+        "jsdoc/require-jsdoc": [
+          "warn",
+          {
+            "publicOnly": true,
+            "require": {
+              "ArrowFunctionExpression": true,
+              "ClassDeclaration": true,
+              "MethodDefinition": true
+            },
+            "checkConstructors": false
+          }
+        ]
+      }
+    },
+    {
+      // .tsxファイルではtsdocの制限を緩和
+      "files": [
+        "*/**/*.tsx"
+      ],
+      "rules": {
+        "jsdoc/require-param": "off"
+      }
+    }
+  ],
+  "rules": {
+    "no-constant-condition": "off",
+    "max-len": [
+      "off",
+      {
+        "code": 100
+      }
+    ],
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [
+          ".jsx",
+          ".tsx"
+        ]
+      }
+    ],
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "markers": [
+          "/ <reference"
+        ]
+      }
+    ],
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      {
+        "variables": true,
+        "functions": false,
+        "classes": true,
+        "typedefs": false
+      }
+    ],
+    "import/prefer-default-export": [
+      "off"
+    ],
+    // アロー関数を強制
+    "func-style": [
+      "error",
+      "expression"
+    ],
+    // アロー関数はカッコ必須
+    "arrow-parens": [
+      "error",
+      "always",
+      {
+        "requireForBlockBody": true
+      }
+    ],
+    // "arrow-body-style": "off",
+    // typescriptでimport解決されるので不要.
+    "node/no-missing-import": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/function-component-definition": "off",
+    "no-use-before-define": "off",
+    "no-console": "off",
+    "@typescript-eslint/interface-name-prefix": [
+      "off"
+    ],
+    // interfaceを禁止
+    "@typescript-eslint/consistent-type-definitions": [
+      "error",
+      "type"
+    ],
+    // 使った方が実装が遥かに容易になるシーンもあるのでwarn
+    "no-await-in-loop": "warn",
+    // コメントの書ける位置が制限される 1行目のコードに説明が書けないので不要
+    "lines-around-comment": "off",
+    // ts, tsxのみ拡張子なし その他は必須とする
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        "ts": "never",
+        "tsx": "never",
+        "js": "never",
+        "jsx": "never"
+      }
+    ],
+    // features, routesのimport禁止, 上に戻る相対パス禁止
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          "../",
+          "features/*",
+          "routes/*"
+        ]
+      }
+    ],
+    "jsx-a11y/alt-text": "off",
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": false
+      }
+    ],
+    "@typescript-eslint/no-floating-promises": "off",
+    // ApolloClientで引数受け取らないQueryにvoid指定したいのでoff
+    // "@typescript-eslint/no-invalid-void-type": "off",
+    // react
+    "react/jsx-no-useless-fragment": "off",
+    "react/require-default-props": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "new-cap": "off",
+    "arrow-body-style": [
+      "error",
+      "always"
+    ],
+    "comma-dangle": [
+      "error",
+      "only-multiline"
+    ],
+    "node/no-unpublished-import": "off",
+    "no-undefined": "off",
+    // jest
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "src/**/*test.+(ts|tsx|js)"
+        ],
+        "peerDependencies": false
+      }
+    ]
+  },
+  "ignorePatterns": [
+    "aws-exports.js",
+    "*.png",
+    "*.jpg",
+    "*.config.js",
+    "plop/*"
+  ]
+}
