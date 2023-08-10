@@ -1,21 +1,59 @@
 # env
 
-| tool  | version    |
-| ----- | ---------- |
-| volta | 1.1.1      |
-| node  | 18.17.1 ※1 |
-| pnpm  | 8.6.12     |
+| tool     | version |
+| -------- | ------- |
+| volta ※1 | 1.1.1   |
+| node     | 18.17.1 |
+| pnpm     | 8.6.12  |
 
-※1 volta を利用している場合は nodejs のバージョンが自動で切り替わります
+※ nvm等の他ツールがお好みであればnvm等でも可です
 
-# start
+# installs
+
+## volta
+
+nodejsの管理ツールです
+
+https://docs.volta.sh/guide/getting-started
+
+or
+
+> winget install Volta
+
+## node
+
+nodejsそのままをインストールするとバージョン切り替えが辛いので、volta や nvm 経由で導入するのが基本になります
+
+### with volta
+
+自動で切り替わるのでインストール等不要です
+
+### with nvm
+
+> nvm install node@18.17.1
+
+## pnpm
+
+nodeのインストール後に実行します
+
+> npm install -g pnpm@8.6.12
+
+---
+
+# quick start
 
 > pnpm install
 > pnpm dev
 
+[http://localhost:3000](http://localhost:3000) にサーバーが立ちます
+
 ---
 
 ---
+
+---
+
+以下はデフォルトのREADMEそのまま
 
 ---
 
