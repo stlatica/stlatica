@@ -171,6 +171,8 @@
       "error",
       "type"
     ],
+    // 未使用変数で赤警告はやりすぎなので黄色に下げる
+    "@typescript-eslint/no-unused-vars": "warn",
     // 使った方が実装が遥かに容易になるシーンもあるのでwarn
     "no-await-in-loop": "warn",
     // コメントの書ける位置が制限される 1行目のコードに説明が書けないので不要
