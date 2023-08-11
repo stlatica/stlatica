@@ -10,15 +10,15 @@ const X = () => {
       <Stack>
         <Typography>ユーザー名</Typography>
         <Typography>ここに書き込みを表示する</Typography>
-        <Stack direction={"row"}>
+        <Stack direction="row">
           <IconButton>
-            <ReplyIcon></ReplyIcon>
+            <ReplyIcon />
           </IconButton>
           <IconButton>
-            <RecyclingIcon></RecyclingIcon>
+            <RecyclingIcon />
           </IconButton>
           <IconButton>
-            <StarBorderIcon></StarBorderIcon>
+            <StarBorderIcon />
           </IconButton>
         </Stack>
       </Stack>
@@ -27,12 +27,14 @@ const X = () => {
 };
 
 const TimeLine: React.FC = () => {
-  const ar = new Array(100).fill(0);
+  const ar = new Array(100).fill(0).map((_, i) => {
+    return i;
+  });
 
-  const list = ar.map((x, index) => {
+  const list = ar.map((x) => {
     return (
-      <div style={{ marginBottom: "0.5em" }}>
-        <X></X>
+      <div key={x} style={{ marginBottom: "0.5em" }}>
+        <X />
       </div>
     );
   });
@@ -43,7 +45,7 @@ const TimeLine: React.FC = () => {
 export default function Home() {
   return (
     <main>
-      <TimeLine></TimeLine>
+      <TimeLine />
     </main>
   );
 }

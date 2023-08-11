@@ -16,7 +16,7 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
+    // "plugin:react-hooks/recommended",
     // prettierと競合するeslintの設定を除外する
     "prettier"
   ],
