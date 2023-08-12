@@ -16,3 +16,6 @@ migration-up:
 
 migration-down:
 	goose -dir=./db/migrations mysql "root@tcp(localhost:4000)/stlatica" down	
+
+generate-code-from-db:
+	sqlboiler --config=db/sqlboiler.toml mysql
