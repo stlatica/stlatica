@@ -1,0 +1,25 @@
+openapi: 3.0.3
+info:
+  title: stlatica_internal_api
+  version: 0.1.0
+  description: stlatica internal api
+paths:
+  /v1/sample_users/{sample_user_id}:
+    get:
+      operationId: getSampleUser
+      tags:
+        - SampleUser
+      summary: Get sample_user
+      description: get sample_user
+      parameters:
+        - in: path
+          name: sample_user_id
+          required: true
+          description: sample_user_id
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+        500:
+          description: internal server error

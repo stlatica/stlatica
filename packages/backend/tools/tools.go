@@ -9,4 +9,5 @@ import (
     _ "github.com/pressly/goose/v3/cmd/goose"
     _ "github.com/volatiletech/sqlboiler/v4"
     _ "github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql"
+    _ "github.com/deepmap/oapi-codegen/cmd/oapi-codegen"
 )
