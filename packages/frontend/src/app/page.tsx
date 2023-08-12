@@ -1,8 +1,9 @@
-import { Button, Card, IconButton, Stack, Typography } from "@mui/material";
+import { Card, IconButton, Stack, Typography } from "@mui/material";
 import React from "react";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import RecyclingIcon from "@mui/icons-material/Recycling";
 import ReplyIcon from "@mui/icons-material/Reply";
+import { SubmitButton } from "@/components/button/SubmitButton";
 
 const X = () => {
   return (
@@ -39,7 +40,12 @@ const TimeLine: React.FC = () => {
     );
   });
 
-  return <div>{list}</div>;
+  return (
+    <>
+      <SubmitButton>Submit 表示テスト</SubmitButton>
+      <div>{list}</div>
+    </>
+  );
 };
 
 export default function Home() {
