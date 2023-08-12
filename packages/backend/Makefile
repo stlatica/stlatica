@@ -21,6 +21,6 @@ generate-code-from-db:
 	sqlboiler --config=db/sqlboiler.toml mysql
 
 codegen-from-oapi:
-	oapi-codegen -generate server -package openapi ../shared/openapi/internalapi/openapi.yml > controllers/internalapi/v1/openapi/internalapi_server.gen.go
-	oapi-codegen -generate types -package openapi ../shared/openapi/internalapi/openapi.yml > controllers/internalapi/v1/openapi/internalapi_types.gen.go
-	oapi-codegen -generate spec -package openapi ../shared/openapi/internalapi/openapi.yml > controllers/internalapi/v1/openapi/internalapi_spec.gen.go
+	oapi-codegen -generate server -package openapi ../shared/openapi/internalapi/openapi.yaml > controllers/internalapi/v1/openapi/internalapi_server.gen.go
+	oapi-codegen -generate types -package openapi ../shared/openapi/internalapi/openapi.yaml > controllers/internalapi/v1/openapi/internalapi_types.gen.go
+	oapi-codegen -generate spec -package openapi ../shared/openapi/internalapi/openapi.yaml > controllers/internalapi/v1/openapi/internalapi_spec.gen.go
