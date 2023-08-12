@@ -3,16 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
     "build": "next build",
-    "start": "next start",
+    "ci/ladle": "ladle build --outDir ladle-build",
+    "ci/test": "jest --ci --silent --coverage",
+    "dev": "next dev --turbo",
     "lint": "next lint",
+    "plop": "plop --plopfile plop/plopfile.js",
+    "start": "next start",
     "test": "jest --silent",
-    "test:watch": "jest --watchAll --silent",
-    "test:watch:log": "jest --watchAll",
     "test:coverage": "jest --coverage --silent --watchAll=false",
-    "test:ci": "jest --ci --silent",
-    "plop": "plop --plopfile plop/plopfile.js"
+    "test:watch": "jest --watchAll --silent",
+    "test:watch:log": "jest --watchAll"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
