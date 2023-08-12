@@ -1,0 +1,13 @@
+# TODO: https://github.com/stlatica/stlatica/issues/16
+pkgname="db"
+output="db"
+add-global-variants=true
+add-panic-variants=true
+[mysql]
+  dbname="stlatica"
+  host="localhost"
+  port=4000
+  user="root"
+  pass=""
+  sslmode="false"
+  whitelist = ["sample_users"]
