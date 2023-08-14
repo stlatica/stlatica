@@ -1,0 +1,29 @@
+name: frontend_build
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [release]
+jobs:
+  build_frontend:
+    if: ${{ always() }}    # 無条件にjobを実行
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [15]
+    steps: 
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with: 
+          version: 8
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: build check
+        run: pnpm build
+      - name: unit test
+        run: pnpm ci:test
+      - name: catalog build
+        run: pnpm ci:ladle
