@@ -27,8 +27,3 @@ jobs:
         run: pnpm ci:test
       - name: catalog build
         run: pnpm ci:ladle
-  
-  build_backend:
-    if: ${{ always() }}    # 無条件にjobを実行
-    runs-on: ubuntu-20.04
-
