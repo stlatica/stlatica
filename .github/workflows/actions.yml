@@ -1,5 +1,6 @@
 name: frontend_build
 run-name: ${{ github.actor }} is learning GitHub Actions
+
 on: [push]
 jobs:
   build_frontend:
