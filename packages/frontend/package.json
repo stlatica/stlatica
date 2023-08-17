@@ -5,6 +5,7 @@
   "scripts": {
     "build": "next build",
     "ci/ladle": "ladle build --outDir ladle-build",
+    "ci/lint": "next lint",
     "ci/test": "jest --ci --silent --coverage",
     "dev": "next dev --turbo",
     "lint": "next lint",
