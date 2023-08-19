@@ -35,7 +35,7 @@ jobs:
         with: 
           version: 8
 
-      # node.jsをインストール()
+      # node.jsをインストール
       - name: Node.js 
         uses: actions/setup-node@v3
         with:
@@ -50,7 +50,7 @@ jobs:
       - name: static code analysis
         run: pnpm ci/lint
 
-      # ビルドチェック(linterが在れば要らない？)
+      # ビルドチェック
       - name: build check
         run: pnpm build
 
