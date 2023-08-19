@@ -18,3 +18,19 @@ services:
       # Docker build時に実行したpnpm installを保持する
       - /app/node_modules
     working_dir: /app
+  prism-internal:
+    container_name: prism-internal
+    image: stoplight/prism:4
+    command: "mock -h 0.0.0.0 /tmp/api.oas3.yml"
+    volumes:
+      - ./shared/openapi/internalapi/openapi.yaml:/tmp/api.oas3.yml:ro
+    ports:
+      - "4010:4010"
+  prism-external:
+    container_name: prism-external
+    image: stoplight/prism:4
+    command: "mock -h 0.0.0.0 /tmp/api.oas3.yml"
+    volumes:
+      - ./shared/openapi/externalapi/openapi.yaml:/tmp/api.oas3.yml:ro
+    ports:
+      - "4011:4010"
