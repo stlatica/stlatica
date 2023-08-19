@@ -61,3 +61,29 @@ jobs:
       #  コンポーネントカタログをビルド
       - name: catalog build
         run: pnpm ci/ladle
+
+  build_backend:
+    needs: changes
+    if: ${{ needs.changes.outputs.is_backend == 'true' }}
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: packages/backend
+    steps: 
+      # リポジトリをチェックアウト
+      - uses: actions/checkout@v3
+      # setup go install
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '1.20.6'
+          cache: false
+      # lint
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with: 
+          version: latest
+          working-directory: packages/backend
+      # TODO:Build
+      # - name: Go build check
+      #   run: |
+      #     go build -v ./...
