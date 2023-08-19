@@ -1,5 +1,5 @@
 name: frontend_build
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: frontend build was executed by ${{ github.actor }}
 
 on: [push]
 jobs:
@@ -10,33 +10,37 @@ jobs:
       run:
         working-directory: packages/frontend
     steps: 
-      # [1] リポジトリをチェックアウト
+      # リポジトリをチェックアウト
       - uses: actions/checkout@v3
       
-      # [2] pnpm 8をインストール
+      # pnpm 8をインストール
       - uses: pnpm/action-setup@v2
         with: 
           version: 8
 
-      # [3] node.jsをインストール()
+      # node.jsをインストール()
       - name: Node.js 
         uses: actions/setup-node@v3
         with:
           cache: 'pnpm'
           cache-dependency-path: packages/frontend/
 
-      # [4] 依存関係先をインストール
+      # 依存関係先をインストール
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # [5] ビルドチェック(linterが在れば要らない？)
+      # lint
+      - name: static code analysis
+        run: pnpm ci/lint
+
+      # ビルドチェック(linterが在れば要らない？)
       - name: build check
         run: pnpm build
 
-      # [6] 単体テスト
+      #  単体テスト
       - name: unit test
         run: pnpm ci/test
 
-      # [7] コンポーネントカタログをビルド
+      #  コンポーネントカタログをビルド
       - name: catalog build
         run: pnpm ci/ladle
