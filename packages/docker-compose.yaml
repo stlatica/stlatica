@@ -10,6 +10,7 @@ services:
     tty: true
     ports:
       - "3000:3000"
+      - "3010:3010"
     volumes:
       - type: bind
         source: ./frontend

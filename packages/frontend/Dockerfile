@@ -7,5 +7,11 @@ RUN npm install -g pnpm@8
 RUN echo 'alias pn="pnpm"' >> ~/.bashrc
 RUN echo 'alias px="pnpx"' >> ~/.bashrc
 
-COPY package.json pnpm-lock.yaml ./
+
+COPY . .
 RUN pnpm install --frozen-lockfile
+
+RUN node -v
+RUN pnpm build
+# RUN pnpm start
+CMD ["pnpm", "start", "--port", "3010"]
