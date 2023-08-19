@@ -1,5 +1,5 @@
-name: frontend_build
-run-name: frontend build was executed by ${{ github.actor }}
+name: build
+run-name: build was executed by ${{ github.actor }}
 
 on: [push]
 jobs:
