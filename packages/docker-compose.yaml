@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  frontend:
+    container_name: frontend
+    build:
+      # sharedアクセス等する場合は上げる
+      context: ./frontend
+      dockerfile: Dockerfile
+    # コンテナ終了を防ぎ中に入れるように
+    tty: true
+    ports:
+      - "80:3000"
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /app
+    working_dir: /app
