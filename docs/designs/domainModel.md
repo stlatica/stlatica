@@ -5,11 +5,7 @@ classDiagram
 
 
     namespace stlaticaServer{
-        class User{
-            id
-            Type
-        }
-
+        class User
         class Activity
 
         class OUTBOX
