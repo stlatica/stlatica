@@ -4,19 +4,21 @@
 classDiagram
 
 
-    namespace stlaticaServer{
-        class User
-        class Activity
-
-        class OUTBOX
-        class INBOX
-
-        class Following
-        class Followers
-
-        class UserStream
-
+    class User{
+        id
+        Type
     }
+
+    class Activity
+
+    class OUTBOX
+    class INBOX
+
+    class Following
+    class Followers
+
+    class UserStream
+
 
     note for User "本サービスにおけるユーザー。ActivityPubにおけるActor"
     note for Activity "投稿およびいいねと類似アクション"
@@ -30,7 +32,7 @@ classDiagram
     class ActivityPub conformant Client
     note for ActivityPub conformant Client "ActivityPubに規定された準拠サードパーティクライアント"
     class Actor of ActivityPub conformant Federated Server
-    note for Actor of ActivityPub conformant Federated Server "ActivityPubに規定連合サーバー"
+    note for Actor of ActivityPub conformant Federated Server "ActivityPubに規定された連合サーバーのActor"
 
     User "1" *-- "1" OUTBOX
     User "1" *-- "1" INBOX 
