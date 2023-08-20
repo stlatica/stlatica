@@ -2,33 +2,39 @@
 
 ```mermaid
 classDiagram
-    class User{
-        id
-        Type
+
+
+    namespace stlaticaServer{
+        class User{
+            id
+            Type
+        }
+
+        class Activity
+
+        class OUTBOX
+        class INBOX
+
+        class Following
+        class Followers
+
+        class UserStream
+
     }
 
     note for User "本サービスにおけるユーザー。ActivityPubにおけるActor"
-
-    class Activity
     note for Activity "投稿およびいいねと類似アクション"
-
-    class OUTBOX
-    note for OUTBOX "ActivityPubに規定された投稿コレクション"
-    class INBOX
     note for INBOX "ActivityPubに規定された受信コレクション"
+    note for OUTBOX "ActivityPubに規定された投稿コレクション"
 
-    class Following
-    class Followers
+    note for UserStream "ユーザーに表示するタイムライン。サービス側で表示順序や優先度を調整する想定"
+    class stlaticaClient
+    note for UserStream "公式クライアント"
 
     class ActivityPub conformant Client
     note for ActivityPub conformant Client "ActivityPubに規定された準拠サードパーティクライアント"
     class Actor of ActivityPub conformant Federated Server
     note for Actor of ActivityPub conformant Federated Server "ActivityPubに規定連合サーバー"
-
-    class UserStream
-    note for UserStream "ユーザーに表示するタイムライン。サービス側で表示順序や優先度を調整する想定"
-    class stlaticaClient
-    note for UserStream "公式クライアント"
 
     User "1" *-- "1" OUTBOX
     User "1" *-- "1" INBOX 
