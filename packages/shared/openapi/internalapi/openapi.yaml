@@ -21,5 +21,19 @@ paths:
       responses:
         200:
           description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleUser'
         500:
           description: internal server error
+components:
+  schemas:
+    SampleUser:
+      type: object
+      required:
+        - username
+      properties:
+        username:
+          type: string
+          example: 'sample_user'
