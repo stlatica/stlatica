@@ -9,16 +9,16 @@ jobs:
       is_frontend: ${{ steps.filter.outputs.is_frontend }}
       is_backend: ${{ steps.filter.outputs.is_backend }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
       id: filter
       with:
         filters: |
-          frontend: 
-            - "packages/frontend/**"
-          backend:
-            -"packages/backend/**"
-
+          is_frontend: 
+            - 'packages/frontend/**'
+          is_backend:
+            - 'packages/backend/**'
+          
   build_frontend:
     needs: changes
     if: ${{ needs.changes.outputs.is_frontend == 'true' }}
