@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Stack, TextField, Typography } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDefaultForm } from "@/zod/utilities/useDefaultForm";
-import { PlatSchema, PlatSchemaType } from "@/zod/tweet/PlatSchema";
+import { PlatSchema, PlatSchemaType } from "@/zod/Plat/PlatSchema";
 import { SubmitButton } from "@/components/button/SubmitButton";
 
 const PlatInput: React.FC = () => {
@@ -23,6 +23,7 @@ const PlatInput: React.FC = () => {
   const { errors } = formState;
 
   // formのsubmit用関数を作成
+  // useFormの戻り値handleSubmitを使うことでzodバリデーション後に呼び出されることが保証される
   const onSubmit = handleSubmit((x) => {
     SetText(x.plat);
   });
@@ -31,7 +32,9 @@ const PlatInput: React.FC = () => {
     <>
       <form onSubmit={onSubmit}>
         <Stack width={400}>
+          {/* registerでフォームを制御する */}
           <TextField {...register("plat")} multiline rows={4} />
+          {/* エラーメッセージは別途表示の必要あり */}
           {errors.plat?.message}
           <SubmitButton type="submit">Plat</SubmitButton>
         </Stack>
