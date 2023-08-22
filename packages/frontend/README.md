@@ -1,3 +1,13 @@
+# develop with Docker
+
+```
+docker compose up -d
+docker exec -it frontend bash
+pn install && pn dev
+```
+
+※ pnpm を pn にエイリアス張ってあります
+
 # env
 
 | tool     | version |
@@ -84,4 +94,3 @@ coverage/lconv-report/index.html に生成されるファイルを直接ブラ�
 起動します　あとは指示に従って入力したり選択するだけです
 
 plop/plopfile.js に設定があります
-

@@ -1,12 +1,11 @@
-# for review
 version: "3.9"
 services:
   frontend:
     container_name: frontend
     build:
       # sharedアクセス等する場合は上げる
-      context: ./frontend
-      dockerfile: Dockerfile-production
+      context: ./
+      dockerfile: Dockerfile
     # コンテナ終了を防ぎ中に入れるように
     tty: true
     ports:
@@ -14,15 +13,17 @@ services:
       - "3010:3010"
     volumes:
       - type: bind
-        source: ./frontend
+        source: ./
         target: /app
+      - "/app/.pnpm-store"
+      - "/app/node_modules"
     working_dir: /app
   prism-internal:
     container_name: prism-internal
     image: stoplight/prism:4
     command: "mock -h 0.0.0.0 /tmp/api.oas3.yml"
     volumes:
-      - ./shared/openapi/internalapi/openapi.yaml:/tmp/api.oas3.yml:ro
+      - ../shared/openapi/internalapi/openapi.yaml:/tmp/api.oas3.yml:ro
     ports:
       - "4010:4010"
   prism-external:
@@ -30,6 +31,6 @@ services:
     image: stoplight/prism:4
     command: "mock -h 0.0.0.0 /tmp/api.oas3.yml"
     volumes:
-      - ./shared/openapi/externalapi/openapi.yaml:/tmp/api.oas3.yml:ro
+      - ../shared/openapi/externalapi/openapi.yaml:/tmp/api.oas3.yml:ro
     ports:
       - "4011:4010"
