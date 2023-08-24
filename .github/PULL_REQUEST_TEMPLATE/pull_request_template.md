@@ -1,8 +1,14 @@
-# Issue URL
+# Issue
 
 <!--
 
-対応するissueのURLを記載してください。
+対応するissueを記載してください。
+URLでも可ですが、issueのclose忘れ等を避けるためキーワードを利用した記載を推奨します。
+
+https://docs.github.com/ja/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue
+
+e.g.
+Closes #10
 
 -->
 
