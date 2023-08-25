@@ -2,6 +2,7 @@ name: build
 run-name: build was executed by ${{ github.actor }}
 
 on: [push]
+
 jobs:
   changes:
     runs-on: ubuntu-20.04
@@ -87,3 +88,58 @@ jobs:
       # - name: Go build check
       #   run: |
       #     go build -v ./...
+  ladle_deploy:
+    # アクセス権限
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    # 同時にビルドが走った際に、先のビルドを優先
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: true
+    # 依存ビルド
+    needs: build_frontend
+    # main でのみ実行
+    if: ${{github.ref == 'refs/heads/main'}}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: packages/frontend
+    steps:
+      # リポジトリをチェックアウト
+      - uses: actions/checkout@v3
+
+      # pnpm 8をインストール
+      - uses: pnpm/action-setup@v2
+        with: 
+          version: 8
+
+      # node.jsをインストール
+      - name: Node.js 
+        uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
+          cache-dependency-path: packages/frontend/
+
+      # 依存関係先をインストール
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      #  コンポーネントカタログをビルド (2回目)
+      - name: catalog build
+        run: pnpm ci/ladle
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # リポジトリのアップロード
+          path: './packages/frontend/ladle-build'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
