@@ -91,7 +91,7 @@ jobs:
   ladle_deploy:
     # アクセス権限
     permissions:
-      contents: write
+      contents: read
       pages: write
       id-token: write
     # 同時にビルドが走った際に、先のビルドを優先
