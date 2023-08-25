@@ -88,7 +88,6 @@ jobs:
       # - name: Go build check
       #   run: |
       #     go build -v ./...
-
   ladle_deploy:
     # アクセス権限
     permissions:
