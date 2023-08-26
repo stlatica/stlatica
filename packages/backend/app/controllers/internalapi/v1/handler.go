@@ -3,8 +3,8 @@ package v1
 import (
 	"net/http"
 
-	"github.com/atlatica/stlatica/app/controllers/internalapi/v1/openapi"
 	"github.com/labstack/echo/v4"
+	"github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1/openapi"
 )
 
 type handler struct {
