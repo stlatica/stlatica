@@ -1,0 +1,19 @@
+name: text2Diagram
+run-name: Diagram is made by ${{ github.actor }}
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs: 
+  build_d2:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: install d2
+        run: curl -fsSL https://d2lang.com/install.sh | sh -s -- --dry-run
+        
