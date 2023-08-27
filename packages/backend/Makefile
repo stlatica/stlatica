@@ -18,7 +18,7 @@ migration-down:
 	$(GOBIN)/goose -dir=./db/migrations mysql "root@tcp(localhost:4000)/stlatica" down	
 
 generate-code-from-db:
-	$(GOBIN)/sqlboiler --config=db/sqlboiler.toml mysql
+	@./db/sqlboiler/generate_codes.sh
 
 codegen-from-oapi:
 	$(GOBIN)/oapi-codegen -generate server -package openapi ../shared/openapi/internalapi/openapi.yaml > app/controllers/internalapi/v1/openapi/internalapi_server.gen.go

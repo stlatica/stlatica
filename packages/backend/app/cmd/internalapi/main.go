@@ -1,8 +1,8 @@
 package main
 
 import (
-	v1controllers "github.com/atlatica/stlatica/app/controllers/internalapi/v1"
 	"github.com/labstack/echo/v4"
+	v1controllers "github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1"
 )
 
 func main() {
