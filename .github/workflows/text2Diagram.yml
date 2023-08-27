@@ -5,10 +5,6 @@ on:
   pull_request:
     branches:
       - main
-  # テスト用
-  push:
-    branches:
-      - d2-CD-Setting
 
 jobs: 
   build_d2:
