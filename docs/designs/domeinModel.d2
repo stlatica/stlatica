@@ -1,0 +1,125 @@
+# Build Command
+# d2 --theme=300 --dark-theme=200 -l elk --pad 0 ./test.d2
+
+Domain Model: {
+  user: User {
+    shape: sql_table
+    id
+    Type
+  }
+
+  # class Activity
+
+  # class OUTBOX
+  # class INBOX
+
+  # class Following
+  # class Followers
+  
+  # class UserStream
+
+  # class Federated Server
+
+  
+
+
+  User <-> OUTBOX: "aa" {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 1 {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+
+  User <-> Following: "aa" {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 1 {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+
+  User <-> UserStream: "aa" {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 1 {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  User -> Followers: "aa" {
+    source-arrowhead: 0..N {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 0..N {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  Federated Server -> Following: "aa" {
+    source-arrowhead: 0..N {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 0..N {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  Federated Server -> Followers: "aa" {
+    source-arrowhead: 0..N {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 0..N {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  Activity -> OUTBOX: "aa" {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 1..N {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  Activity -> INBOX: "aa" {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 1..N {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  OUTBOX -> INBOX: "POST Activity to Another Actor"
+  OUTBOX -> Federated Server: "POST Activity to Another Actor"
+  Federated Server -> INBOX: "POST Activity to Another Actor"
+  UserStream -> INBOX: "make TimeLine"
+  stlaticaClient -> UserStream: "Get TimeLine"
+  ActivityPub conformant Client -> INBOX: "Get INBOX Activity"
+  stlaticaClient -> Activity: "create Activity"
+  ActivityPub conformant Client -> Activity: "create Activity"
+
+}

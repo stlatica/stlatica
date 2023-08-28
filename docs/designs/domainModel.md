@@ -1,66 +1,43 @@
 # stlatica ドメインモデル図
 
-```mermaid
-classDiagram
+
+<img src="domeinModel.svg" />
 
 
-    class User{
-        id
-        Type
-    }
+## 各クラス詳細
 
-    class Activity
+### User
 
-    class OUTBOX
-    class INBOX
+本サービスにおけるユーザー。ActivityPubにおけるActor
 
-    class Following
-    class Followers
+### Activity
 
-    class UserStream
+投稿およびいいねと類似アクション
 
+### INBOX
 
-    note for User "本サービスにおけるユーザー。ActivityPubにおけるActor"
-    note for Activity "投稿およびいいねと類似アクション"
-    note for INBOX "ActivityPubに規定された受信コレクション"
-    note for OUTBOX "ActivityPubに規定された投稿コレクション"
+ActivityPubに規定された受信コレクション
 
-    note for UserStream "ユーザーに表示するタイムライン。サービス側で表示順序や優先度を調整する想定"
-    class stlaticaClient
-    note for UserStream "公式クライアント"
+### OUTBOX
 
-    class ActivityPub conformant Client
-    note for ActivityPub conformant Client "ActivityPubに規定された準拠サードパーティクライアント"
-    class Actor of ActivityPub conformant Federated Server
-    note for Actor of ActivityPub conformant Federated Server "ActivityPubに規定された連合サーバーのActor"
+ActivityPubに規定された投稿コレクション
 
-    User "1" *-- "1" OUTBOX
-    User "1" *-- "1" INBOX 
-    User "1" *-- "1" Following
-    User "1" *-- "1" Followers
-    User "1" *-- "1" UserStream
-    
-    User "0.." --o "o.." Following
-    User "0.." --o "o.." Followers
-    
-    Actor of ActivityPub conformant Federated Server "0.." --o "o.." Following
-    Actor of ActivityPub conformant Federated Server "0.." --o "o.." Followers
+### UserStream
 
-    OUTBOX "1.." o-- "1" Activity
-    INBOX "1.." o-- "1.." Activity
+ユーザーに表示するタイムライン。サービス側で表示順序や優先度を調整する想定
 
-    OUTBOX --> INBOX : POST Activity to Another Actor
-    OUTBOX --> Actor of ActivityPub conformant Federated Server : POST Activity to Another Actor
-    Actor of ActivityPub conformant Federated Server --> INBOX : POST Activity to Another Actor
+### stlaticaClient
 
+公式クライアント
 
-    UserStream --> INBOX : make TimeLine
-    stlaticaClient --> UserStream : Get TimeLine
-    ActivityPub conformant Client --> INBOX : Get INBOX Activity
+### ActivityPub conformant Client 
 
-    stlaticaClient --> Activity : create Activity
-    ActivityPub conformant Client --> Activity : create Activity
+ActivityPubに規定された準拠サードパーティクライアント
 
-    
-    
-```
+### ActivityPub conformant Federated Server 
+
+ActivityPubに規定された連合サーバーのActor
+
+### Actor of ActivityPub conformant Federated Server 
+
+ActivityPubに規定された連合サーバーのActor
