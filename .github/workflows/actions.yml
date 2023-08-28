@@ -1,29 +1,145 @@
-name: frontend_build
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [release]
+name: build
+run-name: build was executed by ${{ github.actor }}
+
+on: [push]
+
 jobs:
-  build_frontend:
-    if: ${{ always() }}    # 無条件にjobを実行
+  changes:
     runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        node-version: [15]
+    outputs:
+      is_frontend: ${{ steps.filter.outputs.is_frontend }}
+      is_backend: ${{ steps.filter.outputs.is_backend }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          is_frontend: 
+            - 'packages/frontend/**'
+          is_backend:
+            - 'packages/backend/**'
+          
+  build_frontend:
+    needs: changes
+    if: ${{ needs.changes.outputs.is_frontend == 'true' }}
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: packages/frontend
     steps: 
+      # リポジトリをチェックアウト
       - uses: actions/checkout@v3
+      
+      # pnpm 8をインストール
       - uses: pnpm/action-setup@v2
         with: 
           version: 8
-      - name: Use Node.js ${{ matrix.node-version }}
+
+      # node.jsをインストール
+      - name: Node.js 
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+          cache-dependency-path: packages/frontend/
+
+      # 依存関係先をインストール
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # lint
+      - name: static code analysis
+        run: pnpm ci/lint
+
+      # ビルドチェック
+      - name: build check
+        run: pnpm build
+
+      #  単体テスト
+      - name: unit test
+        run: pnpm ci/test
+
+      #  コンポーネントカタログをビルド
+      - name: catalog build
+        run: pnpm ci/ladle
+
+  build_backend:
+    needs: changes
+    if: ${{ needs.changes.outputs.is_backend == 'true' }}
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: packages/backend
+    steps: 
+      # リポジトリをチェックアウト
+      - uses: actions/checkout@v3
+      # setup go install
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '1.20.6'
+          cache: false
+      # lint
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with: 
+          version: latest
+          working-directory: packages/backend
+      # TODO:Build
+      # - name: Go build check
+      #   run: |
+      #     go build -v ./...
+  ladle_deploy:
+    # アクセス権限
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    # 同時にビルドが走った際に、先のビルドを優先
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: true
+    # 依存ビルド
+    needs: build_frontend
+    # main でのみ実行
+    if: ${{github.ref == 'refs/heads/main'}}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: packages/frontend
+    steps:
+      # リポジトリをチェックアウト
+      - uses: actions/checkout@v3
+
+      # pnpm 8をインストール
+      - uses: pnpm/action-setup@v2
+        with: 
+          version: 8
+
+      # node.jsをインストール
+      - name: Node.js 
+        uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
+          cache-dependency-path: packages/frontend/
+
+      # 依存関係先をインストール
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
-      - name: build check
-        run: pnpm build
-      - name: unit test
-        run: pnpm ci:test
+      #  コンポーネントカタログをビルド (2回目)
       - name: catalog build
-        run: pnpm ci:ladle
+        run: pnpm ci/ladle
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # リポジトリのアップロード
+          path: './packages/frontend/ladle-build'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

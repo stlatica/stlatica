@@ -9,18 +9,24 @@ start-local-db:
 	docker-compose up -d stlatica_db
 
 create-migration-file:
-	goose -dir=db/migrations create new_migration sql
+	$(GOBIN)/goose -dir=db/migrations create new_migration sql
 
 migration-up:
-	goose -dir=./db/migrations mysql "root@tcp(localhost:4000)/stlatica" up
+	$(GOBIN)/goose -dir=./db/migrations mysql "root@tcp(localhost:4000)/stlatica" up
 
 migration-down:
-	goose -dir=./db/migrations mysql "root@tcp(localhost:4000)/stlatica" down	
+	$(GOBIN)/goose -dir=./db/migrations mysql "root@tcp(localhost:4000)/stlatica" down	
 
 generate-code-from-db:
-	sqlboiler --config=db/sqlboiler.toml mysql
+	$(GOBIN)/sqlboiler --config=db/sqlboiler.toml mysql
 
 codegen-from-oapi:
-	oapi-codegen -generate server -package openapi ../shared/openapi/internalapi/openapi.yaml > controllers/internalapi/v1/openapi/internalapi_server.gen.go
-	oapi-codegen -generate types -package openapi ../shared/openapi/internalapi/openapi.yaml > controllers/internalapi/v1/openapi/internalapi_types.gen.go
-	oapi-codegen -generate spec -package openapi ../shared/openapi/internalapi/openapi.yaml > controllers/internalapi/v1/openapi/internalapi_spec.gen.go
+	$(GOBIN)/oapi-codegen -generate server -package openapi ../shared/openapi/internalapi/openapi.yaml > app/controllers/internalapi/v1/openapi/internalapi_server.gen.go
+	$(GOBIN)/oapi-codegen -generate types -package openapi ../shared/openapi/internalapi/openapi.yaml > app/controllers/internalapi/v1/openapi/internalapi_types.gen.go
+	$(GOBIN)/oapi-codegen -generate spec -package openapi ../shared/openapi/internalapi/openapi.yaml > app/controllers/internalapi/v1/openapi/internalapi_spec.gen.go
+	
+lint:
+	$(GOBIN)/golangci-lint run ./...
+
+start-internalapi:
+	go run app/cmd/internalapi/main.go

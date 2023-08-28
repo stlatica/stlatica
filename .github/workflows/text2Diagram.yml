@@ -1,0 +1,50 @@
+name: text2Diagram
+run-name: Diagram is made by ${{ github.actor }}
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs: 
+  build_d2:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: cache d2 modules
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: d2_modules
+          # 現状の更新条件:キャッシュが消える or osが変わる
+          key: ${{ runner.os }}-primes
+
+      - name: install d2
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: curl -fsSL https://d2lang.com/install.sh | sh -s -- 
+
+      # 変更が合ったファイルを集める
+      - name: Collect changed or added files
+        id: changed-files
+        uses: tj-actions/changed-files@v38
+
+      # d2ファイルをビルド
+      - name: d2 build
+        run: ./.github/workflows/build_d2.sh ${{ steps.changed-files.outputs.all_changed_files }} 
+
+      - name: safe dirctory
+        run: git config --global --add safe.directory $(pwd)
+
+      - name: push generated image
+        run: |
+          git config user.name auto-push
+          git config user.email auto-push@example.com
+          git add .
+          git commit -am "auto push from ci" || echo no commits
+          git push

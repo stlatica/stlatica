@@ -1,13 +1,14 @@
 import React from "react";
 import Button from "@mui/material/Button";
-
-export type SubmitButtonProps = {
-  children: React.ReactNode;
-};
+import type { ButtonProps } from "@mui/material/Button";
 
 /**
  *
  */
-export const SubmitButton: React.FC<SubmitButtonProps> = ({ children }) => {
-  return <Button variant="contained">{children}</Button>;
+export const SubmitButton: React.FC<ButtonProps> = ({ children, ...others }) => {
+  return (
+    <Button variant="contained" {...others}>
+      {children}
+    </Button>
+  );
 };

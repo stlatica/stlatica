@@ -1,0 +1,45 @@
+MeteorfallDevelopmentPlan 
+MeteorfallDevelopmentPlan.RequirementDefinition
+MeteorfallDevelopmentPlan.BasicDesign
+MeteorfallDevelopmentPlan.DetailedDesign
+MeteorfallDevelopmentPlan.Implementation
+
+God.shape : person
+Evaporation.shape:cloud
+
+MeteorfallDevelopmentPlan.RequirementDefinition -> MeteorfallDevelopmentPlan.BasicDesign
+MeteorfallDevelopmentPlan.BasicDesign -> MeteorfallDevelopmentPlan.DetailedDesign
+MeteorfallDevelopmentPlan.DetailedDesign -> MeteorfallDevelopmentPlan.Implementation
+
+God -> MeteorfallDevelopmentPlan.RequirementDefinition:"interrupt" {
+    style.stroke-dash: 5
+}
+
+God -> MeteorfallDevelopmentPlan.BasicDesign: {
+    style.stroke-dash: 5
+}
+
+God -> MeteorfallDevelopmentPlan.DetailedDesign: {
+    style.stroke-dash: 5
+}
+
+God -> MeteorfallDevelopmentPlan.Implementation: {
+    style.stroke-dash: 5
+}
+
+
+MeteorfallDevelopmentPlan.RequirementDefinition -> Evaporation {
+    style.stroke-dash: 5
+}
+
+MeteorfallDevelopmentPlan.BasicDesign -> Evaporation {
+    style.stroke-dash: 5
+}
+
+MeteorfallDevelopmentPlan.DetailedDesign -> Evaporation {
+    style.stroke-dash: 5
+}
+
+MeteorfallDevelopmentPlan.Implementation -> Evaporation {
+    style.stroke-dash: 5
+}
