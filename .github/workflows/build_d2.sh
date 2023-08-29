@@ -3,5 +3,4 @@ for file_dir in "${@}"; do
         *.d2)
         d2 --layout=elk "$file_dir";;
     esac
-
 done
