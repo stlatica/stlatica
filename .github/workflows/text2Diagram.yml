@@ -47,4 +47,4 @@ jobs:
           git config user.email auto-commit@example.com
           git add .
           git commit -am "auto commit from ci" || echo no commits
-          git push
+          git push origin "${{github.head_ref}}"
