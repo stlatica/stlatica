@@ -1,0 +1,12 @@
+// Document用設定ファイル
+{
+    // d2 のレイアウトエンジンの指定
+    "D2.previewLayout": "elk",
+    "[d2]": {
+        // d2ファイルのタブスペース数の指定
+        "editor.tabSize": 4
+    },
+    "[markdown]": {
+        "editor.tabSize": 2,
+    }
+}
