@@ -48,4 +48,3 @@ jobs:
           git add .
           git commit -am "auto commit from ci" || echo no commits
           git push origin "${{github.head_ref}}"
-          echo "${{github.head_ref}}"
