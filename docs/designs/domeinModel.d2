@@ -2,11 +2,7 @@
 # d2 --theme=300 --dark-theme=200 -l elk --pad 0 ./test.d2
 
 Domain Model: {
-  user: User {
-    shape: sql_table
-    id
-    Type
-  }
+  # class User
 
   # class Activity
 
@@ -20,10 +16,33 @@ Domain Model: {
 
   # class Federated Server
 
+  # class plat
   
 
 
-  User <-> OUTBOX: "aa" {
+  User <-> OUTBOX: {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 1 {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  User <-> INBOX: {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 1 {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  User <-> Following: {
     source-arrowhead: 1 {
       shape: diamond
       style.filled: false
@@ -35,7 +54,7 @@ Domain Model: {
   }
 
 
-  User <-> Following: "aa" {
+  User <-> UserStream: {
     source-arrowhead: 1 {
       shape: diamond
       style.filled: false
@@ -46,19 +65,7 @@ Domain Model: {
     }
   }
 
-
-  User <-> UserStream: "aa" {
-    source-arrowhead: 1 {
-      shape: diamond
-      style.filled: false
-    }
-    target-arrowhead: 1 {
-      shape: diamond
-      style.filled: true
-    }
-  }
-
-  User -> Followers: "aa" {
+  User -> Followers: {
     source-arrowhead: 0..N {
       shape: diamond
       style.filled: false
@@ -69,7 +76,7 @@ Domain Model: {
     }
   }
 
-  Federated Server -> Following: "aa" {
+  Federated Server -> Following: {
     source-arrowhead: 0..N {
       shape: diamond
       style.filled: false
@@ -80,7 +87,7 @@ Domain Model: {
     }
   }
 
-  Federated Server -> Followers: "aa" {
+  Federated Server -> Followers: {
     source-arrowhead: 0..N {
       shape: diamond
       style.filled: false
@@ -91,7 +98,7 @@ Domain Model: {
     }
   }
 
-  Activity -> OUTBOX: "aa" {
+  Activity -> OUTBOX: {
     source-arrowhead: 1 {
       shape: diamond
       style.filled: false
@@ -102,12 +109,21 @@ Domain Model: {
     }
   }
 
-  Activity -> INBOX: "aa" {
+  Activity -> INBOX: {
     source-arrowhead: 1 {
       shape: diamond
       style.filled: false
     }
     target-arrowhead: 1..N {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  plat -> Activity: {
+    source-arrowhead: 1 {
+    }
+    target-arrowhead: 1 {
       shape: diamond
       style.filled: true
     }

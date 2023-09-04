@@ -12,7 +12,7 @@
 
 ### Activity
 
-投稿およびいいねと類似アクション
+ActivityPubにおいて規定された投稿などのアクションを指すObject
 
 ### INBOX
 
@@ -34,10 +34,14 @@ ActivityPubに規定された投稿コレクション
 
 ActivityPubに規定された準拠サードパーティクライアント
 
-### ActivityPub conformant Federated Server 
+### Federated Server 
+
+ActivityPubに規定された連合サーバー。正式にはActivityPub conformant  Federated Server 
+
+### Federated Server Actor
 
 ActivityPubに規定された連合サーバーのActor
 
-### Actor of ActivityPub conformant Federated Server 
+### plat
 
-ActivityPubに規定された連合サーバーのActor
+本サービスにおけるユーザーの投稿
