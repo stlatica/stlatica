@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: cache d2 modules
         id: cache
@@ -35,11 +36,11 @@ jobs:
         uses: tj-actions/changed-files@v38
 
       # d2ファイルをビルド
-      - name: d2 build
-        run: ./.github/workflows/build_d2.sh ${{ steps.changed-files.outputs.all_changed_files }} 
-
       - name: safe dirctory
         run: git config --global --add safe.directory $(pwd)
+
+      - name: d2 build
+        run: ./.github/workflows/build_d2.sh ${{ steps.changed-files.outputs.all_changed_files }} 
 
       - name: commit generated image
         run: |
