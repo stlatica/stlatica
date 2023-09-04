@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: cache d2 modules
         id: cache
@@ -45,6 +45,7 @@ jobs:
         run: |
           git config user.name auto-commit
           git config user.email auto-commit@example.com
+          git pull
           git add .
           git commit -am "auto commit from ci" || echo no commits
           git push origin "${{github.head_ref}}"
