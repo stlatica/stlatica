@@ -5,6 +5,9 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - ci-test
 
 jobs: 
   build_d2:
