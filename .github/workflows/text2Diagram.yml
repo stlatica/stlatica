@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: cache d2 modules
         id: cache
@@ -45,7 +46,6 @@ jobs:
         run: |
           git config user.name auto-commit
           git config user.email auto-commit@example.com
-          git pull
           git add .
           git commit -am "auto commit from ci" || echo no commits
           git push origin "${{github.head_ref}}"
