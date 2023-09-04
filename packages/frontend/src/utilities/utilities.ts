@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
 
-// TODO: ちょっと大きすぎになってきたので、ファイル分割等を検討中。
-
 /**
  * Nullを判定します
  * @param x - Null型を除外したい値

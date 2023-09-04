@@ -1,14 +1,17 @@
-module github.com/atlatica/stlatica
+module github.com/stlatica/stlatica/packages/backend
 
 go 1.20
 
 require (
 	github.com/deepmap/oapi-codegen v1.13.4
+	github.com/friendsofgo/errors v0.9.2
 	github.com/getkin/kin-openapi v0.118.0
 	github.com/golangci/golangci-lint v1.54.1
 	github.com/labstack/echo/v4 v4.11.1
 	github.com/pressly/goose/v3 v3.14.0
 	github.com/volatiletech/sqlboiler/v4 v4.14.2
+	github.com/volatiletech/strmangle v0.0.4
+	golang.org/x/tools v0.12.0
 )
 
 require (
@@ -61,7 +64,6 @@ require (
 	github.com/fatih/color v1.15.0 // indirect
 	github.com/fatih/structtag v1.2.0 // indirect
 	github.com/firefart/nonamedreturns v1.0.4 // indirect
-	github.com/friendsofgo/errors v0.9.2 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/fzipp/gocyclo v0.6.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
@@ -226,7 +228,6 @@ require (
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/vertica/vertica-sql-go v1.3.2 // indirect
 	github.com/volatiletech/inflect v0.0.1 // indirect
-	github.com/volatiletech/strmangle v0.0.4 // indirect
 	github.com/xen0n/gosmopolitan v1.2.1 // indirect
 	github.com/yagipy/maintidx v1.0.0 // indirect
 	github.com/yeya24/promlinter v0.2.0 // indirect
@@ -248,7 +249,6 @@ require (
 	golang.org/x/sync v0.3.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect
 	golang.org/x/text v0.12.0 // indirect
-	golang.org/x/tools v0.12.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
