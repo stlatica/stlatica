@@ -2,11 +2,7 @@ name: text2Diagram
 run-name: Diagram is made by ${{ github.actor }}
 
 on: 
-<<<<<<< HEAD
   pull_request:
-=======
-  push:
->>>>>>> origin/main
     branches:
       - main
 
@@ -18,7 +14,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-<<<<<<< HEAD
         with:
           fetch-depth: 2
 
@@ -46,15 +41,10 @@ jobs:
       - name: safe dirctory
         run: git config --global --add safe.directory $(pwd)
 
-      - name: push generated image
+      - name: commit generated image
         run: |
-          git config user.name auto-push
-          git config user.email auto-push@example.com
+          git config user.name auto-commit
+          git config user.email auto-commit@example.com
           git add .
-          git commit -am "auto push from ci" || echo no commits
-          git push
-=======
-      - name: install d2
-        run: curl -fsSL https://d2lang.com/install.sh | sh -s -- --dry-run
-        
->>>>>>> origin/main
+          git commit -am "auto commit from ci" || echo no commits
+          git push origin "${{github.head_ref}}"

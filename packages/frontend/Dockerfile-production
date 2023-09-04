@@ -4,9 +4,9 @@ WORKDIR /app
 RUN npm install -g pnpm@8
 RUN echo 'alias pn="pnpm"' >> ~/.bashrc && echo 'alias px="pnpx"' >> ~/.bashrc
 
-# COPY . .
+COPY . .
 
-# RUN pnpm install --frozen-lockfile
-# RUN pnpm build
+RUN rm -Rf node_modules && pnpm install --frozen-lockfile
+RUN rm -Rf .next && pnpm build
 
-# CMD ["pnpm", "start", "--port", "3010"]
+CMD ["pnpm", "start", "--port", "3010"]
