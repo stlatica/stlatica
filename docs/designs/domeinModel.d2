@@ -12,7 +12,7 @@ Domain Model: {
   # class Following
   # class Followers
   
-  # class UserStream
+  # class TimeLine Setting
 
   # class Federated Server
 
@@ -20,33 +20,21 @@ Domain Model: {
   
 
 
-  User <-> OUTBOX: {
+  User <- OUTBOX: {
     source-arrowhead: 1 {
-      shape: diamond
-      style.filled: false
-    }
-    target-arrowhead: 1 {
       shape: diamond
       style.filled: true
     }
   }
 
-  User <-> INBOX: {
+  User <- INBOX: {
     source-arrowhead: 1 {
-      shape: diamond
-      style.filled: false
-    }
-    target-arrowhead: 1 {
       shape: diamond
       style.filled: true
     }
   }
 
-  User <-> Following: {
-    source-arrowhead: 1 {
-      shape: diamond
-      style.filled: false
-    }
+  User <- Following: {
     target-arrowhead: 1 {
       shape: diamond
       style.filled: true
@@ -54,47 +42,31 @@ Domain Model: {
   }
 
 
-  User <-> UserStream: {
-    source-arrowhead: 1 {
+  User <- TimeLine Setting: {
+    source-arrowhead: 1..N {
       shape: diamond
       style.filled: false
-    }
-    target-arrowhead: 1 {
-      shape: diamond
-      style.filled: true
     }
   }
 
-  User -> Followers: {
-    source-arrowhead: 0..N {
-      shape: diamond
-      style.filled: false
-    }
-    target-arrowhead: 0..N {
+  User <- Followers: {
+    target-arrowhead: 1 {
       shape: diamond
       style.filled: true
     }
   }
 
   Federated Server -> Following: {
-    source-arrowhead: 0..N {
-      shape: diamond
-      style.filled: false
-    }
     target-arrowhead: 0..N {
       shape: diamond
-      style.filled: true
+      style.filled: false
     }
   }
 
   Federated Server -> Followers: {
-    source-arrowhead: 0..N {
-      shape: diamond
-      style.filled: false
-    }
     target-arrowhead: 0..N {
       shape: diamond
-      style.filled: true
+      style.filled: false
     }
   }
 
@@ -121,8 +93,6 @@ Domain Model: {
   }
 
   plat -> Activity: {
-    source-arrowhead: 1 {
-    }
     target-arrowhead: 1 {
       shape: diamond
       style.filled: true
@@ -132,10 +102,8 @@ Domain Model: {
   OUTBOX -> INBOX: "POST Activity to Another Actor"
   OUTBOX -> Federated Server: "POST Activity to Another Actor"
   Federated Server -> INBOX: "POST Activity to Another Actor"
-  UserStream -> INBOX: "make TimeLine"
-  stlaticaClient -> UserStream: "Get TimeLine"
-  ActivityPub conformant Client -> INBOX: "Get INBOX Activity"
+  TimeLine Setting -> INBOX: "make TimeLine"
+  stlaticaClient -> TimeLine Setting: "Get TimeLine"
   stlaticaClient -> Activity: "create Activity"
-  ActivityPub conformant Client -> Activity: "create Activity"
 
 }

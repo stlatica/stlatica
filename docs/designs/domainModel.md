@@ -22,17 +22,13 @@ ActivityPubに規定された受信コレクション
 
 ActivityPubに規定された投稿コレクション
 
-### UserStream
+### TimeLine Setting
 
 ユーザーに表示するタイムライン。サービス側で表示順序や優先度を調整する想定
 
 ### stlaticaClient
 
 公式クライアント
-
-### ActivityPub conformant Client 
-
-ActivityPubに規定された準拠サードパーティクライアント
 
 ### Federated Server 
 
@@ -45,3 +41,11 @@ ActivityPubに規定された連合サーバーのActor
 ### plat
 
 本サービスにおけるユーザーの投稿の本文にあたるObject。文章、画像など
+
+### Followers
+
+Activity Pubに規定されたFollowされた他連合サーバーのActorのcollection
+
+### Following
+
+Activity Pubに規定されたFollowしている他連合サーバーのActorのcollection
