@@ -9,3 +9,11 @@ services:
       - "4000:3306"
     volumes:
       - ./db/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+  stlatica_server:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile
+    ports:
+      - "8080:3000"
+    volumes:
+      - ./server:/server
