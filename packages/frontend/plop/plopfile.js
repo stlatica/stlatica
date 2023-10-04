@@ -43,11 +43,6 @@ module.exports = function (
         },
         {
           type: "add",
-          path: path + `{{pascalCase name}}/sample.tsx`,
-          templateFile: `components/sample.tsx.hbs`,
-        },
-        {
-          type: "add",
           path: path + `{{pascalCase name}}/{{pascalCase name}}.stories.tsx`,
           templateFile: `components/story.tsx.hbs`,
         },

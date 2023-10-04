@@ -1,8 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { Sample1 } from "./sample";
+import { Story1 } from "./{{pascalCase name}}.stories";
 
 test("snapshot", () => {
-  const tree = renderer.create(<Sample1 />).toJSON();
+  const tree = renderer.create(<Story1 />).toJSON();
   expect(tree).toMatchSnapshot();
 });
