@@ -115,6 +115,7 @@ components:
         - following
         - liked
         - discoverable
+        - manuallyApprovesFollowers
         - publicKey
       properties:
         "@context":
@@ -152,6 +153,13 @@ components:
           type: boolean
           description: ブラウザ等の外部ツールからのインデックスを許可するかどうか
           example: true
+        manuallyApprovesFollowers:
+          type: boolean
+          description: |
+            フォローに承認が必要かどうか \
+            非公開アカウントの場合、trueとなる \
+            ref: https://www.w3.org/wiki/Activity_Streams_extensions#as:manuallyApprovesFollowers
+          example: false
         publicKey:
           type: object
           description: HTTP Signaturesにおけるリクエスト検証に使用する公開鍵
