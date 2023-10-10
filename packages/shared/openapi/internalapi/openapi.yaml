@@ -111,7 +111,7 @@ components:
         - icon
         - followers_count
         - following_count
-        - discoverable
+        - is_public
       properties:
         user_id:
           $ref: '#/components/schemas/UserID'
@@ -135,11 +135,11 @@ components:
           type: integer
           description: following数
           example: 20
-        discoverable:
+        is_public:
           type: boolean
           description: |
             公開アカウントであるかどうか \
-            external apiのdiscoverableと同一の値となる
+            external apiのmanuallyApprovesFollowersと同一の値となる
           example: true
     UserID:
       description: |
