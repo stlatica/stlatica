@@ -1,5 +1,4 @@
-# Choose whatever you want, version >= 1.16
-FROM golang:1.21-alpine
+FROM golang:1.20.6
 
 WORKDIR /app
 
@@ -8,4 +7,6 @@ RUN go install github.com/cosmtrek/air@latest
 COPY go.mod go.sum ./
 RUN go mod download
 
+COPY .air.toml ./
+COPY ./* ./
 CMD ["air", "-c", ".air.toml"]
