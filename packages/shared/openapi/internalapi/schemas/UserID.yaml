@@ -1,0 +1,6 @@
+UserID:
+  description: |
+    userを識別するための一意のID \
+    actor_idのfrontend向けエイリアスであり、actor_idと同一の値を持つ
+  type: string
+  example: 'user_id'
