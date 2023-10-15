@@ -1,6 +1,8 @@
-import React from "react";
 import Link from "next/link";
+import React from "react";
+
 import { CancelButton } from "@/components/button/CancelButton";
+
 import { X } from "./X";
 
 const TimeLine: React.FC = () => {

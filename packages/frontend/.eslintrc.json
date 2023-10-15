@@ -8,6 +8,8 @@
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",
+    // import
+    "plugin:import/recommended",
     "plugin:import/typescript",
     "airbnb",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -30,19 +32,18 @@
   },
   "plugins": [
     "react",
+    "import",
     "@typescript-eslint",
     "eslint-plugin-jsdoc",
     "html",
-    "promise"
+    "promise",
+    "unused-imports"
   ],
   "settings": {
     "import/resolver": {
       "node": {
         "paths": [
-          "src",
-          "backend",
-          "amplify/backend",
-          "backend-common"
+          "src"
         ],
         "extensions": [
           ".js",
@@ -168,8 +169,6 @@
       "error",
       "type"
     ],
-    // 未使用変数で赤警告はやりすぎなので黄色に下げる
-    "@typescript-eslint/no-unused-vars": "warn",
     // 使った方が実装が遥かに容易になるシーンもあるのでwarn
     "no-await-in-loop": "warn",
     // コメントの書ける位置が制限される 1行目のコードに説明が書けないので不要
@@ -223,12 +222,6 @@
     ],
     "node/no-unpublished-import": "off",
     "no-undefined": "off",
-    // // jest
-    // "jest/no-disabled-tests": "warn",
-    // "jest/no-focused-tests": "error",
-    // "jest/no-identical-title": "error",
-    // "jest/prefer-to-have-length": "warn",
-    // "jest/valid-expect": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -237,10 +230,43 @@
         ],
         "peerDependencies": false
       }
+    ],
+    // https://github.com/sweepline/eslint-plugin-unused-imports
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "warn",
+    "unused-imports/no-unused-vars": [
+      "warn"
+      // { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ],
+    // import order
+    // https://zenn.dev/knowledgework/articles/0994f518015c04?redirected=1#import%E3%81%AE%E8%87%AA%E5%8B%95%E6%95%B4%E5%88%97%EF%BC%88import%2Forder%EF%BC%89
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          [
+            "parent",
+            "sibling"
+          ],
+          "object",
+          "type",
+          "index"
+        ],
+        "newlines-between": "always",
+        "pathGroupsExcludedImportTypes": [
+          "builtin"
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
     ]
   },
   "ignorePatterns": [
-    "aws-exports.js",
     "*.png",
     "*.jpg",
     "*.config.js",
