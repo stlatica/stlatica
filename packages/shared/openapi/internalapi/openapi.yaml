@@ -27,6 +27,8 @@ paths:
                 $ref: '#/components/schemas/SampleUser'
         500:
           description: internal server error
+  /internal/v1/users/{user_id}:
+    $ref: './paths/users.yaml#/users_{user_id}'
 components:
   schemas:
     SampleUser:
