@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "ci:ladle": "ladle build --outDir ladle-build",
-    "ci:lint": "next lint",
+    "ci:lint": "next lint --max-warnings 0",
     "ci:test": "pnpm test:coverage",
     "dev": "next dev --turbo",
     "lint": "next lint",
