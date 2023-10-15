@@ -12,8 +12,11 @@
     "plop": "plop --plopfile plop/plopfile.js",
     "pn": "pnpm",
     "start": "next start",
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test": "vitest run",
+    "test:snap": "vitest run --update",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "test:watch:coverage": "vitest --coverage"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

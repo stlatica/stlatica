@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`snapshot 1`] = `
+exports[`snapshot > snapshot 1`] = `
 <DocumentFragment>
   <div>
     <button

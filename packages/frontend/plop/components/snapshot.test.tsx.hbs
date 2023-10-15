@@ -1,9 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import { render } from "@testing-library/react";
 import { Story1 } from "./{{pascalCase name}}.stories";
 import { describe, expect, test } from "vitest";
 
-test("snapshot", () => {
-  const tree = renderer.create(<Story1 />).toJSON();
-  expect(tree).toMatchSnapshot();
+describe("snapshot", () => {
+  test("snapshot", () => {
+    const { asFragment } = render(<Story1 />);
+    expect(asFragment()).toMatchSnapshot();
+  });
 });
