@@ -6,7 +6,7 @@ import React from "react";
 
 export const X = () => {
   return (
-    <Card style={{ backgroundColor: "skyblue" }} elevation={8}>
+    <Card elevation={8} style={{ backgroundColor: "skyblue" }}>
       <Stack>
         <Typography>ユーザー名</Typography>
         <Typography>ここに書き込みを表示する</Typography>
