@@ -1,32 +1,24 @@
-// /* istanbul ignore file */
-// import { styled } from "@mui/material/styles";
-
-// /**
-//  *
-//  */
-// export const FollowButton = styled("div")({});
-
-import React, { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
+import React from "react";
+import { SubmitButton } from "@/components/button/SubmitButton";
+import { CancelButton } from "@/components/button/CancelButton";
 
 type FollowButtonProps = {
-  initialFollowState?: boolean;
+  isFollow: boolean;
+  onClick: () => void;
 };
 
-export const FollowButton: React.FC<FollowButtonProps> = ({ initialFollowState }) => {
-  const [isFollow, setIsFollow] = useState(initialFollowState);
-
-  const handleClick = () => {
-    setIsFollow(!isFollow);
-  };
-
-  useEffect(() => {
-    console.log(isFollow ? "Currently Following" : "Not Following");
-  }, [isFollow]);
+export const FollowButton: React.FC<FollowButtonProps> = ({ isFollow, onClick }) => {
+  if (isFollow) {
+    return (
+      <CancelButton style={{ width: "8em" }} onClick={onClick}>
+        フォロー中
+      </CancelButton>
+    );
+  }
 
   return (
-    <Button variant="contained" color={isFollow ? "secondary" : "primary"} onClick={handleClick}>
-      {isFollow ? "フォロー中" : "フォロー"}
-    </Button>
+    <SubmitButton style={{ width: "8em" }} onClick={onClick}>
+      フォロー
+    </SubmitButton>
   );
 };
