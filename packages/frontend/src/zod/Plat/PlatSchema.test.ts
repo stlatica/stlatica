@@ -1,4 +1,5 @@
 import * as Z from "./PlatSchema";
+import { describe, expect, test } from "vitest";
 
 describe("通常", () => {
   test("OK", () => {

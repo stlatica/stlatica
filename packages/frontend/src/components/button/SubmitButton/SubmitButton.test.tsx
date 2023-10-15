@@ -1,8 +1,9 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import { render } from "@testing-library/react";
 import { Sample1 } from "./sample";
+import { expect, test } from "vitest";
 
 test("snapshot", () => {
-  const tree = renderer.create(<Sample1 />).toJSON();
-  expect(tree).toMatchSnapshot();
+  const { asFragment } = render(<Sample1 />);
+  expect(asFragment()).toMatchSnapshot();
 });

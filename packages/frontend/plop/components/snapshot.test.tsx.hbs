@@ -1,6 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import { Story1 } from "./{{pascalCase name}}.stories";
+import { describe, expect, test } from "vitest";
 
 test("snapshot", () => {
   const tree = renderer.create(<Story1 />).toJSON();
