@@ -13,7 +13,7 @@ type FollowButtonProps = {
   initialFollowState?: boolean;
 };
 
-const FollowButton: React.FC<FollowButtonProps> = ({ initialFollowState }) => {
+export const FollowButton: React.FC<FollowButtonProps> = ({ initialFollowState }) => {
   const [isFollow, setIsFollow] = useState(initialFollowState);
 
   const handleClick = () => {
@@ -30,5 +30,3 @@ const FollowButton: React.FC<FollowButtonProps> = ({ initialFollowState }) => {
     </Button>
   );
 };
-
-export default FollowButton;
