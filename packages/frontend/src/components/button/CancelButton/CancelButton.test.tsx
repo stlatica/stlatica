@@ -1,6 +1,7 @@
-import React from "react";
 import { render } from "@testing-library/react";
+import React from "react";
 import { describe, expect, test } from "vitest";
+
 import { Sample1 } from "./sample";
 
 describe("snapshot", () => {

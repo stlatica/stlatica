@@ -94,3 +94,13 @@ coverage/lconv-report/index.html に生成されるファイルを直接ブラ�
 起動します　あとは指示に従って入力したり選択するだけです
 
 plop/plopfile.js に設定があります
+
+# lint
+
+推奨拡張を導入していれば vscode の保存時に自動整形されます。
+
+手動でかける場合は以下で修正できます:
+
+```
+pnpm lint:fix
+```

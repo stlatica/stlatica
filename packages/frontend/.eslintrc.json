@@ -8,15 +8,14 @@
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",
+    "plugin:react/all",
+    // import
+    "plugin:import/recommended",
     "plugin:import/typescript",
-    "airbnb",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:@typescript-eslint/strict",
-    "plugin:react/recommended",
-    // "plugin:react-hooks/recommended",
-    // prettierと競合するeslintの設定を除外する
+    // typescript-eslintの設定解説→ https://zenn.dev/cybozu_frontend/articles/ts-eslint-v6-guide
+    "plugin:@typescript-eslint/strict-type-checked",
+    "plugin:promise/recommended",
+    // prettierと競合するeslintの設定を除外する 末尾に入れておくこと
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -30,19 +29,18 @@
   },
   "plugins": [
     "react",
+    "import",
     "@typescript-eslint",
     "eslint-plugin-jsdoc",
     "html",
-    "promise"
+    "promise",
+    "unused-imports"
   ],
   "settings": {
     "import/resolver": {
       "node": {
         "paths": [
-          "src",
-          "backend",
-          "amplify/backend",
-          "backend-common"
+          "src"
         ],
         "extensions": [
           ".js",
@@ -57,20 +55,6 @@
     }
   },
   "overrides": [
-    // {
-    //   "files": [
-    //     "**/*.test.*"
-    //   ],
-    //   "plugins": [
-    //     "jest"
-    //   ],
-    //   "extends": [
-    //     "plugin:jest/recommended"
-    //   ],
-    //   "rules": {
-    //     "jest/prefer-expect-assertions": "off"
-    //   }
-    // },
     {
       "files": [
         "*/**/*.ts"
@@ -168,8 +152,6 @@
       "error",
       "type"
     ],
-    // 未使用変数で赤警告はやりすぎなので黄色に下げる
-    "@typescript-eslint/no-unused-vars": "warn",
     // 使った方が実装が遥かに容易になるシーンもあるのでwarn
     "no-await-in-loop": "warn",
     // コメントの書ける位置が制限される 1行目のコードに説明が書けないので不要
@@ -204,9 +186,19 @@
       }
     ],
     "@typescript-eslint/no-floating-promises": "off",
-    // ApolloClientで引数受け取らないQueryにvoid指定したいのでoff
-    // "@typescript-eslint/no-invalid-void-type": "off",
     // react
+    "react/self-closing-comp": "warn",
+    // <div>Hoge</div> みたいなのをNGにしない
+    "react/jsx-no-literals": "off",
+    // JSXの深さ制限
+    "react/jsx-max-depth": [
+      "error",
+      {
+        "max": 5
+      }
+    ],
+    // style, classnameなどのpropsを禁止する MUIと相性悪すぎるので一旦停止
+    "react/forbid-component-props": "off",
     "react/jsx-no-useless-fragment": "off",
     "react/require-default-props": "off",
     "react/prop-types": "off",
@@ -223,12 +215,6 @@
     ],
     "node/no-unpublished-import": "off",
     "no-undefined": "off",
-    // // jest
-    // "jest/no-disabled-tests": "warn",
-    // "jest/no-focused-tests": "error",
-    // "jest/no-identical-title": "error",
-    // "jest/prefer-to-have-length": "warn",
-    // "jest/valid-expect": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -237,10 +223,43 @@
         ],
         "peerDependencies": false
       }
+    ],
+    // https://github.com/sweepline/eslint-plugin-unused-imports
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "warn",
+    "unused-imports/no-unused-vars": [
+      "warn"
+      // { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ],
+    // import order
+    // https://zenn.dev/knowledgework/articles/0994f518015c04?redirected=1#import%E3%81%AE%E8%87%AA%E5%8B%95%E6%95%B4%E5%88%97%EF%BC%88import%2Forder%EF%BC%89
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          [
+            "parent",
+            "sibling"
+          ],
+          "object",
+          "type",
+          "index"
+        ],
+        "newlines-between": "always",
+        "pathGroupsExcludedImportTypes": [
+          "builtin"
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
     ]
   },
   "ignorePatterns": [
-    "aws-exports.js",
     "*.png",
     "*.jpg",
     "*.config.js",
