@@ -12,10 +12,8 @@
     "plugin:import/recommended",
     "plugin:import/typescript",
     "airbnb",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:@typescript-eslint/strict",
+    // typescript-eslintの設定解説→ https://zenn.dev/cybozu_frontend/articles/ts-eslint-v6-guide
+    "plugin:@typescript-eslint/strict-type-checked",
     "plugin:react/recommended",
     // "plugin:react-hooks/recommended",
     // prettierと競合するeslintの設定を除外する
@@ -58,20 +56,6 @@
     }
   },
   "overrides": [
-    // {
-    //   "files": [
-    //     "**/*.test.*"
-    //   ],
-    //   "plugins": [
-    //     "jest"
-    //   ],
-    //   "extends": [
-    //     "plugin:jest/recommended"
-    //   ],
-    //   "rules": {
-    //     "jest/prefer-expect-assertions": "off"
-    //   }
-    // },
     {
       "files": [
         "*/**/*.ts"
@@ -203,8 +187,6 @@
       }
     ],
     "@typescript-eslint/no-floating-promises": "off",
-    // ApolloClientで引数受け取らないQueryにvoid指定したいのでoff
-    // "@typescript-eslint/no-invalid-void-type": "off",
     // react
     "react/jsx-no-useless-fragment": "off",
     "react/require-default-props": "off",
