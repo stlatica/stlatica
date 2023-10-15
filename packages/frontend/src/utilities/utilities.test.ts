@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import * as Utils from "./utilities";
 
 describe("数学関数", () => {
