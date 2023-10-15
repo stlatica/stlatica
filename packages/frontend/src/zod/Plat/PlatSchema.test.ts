@@ -1,5 +1,5 @@
-import * as Z from "./PlatSchema";
 import { describe, expect, test } from "vitest";
+import * as Z from "./PlatSchema";
 
 describe("通常", () => {
   test("OK", () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import { Sample1 } from "./sample";
 import { describe, expect, test } from "vitest";
+import { Sample1 } from "./sample";
 
 describe("snapshot", () => {
   test("snapshot", () => {
