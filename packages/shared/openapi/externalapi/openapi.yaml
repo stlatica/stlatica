@@ -80,6 +80,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /external/v1/host-meta/:
+    get:
+      operationId: getHostMeta
+      tags: 
+        - HostMeta
+      summary: get host meta
+      description: get host meta
+      deprecated: false
+      responses:
+        200:
+          description: success
+          content:
+            application/xml:
+              schema:
+                type: string
+                example: |
+                  <?xml version="1.0"?>
+                  <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+                      <Link rel="lrdd" type="application/xrd+xml" template="https://siren.capslock.dev/.well-known/webfinger?resource={uri}" />
+                  </XRD>
+        500:
+          description: |
+            internal server error \
+            error code:
+            - 'INTERNAL_SERVER_ERROR'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        503:
+          description: |
+            service unavailable \
+            error code:
+            - 'SERVICE_UNAVAILABLE'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
     actor_id:
