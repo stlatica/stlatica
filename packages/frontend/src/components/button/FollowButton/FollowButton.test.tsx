@@ -1,18 +1,19 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import { render } from "@testing-library/react";
+import { describe, expect, test } from "vitest";
 import { Story1, Story2, Story3 } from "./FollowButton.stories";
 
 describe("snapshot", () => {
   test("snapshot1", () => {
-    const tree = renderer.create(<Story1 />).toJSON();
-    expect(tree).toMatchSnapshot();
+    const { asFragment } = render(<Story1 />);
+    expect(asFragment()).toMatchSnapshot();
   });
   test("snapshot2", () => {
-    const tree = renderer.create(<Story2 />).toJSON();
-    expect(tree).toMatchSnapshot();
+    const { asFragment } = render(<Story2 />);
+    expect(asFragment()).toMatchSnapshot();
   });
   test("snapshot3", () => {
-    const tree = renderer.create(<Story3 />).toJSON();
-    expect(tree).toMatchSnapshot();
+    const { asFragment } = render(<Story3 />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });
