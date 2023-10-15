@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Story, StoryDefault } from "@ladle/react";
+import React, { useState } from "react";
+
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { FollowButton } from "./FollowButton";
 
 export default {

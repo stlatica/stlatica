@@ -1,23 +1,24 @@
 import React from "react";
-import { SubmitButton } from "@/components/button/SubmitButton";
+
 import { CancelButton } from "@/components/button/CancelButton";
+import { SubmitButton } from "@/components/button/SubmitButton";
 
 type FollowButtonProps = {
-  isFollow: boolean;
-  onClick: () => void;
+  readonly isFollow: boolean;
+  readonly onClick: () => void;
 };
 
 export const FollowButton: React.FC<FollowButtonProps> = ({ isFollow, onClick }) => {
   if (isFollow) {
     return (
-      <CancelButton style={{ width: "8em" }} onClick={onClick}>
+      <CancelButton onClick={onClick} style={{ width: "8em" }}>
         フォロー中
       </CancelButton>
     );
   }
 
   return (
-    <SubmitButton style={{ width: "8em" }} onClick={onClick}>
+    <SubmitButton onClick={onClick} style={{ width: "8em" }}>
       フォロー
     </SubmitButton>
   );
