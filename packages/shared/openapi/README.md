@@ -12,7 +12,7 @@ pnpm install
 
 # Commands
 
-## internal:preview
+## pnpm internal:preview
 
 プレビューサーバーを立ち上げます
 
@@ -20,16 +20,16 @@ pnpm install
 
 ビルド自体はホットリロードされますが、ブラウザ側は手動更新が必要です。
 
-## internal:bundle
+## pnpm internal:bundle
 
 openapi ファイルを 1 つにバンドルします。
 
-## internal:build
+## pnpm internal:build
 
 HTML をビルドします
 
 (実質的に CI 用)
 
-## internal:serve
+## pnpm internal:serve
 
 ビルドした HTML を表示します
