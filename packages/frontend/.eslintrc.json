@@ -83,6 +83,16 @@
       "rules": {
         "jsdoc/require-param": "off"
       }
+    },
+    // ストーリーファイルでの制限緩和
+    {
+      "files": [
+        "*/**/*.stories.tsx"
+      ],
+      "rules": {
+        "react/no-multi-comp": "off",
+        "import/no-extraneous-dependencies": "off"
+      }
     }
   ],
   "rules": {
@@ -186,8 +196,17 @@
       }
     ],
     "@typescript-eslint/no-floating-promises": "off",
-    // react
+    // react設定エリア
+    "react/jsx-no-bind": [
+      "error",
+      {
+        "allowArrowFunctions": true
+      }
+    ],
+    // 赤字にしたくない
     "react/self-closing-comp": "warn",
+    // 赤字にしたくない
+    "react/prefer-read-only-props": "warn",
     // <div>Hoge</div> みたいなのをNGにしない
     "react/jsx-no-literals": "off",
     // JSXの深さ制限
