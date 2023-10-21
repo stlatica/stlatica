@@ -1,6 +1,7 @@
 {
 	"scripts": {
 		"internal:preview": "pnpm redocly preview-docs internalapi/openapi.yaml -p 8080",
+		"internal:lint": "pnpm redocly lint internalapi/openapi.yaml",
 		"internal:bundle": "pnpm redocly bundle internalapi/openapi.yaml --output=internalapi/openapi-bundled.yaml",
 		"internal:build": "pnpm redocly build-docs internalapi/openapi.yaml --output=_html/internal.html",
 		"internal:serve": "pnpm http-server docs/internal.html"

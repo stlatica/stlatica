@@ -22,6 +22,10 @@ pnpm install
 
 ## pnpm internal:bundle
 
+openapi 定義を lint します
+
+## pnpm internal:bundle
+
 openapi ファイルを 1 つにバンドルします。
 
 ## pnpm internal:build
