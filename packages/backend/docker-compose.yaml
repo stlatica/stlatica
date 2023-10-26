@@ -12,7 +12,7 @@ services:
   stlatica_server:
     build:
       context: .
-      dockerfile: Docker/Dockerfile
+      dockerfile: Docker/Dockerfile_air
     ports:
       - "8080:8080"
     volumes:
