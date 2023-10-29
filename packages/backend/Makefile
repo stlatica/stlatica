@@ -30,3 +30,6 @@ lint:
 
 start-internalapi:
 	go run app/cmd/internalapi/main.go
+
+start-internalapi-air:
+	SOURCE_DIR=./app/cmd/internalapi docker compose up stlatica_server
