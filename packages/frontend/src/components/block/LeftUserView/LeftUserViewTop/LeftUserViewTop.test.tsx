@@ -1,7 +1,9 @@
-import React from "react";
 import { render } from "@testing-library/react";
-import { Story1 } from "./LeftUserViewTop.stories";
+import React from "react";
 import { describe, expect, test } from "vitest";
+
+import { Story1 } from "./LeftUserViewTop.stories";
+
 
 describe("snapshot", () => {
   test("snapshot", () => {
