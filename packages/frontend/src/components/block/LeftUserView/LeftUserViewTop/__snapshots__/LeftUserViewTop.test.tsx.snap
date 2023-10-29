@@ -47,7 +47,7 @@ exports[`snapshot > snapshot 1`] = `
         </div>
       </div>
       <div
-        class=" relative col-span-4 "
+        class="relative col-span-4 "
       >
         <div
           class="absolute w-full border-2 border-black bg-red-100 pb-[100%]"
@@ -73,11 +73,14 @@ exports[`snapshot > snapshot 1`] = `
             </button>
           </div>
         </div>
+        <div
+          class="pb-2"
+        />
         <div>
-          999 Follows
+          9999万 Follows
         </div>
         <div>
-          999 Follers
+          9999 Follers
         </div>
       </div>
     </div>
