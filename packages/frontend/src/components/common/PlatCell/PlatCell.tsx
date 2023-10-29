@@ -2,27 +2,26 @@ import React from "react";
 import CommentIcon from "@mui/icons-material/Comment";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-import { Padding } from "@mui/icons-material";
 
 type PlatCellProps = {
-  readonly userName: string;
-  readonly userId: string;
   readonly content: string;
+  readonly favoriteCount: number;
   readonly replyCount: number;
   readonly shareCount: number;
-  readonly favoriteCount: number;
+  readonly userName: string;
+  readonly userId: string;
 };
 
 /**
  *
  */
 export const PlatCell: React.FC<PlatCellProps> = ({
-  userName,
-  userId,
   content,
+  favoriteCount,
   replyCount,
   shareCount,
-  favoriteCount,
+  userName,
+  userId,
 }) => {
   return (
     <div style={{ width: "310px", padding: "2%", backgroundColor: "#373737", color: "#FFFFFF" }}>

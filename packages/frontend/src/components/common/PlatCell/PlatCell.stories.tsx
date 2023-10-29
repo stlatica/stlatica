@@ -9,12 +9,12 @@ export default {
 export const Story1: Story = () => {
   return (
     <PlatCell
-      userName="夏ノブチ"
-      userId="@Nobuchi32384"
       content="3週連続でレート下がってるんだが。"
+      favoriteCount={4}
       replyCount={0}
       shareCount={1}
-      favoriteCount={4}
+      userName="夏ノブチ"
+      userId="@Nobuchi32384"
     />
   );
 };
@@ -23,12 +23,12 @@ Story1.storyName = "1行のPlat";
 export const Story2: Story = () => {
   return (
     <PlatCell
-      userName="冬ノブチ"
-      userId="@Nobuchi79323"
       content="nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) "
+      favoriteCount={8}
       replyCount={1}
       shareCount={3}
-      favoriteCount={8}
+      userName="冬ノブチ"
+      userId="@Nobuchi79323"
     />
   );
 };
