@@ -8,8 +8,8 @@ type PlatCellProps = {
   readonly favoriteCount: number;
   readonly replyCount: number;
   readonly shareCount: number;
-  readonly userName: string;
   readonly userId: string;
+  readonly userName: string;
 };
 
 /**
@@ -20,8 +20,8 @@ export const PlatCell: React.FC<PlatCellProps> = ({
   favoriteCount,
   replyCount,
   shareCount,
-  userName,
   userId,
+  userName,
 }) => {
   return (
     <div style={{ width: "310px", padding: "2%", backgroundColor: "#373737", color: "#FFFFFF" }}>

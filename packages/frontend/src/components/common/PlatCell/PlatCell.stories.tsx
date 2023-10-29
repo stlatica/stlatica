@@ -13,8 +13,8 @@ export const Story1: Story = () => {
       favoriteCount={4}
       replyCount={0}
       shareCount={1}
-      userName="夏ノブチ"
       userId="@Nobuchi32384"
+      userName="夏ノブチ"
     />
   );
 };
@@ -27,8 +27,8 @@ export const Story2: Story = () => {
       favoriteCount={8}
       replyCount={1}
       shareCount={3}
-      userName="冬ノブチ"
       userId="@Nobuchi79323"
+      userName="冬ノブチ"
     />
   );
 };
