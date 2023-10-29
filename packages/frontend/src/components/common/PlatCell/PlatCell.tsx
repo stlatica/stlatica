@@ -1,7 +1,7 @@
-import React from "react";
-import CommentIcon from "@mui/icons-material/Comment";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import CommentIcon from "@mui/icons-material/Comment";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import React from "react";
 
 type PlatCellProps = {
   readonly content: string;
@@ -36,7 +36,7 @@ export const PlatCell: React.FC<PlatCellProps> = ({
             color: "#000000",
             borderRadius: "100%",
           }}
-        ></div>
+         />
         <div style={{ paddingLeft: "2%", paddingRight: "2%" }}>
           {/* ユーザ名 */}
           <div style={{ fontSize: "100%", padding: "2%" }}>{userName}</div>
@@ -52,17 +52,17 @@ export const PlatCell: React.FC<PlatCellProps> = ({
       <div style={{ display: "flex" }}>
         {/* 返信数 */}
         <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <CommentIcon style={{ paddingLeft: "5%", paddingRight: "5%" }}></CommentIcon>
+          <CommentIcon style={{ paddingLeft: "5%", paddingRight: "5%" }} />
           <div>{replyCount}</div>
         </div>
         {/* シェア数 */}
         <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <AutorenewIcon style={{ paddingLeft: "5%", paddingRight: "5%" }}></AutorenewIcon>
+          <AutorenewIcon style={{ paddingLeft: "5%", paddingRight: "5%" }} />
           <div>{shareCount}</div>
         </div>
         {/* いいね数 */}
         <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <StarBorderIcon style={{ paddingLeft: "5%", paddingRight: "5%" }}></StarBorderIcon>
+          <StarBorderIcon style={{ paddingLeft: "5%", paddingRight: "5%" }} />
           <div>{favoriteCount}</div>
         </div>
       </div>

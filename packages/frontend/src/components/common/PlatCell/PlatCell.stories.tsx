@@ -1,6 +1,8 @@
 import React from "react";
-import type { Story, StoryDefault } from "@ladle/react";
+
 import { PlatCell } from "./PlatCell";
+
+import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
   title: "components/common/PlatCell",

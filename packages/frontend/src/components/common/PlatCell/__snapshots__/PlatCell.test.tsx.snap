@@ -1,0 +1,97 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshot > snapshot 1`] = `
+<DocumentFragment>
+  <div
+    style="width: 310px; padding: 2%; background-color: rgb(55, 55, 55); color: rgb(255, 255, 255);"
+  >
+    <div
+      style="display: flex; height: 50px;"
+    >
+      <div
+        style="height: 50px; width: 50px; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); border-radius: 100%;"
+      />
+      <div
+        style="padding-left: 2%; padding-right: 2%;"
+      >
+        <div
+          style="font-size: 100%; padding: 2%;"
+        >
+          夏ノブチ
+        </div>
+        <div
+          style="font-size: 75%; padding: 2%; color: rgb(197, 197, 197);"
+        >
+          @Nobuchi32384
+        </div>
+      </div>
+    </div>
+    <div
+      style="padding: 5%;"
+    >
+      3週連続でレート下がってるんだが。
+    </div>
+    <div
+      style="display: flex;"
+    >
+      <div
+        style="display: flex; align-items: center; width: 100%;"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="CommentIcon"
+          focusable="false"
+          style="padding-left: 5%; padding-right: 5%;"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+          />
+        </svg>
+        <div>
+          0
+        </div>
+      </div>
+      <div
+        style="display: flex; align-items: center; width: 100%;"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="AutorenewIcon"
+          focusable="false"
+          style="padding-left: 5%; padding-right: 5%;"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"
+          />
+        </svg>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        style="display: flex; align-items: center; width: 100%;"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="StarBorderIcon"
+          focusable="false"
+          style="padding-left: 5%; padding-right: 5%;"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+          />
+        </svg>
+        <div>
+          4
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
