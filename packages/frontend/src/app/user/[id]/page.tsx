@@ -1,13 +1,19 @@
+import { LeftUserView } from "@/components/block/LeftUserView";
+
+import { DummyTimeLines } from "./DummyTimeLines";
+
 const Page = ({ params }: { readonly params: { id: string } }) => {
-  console.log(params.id);
+  const { id } = params;
+
+  console.log(id);
 
   return (
-    <main>
-      <div className="flex bg-gray-600">
-        <div className="w-[400px] bg-gray-100 text-slate-900">
-          <div>{params.id}</div>
+    <main className="h-[100vh]">
+      <div className="flex h-full">
+        <div className="min-w-[350px] text-slate-900">
+          <LeftUserView userID={id} />
         </div>
-        <div className="h-full bg-red-100 text-slate-900">タイムラインをここに</div>
+        <DummyTimeLines />
       </div>
     </main>
   );

@@ -38,6 +38,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.47.0
     version: 7.47.0(react@18.2.0)
+  react-icons:
+    specifier: ^4.11.0
+    version: 4.11.0(react@18.2.0)
   tailwindcss:
     specifier: ^3
     version: 3.3.5
@@ -6080,6 +6083,14 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: true
+
+  /react-icons@4.11.0(react@18.2.0):
+    resolution: {integrity: sha512-V+4khzYcE5EBk/BvcuYRq6V/osf11ODUM2J8hg2FDSswRrGvqiYUYPRy4OdrWaQOBj4NcpJfmHZLNaD+VH0TyA==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /react-inspector@6.0.2(react@18.2.0):
     resolution: {integrity: sha512-x+b7LxhmHXjHoU/VrFAzw5iutsILRoYyDq97EDYdFpPLcvqtEzk4ZSZSQjnFPbr5T57tLXnHcqFYoN1pI6u8uQ==}

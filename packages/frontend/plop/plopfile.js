@@ -14,6 +14,7 @@ module.exports = function (
           { name: "input", value: "input" },
           { name: "dialog", value: "dialog" },
           { name: "common", value: "common" },
+          { name: "block", value: "block" },
           { name: "others", value: "others" },
         ],
       },

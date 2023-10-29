@@ -5,7 +5,7 @@ import { SubmitButton } from "@/components/button/SubmitButton";
 
 type FollowButtonProps = {
   readonly isFollow: boolean;
-  readonly onClick: () => void;
+  readonly onClick?: () => void;
 };
 
 export const FollowButton: React.FC<FollowButtonProps> = ({ isFollow, onClick }) => {
