@@ -23,15 +23,6 @@ module.exports = function (
         name: "name",
         message: "コンポーネント名を入力してください",
       },
-      {
-        type: "list",
-        name: "styled",
-        message: "CSS設定だけのコンポーネントですか？(はいを選ぶとstyledで生成します)",
-        choices: [
-          { name: "はい", value: true },
-          { name: "いいえ", value: false },
-        ],
-      },
     ],
     actions: (data) => {
       const path = `../src/components/${data?.category}/`;
@@ -56,8 +47,7 @@ module.exports = function (
         {
           type: "add",
           path: path + `{{pascalCase name}}/{{pascalCase name}}.tsx`,
-          // styled の場合はテンプレの中身を差し替える
-          templateFile: data?.styled ? `components/styled.tsx.hbs` : `components/component.tsx.hbs`,
+          templateFile: `components/component.tsx.hbs`,
         },
       ];
       return actions;
