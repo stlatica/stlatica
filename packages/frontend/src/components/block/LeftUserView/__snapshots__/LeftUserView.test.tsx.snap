@@ -60,7 +60,7 @@ exports[`snapshot > snapshot 1`] = `
             />
           </div>
           <div
-            class="col-span-4 m-2 flex flex-col"
+            class="col-span-4 m-2 flex w-full flex-col"
           >
             <div
               class="flex w-full justify-center pb-3"
