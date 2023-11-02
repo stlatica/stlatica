@@ -9,3 +9,9 @@ services:
       - "4000:3306"
     volumes:
       - ./db/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+  redocly:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_redocly
+    volumes:
+      - ../shared/openapi:/openapi

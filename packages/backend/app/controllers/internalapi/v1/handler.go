@@ -8,12 +8,12 @@ import (
 )
 
 type handler struct {
-	*sampleUserController
+	*userController
 }
 
 func newHandler() openapi.ServerInterface {
 	return &handler{
-		sampleUserController: &sampleUserController{},
+		userController: &userController{},
 	}
 }
 
@@ -23,9 +23,9 @@ func RegisterHandlers(server *echo.Echo) {
 	openapi.RegisterHandlers(server, handler)
 }
 
-// GetSampleUser is the handler for GET /sample_users/{sample_user_id}, ServerInterface implementation.
-func (h *handler) GetSampleUser(ectx echo.Context, sampleUserID string) error {
-	response, err := h.sampleUserController.GetSampleUser(sampleUserID)
+// GetUser is the handler for GET /users/{user_id}, ServerInterface implementation.
+func (h *handler) GetUser(ectx echo.Context, userID string) error {
+	response, err := h.userController.GetUser(userID)
 	if err != nil {
 		return err
 	}
