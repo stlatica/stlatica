@@ -29,4 +29,4 @@ lint:
 	$(GOBIN)/golangci-lint run ./...
 
 start-internalapi:
-	docker compose up -d stlatica_server
+	SOURCE_DIR=./app/cmd/internalapi docker compose up -d stlatica_server
