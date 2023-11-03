@@ -1,0 +1,10 @@
+FROM node:alpine
+
+RUN npm install -g @redocly/cli
+
+WORKDIR /openapi/tmp
+RUN mkdir internalapi
+RUN mkdir externalapi
+
+CMD ["redocly", "bundle", "/openapi/internalapi/openapi.yaml", "-o", "/openapi/tmp/internalapi/openapi.yaml"]
+CMD ["redocly", "bundle", "/openapi/externalapi/openapi.yaml", "-o", "/openapi/tmp/externalapi/openapi.yaml"]

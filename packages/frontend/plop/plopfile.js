@@ -14,6 +14,7 @@ module.exports = function (
           { name: "input", value: "input" },
           { name: "dialog", value: "dialog" },
           { name: "common", value: "common" },
+          { name: "block", value: "block" },
           { name: "others", value: "others" },
         ],
       },
@@ -40,11 +41,6 @@ module.exports = function (
           type: "add",
           path: path + "{{pascalCase name}}/index.ts",
           templateFile: "components/index.ts.hbs",
-        },
-        {
-          type: "add",
-          path: path + `{{pascalCase name}}/sample.tsx`,
-          templateFile: `components/sample.tsx.hbs`,
         },
         {
           type: "add",

@@ -16,7 +16,7 @@ port=4000
 user="root"
 pass=""
 sslmode="false"
-whitelist=["sample_users"]
+whitelist=["sample_users","actors"]
 
 [[types]]
 [types.match]
@@ -35,5 +35,15 @@ db_type="bigint"
 nullable=false
 [types.replace]
 type="types.UnixTime"
+[types.imports]
+third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
+
+[[types]]
+[types.match]
+name="actor_id"
+db_type="varchar"
+nullable=false
+[types.replace]
+type="types.ActorID"
 [types.imports]
 third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']

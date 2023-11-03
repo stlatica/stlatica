@@ -63,7 +63,7 @@ nodeのインストール後に実行します
 
 ---
 
-# jest
+# TEST
 
 単体テスト
 
@@ -71,17 +71,19 @@ nodeのインストール後に実行します
 
 単発でテストを起動します
 
+> pnpm test:snap
+
+スナップショットを更新します
+
 > pnpm test:watch
 
 ウォッチモードでテストを起動します
-
-予期せぬデグレを防ぐため、開発中は常に立ち上げておくことを推奨します
 
 > pnpm test:coverage
 
 テストカバレッジを生成します
 
-coverage/lconv-report/index.html に生成されるファイルを直接ブラウザ開くと確認できます
+coverage/index.html に生成されるファイルを直接ブラウザで開くと確認できます
 
 ---
 
@@ -94,3 +96,13 @@ coverage/lconv-report/index.html に生成されるファイルを直接ブラ�
 起動します　あとは指示に従って入力したり選択するだけです
 
 plop/plopfile.js に設定があります
+
+# lint
+
+推奨拡張を導入していれば vscode の保存時に自動整形されます。
+
+手動でかける場合は以下で修正できます:
+
+```
+pnpm lint:fix
+```

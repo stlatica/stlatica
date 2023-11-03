@@ -1,0 +1,40 @@
+User:
+  type: object
+  description: user
+  required:
+    - user_id
+    - username
+    - summary
+    - icon
+    - followers_count
+    - following_count
+    - is_public
+  properties:
+    user_id:
+      $ref: '../schemas/UserID.yaml#/UserID'
+    username:
+      type: string
+      description: 画面上に表示されるユーザ名
+      example: 'sample_actor'
+    summary:
+      type: string
+      description: ユーザのプロフィール
+      example: 'sample_actor'
+    icon:
+      type: string
+      description: ユーザのアイコン画像のURL
+      example: 'https://xxx/external/v1/images/sample_actor.png'
+    followers_count:
+      type: integer
+      description: follower数
+      example: 20
+    following_count:
+      type: integer
+      description: following数
+      example: 20
+    is_public:
+      type: boolean
+      description: |
+        公開アカウントであるかどうか \
+        external apiのmanuallyApprovesFollowersと同一の値となる
+      example: true

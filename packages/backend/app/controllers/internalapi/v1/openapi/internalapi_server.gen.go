@@ -13,9 +13,9 @@ import (
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
-	// Get sample_user
-	// (GET /v1/sample_users/{sample_user_id})
-	GetSampleUser(ctx echo.Context, sampleUserId string) error
+	// get user
+	// (GET /internal/v1/users/{user_id})
+	GetUser(ctx echo.Context, userId UserId) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -23,19 +23,19 @@ type ServerInterfaceWrapper struct {
 	Handler ServerInterface
 }
 
-// GetSampleUser converts echo context to params.
-func (w *ServerInterfaceWrapper) GetSampleUser(ctx echo.Context) error {
+// GetUser converts echo context to params.
+func (w *ServerInterfaceWrapper) GetUser(ctx echo.Context) error {
 	var err error
-	// ------------- Path parameter "sample_user_id" -------------
-	var sampleUserId string
+	// ------------- Path parameter "user_id" -------------
+	var userId UserId
 
-	err = runtime.BindStyledParameterWithLocation("simple", false, "sample_user_id", runtime.ParamLocationPath, ctx.Param("sample_user_id"), &sampleUserId)
+	err = runtime.BindStyledParameterWithLocation("simple", false, "user_id", runtime.ParamLocationPath, ctx.Param("user_id"), &userId)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter sample_user_id: %s", err))
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter user_id: %s", err))
 	}
 
 	// Invoke the callback with all the unmarshaled arguments
-	err = w.Handler.GetSampleUser(ctx, sampleUserId)
+	err = w.Handler.GetUser(ctx, userId)
 	return err
 }
 
@@ -67,6 +67,6 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
-	router.GET(baseURL+"/v1/sample_users/:sample_user_id", wrapper.GetSampleUser)
+	router.GET(baseURL+"/internal/v1/users/:user_id", wrapper.GetUser)
 
 }

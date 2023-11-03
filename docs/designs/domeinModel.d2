@@ -1,0 +1,109 @@
+# Build Command
+# d2 --theme=300 --dark-theme=200 -l elk --pad 0 ./test.d2
+
+Domain Model: {
+  # class User
+
+  # class Activity
+
+  # class OUTBOX
+  # class INBOX
+
+  # class Following
+  # class Followers
+  
+  # class TimeLine Setting
+
+  # class Federated Server
+
+  # class plat
+  
+
+
+  User <- OUTBOX: {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  User <- INBOX: {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  User <- Following: {
+    target-arrowhead: 1 {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+
+  User <- TimeLine Setting: {
+    source-arrowhead: 1..N {
+      shape: diamond
+      style.filled: false
+    }
+  }
+
+  User <- Followers: {
+    target-arrowhead: 1 {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  Federated Server -> Following: {
+    target-arrowhead: 0..N {
+      shape: diamond
+      style.filled: false
+    }
+  }
+
+  Federated Server -> Followers: {
+    target-arrowhead: 0..N {
+      shape: diamond
+      style.filled: false
+    }
+  }
+
+  Activity -> OUTBOX: {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 1..N {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  Activity -> INBOX: {
+    source-arrowhead: 1 {
+      shape: diamond
+      style.filled: false
+    }
+    target-arrowhead: 1..N {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  plat -> Activity: {
+    target-arrowhead: 1 {
+      shape: diamond
+      style.filled: true
+    }
+  }
+
+  OUTBOX -> INBOX: "POST Activity to Another Actor"
+  OUTBOX -> Federated Server: "POST Activity to Another Actor"
+  Federated Server -> INBOX: "POST Activity to Another Actor"
+  TimeLine Setting -> INBOX: "make TimeLine"
+  stlaticaClient -> TimeLine Setting: "Get TimeLine"
+  stlaticaClient -> Activity: "create Activity"
+
+}
