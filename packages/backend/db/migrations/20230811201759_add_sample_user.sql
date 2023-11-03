@@ -9,8 +9,4 @@ CREATE TABLE `sample_users` (
   DEFAULT COLLATE utf8mb4_ja_0900_as_cs
 ;
 -- +goose Down
-SET FOREIGN_KEY_CHECKS = 0;
-
 DROP TABLE `sample_users`;
-
-SET FOREIGN_KEY_CHECKS = 1;

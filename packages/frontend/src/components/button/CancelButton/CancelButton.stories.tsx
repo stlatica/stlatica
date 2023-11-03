@@ -1,5 +1,6 @@
-import type { Story, StoryDefault } from "@ladle/react";
 import { Sample1 } from "./sample";
+
+import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
   title: "components/button/CancelButton",

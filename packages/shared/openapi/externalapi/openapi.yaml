@@ -1,10 +1,10 @@
 openapi: 3.0.3
 info:
-  title: stlatica_internal_api
+  title: stlatica_external_api
   version: 0.1.0
-  description: stlatica internal api
+  description: stlatica external api
 paths:
-  /v1/sample_users/{sample_user_id}:
+  /external/v1/sample_users/{sample_user_id}:
     get:
       operationId: getSampleUser
       tags:
@@ -27,7 +27,69 @@ paths:
                 $ref: '#/components/schemas/SampleUser'
         500:
           description: internal server error
+  /external/v1/actors/{actor_id}:
+    get:
+      operationId: getActor
+      tags:
+        - Actor
+      summary: get actor
+      description: get actor
+      parameters:
+        - $ref: '#/components/parameters/actor_id'
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actor'
+        400:
+          description: |
+            bad request \
+            error code:
+            - 'BAD_REQUEST'
+            - 'MISSING_PARAMETER'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: |
+            not found \
+            error code:
+            - 'NOT_FOUND'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: |
+            internal server error \
+            error code:
+            - 'INTERNAL_SERVER_ERROR'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        503:
+          description: |
+            service unavailable \
+            error code:
+            - 'SERVICE_UNAVAILABLE'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    actor_id:
+      in: path
+      required: true
+      name: actor_id
+      description: actor_id
+      schema:
+        type: string
+      example: 'actor_id'
   schemas:
     SampleUser:
       type: object
@@ -37,3 +99,128 @@ components:
         username:
           type: string
           example: 'sample_user'
+    Actor:
+      type: object
+      description: actor
+      required:
+        - "@context"
+        - id
+        - type
+        - preferredUsername
+        - summary
+        - icon
+        - inbox
+        - outbox
+        - followers
+        - following
+        - liked
+        - discoverable
+        - manuallyApprovesFollowers
+        - publicKey
+      properties:
+        "@context":
+          $ref: '#/components/schemas/JSONLDContexts'
+        id:
+          $ref: '#/components/schemas/ActorID'
+        type:
+          $ref: '#/components/schemas/ActorType'
+        preferredUsername:
+          type: string
+          description: 画面上に表示されるユーザ名
+          example: 'sample_actor'
+        summary:
+          type: string
+          example: 'sample_actor'
+        icon:
+          type: string
+          example: 'https://xxx/external/v1/images/sample_actor.png'
+        inbox:
+          type: string
+          example: 'https://xxx/external/v1/actors/actor_id/inbox'
+        outbox:
+          type: string
+          example: 'https://xxx/external/v1/actors/actor_id/outbox'
+        followers:
+          type: string
+          example: 'https://xxx/external/v1/actors/actor_id/followers'
+        following:
+          type: string
+          example: 'https://xxx/external/v1/actors/actor_id/following'
+        liked:
+          type: string
+          example: 'https://xxx/external/v1/actors/actor_id/liked'
+        discoverable:
+          type: boolean
+          description: ブラウザ等の外部ツールからのインデックスを許可するかどうか
+          example: true
+        manuallyApprovesFollowers:
+          type: boolean
+          description: |
+            フォローに承認が必要かどうか \
+            非公開アカウントの場合、trueとなる \
+            ref: https://www.w3.org/wiki/Activity_Streams_extensions#as:manuallyApprovesFollowers
+          example: false
+        publicKey:
+          type: object
+          description: HTTP Signaturesにおけるリクエスト検証に使用する公開鍵
+          required:
+            - id
+            - owner
+            - publicKeyPem
+          properties:
+            id:
+              type: string
+              example: 'https://xxx/external/v1/actors/actor_id#main-key'
+            owner:
+              type: string
+              example: 'https://xxx/external/v1/actors/actor_id'
+            publicKeyPem:
+              type: string
+              example: -----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----
+    JSONLDContexts:
+      description: |
+        以下のうちのいずれかを使用する
+        - https://www.w3.org/ns/activitystreams
+          - Activity Streams2.0関連の語彙や概念を定義したJSON-LD context
+        - https://w3id.org/security/v1
+          - 暗号化や署名するためのセキュリティ関連の語彙や概念を定義したJSON-LD context
+      type: array
+      items:
+        type: string
+        enum:
+          - 'https://www.w3.org/ns/activitystreams'
+          - 'https://w3id.org/security/v1'
+        example: 'https://www.w3.org/ns/activitystreams'
+    ActorID:
+      description: actor_id
+      type: string
+      example: 'actor_id'
+    ActorType:
+      description: |
+        actorの種別 \
+        ref: https://www.w3.org/TR/activitystreams-vocabulary/#actor-types
+      type: string
+      example: 'Person'
+      enum:
+        - 'Application'
+        - 'Group'
+        - 'Organization'
+        - 'Person'
+        - 'Service'
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - 'BAD_REQUEST'
+            - 'NOT_FOUND'
+            - 'INTERNAL_SERVER_ERROR'
+            - 'SERVICE_UNAVAILABLE'
+          example: 'INTERNAL_SERVER_ERROR'
+        message:
+          type: string
+          example: 'error message'

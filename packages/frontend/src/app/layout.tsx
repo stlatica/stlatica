@@ -1,4 +1,6 @@
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+import "./global.css";
+
+export default function RootLayout({ children }: { readonly children: React.ReactNode }) {
   return (
     <html lang="ja">
       <body>{children}</body>
