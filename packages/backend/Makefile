@@ -6,7 +6,7 @@ install-tools:
 	@./tools/install_tools.sh "./tools/tools.go"
 
 start-local-db:
-	docker-compose up -d stlatica_db
+	docker compose up -d stlatica_db
 
 create-migration-file:
 	$(GOBIN)/goose -dir=db/migrations create new_migration sql
@@ -32,4 +32,4 @@ lint:
 	$(GOBIN)/golangci-lint run ./...
 
 start-internalapi:
-	go run app/cmd/internalapi/main.go
+	SOURCE_DIR=./app/cmd/internalapi docker compose up -d stlatica_server

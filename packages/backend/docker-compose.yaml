@@ -9,6 +9,15 @@ services:
       - "4000:3306"
     volumes:
       - ./db/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+  stlatica_server:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile_air
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/app
+    command: sh -c 'air -c .air.toml --build.cmd "go build -o ./tmp/main $SOURCE_DIR"'
   redocly:
     build:
       context: .
