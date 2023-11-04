@@ -2,6 +2,7 @@ package v1
 
 type userController struct{}
 
+// GetUserResponse is the response of GetUser.
 type GetUserResponse struct{}
 
 // GetUser converts request data and calls usecase to get user.
