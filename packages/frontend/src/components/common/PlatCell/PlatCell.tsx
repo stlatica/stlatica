@@ -24,7 +24,7 @@ export const PlatCell: React.FC<PlatCellProps> = ({
   userName,
 }) => {
   return (
-    <div style={{ padding: "2%", backgroundColor: "#373737", color: "#FFFFFF" }}>
+    <div style={{ padding: "20px", backgroundColor: "#373737", color: "#FFFFFF" }}>
       {/* ユーザプロファイル */}
       <div style={{ display: "flex", height: "50px" }}>
         {/* アイコン */}
@@ -37,7 +37,7 @@ export const PlatCell: React.FC<PlatCellProps> = ({
             borderRadius: "100%",
           }}
         />
-        <div style={{ paddingLeft: "2%", paddingRight: "2%" }}>
+        <div style={{ paddingLeft: "13px", paddingRight: "13px" }}>
           {/* ユーザ名 */}
           <div style={{ fontSize: "100%", padding: "2%" }}>{userName}</div>
           {/* ユーザID */}
@@ -46,7 +46,7 @@ export const PlatCell: React.FC<PlatCellProps> = ({
       </div>
 
       {/* platの内容 */}
-      <div style={{ padding: "5%" }}>{content}</div>
+      <div style={{ padding: "20px" }}>{content}</div>
 
       {/* 下部のアイコン */}
       <div style={{ display: "flex" }}>
