@@ -10,22 +10,21 @@ import { SelfIntroductionEditor } from "./SelfIntroductionEditor";
 export default function Home() {
   return (
     <main>
-      <div
-        style={{ display: "flex", padding: "48px", color: "#FFFFFF", backgroundColor: "#373737" }}
-      >
-        <div style={{ width: "50%" }}>
+      <div className="flex p-12 text-white bg-gray-800">
+        <div className="w-1/2">
           <IconEditor />
         </div>
-        <div style={{ width: "50%", marginLeft: "48px" }}>
+        <div className="w-1/2 ml-12">
           <div>
             <NameEditor />
           </div>
-          <div style={{ marginTop: "48px" }}>
+          <div className="mt-12">
             <SelfIntroductionEditor />
           </div>
-          <div style={{ marginTop: "48px", display: "flex", justifyContent: "space-around" }}>
-            <SubmitButton style={{ width: "100px" }}>Save</SubmitButton>
-            <CancelButton style={{ width: "100px" }}>Cancel</CancelButton>
+          <div className="flex justify-around mt-12">
+            {/* Assuming SubmitButton and CancelButton are styled components, you would need to pass the class names instead of the style prop. */}
+            <SubmitButton className="w-25">Save</SubmitButton> {/* Adjust the width as needed */}
+            <CancelButton className="w-25">Cancel</CancelButton> {/* Adjust the width as needed */}
           </div>
         </div>
       </div>
