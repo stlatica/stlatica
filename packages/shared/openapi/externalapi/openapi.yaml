@@ -87,7 +87,6 @@ paths:
         - HostMeta
       summary: get host meta
       description: get host meta
-      deprecated: false
       responses:
         200:
           description: success
