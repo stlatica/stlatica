@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "ci:ladle": "ladle build --outDir ladle-build",
+    "ci:ladle": "ladle build",
     "ci:lint": "next lint --max-warnings 0",
     "ci:test": "pnpm test:coverage",
     "dev": "next dev --turbo",
@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
-    "@mui/icons-material": "^5.14.13",
     "autoprefixer": "^10",
     "next": "14.0.0",
     "postcss": "^8",
