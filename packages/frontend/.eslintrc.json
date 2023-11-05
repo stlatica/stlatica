@@ -92,7 +92,8 @@
       ],
       "rules": {
         "react/no-multi-comp": "off",
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "react/forbid-dom-props": "off"
       }
     }
   ],
@@ -217,8 +218,30 @@
         "max": 5
       }
     ],
-    // style, classnameなどのpropsを禁止する MUIと相性悪すぎるので一旦停止
-    "react/forbid-component-props": "off",
+    // tailwind強制用: style要素の禁止
+    "react/forbid-dom-props": [
+      "error",
+      {
+        "forbid": [
+          {
+            "propName": "style",
+            "message": "Use className (Must use tailwind css)"
+          }
+        ]
+      }
+    ],
+    // tailwind強制用: 同上 こちらはコンポーネント用
+    "react/forbid-component-props": [
+      "error",
+      {
+        "forbid": [
+          {
+            "propName": "style",
+            "message": "Use className (Must use tailwind css)"
+          }
+        ]
+      }
+    ],
     "react/jsx-no-useless-fragment": "off",
     "react/require-default-props": "off",
     "react/prop-types": "off",
