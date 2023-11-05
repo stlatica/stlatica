@@ -70,7 +70,7 @@ Story4.storyName = "width=700";
 
 export const Story5: Story = () => {
   return (
-    <div className="w-1000px]">
+    <div className="w-[1000px]">
       <PlatCell
         content="nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) "
         favoriteCount={8}
