@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "cc": "pnpm ci-check",
+    "ci-check": "next lint --fix --max-warnings 0 && pnpm ci:test && pnpm build && pnpm ladle build",
     "ci:ladle": "ladle build",
     "ci:lint": "next lint --max-warnings 0",
     "ci:test": "pnpm test:coverage",
