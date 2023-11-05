@@ -15,6 +15,7 @@
     // typescript-eslintの設定解説→ https://zenn.dev/cybozu_frontend/articles/ts-eslint-v6-guide
     "plugin:@typescript-eslint/strict-type-checked",
     "plugin:promise/recommended",
+    "plugin:tailwindcss/recommended",
     // prettierと競合するeslintの設定を除外する 末尾に入れておくこと
     "prettier"
   ],

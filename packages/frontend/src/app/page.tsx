@@ -8,6 +8,7 @@ export default function Home() {
         <Link href="/sample">サンプルページへ</Link>
         <Link href="/sample/zod">zod sample</Link>
         <Link href="/EditProfile">EditProfile</Link>
+        <Link href="/user/sample_user">User Page</Link>
       </Stack>
     </main>
   );

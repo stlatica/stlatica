@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// UnixTime is the type for unix time.
 type UnixTime uint64
 
 // Value implements driver.Valuer interface.

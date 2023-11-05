@@ -210,7 +210,6 @@ linters:
     - goconst # finds repeated strings that could be replaced by a constant
     - gocritic # provides diagnostics that check for bugs, performance and style issues
     - gocyclo # computes and checks the cyclomatic complexity of functions
-    - godot # checks if comments end in a period
     - goimports # in addition to fixing imports, goimports also formats your code in the same style as gofmt
     - gomnd # detects magic numbers
     - gomoddirectives # manages the use of 'replace', 'retract', and 'excludes' directives in go.mod
@@ -248,6 +247,7 @@ linters:
     - whitespace # detects leading and trailing whitespace
 
     ## you may want to enable
+    #- godot # checks if comments end in a period
     #- decorder # checks declaration order and count of types, constants, variables and functions
     #- exhaustruct # [highly recommend to enable] checks if all structure fields are initialized
     #- gci # controls golang package import order and makes it always deterministic
@@ -303,9 +303,15 @@ issues:
   # Default: 3
   max-same-issues: 50
 
+  # Set false to require comments on public methods and types.
+  # Default: true
+  # https://golangci-lint.run/usage/false-positives/#default-exclusions
+  exclude-use-default: false
+
+  exclude:
+    # Package comments are not required.
+    - should have a package comment
   exclude-rules:
-    - source: "(noinspection|TODO)"
-      linters: [ godot ]
     - source: "//noinspection"
       linters: [ gocritic ]
     - path: "_test\\.go"
