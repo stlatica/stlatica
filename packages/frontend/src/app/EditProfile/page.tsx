@@ -10,18 +10,18 @@ import { SelfIntroductionEditor } from "./SelfIntroductionEditor";
 export default function Home() {
   return (
     <main>
-      <div className="flex p-12 text-white bg-gray-800">
+      <div className="flex bg-gray-800 p-12 text-white">
         <div className="w-1/2">
           <IconEditor />
         </div>
-        <div className="w-1/2 ml-12">
+        <div className="ml-12 w-1/2">
           <div>
             <NameEditor />
           </div>
           <div className="mt-12">
             <SelfIntroductionEditor />
           </div>
-          <div className="flex justify-around mt-12">
+          <div className="mt-12 flex justify-around">
             {/* Assuming SubmitButton and CancelButton are styled components, you would need to pass the class names instead of the style prop. */}
             <SubmitButton className="w-[85px]">Save</SubmitButton>{" "}
             {/* Adjust the width as needed */}
