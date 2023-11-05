@@ -22,11 +22,11 @@ export const PlatCell: React.FC<PlatCellProps> = ({
   userName,
 }) => {
   return (
-    <div className="p-5 bg-gray-800 text-white">
+    <div className="bg-gray-800 p-5 text-white">
       {/* ユーザプロファイル */}
       <div className="flex h-12">
         {/* アイコン */}
-        <div className="h-12 w-12 bg-white text-black rounded-full" />
+        <div className="h-12 w-12 rounded-full bg-white text-black" />
         {/* ユーザ名 と ユーザID */}
         <div className="px-3">
           {/* ユーザ名 */}
@@ -39,21 +39,21 @@ export const PlatCell: React.FC<PlatCellProps> = ({
       {/* 下部のアイコン */}
       <div className="flex">
         {/* 返信数 */}
-        <div className="flex items-center flex-1">
+        <div className="flex flex-1 items-center">
           <div className="px-2">
             <MdComment size="2em" />
           </div>
           <div>{replyCount}</div>
         </div>
         {/* シェア数 */}
-        <div className="flex items-center flex-1">
+        <div className="flex flex-1 items-center">
           <div className="px-2">
             <MdAutorenew size="2em" />
           </div>
           <div>{shareCount}</div>
         </div>
         {/* いいね数 */}
-        <div className="flex items-center flex-1">
+        <div className="flex flex-1 items-center">
           <div className="px-2">
             <MdStarBorder size="2em" />
           </div>
