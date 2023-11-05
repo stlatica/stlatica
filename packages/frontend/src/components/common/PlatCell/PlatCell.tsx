@@ -1,7 +1,5 @@
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import CommentIcon from "@mui/icons-material/Comment";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import React from "react";
+import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
 
 type PlatCellProps = {
   readonly content: string;
@@ -52,17 +50,23 @@ export const PlatCell: React.FC<PlatCellProps> = ({
       <div style={{ display: "flex" }}>
         {/* 返信数 */}
         <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <CommentIcon style={{ paddingLeft: "5%", paddingRight: "5%" }} />
+          <div className="px-2">
+            <MdComment size="2em" />
+          </div>
           <div>{replyCount}</div>
         </div>
         {/* シェア数 */}
         <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <AutorenewIcon style={{ paddingLeft: "5%", paddingRight: "5%" }} />
+          <div className="px-2">
+            <MdAutorenew size="2em" />
+          </div>
           <div>{shareCount}</div>
         </div>
         {/* いいね数 */}
         <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <StarBorderIcon style={{ paddingLeft: "5%", paddingRight: "5%" }} />
+          <div className="px-2">
+            <MdStarBorder size="2em" />
+          </div>
           <div>{favoriteCount}</div>
         </div>
       </div>

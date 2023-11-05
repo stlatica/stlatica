@@ -24,7 +24,7 @@ export const LeftUserViewTop: React.FC<LeftUserViewTopProps> = () => {
         <div className="relative col-span-4 ">
           <div className="absolute w-full border-2 border-black bg-red-100 pb-[100%]" />
         </div>
-        <div className="col-span-4 m-2 flex flex-col">
+        <div className="col-span-4 m-2 flex w-full flex-col">
           <div className="flex w-full justify-center pb-3">
             <div>
               <FollowButton isFollow />
