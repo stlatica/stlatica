@@ -9,8 +9,8 @@ require (
 	github.com/golangci/golangci-lint v1.54.1
 	github.com/labstack/echo/v4 v4.11.1
 	github.com/pressly/goose/v3 v3.14.0
-	github.com/volatiletech/sqlboiler/v4 v4.14.2
-	github.com/volatiletech/strmangle v0.0.4
+	github.com/volatiletech/sqlboiler/v4 v4.15.0
+	github.com/volatiletech/strmangle v0.0.5
 	golang.org/x/tools v0.12.0
 )
 
@@ -167,6 +167,7 @@ require (
 	github.com/nishanths/exhaustive v0.11.0 // indirect
 	github.com/nishanths/predeclared v0.2.2 // indirect
 	github.com/nunnatsa/ginkgolinter v0.13.3 // indirect
+	github.com/oklog/ulid/v2 v2.1.0
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/paulmach/orb v0.9.2 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
