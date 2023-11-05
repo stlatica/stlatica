@@ -1,0 +1,13 @@
+Plat:
+  type: object
+  description: plat
+  required: 
+    - plat_id
+    - content
+  properties:
+    plat_id:
+      $ref: '../schemas/PlatID.yaml#/PlatID'
+    content:
+      type: string
+      description: platの本文
+      example: 'これはサンプルのplatです。'
