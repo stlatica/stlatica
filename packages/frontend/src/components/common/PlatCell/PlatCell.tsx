@@ -24,6 +24,7 @@ export const PlatCell: React.FC<PlatCellProps> = ({
   userName,
 }) => {
   return (
+    // TODO: #184 Tailwindへの置き換え @nobuchi
     <div style={{ padding: "20px", backgroundColor: "#373737", color: "#FFFFFF" }}>
       {/* ユーザプロファイル */}
       <div style={{ display: "flex", height: "50px" }}>
