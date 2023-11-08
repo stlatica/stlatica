@@ -1,94 +1,635 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`snapshot > snapshot 1`] = `
+exports[`snapshot > snapshot1 1`] = `
 <DocumentFragment>
   <div
-    style="width: 310px; padding: 2%; background-color: rgb(55, 55, 55); color: rgb(255, 255, 255);"
+    class="bg-gray-800 p-5 text-white"
   >
     <div
-      style="display: flex; height: 50px;"
+      class="flex h-12"
     >
       <div
-        style="height: 50px; width: 50px; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); border-radius: 100%;"
+        class="h-12 w-12 rounded-full bg-white text-black"
       />
       <div
-        style="padding-left: 2%; padding-right: 2%;"
+        class="px-3"
       >
         <div
-          style="font-size: 100%; padding: 2%;"
+          class="text-lg"
         >
           夏ノブチ
         </div>
+         
         <div
-          style="font-size: 75%; padding: 2%; color: rgb(197, 197, 197);"
+          class="text-sm text-gray-500"
         >
           @Nobuchi32384
         </div>
+         
       </div>
     </div>
     <div
-      style="padding: 5%;"
+      class="p-5"
     >
       3週連続でレート下がってるんだが。
     </div>
     <div
-      style="display: flex;"
+      class="flex"
     >
       <div
-        style="display: flex; align-items: center; width: 100%;"
+        class="flex flex-1 items-center"
       >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-          data-testid="CommentIcon"
-          focusable="false"
-          style="padding-left: 5%; padding-right: 5%;"
-          viewBox="0 0 24 24"
+        <div
+          class="px-2"
         >
-          <path
-            d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
-          />
-        </svg>
+          <svg
+            fill="currentColor"
+            height="2em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="2em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+            />
+          </svg>
+        </div>
         <div>
           0
         </div>
       </div>
       <div
-        style="display: flex; align-items: center; width: 100%;"
+        class="flex flex-1 items-center"
       >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-          data-testid="AutorenewIcon"
-          focusable="false"
-          style="padding-left: 5%; padding-right: 5%;"
-          viewBox="0 0 24 24"
+        <div
+          class="px-2"
         >
-          <path
-            d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"
-          />
-        </svg>
+          <svg
+            fill="currentColor"
+            height="2em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="2em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8A5.87 5.87 0 016 12c0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"
+            />
+          </svg>
+        </div>
         <div>
           1
         </div>
       </div>
       <div
-        style="display: flex; align-items: center; width: 100%;"
+        class="flex flex-1 items-center"
       >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-          data-testid="StarBorderIcon"
-          focusable="false"
-          style="padding-left: 5%; padding-right: 5%;"
-          viewBox="0 0 24 24"
+        <div
+          class="px-2"
         >
-          <path
-            d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
-          />
-        </svg>
+          <svg
+            fill="currentColor"
+            height="2em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="2em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+            />
+          </svg>
+        </div>
         <div>
           4
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`snapshot > snapshot2 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-gray-800 p-5 text-white"
+  >
+    <div
+      class="flex h-12"
+    >
+      <div
+        class="h-12 w-12 rounded-full bg-white text-black"
+      />
+      <div
+        class="px-3"
+      >
+        <div
+          class="text-lg"
+        >
+          冬ノブチ
+        </div>
+         
+        <div
+          class="text-sm text-gray-500"
+        >
+          @Nobuchi79323
+        </div>
+         
+      </div>
+    </div>
+    <div
+      class="p-5"
+    >
+      nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) 
+    </div>
+    <div
+      class="flex"
+    >
+      <div
+        class="flex flex-1 items-center"
+      >
+        <div
+          class="px-2"
+        >
+          <svg
+            fill="currentColor"
+            height="2em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="2em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+            />
+          </svg>
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="flex flex-1 items-center"
+      >
+        <div
+          class="px-2"
+        >
+          <svg
+            fill="currentColor"
+            height="2em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="2em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8A5.87 5.87 0 016 12c0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"
+            />
+          </svg>
+        </div>
+        <div>
+          3
+        </div>
+      </div>
+      <div
+        class="flex flex-1 items-center"
+      >
+        <div
+          class="px-2"
+        >
+          <svg
+            fill="currentColor"
+            height="2em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="2em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+            />
+          </svg>
+        </div>
+        <div>
+          8
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`snapshot > snapshot3 1`] = `
+<DocumentFragment>
+  <div
+    class="w-[310px]"
+  >
+    <div
+      class="bg-gray-800 p-5 text-white"
+    >
+      <div
+        class="flex h-12"
+      >
+        <div
+          class="h-12 w-12 rounded-full bg-white text-black"
+        />
+        <div
+          class="px-3"
+        >
+          <div
+            class="text-lg"
+          >
+            冬ノブチ
+          </div>
+           
+          <div
+            class="text-sm text-gray-500"
+          >
+            @Nobuchi79323
+          </div>
+           
+        </div>
+      </div>
+      <div
+        class="p-5"
+      >
+        nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) 
+      </div>
+      <div
+        class="flex"
+      >
+        <div
+          class="flex flex-1 items-center"
+        >
+          <div
+            class="px-2"
+          >
+            <svg
+              fill="currentColor"
+              height="2em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+              />
+            </svg>
+          </div>
+          <div>
+            1
+          </div>
+        </div>
+        <div
+          class="flex flex-1 items-center"
+        >
+          <div
+            class="px-2"
+          >
+            <svg
+              fill="currentColor"
+              height="2em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8A5.87 5.87 0 016 12c0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"
+              />
+            </svg>
+          </div>
+          <div>
+            3
+          </div>
+        </div>
+        <div
+          class="flex flex-1 items-center"
+        >
+          <div
+            class="px-2"
+          >
+            <svg
+              fill="currentColor"
+              height="2em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+              />
+            </svg>
+          </div>
+          <div>
+            8
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`snapshot > snapshot4 1`] = `
+<DocumentFragment>
+  <div
+    class="w-[700px]"
+  >
+    <div
+      class="bg-gray-800 p-5 text-white"
+    >
+      <div
+        class="flex h-12"
+      >
+        <div
+          class="h-12 w-12 rounded-full bg-white text-black"
+        />
+        <div
+          class="px-3"
+        >
+          <div
+            class="text-lg"
+          >
+            冬ノブチ
+          </div>
+           
+          <div
+            class="text-sm text-gray-500"
+          >
+            @Nobuchi79323
+          </div>
+           
+        </div>
+      </div>
+      <div
+        class="p-5"
+      >
+        nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) 
+      </div>
+      <div
+        class="flex"
+      >
+        <div
+          class="flex flex-1 items-center"
+        >
+          <div
+            class="px-2"
+          >
+            <svg
+              fill="currentColor"
+              height="2em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+              />
+            </svg>
+          </div>
+          <div>
+            1
+          </div>
+        </div>
+        <div
+          class="flex flex-1 items-center"
+        >
+          <div
+            class="px-2"
+          >
+            <svg
+              fill="currentColor"
+              height="2em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8A5.87 5.87 0 016 12c0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"
+              />
+            </svg>
+          </div>
+          <div>
+            3
+          </div>
+        </div>
+        <div
+          class="flex flex-1 items-center"
+        >
+          <div
+            class="px-2"
+          >
+            <svg
+              fill="currentColor"
+              height="2em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+              />
+            </svg>
+          </div>
+          <div>
+            8
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`snapshot > snapshot5 1`] = `
+<DocumentFragment>
+  <div
+    class="w-[1000px]"
+  >
+    <div
+      class="bg-gray-800 p-5 text-white"
+    >
+      <div
+        class="flex h-12"
+      >
+        <div
+          class="h-12 w-12 rounded-full bg-white text-black"
+        />
+        <div
+          class="px-3"
+        >
+          <div
+            class="text-lg"
+          >
+            冬ノブチ
+          </div>
+           
+          <div
+            class="text-sm text-gray-500"
+          >
+            @Nobuchi79323
+          </div>
+           
+        </div>
+      </div>
+      <div
+        class="p-5"
+      >
+        nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) 
+      </div>
+      <div
+        class="flex"
+      >
+        <div
+          class="flex flex-1 items-center"
+        >
+          <div
+            class="px-2"
+          >
+            <svg
+              fill="currentColor"
+              height="2em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+              />
+            </svg>
+          </div>
+          <div>
+            1
+          </div>
+        </div>
+        <div
+          class="flex flex-1 items-center"
+        >
+          <div
+            class="px-2"
+          >
+            <svg
+              fill="currentColor"
+              height="2em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8A5.87 5.87 0 016 12c0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"
+              />
+            </svg>
+          </div>
+          <div>
+            3
+          </div>
+        </div>
+        <div
+          class="flex flex-1 items-center"
+        >
+          <div
+            class="px-2"
+          >
+            <svg
+              fill="currentColor"
+              height="2em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+              />
+            </svg>
+          </div>
+          <div>
+            8
+          </div>
         </div>
       </div>
     </div>
