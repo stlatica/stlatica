@@ -1,0 +1,10 @@
+PlatPost:
+  type: object
+  description: plat
+  required:
+    - content
+  properties:
+    content:
+      type: string
+      description: platの本文
+      example: 'これはサンプルのplatです。'
