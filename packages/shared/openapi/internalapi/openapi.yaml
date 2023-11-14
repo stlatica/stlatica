@@ -6,6 +6,10 @@ info:
 paths:
   /internal/v1/users/{user_id}:
     $ref: './paths/users.yaml#/users_{user_id}'
+  /internal/v1/plat/{plat_id}:
+    $ref: './paths/plat.yaml#/plat_{plat_id}'
+  /internal/v1/plat:
+    $ref: './paths/plat.yaml#/postPlat'
 components:
   schemas:
     SampleUser:

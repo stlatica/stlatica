@@ -1,4 +1,4 @@
-plat/{plat_id}
+plat_{plat_id}:
   get:
     tags: 
       - Plat
@@ -56,21 +56,17 @@ plat/{plat_id}
           application/json:
             schema:
               $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
-  post:
-    tags:
+  delete:
+    tags: 
       - Plat
-    summary: Post plat.
-    description: Returns result.
-    operationId: postPlat
-    requestBody:
-      description: 投稿内容
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/PlatPost.yaml#/PlatPost'
+    summary: Delete plat by ID.
+    description: Delete plat.
+    operationId: deletePlat
+    parameters:
+      - $ref: '../parameters/plat_id.yaml#/plat_id'
     responses:
-      201:
-        description: Created.
+      204:
+        description: No content.
       400:
         description: |
           bad request \
@@ -113,17 +109,22 @@ plat/{plat_id}
           application/json:
             schema:
               $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
-  delete:
-    tags: 
+postPlat:
+  post:
+    tags:
       - Plat
-    summary: Delete plat by ID.
-    description: Returns result.
-    operationId: deletePlat
-    parameters:
-      - $ref: '../parameters/plat_id.yaml#/plat_id'
+    summary: Post plat.
+    description: Post plat.
+    operationId: postPlat
+    requestBody:
+      description: 投稿内容
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/PlatPost.yaml#/PlatPost'
     responses:
-      204:
-        description: No content.
+      201:
+        description: Created.
       400:
         description: |
           bad request \
