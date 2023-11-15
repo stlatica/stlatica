@@ -80,7 +80,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /external/v1/host-meta/:
+  /.well-known/host-meta:
     get:
       operationId: getHostMeta
       tags: 
