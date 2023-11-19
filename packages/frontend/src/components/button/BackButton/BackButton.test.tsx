@@ -4,7 +4,6 @@ import { describe, expect, test } from "vitest";
 
 import { Story1 } from "./BackButton.stories";
 
-
 describe("snapshot", () => {
   test("snapshot", () => {
     const { asFragment } = render(<Story1 />);

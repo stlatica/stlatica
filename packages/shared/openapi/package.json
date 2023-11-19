@@ -1,0 +1,20 @@
+{
+	"scripts": {
+		"external:build": "pnpm redocly build-docs externalapi/openapi.yaml --output=build/external.html",
+		"external:bundle": "pnpm redocly bundle externalapi/openapi.yaml --output=externalapi/openapi-bundled.yaml",
+		"external:lint": "pnpm redocly lint externalapi/openapi.yaml",
+		"external:preview": "pnpm redocly preview-docs externalapi/openapi.yaml -p 8081",
+		"external:serve": "pnpm serve build/external.html -p 8091",
+		"internal:build": "pnpm redocly build-docs internalapi/openapi.yaml --output=build/internal.html",
+		"internal:bundle": "pnpm redocly bundle internalapi/openapi.yaml --output=internalapi/openapi-bundled.yaml",
+		"internal:lint": "pnpm redocly lint internalapi/openapi.yaml",
+		"internal:preview": "pnpm redocly preview-docs internalapi/openapi.yaml -p 8080",
+		"internal:serve": "pnpm serve build/internal.html"
+	},
+	"dependencies": {
+		"@redocly/cli": "^1.4.0"
+	},
+	"devDependencies": {
+		"serve": "^14.2.1"
+	}
+}
