@@ -2,10 +2,10 @@ import { LeftUserView } from "@/components/block/LeftUserView";
 
 import { DummyTimeLines } from "./DummyTimeLines";
 
-const Page = ({ params }: { readonly params: { id: string } }) => {
+export default function Page({ params }: { readonly params: { id: string } }) {
   const { id } = params;
 
-  console.log(id);
+  // console.log(id);
 
   return (
     <main className="h-[100vh]">
@@ -17,6 +17,4 @@ const Page = ({ params }: { readonly params: { id: string } }) => {
       </div>
     </main>
   );
-};
-
-export default Page;
+}

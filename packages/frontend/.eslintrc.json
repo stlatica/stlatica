@@ -33,6 +33,8 @@
     "import",
     "@typescript-eslint",
     "eslint-plugin-jsdoc",
+    // @stylistic/eslint-plugin
+    "@stylistic",
     "html",
     "promise",
     "unused-imports"
@@ -76,34 +78,48 @@
         ]
       }
     },
+    // nextjs専用ルール
     {
-      // .tsxファイルではtsdocの制限を緩和
       "files": [
-        "*/**/*.tsx"
+        "*/**/page.tsx",
+        "*/**/layout.tsx"
       ],
       "rules": {
-        "jsdoc/require-param": "off"
+        // export default Page() が基本なのでアロー強制しない
+        "react/function-component-definition": [
+          "error",
+          {
+            "namedComponents": "function-declaration"
+          }
+        ]
       }
     },
-    // ストーリーファイルでの制限緩和
+    // ストーリー, テストファイルでの制限緩和
     {
       "files": [
-        "*/**/*.stories.tsx"
+        "*/**/*.stories.tsx",
+        "*/**/*.test.tsx"
       ],
       "rules": {
         "react/no-multi-comp": "off",
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "react/forbid-dom-props": "off",
+        "no-console": "off",
+        "jsdoc/require-param": "off"
       }
     }
   ],
   "rules": {
-    "no-constant-condition": "off",
-    "max-len": [
-      "off",
+    // 1ファイル行数制限
+    "max-lines": [
+      "warn",
       {
-        "code": 100
+        "max": 250,
+        // "skipComments": true,
+        "skipBlankLines": true
       }
     ],
+    // デフォルトだとtsxファイルでjsx書けないので許可
     "react/jsx-filename-extension": [
       "error",
       {
@@ -114,12 +130,12 @@
       }
     ],
     "spaced-comment": [
-      "error",
+      "warn",
       "always",
       {
-        "markers": [
-          "/ <reference"
-        ]
+        "block": {
+          "balanced": true
+        }
       }
     ],
     "@typescript-eslint/no-use-before-define": [
@@ -152,21 +168,26 @@
     "node/no-missing-import": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "react/function-component-definition": "off",
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
     "no-use-before-define": "off",
-    "no-console": "off",
+    // console が本番に残っていると良くないので、マージまでにコメントアウトしておくこと
+    "no-console": "warn",
     "@typescript-eslint/interface-name-prefix": [
       "off"
     ],
-    // interfaceを禁止
+    // interfaceを禁止, typeに統一
     "@typescript-eslint/consistent-type-definitions": [
       "error",
       "type"
     ],
-    // 使った方が実装が遥かに容易になるシーンもあるのでwarn
+    // 使うべきシーンもあるので赤エラーは出さない. 必要なら随時無効化で対応を
     "no-await-in-loop": "warn",
-    // コメントの書ける位置が制限される 1行目のコードに説明が書けないので不要
-    "lines-around-comment": "off",
     // ts, tsxのみ拡張子なし その他は必須とする
     "import/extensions": [
       "error",
@@ -178,18 +199,15 @@
         "jsx": "never"
       }
     ],
-    // features, routesのimport禁止, 上に戻る相対パス禁止
+    // 上に戻る相対パス禁止, @/ を使うこと
     "no-restricted-imports": [
       "error",
       {
         "patterns": [
-          "../",
-          "features/*",
-          "routes/*"
+          "../"
         ]
       }
     ],
-    "jsx-a11y/alt-text": "off",
     "@typescript-eslint/no-misused-promises": [
       "error",
       {
@@ -204,9 +222,9 @@
         "allowArrowFunctions": true
       }
     ],
-    // 赤字にしたくない
+    // 赤字ではなく黄色で
     "react/self-closing-comp": "warn",
-    // 赤字にしたくない
+    // 赤字ではなく黄色で
     "react/prefer-read-only-props": "warn",
     // <div>Hoge</div> みたいなのをNGにしない
     "react/jsx-no-literals": "off",
@@ -217,23 +235,45 @@
         "max": 5
       }
     ],
-    // style, classnameなどのpropsを禁止する MUIと相性悪すぎるので一旦停止
-    "react/forbid-component-props": "off",
+    // tailwind強制用: style要素の禁止
+    "react/forbid-dom-props": [
+      "error",
+      {
+        "forbid": [
+          {
+            "propName": "style",
+            "message": "Use className (Must use tailwind css)"
+          }
+        ]
+      }
+    ],
+    // tailwind強制用: 同上 こちらはコンポーネント用
+    "react/forbid-component-props": [
+      "error",
+      {
+        "forbid": [
+          {
+            "propName": "style",
+            "message": "Use className (Must use tailwind css)"
+          }
+        ]
+      }
+    ],
     "react/jsx-no-useless-fragment": "off",
+    // tsでは完全に不要なルール
     "react/require-default-props": "off",
     "react/prop-types": "off",
+    // import React を不要にする
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
-    "new-cap": "off",
     "arrow-body-style": [
       "error",
       "always"
     ],
-    "comma-dangle": [
+    "@stylistic/comma-dangle": [
       "error",
       "only-multiline"
     ],
-    "node/no-unpublished-import": "off",
     "no-undefined": "off",
     "import/no-extraneous-dependencies": [
       "error",
@@ -282,7 +322,6 @@
   "ignorePatterns": [
     "*.png",
     "*.jpg",
-    "*.config.js",
-    "plop/*"
+    "*.config.js"
   ]
 }

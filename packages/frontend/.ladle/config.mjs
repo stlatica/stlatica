@@ -1,3 +1,4 @@
 export default {
-    base: "/stlatica/",
+  base: "/stlatica/",
+  outDir: "ladle-build",
 };
