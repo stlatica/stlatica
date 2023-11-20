@@ -1,0 +1,14 @@
+PlatPost:
+  type: object
+  description: plat
+  required:
+    - content
+    - user_id
+    # TODO: 他に必要な要素があれば書き足す
+  properties:
+    content:
+      type: string
+      description: platの本文
+      example: 'これはサンプルのplatです。'
+    user_id:
+      $ref: '../parameters/user_id.yaml#/user_id'

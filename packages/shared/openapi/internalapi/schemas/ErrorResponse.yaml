@@ -9,6 +9,7 @@ ErrorResponse:
       enum:
         - 'BAD_REQUEST'
         - 'MISSING_PARAMETER'
+        - 'UNAUTHORIZED'
         - 'NOT_FOUND'
         - 'INTERNAL_SERVER_ERROR'
         - 'SERVICE_UNAVAILABLE'
