@@ -13,7 +13,7 @@ plat_{plat_id}:
         content:
           application/json:
             schema:
-              $ref: '../schemas/Plat.yaml/Plat'
+              $ref: '../schemas/Plat.yaml#/Plat'
       400:
         description: |
           bad request \
