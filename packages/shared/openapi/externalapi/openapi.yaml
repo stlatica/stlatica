@@ -97,7 +97,7 @@ paths:
                 example: |
                   <?xml version="1.0"?>
                   <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
-                      <Link rel="lrdd" type="application/xrd+xml" template="https://siren.capslock.dev/.well-known/webfinger?resource={uri}" />
+                      <Link rel="lrdd" type="application/xrd+xml" template="https://stlatica.hoge/.well-known/webfinger?resource={uri}" />
                   </XRD>
         500:
           description: |
