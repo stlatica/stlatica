@@ -2,10 +2,9 @@ import React from "react";
 
 import { CancelButton } from "@/components/button/CancelButton";
 import { SubmitButton } from "@/components/button/SubmitButton";
+import { TextEditor } from "@/components/common/TextEditor";
 
 import { IconEditor } from "./IconEditor";
-import { NameEditor } from "./NameEditor";
-import { SelfIntroductionEditor } from "./SelfIntroductionEditor";
 
 export default function Home() {
   return (
@@ -16,10 +15,15 @@ export default function Home() {
         </div>
         <div className="ml-12 w-1/2">
           <div>
-            <NameEditor />
+            <TextEditor componentId="Name" defaultValue="" maxlength={16} title="Name" />
           </div>
           <div className="mt-12">
-            <SelfIntroductionEditor />
+            <TextEditor
+              componentId="SI"
+              defaultValue=""
+              maxlength={512}
+              title="Self-Intorduction"
+            />
           </div>
           <div className="mt-12 flex justify-around">
             {/* Assuming SubmitButton and CancelButton are styled components, you would need to pass the class names instead of the style prop. */}

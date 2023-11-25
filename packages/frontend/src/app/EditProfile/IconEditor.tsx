@@ -2,11 +2,11 @@ import React from "react";
 
 export const IconEditor: React.FC = () => {
   return (
-    <div className="rounded border border-white p-3">
-      <div className="text-gray-500">Icon</div>
-      <div>
-        <div className="h-[100px] w-[100px] bg-white text-black">tmp</div>
+    <div className="relative rounded-lg border p-3 dark:border-gray-600">
+      <div className="absolute -translate-x-3.5 -translate-y-6 scale-75 bg-gray-800 px-2 text-gray-400">
+        Icon
       </div>
+      <div className="h-[100px] w-[100px] bg-white text-black">tmp</div>
       <div>zoom bar</div>
       <div>file path</div>
     </div>
