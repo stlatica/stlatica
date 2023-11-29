@@ -80,6 +80,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /.well-known/webfinger?resource=acct:example@example.com:   # TODO:resourceを変える
+    get:
+      operationId: getWebfinger
+      tags:
+        - Webfinger
+      summary: get Webfinger
+      description: get Webfinger
+      parameters:
+        - $ref: "#/components/parameters/actor_id"
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+            
+
+
   /.well-known/host-meta:
     get:
       operationId: getHostMeta
