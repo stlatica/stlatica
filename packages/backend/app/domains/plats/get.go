@@ -14,7 +14,7 @@ type PlatGetter interface {
 	GetPlat(ctx context.Context, platID types.PlatID, inPort ports.PlatGetInPort) (*entities.Plat, error)
 }
 
-type platGetter struct {}
+type platGetter struct{}
 
 func (g *platGetter) GetPlat(ctx context.Context,
 	platID types.PlatID, inPort ports.PlatGetInPort) (*entities.Plat, error) {
