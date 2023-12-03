@@ -3,8 +3,8 @@ package plats
 import (
 	"context"
 
-	"github.com/stlatica/stlatica/packages/backend/app/domains/plats/ports"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
+	"github.com/stlatica/stlatica/packages/backend/app/domains/plats/ports"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 )
 
