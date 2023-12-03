@@ -15,15 +15,10 @@ export default function Home() {
         </div>
         <div className="ml-12 w-1/2">
           <div>
-            <TextEditor componentId="Name" defaultValue="" maxlength={16} title="Name" />
+            <TextEditor defaultValue="" maxlength={16} title="Name" />
           </div>
           <div className="mt-12">
-            <TextEditor
-              componentId="SI"
-              defaultValue=""
-              maxlength={512}
-              title="Self-Intorduction"
-            />
+            <TextEditor defaultValue="" maxlength={512} title="Self-Intorduction" />
           </div>
           <div className="mt-12 flex justify-around">
             {/* Assuming SubmitButton and CancelButton are styled components, you would need to pass the class names instead of the style prop. */}
