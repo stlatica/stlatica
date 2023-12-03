@@ -16,7 +16,7 @@ port=4000
 user="root"
 pass=""
 sslmode="false"
-whitelist=["sample_users","actors"]
+whitelist=["sample_users","actors","plats"]
 
 [[types]]
 [types.match]
@@ -45,5 +45,25 @@ db_type="varchar"
 nullable=false
 [types.replace]
 type="types.ActorID"
+[types.imports]
+third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
+
+[[types]]
+[types.match]
+name="user_id"
+db_type="varchar"
+nullable=false
+[types.replace]
+type="types.UserID"
+[types.imports]
+third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
+
+[[types]]
+[types.match]
+name="plat_id"
+db_type="varchar"
+nullable=false
+[types.replace]
+type="types.PlatID"
 [types.imports]
 third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']

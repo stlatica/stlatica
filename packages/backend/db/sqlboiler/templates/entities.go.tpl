@@ -42,7 +42,7 @@ func (m *{{$table_alias.UpSingular}}) Get{{$col_alias}}() {{$column.Type}} {
         return decimal.Zero()
         {{else if or (eq $column.Type "times.Date") (eq $column.Type "times.Timestamp") -}}
         return {{$column.Type}}{}
-        {{else if (eq $column.Type "types.ActorID") -}}
+        {{else if or (eq $column.Type "types.ActorID") (eq $column.Type "types.PlatID") (eq $column.Type "types.UserID") -}}
         return {{$column.Type}}{}
     	{{else -}}
         return {{$column.Type}}(0)
