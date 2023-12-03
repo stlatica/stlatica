@@ -80,7 +80,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /.well-known/webfinger?resource=acct:example@example.com:   # TODO:resourceを変える
+  /.well-known/webfinger?resource=acct:{actor_id}@{server_domain}:   # TODO:resourceを変える
     get:
       operationId: getWebfinger
       tags:
@@ -88,15 +88,73 @@ paths:
       summary: get Webfinger
       description: get Webfinger
       parameters:
-        - $ref: "#/components/parameters/actor_id"
+        - $ref: '#/components/parameters/actor_id'
+        - $ref: "#/components/parameters/server_domain"
       responses:
         200:
           description: success
           content:
             application/json:
-            
-
-
+              example:
+                subject: "acct:Gargron@mastodon.social"
+                aliases:
+                  - "https://mastodon.social/@Gargron"
+                  - "https://mastodon.social/users/Gargron"
+                links:
+                  - rel: "http://webfinger.net/rel/profile-page"
+                    type: "text/html"
+                    href: "https://mastodon.social/@Gargron"
+                  - rel: "self"
+                    type: "application/activity+json"
+                    href: "https://mastodon.social/users/Gargron"
+                  - rel: "http://ostatus.org/schema/1.0/subscribe"
+                    template: "https://mastodon.social/authorize_interaction?uri={uri}"
+        400:
+          description: |
+            bad request \
+            error code:
+            - 'BAD_REQUEST'
+            - 'MISSING_PARAMETER'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: |
+            not found \
+            error code:
+            - 'NOT_FOUND'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        422:
+          description:  |
+            Unprocessable Entity \
+            error code:
+            - 'UNPROCESSABLE_ENTITY'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: |
+            internal server error \
+            error code:
+            - 'INTERNAL_SERVER_ERROR'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        503:
+          description: |
+            service unavailable \
+            error code:
+            - 'SERVICE_UNAVAILABLE'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /.well-known/host-meta:
     get:
       operationId: getHostMeta
@@ -137,6 +195,22 @@ paths:
 components:
   parameters:
     actor_id:
+      in: path
+      required: true
+      name: actor_id
+      description: actor_id
+      schema:
+        type: string
+      example: 'actor_id'
+    example:
+      in: path
+      required: true
+      name: actor_id
+      description: actor_id
+      schema:
+        type: string
+      example: 'actor_id'
+    server_domain:
       in: path
       required: true
       name: actor_id
