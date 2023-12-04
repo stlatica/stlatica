@@ -6,7 +6,6 @@ type UserIconProps = {
    * bese64
    */
   readonly iconImage: string;
-  readonly size: number;
 };
 
 const cropStyle = {
@@ -16,9 +15,9 @@ const cropStyle = {
  * user icon
  */
 export const UserIcon: React.FC<UserIconProps> = (props) => {
-  const { iconImage, size } = props;
+  const { iconImage } = props;
   return (
-    <div style={{ height: size, width: size }}>
+    <div>
       <img alt="icon" src={iconImage} style={cropStyle} />
     </div>
   );
