@@ -8,9 +8,6 @@ type UserIconProps = {
   readonly iconImage: string;
 };
 
-const cropStyle = {
-  borderRadius: "50%",
-};
 /**
  * user icon
  */
@@ -18,7 +15,7 @@ export const UserIcon: React.FC<UserIconProps> = (props) => {
   const { iconImage } = props;
   return (
     <div>
-      <img alt="icon" src={iconImage} style={cropStyle} />
+      <img alt="icon" className="rounded-[50%]" src={iconImage} />
     </div>
   );
 };
