@@ -13,9 +13,5 @@ type UserIconProps = {
  */
 export const UserIcon: React.FC<UserIconProps> = (props) => {
   const { iconImage } = props;
-  return (
-    <div>
-      <img alt="icon" className="rounded-[50%]" src={iconImage} />
-    </div>
-  );
+  return <img alt="icon" className="aspect-square h-full w-full rounded-full" src={iconImage} />;
 };
