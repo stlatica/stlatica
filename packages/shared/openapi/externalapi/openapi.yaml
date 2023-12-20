@@ -95,6 +95,8 @@ paths:
           description: success
           content:
             application/jrd+json:
+              schema:
+                $ref: '#/components/schemas/Webfinger'
               example:
                 subject: "acct:Gargron@mastodon.social"
                 aliases:
@@ -305,6 +307,14 @@ components:
             publicKeyPem:
               type: string
               example: -----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----
+    Webfinger:
+      type: object
+      description: Webfinger
+      required:
+        - "id"
+      properties:
+        id :
+          $ref: '#/components/schemas/ActorID'
     JSONLDContexts:
       description: |
         以下のうちのいずれかを使用する
