@@ -80,7 +80,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /.well-known/webfinger?resource=acct:{actor_id}@{server_domain}:   # TODO:resourceを変える
+  /.well-known/webfinger?resource=acct:{actor_id}@{server_domain}:
     get:
       operationId: getWebfinger
       tags:
