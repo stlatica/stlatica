@@ -80,7 +80,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /.well-known/webfinger?resource=acct:{actor_id}@{server_domain}:
+  /.well-known/webfinger?resource=acct:{ActorID}@{server_domain}:
     get:
       operationId: getWebfinger
       tags:
@@ -88,7 +88,7 @@ paths:
       summary: get Webfinger
       description: get Webfinger
       parameters:
-        - $ref: '#/components/parameters/actor_id'
+        - $ref: "#/components/schemas/ActorID"
         - $ref: "#/components/parameters/server_domain"
       responses:
         200:
@@ -196,14 +196,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
-    actor_id:
-      in: path
-      required: true
-      name: actor_id
-      description: actor_id
-      schema:
-        type: string
-      example: 'actor_id'
     example:
       in: path
       required: true
@@ -215,11 +207,11 @@ components:
     server_domain:
       in: path
       required: true
-      name: actor_id
-      description: actor_id
+      name: domain_name
+      description: server domain
       schema:
         type: string
-      example: 'actor_id'
+      example: 'stlatica.hoge'
   schemas:
     SampleUser:
       type: object
