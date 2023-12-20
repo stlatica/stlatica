@@ -35,7 +35,7 @@ paths:
       summary: get actor
       description: get actor
       parameters:
-        - $ref: '#/components/parameters/actor_id'
+        - $ref: '#/components/schemas/ActorID'
       responses:
         200:
           description: success
