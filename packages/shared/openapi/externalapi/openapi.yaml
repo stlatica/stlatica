@@ -94,7 +94,7 @@ paths:
         200:
           description: success
           content:
-            application/json:
+            application/jrd+json:
               example:
                 subject: "acct:Gargron@mastodon.social"
                 aliases:
