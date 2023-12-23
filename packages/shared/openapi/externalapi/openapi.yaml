@@ -171,6 +171,7 @@ paths:
             application/xml:
               schema:
                 type: string
+                # TODO: https://github.com/stlatica/stlatica/issues/236
                 example: |
                   <?xml version="1.0"?>
                   <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
