@@ -13,6 +13,27 @@ Goのversion管理には`goenv`を使用するため、[こちら](https://githu
 
 `make start-local-db`
 
+# Structure
+
+backend packageではクリーンアーキテクチャを採用しています。 \
+クリーンアーキテクチャの詳細は[こちら](https://miro.com/app/board/uXjVNUb8IMw=/?share_link_id=136453257125)を参照してください。
+
+package構成は以下の通りです。
+```
+├── app
+│ ├── adapters
+│ ├── cmd // entrypoint
+│ ├── controllers
+│ ├── domains
+│ │ ├── types
+│ │ └── entities
+│ ├── repositories
+│ │ ├── dao
+│ │ └── entities
+│ └── usecases
+└── その他(db, tools etc.)
+```
+
 # Tools
 
 ## goose
