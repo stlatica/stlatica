@@ -31,8 +31,11 @@ codegen-from-oapi:
 lint:
 	$(GOBIN)/golangci-lint run ./...
 
-start-internalapi:
-	SOURCE_DIR=./app/cmd/internalapi docker compose up -d stlatica_server
+start-local-internalapi:
+	GO_ENV=local go run app/cmd/internalapi/main.go
 
-stop-internalapi:
-	SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server
+start-docker-internalapi:
+	GO_ENV=local SOURCE_DIR=./app/cmd/internalapi docker compose up -d stlatica_server
+
+stop-docker-internalapi:
+	GO_ENV=local SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server
