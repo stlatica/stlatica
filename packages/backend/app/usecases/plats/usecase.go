@@ -27,3 +27,19 @@ type PlatUseCase struct {
 	platDAO       dao.PlatDAO
 	domainFactory plats.Factory
 }
+
+func (u *platUseCase) GetPlat(ctx context.Context, platID types.PlatID) (*entities.Plat, error) {
+	getter := u.domainFactory.NewPlatGetter()
+	portImpl := &platPortImpl{
+		platDAO: u.platDAO,
+	}
+	return getter.GetPlat(ctx, platID, portImpl)
+}
+
+type platPortImpl struct {
+	platDAO dao.PlatDAO
+}
+
+func (p *platPortImpl) GetPlat(ctx context.Context, platID types.PlatID) (*entities.Plat, error) {
+	return p.platDAO.GetPlat(ctx, platID)
+}
