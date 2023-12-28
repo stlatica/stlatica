@@ -9,21 +9,21 @@ import  (
 	"github.com/stlatica/stlatica/packages/backend/app/repositories/dao"
 )
 
-// PlatsUseCase is the interface for getting plat.
+// PlatUseCase is the interface for getting plat.
 type PlatUseCase interface {
 	// GetPlat returns plat.
-	GetPlat(ctx context.Cntent, platID types.PlatID) (*entities.Plat, error)
+	GetPlat(ctx context.Context, platID types.PlatID) (*entities.Plat, error)
 }
 
 // NewPlatUseCase returns PlatUseCase.
 func NewPlatUseCase(domainFactory plats.Factory, platDAO dao.PlatDAO) PlatUseCase {
-	return &PlatUseCase{
+	return &platUseCase{
 		platDAO:       platDAO,
 		domainFactory: domainFactory,
 	}
 }
 
-type PlatUseCase struct {
+type platUseCase struct {
 	platDAO       dao.PlatDAO
 	domainFactory plats.Factory
 }

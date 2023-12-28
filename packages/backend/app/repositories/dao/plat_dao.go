@@ -19,7 +19,7 @@ type PlatDAO interface {
 func NewPlatDAO() PlatDAO {
 	ctxExecutor := boil.GetContextDB()
 	return &platDAO{
-		ctxExecutor: ctxExecutor
+		ctxExecutor: ctxExecutor,
 	}
 }
 
