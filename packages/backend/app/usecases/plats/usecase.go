@@ -1,10 +1,10 @@
 package plats
 
-import  (
+import (
 	"context"
 
-	"github.com/stlatica/stlatica/packages/backend/app/domains/plats"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
+	"github.com/stlatica/stlatica/packages/backend/app/domains/plats"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	"github.com/stlatica/stlatica/packages/backend/app/repositories/dao"
 )

@@ -33,12 +33,10 @@ func (dao *platDAO) GetPlat(ctx context.Context, platID types.PlatID) (*domainen
 		return nil, err
 	}
 
-	return &domainentities.Plat {
+	return &domainentities.Plat{
 		PlatID:    entity.PlatID,
 		ActorID:   entity.ActorID,
 		Content:   entity.Content,
 		CreatedAt: entity.CreatedAt,
 	}, nil
 }
-
-
