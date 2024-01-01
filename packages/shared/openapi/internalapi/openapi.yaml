@@ -10,6 +10,8 @@ paths:
     $ref: './paths/plat.yaml#/plat_{plat_id}'
   /internal/v1/plats:
     $ref: './paths/plat.yaml#/postPlat'
+  /internal/v1/timelines/{timeline_id}':
+    $ref: './paths/timelines.yaml#/timelines_{timeline_id}'
 components:
   schemas:
     SampleUser:
