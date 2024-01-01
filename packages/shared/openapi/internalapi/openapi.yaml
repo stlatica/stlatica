@@ -7,9 +7,11 @@ paths:
   /internal/v1/users/{user_id}:
     $ref: './paths/users.yaml#/users_{user_id}'
   /internal/v1/plats/{plat_id}:
-    $ref: './paths/plat.yaml#/plat_{plat_id}'
+    $ref: './paths/plats.yaml#/plat_{plat_id}'
   /internal/v1/plats:
-    $ref: './paths/plat.yaml#/postPlat'
+    $ref: './paths/plats.yaml#/plats'
+  /internal/v1/timelines/{timeline_id}':
+    $ref: './paths/timelines.yaml#/timelines_{timeline_id}'
 components:
   schemas:
     SampleUser:
