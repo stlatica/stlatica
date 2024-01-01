@@ -10,6 +10,7 @@ const (
 	MISSINGPARAMETER    ErrorResponseCode = "MISSING_PARAMETER"
 	NOTFOUND            ErrorResponseCode = "NOT_FOUND"
 	SERVICEUNAVAILABLE  ErrorResponseCode = "SERVICE_UNAVAILABLE"
+	UNAUTHORIZED        ErrorResponseCode = "UNAUTHORIZED"
 )
 
 // ErrorResponse defines model for ErrorResponse.
@@ -20,6 +21,27 @@ type ErrorResponse struct {
 
 // ErrorResponseCode defines model for ErrorResponse.Code.
 type ErrorResponseCode string
+
+// Plat plat
+type Plat struct {
+	// Content platの本文
+	Content string `json:"content"`
+
+	// PlatId platを識別するための一意のID
+	PlatId PlatID `json:"plat_id"`
+}
+
+// PlatID platを識別するための一意のID
+type PlatID = string
+
+// PlatPost plat
+type PlatPost struct {
+	// Content platの本文
+	Content string `json:"content"`
+
+	// UserId userを識別するための一意のID
+	UserId UserID `json:"user_id"`
+}
 
 // User user
 type User struct {
@@ -39,17 +61,24 @@ type User struct {
 	// Summary ユーザのプロフィール
 	Summary string `json:"summary"`
 
-	// UserId userを識別するための一意のID \
-	// actor_idのfrontend向けエイリアスであり、actor_idと同一の値を持つ
+	// UserId userを識別するための一意のID
 	UserId UserID `json:"user_id"`
 
 	// Username 画面上に表示されるユーザ名
 	Username string `json:"username"`
 }
 
-// UserID userを識別するための一意のID \
-// actor_idのfrontend向けエイリアスであり、actor_idと同一の値を持つ
+// UserID userを識別するための一意のID
 type UserID = string
+
+// PlatId defines model for plat_id.
+type PlatId = string
+
+// TimelineId defines model for timeline_id.
+type TimelineId = string
 
 // UserId defines model for user_id.
 type UserId = string
+
+// PostPlatJSONRequestBody defines body for PostPlat for application/json ContentType.
+type PostPlatJSONRequestBody = PlatPost
