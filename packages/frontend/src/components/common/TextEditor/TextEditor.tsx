@@ -16,6 +16,9 @@ type TextEditorProps = {
 export const TextEditor: React.FC<TextEditorProps> = ({ defaultValue, maxlength, title }) => {
   const componentId = useRef(CreateID());
   return (
+    // Quoted from Flowbite
+    // Tailwind CSS Floating Label / Floating label example
+    // https://flowbite.com/docs/forms/floating-label/
     <div className="relative h-full">
       <textarea
         className="peer block h-full w-full appearance-none rounded-lg border border-white bg-transparent p-3 px-2.5 pb-2.5 pt-4 text-sm text-gray-800 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
