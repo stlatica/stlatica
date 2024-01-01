@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
+    "@types/nanoid": "^3.0.0",
     "autoprefixer": "^10",
     "nanoid": "^5.0.4",
     "next": "14.0.0",

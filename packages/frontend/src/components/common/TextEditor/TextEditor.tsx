@@ -14,7 +14,7 @@ type TextEditorProps = {
  *
  */
 export const TextEditor: React.FC<TextEditorProps> = ({ defaultValue, maxlength, title }) => {
-  const componentId = useRef(CreateID());
+  const componentId = useRef<string>(CreateID());
   return (
     // Quoted from Flowbite
     // Tailwind CSS Floating Label / Floating label example
