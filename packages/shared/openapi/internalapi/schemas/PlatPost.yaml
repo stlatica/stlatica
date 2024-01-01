@@ -11,4 +11,4 @@ PlatPost:
       description: platの本文
       example: 'これはサンプルのplatです。'
     user_id:
-      $ref: '../parameters/user_id.yaml#/user_id'
+      $ref: '../schemas/UserID.yaml#/UserID'

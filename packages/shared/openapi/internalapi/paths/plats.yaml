@@ -109,7 +109,7 @@ plat_{plat_id}:
           application/json:
             schema:
               $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
-postPlat:
+plats:
   post:
     tags:
       - Plat
