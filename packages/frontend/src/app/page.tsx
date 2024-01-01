@@ -5,6 +5,7 @@ export default function Home() {
     <main>
       <div className="flex flex-col">
         <Link href="/sample/zod">zod sample</Link>
+        <Link href="/EditProfile">EditProfile</Link>
         <Link href="/user/sample_user">User Page</Link>
       </div>
     </main>
