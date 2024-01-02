@@ -14,10 +14,22 @@ import {
   http
 } from 'msw'
 
+export const getGetUserMock = () => ({followers_count: faker.number.int({min: undefined, max: undefined}), following_count: faker.number.int({min: undefined, max: undefined}), icon: faker.word.sample(), is_public: faker.datatype.boolean(), summary: faker.word.sample(), user_id: faker.word.sample(), username: faker.word.sample()})
+
 export const getGetPlatMock = () => ({content: faker.word.sample(), plat_id: faker.word.sample()})
 
-export const getPlatMock = () => [
-http.get('*/internal/v1/plats/:platId', async () => {
+export const getStlaticaInternalApiMock = () => [
+http.get('*/internal/v1/users/:userId', async () => {
+        await delay(1000);
+        return new HttpResponse(JSON.stringify(getGetUserMock()),
+          { 
+            status: 200,
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }
+        )
+      }),http.get('*/internal/v1/plats/:platId', async () => {
         await delay(1000);
         return new HttpResponse(JSON.stringify(getGetPlatMock()),
           { 

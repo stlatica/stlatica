@@ -11,7 +11,7 @@ User:
     - is_public
   properties:
     user_id:
-      $ref: '../schemas/UserID.yaml#/UserIDDef2'
+      $ref: '../schemas/UserID.yaml#/UserID'
     username:
       type: string
       description: 画面上に表示されるユーザ名

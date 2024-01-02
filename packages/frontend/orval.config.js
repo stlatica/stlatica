@@ -1,9 +1,9 @@
 module.exports = {
   api: {
     output: {
-      mode: "tags-split",
+      // .msw を別で生成するため
+      mode: "split",
       target: "src/openapi/",
-      schemas: "src/openapi/model",
       client: "swr",
       mock: true,
       useTypeOverInterfaces: true,

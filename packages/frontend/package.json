@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "cc": "pnpm ci-check",
-    "ci-check": "next lint --fix --max-warnings 0 && pnpm ci:test && pnpm build && pnpm ladle build",
+    "ci-check": "next lint --fix --max-warnings 0 && pnpm ci:test && pnpm ladle build && pnpm build",
     "ci:ladle": "ladle build",
     "ci:lint": "next lint --max-warnings 0",
     "ci:test": "pnpm test:coverage",
@@ -16,7 +16,7 @@
     "plop": "plop --plopfile plop/plopfile.js",
     "pn": "pnpm",
     "api:mock": "cd ../shared/openapi && pnpm install && pnpm internal:mock",
-    "api:gen": "cd ../shared/openapi/ && pnpm install && pnpm internal:bundle && cd ../../frontend && pnpx rimraf ./src/openapi && pnpm orval",
+    "api:gen": "cd ../shared/openapi/ && pnpm install && pnpm internal:bundle && cd ../../frontend && pnpm orval",
     "start": "next start",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",

@@ -1,5 +1,6 @@
 "use client";
-import { useGetUser } from "@/openapi/user/user";
+
+import { useGetUser } from "@/openapi/stlaticaInternalApi";
 
 export default function Home() {
   const { data, isLoading, error } = useGetUser("hoge");

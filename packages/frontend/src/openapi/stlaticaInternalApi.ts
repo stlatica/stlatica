@@ -19,12 +19,55 @@ import type {
 import type {
   ErrorResponse,
   Plat,
-  PlatPost
-} from '.././model'
+  PlatPost,
+  User
+} from './stlaticaInternalApi.schemas'
 
 
   
   /**
+ * get user
+ * @summary get user
+ */
+export const getUser = (
+    userId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<User>> => {
+    return axios.get(
+      `http://localhost:4010/internal/v1/users/${userId}`,options
+    );
+  }
+
+
+export const getGetUserKey = (userId: string,) => [`http://localhost:4010/internal/v1/users/${userId}`] as const;
+
+    
+export type GetUserQueryResult = NonNullable<Awaited<ReturnType<typeof getUser>>>
+export type GetUserQueryError = AxiosError<ErrorResponse>
+
+/**
+ * @summary get user
+ */
+export const useGetUser = <TError = AxiosError<ErrorResponse>>(
+ userId: string, options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof getUser>>, TError> & { swrKey?: Key, enabled?: boolean }, axios?: AxiosRequestConfig }
+
+  ) => {
+
+  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+
+  const isEnabled = swrOptions?.enabled !== false && !!(userId)
+    const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getGetUserKey(userId) : null);
+  const swrFn = () => getUser(userId, axiosOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+
+  return {
+    swrKey,
+    ...query
+  }
+}
+
+
+/**
  * Returns plat.
  * @summary Get plat by ID.
  */
@@ -65,6 +108,7 @@ export const useGetPlat = <TError = AxiosError<ErrorResponse | void>>(
   }
 }
 
+
 /**
  * Delete plat.
  * @summary Delete plat by ID.
@@ -76,6 +120,7 @@ export const deletePlat = (
       `http://localhost:4010/internal/v1/plats/${platId}`,options
     );
   }
+
 
 
 /**
@@ -90,5 +135,6 @@ export const postPlat = (
       platPost,options
     );
   }
+
 
 
