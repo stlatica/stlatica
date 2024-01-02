@@ -8,7 +8,7 @@
     "ci-check": "next lint --fix --max-warnings 0 && pnpm ci:test && pnpm ladle build && pnpm build",
     "ci:ladle": "ladle build",
     "ci:lint": "next lint --max-warnings 0",
-    "ci:test": "pnpm test:coverage",
+    "ci:test": "vitest run --coverage",
     "dev": "next dev --turbo",
     "dev:legacy": "next dev",
     "lint": "next lint",
@@ -18,11 +18,7 @@
     "api:mock": "cd ../shared/openapi && pnpm install && pnpm internal:mock",
     "api:gen": "cd ../shared/openapi/ && pnpm install && pnpm internal:bundle && cd ../../frontend && pnpm orval",
     "start": "next start",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "test:snap": "vitest run --update",
-    "test:watch": "vitest",
-    "test:watch:coverage": "vitest --coverage"
+    "test": "vitest --ui --coverage"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -52,6 +48,7 @@
     "@typescript-eslint/parser": "^6.7.5",
     "@vitejs/plugin-react": "^4.1.0",
     "@vitest/coverage-v8": "^0.34.6",
+    "@vitest/ui": "^1.1.1",
     "eslint": "8.46.0",
     "eslint-config-next": "14.0.0",
     "eslint-config-prettier": "^9.0.0",
