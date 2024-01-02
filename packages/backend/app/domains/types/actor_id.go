@@ -1,3 +1,4 @@
+//nolint:dupl // TODO: 後ほど共通化する https://github.com/stlatica/stlatica/issues/207
 package types
 
 import (

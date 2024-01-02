@@ -1,0 +1,9 @@
+timeline_id:
+  in: path
+  required: true
+  name: timeline_id
+  description: |
+    timelineを識別するための一意のID
+  schema:
+    type: string
+  example: 'timeline_id'

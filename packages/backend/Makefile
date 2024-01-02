@@ -33,3 +33,6 @@ lint:
 
 start-internalapi:
 	SOURCE_DIR=./app/cmd/internalapi docker compose up -d stlatica_server
+
+stop-internalapi:
+	SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server

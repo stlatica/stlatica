@@ -311,6 +311,7 @@ issues:
   exclude:
     # Package comments are not required.
     - should have a package comment
+    - should be of the form "Package types ..."
   exclude-rules:
     - source: "//noinspection"
       linters: [ gocritic ]

@@ -13,6 +13,27 @@ Goのversion管理には`goenv`を使用するため、[こちら](https://githu
 
 `make start-local-db`
 
+# Structure
+
+backend packageではクリーンアーキテクチャを採用しています。 \
+クリーンアーキテクチャの詳細は[こちら](https://miro.com/app/board/uXjVNUb8IMw=/?share_link_id=136453257125)を参照してください。
+
+package構成は以下の通りです。
+```
+├── app
+│ ├── adapters
+│ ├── cmd // entrypoint
+│ ├── controllers
+│ ├── domains
+│ │ ├── types
+│ │ └── entities
+│ ├── repositories
+│ │ ├── dao
+│ │ └── entities
+│ └── usecases
+└── その他(db, tools etc.)
+```
+
 # Tools
 
 ## goose
@@ -37,6 +58,13 @@ openapiの定義からGoのコードを自動生成します。 \
 `make codegen-from-oapi`
 
 生成されるコードで使用するフレームワークはデフォルトのechoとします。
+
+
+## Air
+ホットリロードに対応したWebサーバを立てるGo製のツールです。\
+以下のコマンドで、Webサーバを立てることができます。
+
+`make start-internalapi`
 
 # 各種コマンドの実行
 

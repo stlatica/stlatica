@@ -284,6 +284,8 @@
         "peerDependencies": false
       }
     ],
+    // nextjs用 Imageタグの使用強制をオフ
+    "@next/next/no-img-element": "off",
     // https://github.com/sweepline/eslint-plugin-unused-imports
     "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "warn",
