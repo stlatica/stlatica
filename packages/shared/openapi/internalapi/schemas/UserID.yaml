@@ -1,3 +1,4 @@
+# TODO: OpenAPI重複回避の仮名 https://github.com/stlatica/stlatica/issues/248
 UserID:
   description: |
     userを識別するための一意のID

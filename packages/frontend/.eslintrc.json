@@ -324,6 +324,7 @@
   "ignorePatterns": [
     "*.png",
     "*.jpg",
-    "*.config.js"
+    "*.config.js",
+    "src/openapi/**/*"
   ]
 }

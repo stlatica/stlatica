@@ -3,6 +3,9 @@ info:
   title: stlatica_internal_api
   version: 0.1.0
   description: stlatica internal api
+servers:
+  - url: http://localhost:4010
+    description: prism mock server
 paths:
   /internal/v1/users/{user_id}:
     $ref: './paths/users.yaml#/users_{user_id}'

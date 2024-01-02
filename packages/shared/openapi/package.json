@@ -8,13 +8,16 @@
 		"internal:build": "pnpm redocly build-docs internalapi/openapi.yaml --output=build/internal.html",
 		"internal:bundle": "pnpm redocly bundle internalapi/openapi.yaml --output=internalapi/openapi-bundled.yaml",
 		"internal:lint": "pnpm redocly lint internalapi/openapi.yaml",
+		"internal:mock-start": "pnpm internal:bundle && pnpm prism mock ./internalapi/openapi-bundled.yaml",
+		"internal:mock": "pnpm internal:bundle && pnpm internal:mock-start",
 		"internal:preview": "pnpm redocly preview-docs internalapi/openapi.yaml -p 8080",
 		"internal:serve": "pnpm serve build/internal.html"
 	},
 	"dependencies": {
-		"@redocly/cli": "^1.4.0"
+		"@redocly/cli": "^1.6.0"
 	},
 	"devDependencies": {
+		"@stoplight/prism-cli": "^5.5.2",
 		"serve": "^14.2.1"
 	}
 }

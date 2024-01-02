@@ -1,5 +1,4 @@
 {
-  "editor.formatOnSave": true,
   "files.exclude": {
     "**/node_modules": true,
     "**/.pnpm-store": true
@@ -20,6 +19,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
+  "editor.formatOnSave": true,
   "files.eol": "\n",
   "editor.tabSize": 2
 }

@@ -7,6 +7,7 @@ export default function Home() {
         <Link href="/sample/zod">zod sample</Link>
         <Link href="/EditProfile">EditProfile</Link>
         <Link href="/user/sample_user">User Page</Link>
+        <Link href="/test">実験用ページ</Link>
       </div>
     </main>
   );
