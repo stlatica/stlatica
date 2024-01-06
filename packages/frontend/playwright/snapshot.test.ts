@@ -12,7 +12,7 @@ const stories = fetch(`${url}/meta.json`).json().stories;
 // iterate through stories
 Object.keys(stories).forEach((storyKey) => {
   // create a test for each story
-  test(`${storyKey} - compare snapshots`, async ({ page }) => {
+  test(`snapshot test - ${storyKey}`, async ({ page }) => {
     // skip stories with `meta.skip` set to true
     // test.skip(stories[storyKey].meta.skip, "meta.skip is true");
     // navigate to the story
