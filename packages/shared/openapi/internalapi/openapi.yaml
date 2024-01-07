@@ -15,6 +15,8 @@ paths:
     $ref: './paths/plats.yaml#/plats'
   /internal/v1/timelines/{timeline_id}:
     $ref: './paths/timelines.yaml#/timelines_{timeline_id}'
+  /internal/v1/images/{image_id}:
+    $ref: './paths/images.yaml#/images_{image_id}'
 components:
   schemas:
     SampleUser:

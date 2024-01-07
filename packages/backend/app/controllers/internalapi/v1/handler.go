@@ -51,6 +51,10 @@ func (h *handler) GetTimeline(_ echo.Context, _ string) error {
 	panic("implement me")
 }
 
+func (h *handler) GetImage(_ echo.Context, _ string) error {
+	panic("implement me")
+}
+
 // ControllerInitContents is the struct to hold the dependencies for the controller.
 type ControllerInitContents struct {
 	ActorUseCase actors.ActorUseCase

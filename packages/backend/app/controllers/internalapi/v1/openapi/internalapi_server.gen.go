@@ -13,6 +13,9 @@ import (
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// get image
+	// (GET /internal/v1/images/{image_id})
+	GetImage(ctx echo.Context, imageId string) error
 	// Post plat.
 	// (POST /internal/v1/plats)
 	PostPlat(ctx echo.Context) error
@@ -33,6 +36,22 @@ type ServerInterface interface {
 // ServerInterfaceWrapper converts echo contexts to parameters.
 type ServerInterfaceWrapper struct {
 	Handler ServerInterface
+}
+
+// GetImage converts echo context to params.
+func (w *ServerInterfaceWrapper) GetImage(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "image_id" -------------
+	var imageId string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "image_id", runtime.ParamLocationPath, ctx.Param("image_id"), &imageId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter image_id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetImage(ctx, imageId)
+	return err
 }
 
 // PostPlat converts echo context to params.
@@ -136,6 +155,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
+	router.GET(baseURL+"/internal/v1/images/:image_id", wrapper.GetImage)
 	router.POST(baseURL+"/internal/v1/plats", wrapper.PostPlat)
 	router.DELETE(baseURL+"/internal/v1/plats/:plat_id", wrapper.DeletePlat)
 	router.GET(baseURL+"/internal/v1/plats/:plat_id", wrapper.GetPlat)
