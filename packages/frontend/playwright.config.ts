@@ -2,17 +2,20 @@
 import { PlaywrightTestConfig } from "@playwright/test";
 
 export default {
-  webServer: {
-    command: "pnpm ladle build && pnpm ladle preview -p 61000",
-    // command:
-    //   process.env.TYPE === "dev" ? "pnpm ladle serve" : "pnpm ladle build && pnpm ladle preview",
-    url: `http://localhost:61000/stlatica`,
-  },
+  webServer: [
+    {
+      command:
+        process.env.E2E_ENV === "dev"
+          ? "pnpm ladle serve"
+          : "pnpm ladle build && pnpm ladle preview -p 61000",
+      url: `http://localhost:61000`,
+    },
+  ],
   reporter: [["html", { outputFolder: "playwright/report" }]],
   projects: [
     {
       name: "visual-snapshot",
-      testDir: "playwright",
+      testDir: "playwright/snapshots",
       snapshotDir: "playwright/snapshots",
       outputDir: "playwright/snapshots/output",
     },

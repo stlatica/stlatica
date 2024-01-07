@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 import fetch from "sync-fetch";
 
 // URL where Ladle is served
-const url = "http://localhost:61000/stlatica";
+const url = "http://localhost:61000";
 
 // fetch Ladle's meta file
 // https://ladle.dev/docs/meta
