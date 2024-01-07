@@ -23,7 +23,7 @@ type ServerInterface interface {
 	// (GET /internal/v1/plats/{plat_id})
 	GetPlat(ctx echo.Context, platId PlatId) error
 	// get timeline
-	// (GET /internal/v1/timelines/{timeline_id}')
+	// (GET /internal/v1/timelines/{timeline_id})
 	GetTimeline(ctx echo.Context, timelineId TimelineId) error
 	// get user
 	// (GET /internal/v1/users/{user_id})
@@ -139,7 +139,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	router.POST(baseURL+"/internal/v1/plats", wrapper.PostPlat)
 	router.DELETE(baseURL+"/internal/v1/plats/:plat_id", wrapper.DeletePlat)
 	router.GET(baseURL+"/internal/v1/plats/:plat_id", wrapper.GetPlat)
-	router.GET(baseURL+"/internal/v1/timelines/:timeline_id'", wrapper.GetTimeline)
+	router.GET(baseURL+"/internal/v1/timelines/:timeline_id", wrapper.GetTimeline)
 	router.GET(baseURL+"/internal/v1/users/:user_id", wrapper.GetUser)
 
 }
