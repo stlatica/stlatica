@@ -10,16 +10,16 @@ jobs:
       is_frontend: ${{ steps.filter.outputs.is_frontend }}
       is_backend: ${{ steps.filter.outputs.is_backend }}
     steps:
-    - uses: actions/checkout@v3
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
-          is_frontend: 
-            - 'packages/frontend/**'
-          is_backend:
-            - 'packages/backend/**'
-          
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            is_frontend: 
+              - 'packages/frontend/**'
+            is_backend:
+              - 'packages/backend/**'
+
   build_frontend:
     needs: changes
     if: ${{ needs.changes.outputs.is_frontend == 'true' }}
@@ -27,20 +27,21 @@ jobs:
     defaults:
       run:
         working-directory: packages/frontend
-    steps: 
+    steps:
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
-      
+
       # pnpm 8をインストール
       - uses: pnpm/action-setup@v2
-        with: 
+        with:
           version: 8
 
       # node.jsをインストール
-      - name: Node.js 
+      - name: Node.js
         uses: actions/setup-node@v3
         with:
-          cache: 'pnpm'
+          node-version: 20
+          cache: "pnpm"
           cache-dependency-path: packages/frontend/
 
       # 依存関係先をインストール
@@ -59,9 +60,68 @@ jobs:
       - name: unit test
         run: pnpm ci:test
 
-      #  コンポーネントカタログをビルド
-      - name: catalog build
-        run: pnpm ci:ladle
+      # スナップショットテスト(vrt)
+      - name: Install Playwright Browsers
+        run: pnpx playwright install --with-deps
+      - name: check snapshot
+        run: pnpm ci:vrt
+
+      - name: Commit and Push If Changes Detected
+        id: commit
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git reset package.json pnpm-lock.yaml
+          git commit -m "Add updated visual regression diff images" && echo "commit_success=true" >> $GITHUB_ENV || echo "commit_success=false" >> $GITHUB_ENV
+          git push
+
+      - name: List changed snapshot files
+        id: list-changed-snapshots
+        run: |
+          changed_files=$(git diff --name-only HEAD HEAD~1 | grep '.png' | tr '\n' ',')
+          echo "Changed snapshot files: $changed_files"
+          echo "::set-output name=changed_files::$changed_files"
+
+      - name: Get the latest commit SHA
+        id: get-sha
+        run: echo "::set-output name=sha::$(git rev-parse HEAD)"
+
+      - name: Comment PR with diff images and logs
+        if: env.commit_success == 'true'
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const changedFiles = "${{ steps.list-changed-snapshots.outputs.changed_files }}".split(',');
+            if (changedFiles[changedFiles.length - 1] === '') {
+              changedFiles.pop();
+            }
+
+            let commentBody = "## 📸 Playwright Snapshot Update Log\n\n";
+            commentBody += "スナップショットが更新されました。**意図した変更内容かどうか**確認しましょう。";
+            commentBody += "<details><summary>Updated Snapshots</summary>\n\n";
+
+            for (const file of changedFiles) {
+              if (file) {
+                const filePath = `${process.env.GITHUB_WORKSPACE}/${file}`;
+                const fileName = path.basename(filePath);
+                const fileUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/blob/${{ steps.get-sha.outputs.sha }}/${file}`;
+                commentBody += `- [${fileName}](${fileUrl})\n ![Updated snapshot for '${fileName}'](${fileUrl}?raw=true)\n`;
+              }
+            }
+
+            commentBody += "</details>\n";
+            commentBody += `- Total updated files: ${changedFiles.length}\n`;
+
+            await github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody,
+            });
 
   build_backend:
     needs: changes
@@ -70,18 +130,18 @@ jobs:
     defaults:
       run:
         working-directory: packages/backend
-    steps: 
+    steps:
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
       # setup go install
       - uses: actions/setup-go@v4
         with:
-          go-version: '1.20.6'
+          go-version: "1.20.6"
           cache: false
       # lint
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
-        with: 
+        with:
           version: latest
           working-directory: packages/backend
       # TODO:Build
@@ -96,7 +156,7 @@ jobs:
       id-token: write
     # 同時にビルドが走った際に、先のビルドを優先
     concurrency:
-      group: 'pages'
+      group: "pages"
       cancel-in-progress: true
     # 依存ビルド
     needs: build_frontend
@@ -115,31 +175,32 @@ jobs:
 
       # pnpm 8をインストール
       - uses: pnpm/action-setup@v2
-        with: 
+        with:
           version: 8
 
       # node.jsをインストール
-      - name: Node.js 
+      - name: Node.js
         uses: actions/setup-node@v3
         with:
-          cache: 'pnpm'
+          node-version: 20
+          cache: "pnpm"
           cache-dependency-path: packages/frontend/
 
       # 依存関係先をインストール
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       #  コンポーネントカタログをビルド (2回目)
       - name: catalog build
         run: pnpm ci:ladle
-      
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # リポジトリのアップロード
-          path: './packages/frontend/ladle-build'
+          path: "./packages/frontend/ladle-build"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
