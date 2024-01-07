@@ -4,7 +4,8 @@ timelines_{timeline_id}:
     tags:
       - Timeline
     summary: get timeline
-    description: get timeline
+    description: get timeline \
+      plat idの降順でplatの配列を取得する
     parameters:
       - $ref: '../parameters/timeline_id.yaml#/timeline_id'
     responses:
