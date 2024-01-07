@@ -28,5 +28,5 @@ ladle-build
 
 .pnpm-store
 
-playwright/html
-playwright/output
+playwright/report
+playwright/snapshots/output

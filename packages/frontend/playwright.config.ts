@@ -8,8 +8,13 @@ export default {
     //   process.env.TYPE === "dev" ? "pnpm ladle serve" : "pnpm ladle build && pnpm ladle preview",
     url: `http://localhost:61000/stlatica`,
   },
-  testDir: "playwright",
-  reporter: [["html", { outputFolder: "playwright/html" }]],
-  snapshotDir: "playwright/snapshots",
-  outputDir: "playwright/output",
+  reporter: [["html", { outputFolder: "playwright/report" }]],
+  projects: [
+    {
+      name: "visual-snapshot",
+      testDir: "playwright",
+      snapshotDir: "playwright/snapshots",
+      outputDir: "playwright/snapshots/output",
+    },
+  ],
 } satisfies PlaywrightTestConfig;
