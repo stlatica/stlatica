@@ -13,7 +13,7 @@ paths:
     $ref: './paths/plats.yaml#/plat_{plat_id}'
   /internal/v1/plats:
     $ref: './paths/plats.yaml#/plats'
-  /internal/v1/timelines/{timeline_id}':
+  /internal/v1/timelines/{timeline_id}:
     $ref: './paths/timelines.yaml#/timelines_{timeline_id}'
 components:
   schemas:
