@@ -62,8 +62,13 @@ func (h *handler) GetTimeline(ectx echo.Context, _ string) error {
 	return ectx.JSON(http.StatusOK, plats)
 }
 
-func (h *handler) GetImage(_ echo.Context, _ string) error {
-	panic("implement me")
+// GetImage is the handler for GET /images/{image_id}, ServerInterface implementation.
+// if image_id is "large", return large image, otherwise return small image.
+func (h *handler) GetImage(ectx echo.Context, imageID string) error {
+	if imageID == "large" {
+		return ectx.String(http.StatusOK, mockLargeImage)
+	}
+	return ectx.String(http.StatusOK, mockSmallImage)
 }
 
 func (h *handler) GetUser(_ echo.Context, _ string) error {
