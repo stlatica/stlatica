@@ -1,0 +1,9 @@
+image_id:
+  in: path
+  required: true
+  description: |
+    画像を識別するための一意のID
+  name: image_id
+  schema:
+    type: string
+  example: 'image_id'

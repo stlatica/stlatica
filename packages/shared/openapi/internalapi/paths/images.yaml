@@ -1,23 +1,36 @@
-timelines_{timeline_id}:
+images_{image_id}:
   get:
-    operationId: getTimeline
     tags:
-      - Timeline
-    summary: get timeline
+      - images
+    summary: get image
     description: |
-      get timeline \
-      plat idの降順でplatの配列を取得する
+      get image \
+      base64形式で返される
+    operationId: getImage
     parameters:
-      - $ref: '../parameters/timeline_id.yaml#/timeline_id'
+      - name: image_id
+        in: path
+        description: 画像ID
+        required: true
+        schema:
+          type: string
+        example: 'image_id'
     responses:
       200:
         description: success
         content:
-          application/json:
+          image/png:
             schema:
-              type: array
-              items:
-                $ref: '../schemas/Plat.yaml#/Plat'
+              type: string
+              format: byte
+          image/jpeg:
+            schema:
+              type: string
+              format: byte
+          image/gif:
+            schema:
+              type: string
+              format: byte
       400:
         description: |
           bad request \
@@ -28,6 +41,11 @@ timelines_{timeline_id}:
           application/json:
             schema:
               $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      401:
+        description: |
+          unauthorized \
+          error code:
+          - 'UNAUTHORIZED'
       404:
         description: |
           not found \

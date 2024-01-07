@@ -62,6 +62,10 @@ func (h *handler) GetTimeline(ectx echo.Context, _ string) error {
 	return ectx.JSON(http.StatusOK, plats)
 }
 
+func (h *handler) GetImage(_ echo.Context, _ string) error {
+	panic("implement me")
+}
+
 func (h *handler) GetUser(_ echo.Context, _ string) error {
 	panic("implement me")
 }
