@@ -63,9 +63,9 @@ func (h *handler) GetTimeline(ectx echo.Context, _ string) error {
 }
 
 // GetImage is the handler for GET /images/{image_id}, ServerInterface implementation.
-// if image_id is 1, return large image, otherwise return small image.
+// if image_id is "large", return large image, otherwise return small image.
 func (h *handler) GetImage(ectx echo.Context, imageID string) error {
-	if imageID == "1" {
+	if imageID == "large" {
 		return ectx.String(http.StatusOK, mockLargeImage)
 	}
 	return ectx.String(http.StatusOK, mockSmallImage)
