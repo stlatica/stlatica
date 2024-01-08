@@ -5,6 +5,7 @@ import fetch from "sync-fetch";
 // URL where Ladle is served
 const url = "http://localhost:61000";
 
+// TODO: sync-fetchを使わずに実行 https://github.com/stlatica/stlatica/issues/261
 // fetch Ladle's meta file
 // https://ladle.dev/docs/meta
 const stories = fetch(`${url}/meta.json`).json().stories;
