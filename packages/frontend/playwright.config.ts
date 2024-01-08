@@ -18,7 +18,7 @@ export default {
       testDir: "playwright/snapshots",
       snapshotDir: "playwright/snapshots",
       outputDir: "playwright/snapshots/output",
-      // fullyParallel: true,
+      fullyParallel: true,
     },
   ],
   // snapshotPathTemplate: "{testDir}/{testFilePath}-snapshots/{arg}-{projectName}{ext}",

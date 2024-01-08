@@ -22,7 +22,7 @@ Object.keys(stories).forEach((storyKey) => {
     // take a screenshot and compare it with the baseline
     await expect(page).toHaveScreenshot(`${storyKey}.png`, {
       // CIとの環境差分で落ちる場合はここを調整
-      maxDiffPixels: 100,
+      // maxDiffPixels: 100,
       fullPage: true,
     });
   });
