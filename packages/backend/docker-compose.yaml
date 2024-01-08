@@ -23,4 +23,6 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile_redocly
     volumes:
-      - ../shared/openapi:/openapi
+      - ../shared/openapi/externalapi:/openapi/externalapi
+      - ../shared/openapi/internalapi:/openapi/internalapi
+      - ../shared/openapi/tmp:/openapi/tmp
