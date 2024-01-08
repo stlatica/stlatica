@@ -20,10 +20,10 @@ Object.keys(stories).forEach((storyKey) => {
     // stories are code-splitted, wait for them to be loaded
     await page.waitForSelector("[data-storyloaded]");
     // take a screenshot and compare it with the baseline
-    await expect(page).toHaveScreenshot(
-      `${storyKey}.png`
-      // CIとの環境差分で落ちた場合はここを調整
-      //  { maxDiffPixels: 20 }
-    );
+    await expect(page).toHaveScreenshot(`${storyKey}.png`, {
+      // CIとの環境差分で落ちる場合はここを調整
+      maxDiffPixels: 100,
+      fullPage: true,
+    });
   });
 });
