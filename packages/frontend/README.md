@@ -84,6 +84,28 @@ vitest ui を採用しているためブラウザで結果確認等できます
 pnpm test
 ```
 
+## Visual Regression Testing
+
+package/frontend 内で実行することを前提にスクリプトを作成しています
+
+### 初回のみ
+
+```sh
+playwright/vrt.sh vrt
+```
+
+### 実行
+
+```sh
+playwright/vrt.sh vrt
+```
+
+### アップデート
+
+```
+playwright/vrt.sh vrt:update
+```
+
 ---
 
 ## plop
