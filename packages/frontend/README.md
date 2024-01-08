@@ -88,10 +88,18 @@ pnpm test
 
 package/frontend 内で実行することを前提にスクリプトを作成しています
 
+docker環境必須です
+
+内容は1コマンドのため、中身を見て直接実行してもOKです（windows向け）
+
 ### 初回のみ
 
+dockerイメージをビルドします。初回、あるいは更新があった際に再実行してください。
+
+// make等で自動化したい
+
 ```sh
-playwright/vrt.sh vrt
+playwright/vrt-build.sh vrt
 ```
 
 ### 実行
@@ -102,7 +110,7 @@ playwright/vrt.sh vrt
 
 ### アップデート
 
-```
+```sh
 playwright/vrt.sh vrt:update
 ```
 
