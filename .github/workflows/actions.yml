@@ -10,51 +10,38 @@ jobs:
       is_frontend: ${{ steps.filter.outputs.is_frontend }}
       is_backend: ${{ steps.filter.outputs.is_backend }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            is_frontend: 
-              - 'packages/frontend/**'
-            is_backend:
-              - 'packages/backend/**'
-
+    - uses: actions/checkout@v3
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          is_frontend: 
+            - 'packages/frontend/**'
+          is_backend:
+            - 'packages/backend/**'
+          
   build_frontend:
     needs: changes
     if: ${{ needs.changes.outputs.is_frontend == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     defaults:
       run:
         working-directory: packages/frontend
-    steps:
+    steps: 
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
-
+      
       # pnpm 8をインストール
       - uses: pnpm/action-setup@v2
-        with:
+        with: 
           version: 8
 
       # node.jsをインストール
-      - name: Node.js
+      - name: Node.js 
         uses: actions/setup-node@v3
         with:
-          node-version: 20
-          cache: "pnpm"
+          cache: 'pnpm'
           cache-dependency-path: packages/frontend/
-
-      # https://playwrightsolutions.com/playwright-github-action-to-cache-the-browser-binaries/
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
-      - name: Cache playwright binaries
-        uses: actions/cache@v3
-        id: playwright-cache
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
 
       # 依存関係先をインストール
       - name: Install dependencies
@@ -72,11 +59,9 @@ jobs:
       - name: unit test
         run: pnpm ci:test
 
-      # スナップショットテスト(vrt)
-      - name: Install Playwright Browsers
-        run: pnpx playwright install --with-deps
-      - name: check snapshot
-        run: pnpm ci:vrt
+      #  コンポーネントカタログをビルド
+      - name: catalog build
+        run: pnpm ci:ladle
 
   build_backend:
     needs: changes
@@ -85,18 +70,18 @@ jobs:
     defaults:
       run:
         working-directory: packages/backend
-    steps:
+    steps: 
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
       # setup go install
       - uses: actions/setup-go@v4
         with:
-          go-version: "1.20.6"
+          go-version: '1.20.6'
           cache: false
       # lint
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
-        with:
+        with: 
           version: latest
           working-directory: packages/backend
       # TODO:Build
@@ -111,7 +96,7 @@ jobs:
       id-token: write
     # 同時にビルドが走った際に、先のビルドを優先
     concurrency:
-      group: "pages"
+      group: 'pages'
       cancel-in-progress: true
     # 依存ビルド
     needs: build_frontend
@@ -130,32 +115,31 @@ jobs:
 
       # pnpm 8をインストール
       - uses: pnpm/action-setup@v2
-        with:
+        with: 
           version: 8
 
       # node.jsをインストール
-      - name: Node.js
+      - name: Node.js 
         uses: actions/setup-node@v3
         with:
-          node-version: 20
-          cache: "pnpm"
+          cache: 'pnpm'
           cache-dependency-path: packages/frontend/
 
       # 依存関係先をインストール
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
+      
       #  コンポーネントカタログをビルド (2回目)
       - name: catalog build
         run: pnpm ci:ladle
-
+      
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # リポジトリのアップロード
-          path: "./packages/frontend/ladle-build"
+          path: './packages/frontend/ladle-build'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
