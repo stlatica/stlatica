@@ -12,7 +12,7 @@ export const FollowButton: React.FC<FollowButtonProps> = ({ isFollow, onClick })
   if (isFollow) {
     return (
       <CancelButton className="w-[8em]" onClick={onClick}>
-        フォロー中d
+        フォロー中
       </CancelButton>
     );
   }
