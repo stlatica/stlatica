@@ -117,6 +117,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /.well-known/nodeinfo:
+    get:
+      operationId: supportNodeinfo
+      tags:
+        - SupportNodeinfo
+      summary: Indicate that nodeinfo is supported.
+      description: Indicate that nodeinfo is supported.
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              example:
+                links:
+                  - rel: "http://nodeinfo.diaspora.software/ns/schema/2.1"
+                    href: "https://example.org/external/v1/nodeinfo/2.1" # example.org is each domain.
+  /external/v1/nodeinfo/2.1:
+    get:
+      operationId: getNodeinfo
+      tags:
+        - nodeinfo
+      summary: get nodeinfo
+      description: get nodeinfo
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              example:
+                openRegistrations: false
+                protocols:
+                  - activitypub
+                software:
+                  name: "Stlatica"
+                  repository: "https://github.com/stlatica/stlatica"
+                  version: "0.1.0"
+                usage:
+                  users:
+                    total: 1    # Should be Include private accounts?
+                services:
+                  inbound: []
+                  outbound: []
+                metadata: {}
+                version: "2.1"  # nodeinfo version
 components:
   parameters:
     actor_id:
