@@ -15,7 +15,7 @@
     "dev:legacy": "next dev",
     "vrt": "cross-env E2E_ENV=dev pnpm playwright test --project=visual-snapshot",
     "vrt:update": "cross-env E2E_ENV=dev pnpm playwright test --project=visual-snapshot -u",
-    "ci:vrt": "pnpm playwright test --project=visual-snapshot -u",
+    "ci:vrt": "pnpm playwright test --project=visual-snapshot",
     "e2e": "playwright test",
     "e2e:report": "playwright show-report playwright/html",
     "lint": "next lint",

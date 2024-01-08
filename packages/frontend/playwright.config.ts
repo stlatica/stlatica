@@ -20,4 +20,5 @@ export default {
       outputDir: "playwright/snapshots/output",
     },
   ],
+  snapshotPathTemplate: "{testDir}/{testFilePath}-snapshots/{arg}-{projectName}{ext}",
 } satisfies PlaywrightTestConfig;

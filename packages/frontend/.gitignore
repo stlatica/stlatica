@@ -30,5 +30,3 @@ ladle-build
 
 playwright/report
 playwright/snapshots/output
-
-**/*win32.png
