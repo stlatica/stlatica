@@ -1,4 +1,4 @@
-import React from "React";
+import React from "react";
 
 import type { GlobalProvider } from "@ladle/react";
 import "../src/app/global.css";

@@ -1,4 +1,5 @@
 export default {
-  base: "/stlatica/",
+  // ladleにbase指定していると meta.json が404になってしまう
+  // base: "/stlatica/",
   outDir: "ladle-build",
 };

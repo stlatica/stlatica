@@ -27,3 +27,8 @@ next-env.d.ts
 ladle-build
 
 .pnpm-store
+
+playwright/report
+playwright/snapshots/output
+
+**/*-win32.png

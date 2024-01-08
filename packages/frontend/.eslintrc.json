@@ -279,7 +279,7 @@
       "error",
       {
         "devDependencies": [
-          "src/**/*test.+(ts|tsx|js)"
+          "**/*test.+(ts|tsx|js)"
         ],
         "peerDependencies": false
       }
