@@ -11,15 +11,15 @@ export default {
       url: `http://localhost:61000`,
     },
   ],
-  reporter: [["html", { outputFolder: "playwright/report" }]],
+  reporter: [["html", { host: "0.0.0.0", outputFolder: "playwright/report" }]],
   projects: [
     {
       name: "visual-snapshot",
       testDir: "playwright/snapshots",
       snapshotDir: "playwright/snapshots",
       outputDir: "playwright/snapshots/output",
-      fullyParallel: true,
+      // fullyParallel: true,
     },
   ],
-  snapshotPathTemplate: "{testDir}/{testFilePath}-snapshots/{arg}-{projectName}{ext}",
+  // snapshotPathTemplate: "{testDir}/{testFilePath}-snapshots/{arg}-{projectName}{ext}",
 } satisfies PlaywrightTestConfig;

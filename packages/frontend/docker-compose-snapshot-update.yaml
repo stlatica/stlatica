@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  nextjs:
+    container_name: playwright-vrt
+    build:
+      # sharedアクセス等する場合は上げる
+      context: ./
+      dockerfile: playwright/Dockerfile
+    # コンテナ終了を防ぎ中に入れるように
+    tty: true
+    volumes:
+      - type: bind
+        source: ./playwright
+        target: /app/playwright
+    working_dir: /app
+    ports:
+      - "9323:9323"
+    command: ["pnpm", "vrt:update"]
