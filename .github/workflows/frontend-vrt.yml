@@ -28,6 +28,11 @@ jobs:
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
 
+      # pnpm 8をインストール
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       # node.jsをインストール
       - name: Node.js
         uses: actions/setup-node@v3
@@ -35,11 +40,6 @@ jobs:
           node-version: 20
           cache: "pnpm"
           cache-dependency-path: packages/frontend/
-
-      # pnpm 8をインストール
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
 
       # https://playwrightsolutions.com/playwright-github-action-to-cache-the-browser-binaries/
       - name: Get installed Playwright version
