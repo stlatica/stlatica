@@ -26,7 +26,6 @@ codegen-from-oapi:
 	$(GOBIN)/oapi-codegen -generate server -package openapi ../shared/openapi/tmp/internalapi/openapi.yaml > app/controllers/internalapi/v1/openapi/internalapi_server.gen.go
 	$(GOBIN)/oapi-codegen -generate types -package openapi ../shared/openapi/tmp/internalapi/openapi.yaml > app/controllers/internalapi/v1/openapi/internalapi_types.gen.go
 	$(GOBIN)/oapi-codegen -generate spec -package openapi ../shared/openapi/tmp/internalapi/openapi.yaml > app/controllers/internalapi/v1/openapi/internalapi_spec.gen.go
-	
 	rm -r ../shared/openapi/tmp
 
 lint:
