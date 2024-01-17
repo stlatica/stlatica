@@ -112,7 +112,7 @@ jobs:
 
       # スナップショットテスト(vrt)
       - name: Install Playwright Browsers
-        run: pnpx playwright install --with-deps
+        run: pnpm exec playwright install-deps && pnpm exec playwright install
       - name: check snapshot
         run: pnpm ci:vrt
 
