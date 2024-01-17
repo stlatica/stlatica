@@ -1,0 +1,25 @@
+# https://github.com/marketplace/actions/add-to-github-projects
+name: set project for issue
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  add-to-project:
+    name: Add issue to project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@RELEASE_VERSION
+        with:
+          project-url: https://github.com/orgs/stlatica/projects/1
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          labeled: bug
+          label-operator: NOT
+      - uses: actions/add-to-project@RELEASE_VERSION
+        with:
+          project-url: https://github.com/orgs/stlatica/projects/2
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          labeled: bug
+          label-operator: OR
