@@ -35,7 +35,7 @@ paths:
       summary: get actor
       description: get actor
       parameters:
-        - $ref: '#/components/schemas/ActorID'
+        - $ref: '#/components/parameters/actor_id'
       responses:
         200:
           description: success
@@ -80,7 +80,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /.well-known/webfinger?resource=acct:{ActorID}@{server_domain}:
+  /.well-known/webfinger?resource=acct:{actor_id}@{server_domain}:
     get:
       operationId: getWebfinger
       tags:
@@ -88,7 +88,7 @@ paths:
       summary: get Webfinger
       description: get Webfinger
       parameters:
-        - $ref: '#/components/schemas/ActorID'
+        - $ref: '#/components/parameters/actor_id'
         - $ref: '#/components/parameters/server_domain'
       responses:
         200:
@@ -98,19 +98,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/Webfinger'
               example:
-                subject: 'acct:Gargron@mastodon.social'
+                subject: 'acct:example_actor@stlatica.hoge'
                 aliases:
-                  - 'https://mastodon.social/@Gargron'
-                  - 'https://mastodon.social/users/Gargron'
+                  - 'https://stlatica.hoge/@example_actor'
+                  - 'https://stlatica.hoge/users/example_actor'
                 links:
                   - rel: 'http://webfinger.net/rel/profile-page'
                     type: 'text/html'
-                    href: 'https://mastodon.social/@Gargron'
+                    href: 'https://stlatica.hoge/@example_actor'
                   - rel: 'self'
                     type: 'application/activity+json'
-                    href: 'https://mastodon.social/users/Gargron'
+                    href: 'https://stlatica.hoge/users/example_actor'
                   - rel: 'http://ostatus.org/schema/1.0/subscribe'
-                    template: 'https://mastodon.social/authorize_interaction?uri={uri}'
+                    template: 'https://stlatica.hoge/authorize_interaction?uri={uri}'
         400:
           description: |
             bad request \
@@ -197,7 +197,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
-    example:
+    actor_id:
       in: path
       required: true
       name: actor_id
@@ -304,10 +304,13 @@ components:
       type: object
       description: Webfinger
       required:
-        - 'id'
+        - 'actor_id'
+        - 'server_domain'
       properties:
-        id :
-          $ref: '#/components/schemas/ActorID'
+        actor_id:
+          $ref: '#/components/parameters/actor_id'
+        server_domain:
+          $ref: '#/components/parameters/server_domain'
     JSONLDContexts:
       description: |
         以下のうちのいずれかを使用する
