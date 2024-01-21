@@ -209,8 +209,8 @@ paths:
             application/json:
               example:
                 links:
-                  - rel: "http://nodeinfo.diaspora.software/ns/schema/2.1"
-                    href: "https://example.org/external/v1/nodeinfo/2.1" # example.org is each domain.
+                  - rel: 'http://nodeinfo.diaspora.software/ns/schema/2.1'
+                    href: 'https://example.org/external/v1/nodeinfo/2.1' # example.org is each domain.
   /external/v1/nodeinfo/2.1:
     get:
       operationId: getNodeinfo
@@ -224,7 +224,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NodeInfo"
+                $ref: '#/components/schemas/NodeInfo'
 components:
   parameters:
     actor_id:
@@ -370,17 +370,17 @@ components:
           type: string
           example: activitypub
         software:
-          $ref: "#/components/schemas/Software"
+          $ref: '#/components/schemas/Software'
         usage:
-          $ref: "#/components/schemas/usage"
+          $ref: '#/components/schemas/usage'
         services:
-          $ref: "#/components/schemas/services"
+          $ref: '#/components/schemas/services'
         metadata:
           type: object
         version:
           # nodeinfoのバージョン
           type: string
-          example: "2.1"
+          example: '2.1'
     ActorType:
       description: |
         actorの種別 \
@@ -399,19 +399,19 @@ components:
       properties:
         name:
           type: string
-          example: "stlatica" #  [a-z0-9-] のみ使用可能
+          example: 'stlatica' #  [a-z0-9-] のみ使用可能
         repository:
           type: string
-          example: "https://github.com/stlatica/stlatica"
+          example: 'https://github.com/stlatica/stlatica'
         version:
           type: string
-          example: "0.1.0"
+          example: '0.1.0'
     usage:
       type: object
       description: Usage statistics for this server.
       properties:
         users:
-          $ref: "#/components/schemas/users"
+          $ref: '#/components/schemas/users'
     users:
       type: object
       description: total user count
@@ -424,9 +424,9 @@ components:
       description: The third party sites this server can connect to via their application API.
       properties:
         inbound:
-          $ref: "#/components/schemas/inbound"
+          $ref: '#/components/schemas/inbound'
         outbound:
-          $ref: "#/components/schemas/outbound"
+          $ref: '#/components/schemas/outbound'
     inbound:
       type: array
       # TODO: https://github.com/stlatica/stlatica/issues/281
