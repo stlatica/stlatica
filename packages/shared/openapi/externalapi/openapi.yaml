@@ -145,22 +145,8 @@ paths:
           description: success
           content:
             application/json:
-              example:
-                openRegistrations: false
-                protocols:
-                  - activitypub
-                software:
-                  name: "Stlatica"
-                  repository: "https://github.com/stlatica/stlatica"
-                  version: "0.1.0"
-                usage:
-                  users:
-                    total: 1    # Should be Include private accounts?
-                services:
-                  inbound: []
-                  outbound: []
-                metadata: {}
-                version: "2.1"  # nodeinfo version
+              schema:
+                $ref: "#/components/schemas/NodeInfo"
 components:
   parameters:
     actor_id:
@@ -276,6 +262,28 @@ components:
       description: actor_id
       type: string
       example: 'actor_id'
+    NodeInfo:
+      type: object
+      description: nodeinfo
+      properties:
+        openRegistrations: 
+          type: boolean
+          example: false
+        protocols:
+          type: string
+          example: activitypub
+        software:
+          $ref: "#/components/schemas/Software"
+        usage:
+          $ref: "#/components/schemas/usage"
+        services:
+          $ref: "#/components/schemas/services"
+        metadata:
+          type: object
+        version:
+          # nodeinfoのバージョン
+          type: string
+          example: "2.1"
     ActorType:
       description: |
         actorの種別 \
@@ -288,6 +296,51 @@ components:
         - 'Organization'
         - 'Person'
         - 'Service'
+    Software: 
+      type: object
+      description: software infomation
+      properties:
+        name:
+          type: string
+          example: "stlatica" #  [a-z0-9-] のみ使用可能
+        repository:
+          type: string
+          example: "https://github.com/stlatica/stlatica"
+        version:
+          type: string
+          example: "0.1.0"
+    usage:
+      type: object
+      description: Usage statistics for this server.
+      properties:
+        users:
+          $ref: "#/components/schemas/users"
+    users:
+      type: object
+      description: total user count
+      properties:
+        total:
+          type: integer
+          example: 1
+    services:
+      type: object
+      description: The third party sites this server can connect to via their application API.
+      properties:
+        inbound:
+          $ref: "#/components/schemas/inbound"
+        outbound:
+          $ref: "#/components/schemas/outbound"
+    inbound:
+      type: array
+      # TODO: https://github.com/stlatica/stlatica/issues/281
+      description: The third party sites this server can retrieve messages from for combined display with regular traffic.
+      minItems: 0
+      example: []
+    outbound:
+      type: array
+      description: The third party sites this server can publish messages to on the behalf of a user.
+      minItems: 0
+      example: []
     ErrorResponse:
       type: object
       required:
