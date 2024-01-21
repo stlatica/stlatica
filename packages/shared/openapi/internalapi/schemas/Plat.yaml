@@ -4,6 +4,7 @@ Plat:
   required: 
     - plat_id
     - content
+    - created_at
   properties:
     plat_id:
       $ref: '../schemas/PlatID.yaml#/PlatID'
@@ -11,3 +12,14 @@ Plat:
       type: string
       description: platの本文
       example: 'これはサンプルのplatです。'
+    images:
+      type: array
+      description: platに添付された画像のURL
+      items:
+        type: string
+        example: 'https://xxx/internal/v1/images/1'
+    created_at:
+      type: string
+      description: platが作成された日時(ISO8601)
+      format: date-time
+      example: '2024-01-01T00:00:00+09:00'

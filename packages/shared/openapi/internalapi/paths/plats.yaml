@@ -1,0 +1,169 @@
+plat_{plat_id}:
+  get:
+    tags: 
+      - Plat
+    summary: Get plat by ID.
+    description: Returns plat.
+    operationId: getPlat
+    parameters:
+      - $ref: '../parameters/plat_id.yaml#/plat_id'
+    responses:
+      200:
+        description: success
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/Plat.yaml#/Plat'
+      400:
+        description: |
+          bad request \
+          error code:
+          - 'BAD_REQUEST'
+          - 'MISSING_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      401:
+        description: |
+          unauthorized \
+          error code:
+          - 'UNAUTHORIZED'
+      404:
+        description: |
+          not found \
+          error code:
+          - 'NOT_FOUND'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+  delete:
+    tags: 
+      - Plat
+    summary: Delete plat by ID.
+    description: Delete plat.
+    operationId: deletePlat
+    parameters:
+      - $ref: '../parameters/plat_id.yaml#/plat_id'
+    responses:
+      204:
+        description: No content.
+      400:
+        description: |
+          bad request \
+          error code:
+          - 'BAD_REQUEST'
+          - 'MISSING_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      401:
+        description: |
+          unauthorized \
+          error code:
+          - 'UNAUTHORIZED'
+      404:
+        description: |
+          not found \
+          error code:
+          - 'NOT_FOUND'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+plats:
+  post:
+    tags:
+      - Plat
+    summary: Post plat.
+    description: Post plat.
+    operationId: postPlat
+    requestBody:
+      description: 投稿内容
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/PlatPost.yaml#/PlatPost'
+    responses:
+      201:
+        description: Created.
+      400:
+        description: |
+          bad request \
+          error code:
+          - 'BAD_REQUEST'
+          - 'MISSING_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      401:
+        description: |
+          unauthorized \
+          error code:
+          - 'UNAUTHORIZED'
+      404:
+        description: |
+          not found \
+          error code:
+          - 'NOT_FOUND'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'

@@ -80,6 +80,83 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /.well-known/webfinger?resource=acct:{actor_id}@{server_domain}:
+    get:
+      operationId: getWebfinger
+      tags:
+        - Webfinger
+      summary: get Webfinger
+      description: get Webfinger
+      parameters:
+        - $ref: '#/components/parameters/actor_id'
+        - $ref: '#/components/parameters/server_domain'
+      responses:
+        200:
+          description: success
+          content:
+            application/jrd+json:
+              schema:
+                $ref: '#/components/schemas/Webfinger'
+              example:
+                subject: 'acct:example_actor@stlatica.hoge'
+                aliases:
+                  - 'https://stlatica.hoge/@example_actor'
+                  - 'https://stlatica.hoge/users/example_actor'
+                links:
+                  - rel: 'http://webfinger.net/rel/profile-page'
+                    type: 'text/html'
+                    href: 'https://stlatica.hoge/@example_actor'
+                  - rel: 'self'
+                    type: 'application/activity+json'
+                    href: 'https://stlatica.hoge/users/example_actor'
+                  - rel: 'http://ostatus.org/schema/1.0/subscribe'
+                    template: 'https://stlatica.hoge/authorize_interaction?uri={uri}'
+        400:
+          description: |
+            bad request \
+            error code:
+            - 'BAD_REQUEST'
+            - 'MISSING_PARAMETER'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: |
+            not found \
+            error code:
+            - 'NOT_FOUND'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        422:
+          description:  |
+            Unprocessable Entity \
+            error code:
+            - 'UNPROCESSABLE_ENTITY'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: |
+            internal server error \
+            error code:
+            - 'INTERNAL_SERVER_ERROR'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        503:
+          description: |
+            service unavailable \
+            error code:
+            - 'SERVICE_UNAVAILABLE'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /.well-known/host-meta:
     get:
       operationId: getHostMeta
@@ -94,10 +171,11 @@ paths:
             application/xml:
               schema:
                 type: string
+                # TODO: https://github.com/stlatica/stlatica/issues/236
                 example: |
-                  <?xml version="1.0"?>
-                  <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
-                      <Link rel="lrdd" type="application/xrd+xml" template="https://stlatica.hoge/.well-known/webfinger?resource={uri}" />
+                  <?xml version='1.0'?>
+                  <XRD xmlns='http://docs.oasis-open.org/ns/xri/xrd-1.0'>
+                      <Link rel='lrdd' type='application/xrd+xml' template='https://stlatica.hoge/.well-known/webfinger?resource={uri}' />
                   </XRD>
         500:
           description: |
@@ -157,6 +235,14 @@ components:
       schema:
         type: string
       example: 'actor_id'
+    server_domain:
+      in: path
+      required: true
+      name: domain_name
+      description: server domain
+      schema:
+        type: string
+      example: 'stlatica.hoge'
   schemas:
     SampleUser:
       type: object
@@ -170,7 +256,7 @@ components:
       type: object
       description: actor
       required:
-        - "@context"
+        - '@context'
         - id
         - type
         - preferredUsername
@@ -185,7 +271,7 @@ components:
         - manuallyApprovesFollowers
         - publicKey
       properties:
-        "@context":
+        '@context':
           $ref: '#/components/schemas/JSONLDContexts'
         id:
           $ref: '#/components/schemas/ActorID'
@@ -244,6 +330,17 @@ components:
             publicKeyPem:
               type: string
               example: -----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----
+    Webfinger:
+      type: object
+      description: Webfinger
+      required:
+        - 'actor_id'
+        - 'server_domain'
+      properties:
+        actor_id:
+          $ref: '#/components/parameters/actor_id'
+        server_domain:
+          $ref: '#/components/parameters/server_domain'
     JSONLDContexts:
       description: |
         以下のうちのいずれかを使用する

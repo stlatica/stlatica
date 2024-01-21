@@ -1,12 +1,19 @@
-# develop with Docker
+# quick start
+
+```sh
+pnpm install
+pnpm dev
+```
+
+[http://localhost:3000](http://localhost:3000) にサーバーが立ちます
+
+## quick start with Docker
 
 ```
 docker compose up -d
 docker exec -it frontend bash
-pn install && pn dev
+pnpm install && pnpm dev
 ```
-
-※ pnpm を pn にエイリアス張ってあります
 
 # env
 
@@ -18,8 +25,6 @@ pn install && pn dev
 
 ※ nvm等の他ツールがお好みであればnvm等でも可です
 
-↑ 最終的にDocker化したら何もかも不要になりそう
-
 # installs
 
 ## volta
@@ -30,88 +35,105 @@ https://docs.volta.sh/guide/getting-started
 
 or
 
-> winget install Volta
+```sh
+winget install Volta
+```
 
 ## node
 
-nodejsそのままをインストールするとバージョン切り替えが辛いので、volta や nvm 経由で導入するのが基本になります
+nodejsそのままをインストールするとバージョン切り替えが辛いので、volta や nvm 等node管理ツール経由で導入を推奨します。
 
 ### with volta
 
-自動で切り替わるのでインストール等不要です
+自動で切り替わるのでインストール等一切不要です
 
 ### with nvm
 
-> nvm install node@18.17.1
+```sh
+nvm install node@18.17.1
+```
 
 ## pnpm
 
-nodeのインストール後に実行します
-
-> npm install -g pnpm@8.6.12
-
----
-
-# quick start
-
-> pnpm install
-> pnpm dev
-
-[http://localhost:3000](http://localhost:3000) にサーバーが立ちます
-
----
-
----
-
-# PR前チェック
-
-CIで回る項目をローカルで素早く検証します
-
+```sh
+npm install -g pnpm@8.6.12
 ```
+
+---
+
+---
+
+# Commands
+
+## PR前チェック
+
+CIで回る項目をローカルで検証します
+
+```sh
 # ci-checkの略
 pnpm cc
 ```
 
-# TEST
+## TEST
 
-単体テスト
+テストを起動します
 
-> pnpm test
+vitest ui を採用しているためブラウザで結果確認等できます
 
-単発でテストを起動します
+```sh
+pnpm test
+```
 
-> pnpm test:snap
+## Visual Regression Testing
 
-スナップショットを更新します
+package/frontend 内で実行することを前提にスクリプトを作成しています
 
-> pnpm test:watch
+docker環境必須です
 
-ウォッチモードでテストを起動します
+内容は1コマンドのため、中身を見て直接実行してもOKです（windows向け）
 
-> pnpm test:coverage
+### 初回のみ
 
-テストカバレッジを生成します
+dockerイメージをビルドします。初回、あるいは更新があった際に再実行してください。
 
-coverage/index.html に生成されるファイルを直接ブラウザで開くと確認できます
+// make等で自動化したい
+
+```sh
+playwright/vrt-build.sh vrt
+```
+
+### 実行
+
+```sh
+playwright/vrt.sh vrt
+```
+
+### アップデート
+
+```sh
+playwright/vrt.sh vrt:update
+```
 
 ---
 
-# plop
+## plop
 
-テンプレート生成ツール
+テンプレートジェネレータです
 
-> pnpm plop
+plop/plopfile.js に設定があります。必要に応じて調整してください
 
-起動します　あとは指示に従って入力したり選択するだけです
+```
+pnpm plop
+```
 
-plop/plopfile.js に設定があります
-
-# lint
+## lint
 
 推奨拡張を導入していれば vscode の保存時に自動整形されます。
 
-手動でかける場合は以下で修正できます:
+手動で整形をかける場合は以下で修正できます:
 
 ```
 pnpm lint:fix
 ```
+
+

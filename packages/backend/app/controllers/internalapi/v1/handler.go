@@ -35,6 +35,26 @@ func (h *handler) GetUser(ectx echo.Context, userID string) error {
 	return ectx.JSON(http.StatusOK, response)
 }
 
+func (h *handler) PostPlat(_ echo.Context) error {
+	panic("implement me")
+}
+
+func (h *handler) DeletePlat(_ echo.Context, _ string) error {
+	panic("implement me")
+}
+
+func (h *handler) GetPlat(_ echo.Context, _ string) error {
+	panic("implement me")
+}
+
+func (h *handler) GetTimeline(_ echo.Context, _ string) error {
+	panic("implement me")
+}
+
+func (h *handler) GetImage(_ echo.Context, _ string) error {
+	panic("implement me")
+}
+
 // ControllerInitContents is the struct to hold the dependencies for the controller.
 type ControllerInitContents struct {
 	ActorUseCase actors.ActorUseCase

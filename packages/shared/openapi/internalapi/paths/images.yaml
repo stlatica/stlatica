@@ -1,0 +1,75 @@
+images_{image_id}:
+  get:
+    tags:
+      - images
+    summary: get image
+    description: |
+      get image \
+      base64形式で返される
+    operationId: getImage
+    parameters:
+      - name: image_id
+        in: path
+        description: 画像ID
+        required: true
+        schema:
+          type: string
+        example: 'image_id'
+    responses:
+      200:
+        description: success
+        content:
+          image/png:
+            schema:
+              type: string
+              format: byte
+          image/jpeg:
+            schema:
+              type: string
+              format: byte
+          image/gif:
+            schema:
+              type: string
+              format: byte
+      400:
+        description: |
+          bad request \
+          error code:
+          - 'BAD_REQUEST'
+          - 'MISSING_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      401:
+        description: |
+          unauthorized \
+          error code:
+          - 'UNAUTHORIZED'
+      404:
+        description: |
+          not found \
+          error code:
+          - 'NOT_FOUND'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'

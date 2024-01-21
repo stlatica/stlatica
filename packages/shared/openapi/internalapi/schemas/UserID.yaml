@@ -1,6 +1,6 @@
+# TODO: OpenAPI重複回避の仮名 https://github.com/stlatica/stlatica/issues/248
 UserID:
   description: |
-    userを識別するための一意のID \
-    actor_idのfrontend向けエイリアスであり、actor_idと同一の値を持つ
+    userを識別するための一意のID
   type: string
   example: 'user_id'

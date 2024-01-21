@@ -50,3 +50,7 @@ HTML をビルドします
 ビルドした HTML を表示します。
 
 （デバッグ用）
+
+## pnpm internal:mock
+
+prism でモックサーバーを開始します

@@ -13,6 +13,21 @@ import (
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// get image
+	// (GET /internal/v1/images/{image_id})
+	GetImage(ctx echo.Context, imageId string) error
+	// Post plat.
+	// (POST /internal/v1/plats)
+	PostPlat(ctx echo.Context) error
+	// Delete plat by ID.
+	// (DELETE /internal/v1/plats/{plat_id})
+	DeletePlat(ctx echo.Context, platId PlatId) error
+	// Get plat by ID.
+	// (GET /internal/v1/plats/{plat_id})
+	GetPlat(ctx echo.Context, platId PlatId) error
+	// get timeline
+	// (GET /internal/v1/timelines/{timeline_id})
+	GetTimeline(ctx echo.Context, timelineId TimelineId) error
 	// get user
 	// (GET /internal/v1/users/{user_id})
 	GetUser(ctx echo.Context, userId UserId) error
@@ -21,6 +36,79 @@ type ServerInterface interface {
 // ServerInterfaceWrapper converts echo contexts to parameters.
 type ServerInterfaceWrapper struct {
 	Handler ServerInterface
+}
+
+// GetImage converts echo context to params.
+func (w *ServerInterfaceWrapper) GetImage(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "image_id" -------------
+	var imageId string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "image_id", runtime.ParamLocationPath, ctx.Param("image_id"), &imageId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter image_id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetImage(ctx, imageId)
+	return err
+}
+
+// PostPlat converts echo context to params.
+func (w *ServerInterfaceWrapper) PostPlat(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.PostPlat(ctx)
+	return err
+}
+
+// DeletePlat converts echo context to params.
+func (w *ServerInterfaceWrapper) DeletePlat(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "plat_id" -------------
+	var platId PlatId
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "plat_id", runtime.ParamLocationPath, ctx.Param("plat_id"), &platId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter plat_id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.DeletePlat(ctx, platId)
+	return err
+}
+
+// GetPlat converts echo context to params.
+func (w *ServerInterfaceWrapper) GetPlat(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "plat_id" -------------
+	var platId PlatId
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "plat_id", runtime.ParamLocationPath, ctx.Param("plat_id"), &platId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter plat_id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetPlat(ctx, platId)
+	return err
+}
+
+// GetTimeline converts echo context to params.
+func (w *ServerInterfaceWrapper) GetTimeline(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "timeline_id" -------------
+	var timelineId TimelineId
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "timeline_id", runtime.ParamLocationPath, ctx.Param("timeline_id"), &timelineId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter timeline_id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetTimeline(ctx, timelineId)
+	return err
 }
 
 // GetUser converts echo context to params.
@@ -67,6 +155,11 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
+	router.GET(baseURL+"/internal/v1/images/:image_id", wrapper.GetImage)
+	router.POST(baseURL+"/internal/v1/plats", wrapper.PostPlat)
+	router.DELETE(baseURL+"/internal/v1/plats/:plat_id", wrapper.DeletePlat)
+	router.GET(baseURL+"/internal/v1/plats/:plat_id", wrapper.GetPlat)
+	router.GET(baseURL+"/internal/v1/timelines/:timeline_id", wrapper.GetTimeline)
 	router.GET(baseURL+"/internal/v1/users/:user_id", wrapper.GetUser)
 
 }

@@ -1,0 +1,16 @@
+module.exports = {
+  api: {
+    output: {
+      // .msw を別で生成するため
+      mode: "split",
+      target: "src/openapi/",
+      client: "swr",
+      mock: true,
+      useTypeOverInterfaces: true,
+      baseUrl: "http://localhost:4010",
+    },
+    input: {
+      target: "../shared/openapi/internalapi/openapi-bundled.yaml",
+    },
+  },
+};
