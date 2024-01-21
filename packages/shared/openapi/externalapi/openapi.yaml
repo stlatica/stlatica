@@ -372,9 +372,9 @@ components:
         software:
           $ref: '#/components/schemas/Software'
         usage:
-          $ref: '#/components/schemas/usage'
+          $ref: '#/components/schemas/Usage'
         services:
-          $ref: '#/components/schemas/services'
+          $ref: '#/components/schemas/Services'
         metadata:
           type: object
         version:
@@ -406,34 +406,34 @@ components:
         version:
           type: string
           example: '0.1.0'
-    usage:
+    Usage:
       type: object
       description: Usage statistics for this server.
       properties:
         users:
-          $ref: '#/components/schemas/users'
-    users:
+          $ref: '#/components/schemas/Users'
+    Users:
       type: object
       description: total user count
       properties:
         total:
           type: integer
           example: 1
-    services:
+    Services:
       type: object
       description: The third party sites this server can connect to via their application API.
       properties:
         inbound:
-          $ref: '#/components/schemas/inbound'
+          $ref: '#/components/schemas/Inbound'
         outbound:
-          $ref: '#/components/schemas/outbound'
-    inbound:
+          $ref: '#/components/schemas/Outbound'
+    Inbound:
       type: array
       # TODO: https://github.com/stlatica/stlatica/issues/281
       description: The third party sites this server can retrieve messages from for combined display with regular traffic.
       minItems: 0
       example: []
-    outbound:
+    Outbound:
       type: array
       description: The third party sites this server can publish messages to on the behalf of a user.
       minItems: 0
