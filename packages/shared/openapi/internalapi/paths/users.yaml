@@ -174,7 +174,7 @@ users:
     description: Get users.
     operationId: getUsers
     parameters:
-      - $ref: '../schemas/User.yaml#/username'
+      - $ref: '../parameters/user_id.yaml#/user_id'
     responses:
       200:
         description: success
