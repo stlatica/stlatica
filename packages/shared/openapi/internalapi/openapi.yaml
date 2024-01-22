@@ -11,7 +11,7 @@ paths:
     $ref: './paths/users.yaml#/users_{user_id}'
   /internal/v1/plats/{plat_id}:
     $ref: './paths/plats.yaml#/plat_{plat_id}'
-  /internal/v1/plats/{plat_id}/like:
+  /internal/v1/plats/{plat_id}/favorites:
     $ref: './paths/plats.yaml#/favorite_{plat_id}'
   /internal/v1/plats:
     $ref: './paths/plats.yaml#/plats'
