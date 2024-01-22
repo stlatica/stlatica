@@ -51,3 +51,177 @@ users_{user_id}:
           application/json:
             schema:
               $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+  delete:
+    tags:
+      - User
+    summary: Delete User by ID.
+    description: Delete User
+    operationId: deleteUser
+    parameters:
+      - $ref: '../parameters/user_id.yaml#/user_id'
+    responses:
+      204:
+        description: No content.
+      400:
+        description: |
+          bad request \
+          error code:
+          - 'BAD_REQUEST'
+          - 'MISSING_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      401:
+        description: |
+          unauthorized \
+          error code:
+          - 'UNAUTHORIZED'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'  
+      404:
+        description: |
+          not found \
+          error code:
+          - 'NOT_FOUND'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+
+users:
+  post:
+    tags:
+      - User
+    summary: Create new user.
+    description: Create new user.
+    operationId: createUser
+    parameters:
+      - $ref: '../parameters/user_id.yaml#/user_id'
+    responses:
+      201:
+        description: Created.
+      400:
+        description: |
+          bad request \
+          error code:
+          - 'BAD_REQUEST'
+          - 'MISSING_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      404:
+        description: |
+          not found \
+          error code:
+          - 'NOT_FOUND'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      409:
+        description: |
+          user id conflict \
+          error code:
+          - 'CONFLICT'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+  get:
+    tags:
+      - User
+    summary: Get users.
+    description: Get users.
+    operationId: getUsers
+    parameters:
+      - $ref: '../schemas/User.yaml#/username'
+    responses:
+      200:
+        description: success
+        content:
+          application/json:
+            items:
+              schema:
+                - $ref: '../schemas/User.yaml' 
+      400:
+        description: |
+          bad request \
+          error code:
+          - 'BAD_REQUEST'
+          - 'MISSING_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      401:
+        description: |
+          unauthorized \
+          error code:
+          - 'UNAUTHORIZED'
+      404:
+        description: |
+          not found \
+          error code:
+          - 'NOT_FOUND'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
