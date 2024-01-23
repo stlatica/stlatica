@@ -31,7 +31,7 @@ body:
   - type: textarea
     attributes:
       label: To Reproduce
-      description: 再現手順を記載して下さい
+      description: 再現手順、実行時のログを記載して下さい
       placeholder: |
         1. ログイン画面を開く
         2. 正しい ID, パスワード を入力する
