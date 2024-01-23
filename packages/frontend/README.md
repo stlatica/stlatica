@@ -22,6 +22,7 @@ pnpm install && pnpm dev
 | volta ※1 | 1.1.1   |
 | node     | 18.17.1 |
 | pnpm     | 8.6.12  |
+| make     |         |
 
 ※ nvm等の他ツールがお好みであればnvm等でも可です
 
@@ -135,5 +136,3 @@ pnpm plop
 ```
 pnpm lint:fix
 ```
-
-

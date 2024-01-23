@@ -32,3 +32,6 @@ playwright/report
 playwright/snapshots/output
 
 **/*-win32.png
+
+# makefileキャッシュ用
+docker/build_*

@@ -1,11 +1,24 @@
 version: "3.9"
 services:
+  front_dev:
+    image: stlatica_front_node
+    container_name: stlatica_front_dev
+    volumes:
+      - type: bind
+        source: ./
+        target: /app/packages/frontend
+    # ports:
+    #   - "127.0.0.1:3000:3000"
+    network_mode: host
+    working_dir: /app/packages/frontend
+    tty: true
+
   nextjs:
     container_name: nextjs
     build:
       # sharedアクセス等する場合は上げる
-      context: ../
-      dockerfile: frontend/Dockerfile
+      context: ../../
+      dockerfile: packages/frontend/Dockerfile
     # コンテナ終了を防ぎ中に入れるように
     tty: true
     ports:
@@ -14,10 +27,8 @@ services:
     volumes:
       - type: bind
         source: ./
-        target: /app
-      - "/app/.pnpm-store"
-      - "/app/node_modules"
-    working_dir: /app
+        target: /app/packages/frontend
+    working_dir: /app/packages/frontend
   # prism-internal:
   #   container_name: prism-internal
   #   image: stoplight/prism:4
