@@ -80,7 +80,7 @@ jobs:
     steps:
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
-      # ここキャッシュ効かせたい
+      # TODO: github action 内のdocker build でキャッシュしたい https://github.com/stlatica/stlatica/issues/286
       - name: build container image
         run: make docker/build_playwright
       - name: Run vrt tests in container
