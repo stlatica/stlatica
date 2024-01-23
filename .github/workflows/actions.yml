@@ -66,9 +66,9 @@ jobs:
       - name: unit test
         run: pnpm ci:test
 
-      #  コンポーネントカタログをビルド
-      - name: catalog build
-        run: pnpm ci:ladle
+      # #  コンポーネントカタログをビルド
+      # - name: catalog build
+      #   run: pnpm ci:ladle
 
   visual-regression-testing:
     needs: changes
@@ -80,41 +80,11 @@ jobs:
     steps:
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
-
-      # pnpm 8をインストール
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      # node.jsをインストール
-      - name: Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: "pnpm"
-          cache-dependency-path: packages/frontend/
-
-      # https://playwrightsolutions.com/playwright-github-action-to-cache-the-browser-binaries/
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
-      - name: Cache playwright binaries
-        uses: actions/cache@v3
-        id: playwright-cache
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
-
-      # 依存関係先をインストール
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      # スナップショットテスト(vrt)
-      - name: Install Playwright Browsers
-        run: pnpm exec playwright install-deps && pnpm exec playwright install
-      - name: check snapshot
-        run: pnpm ci:vrt
+      # ここキャッシュ効かせたい
+      - name: build container image
+        run: make docker/build_playwright
+      - name: Run vrt tests in container
+        run: make vrt
 
 
   build_backend:
