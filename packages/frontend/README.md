@@ -96,14 +96,6 @@ vitest ui を採用しているためブラウザで結果確認等できます
 pnpm test
 ```
 
-## Visual Regression Testing
-
-package/frontend 内で実行することを前提にスクリプトを作成しています
-
-docker環境必須です
-
-内容は1コマンドのため、中身を見て直接実行してもOKです（windows向け）
-
 ### 初回のみ
 
 dockerイメージをビルドします。初回、あるいは更新があった際に再実行してください。

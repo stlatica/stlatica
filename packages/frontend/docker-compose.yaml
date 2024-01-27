@@ -10,8 +10,8 @@ services:
       - type: bind
         source: ../shared/
         target: /app/packages/shared
-    ports:
-      - "127.0.0.1:3000:3000"
+    # ports:
+    #   - "127.0.0.1:3000:3000"
     network_mode: host
     working_dir: /app/packages/frontend
     tty: true

@@ -1,6 +1,0 @@
-FROM node:20.11.0-slim
-WORKDIR /app
-
-RUN npm install -g pnpm@8.14.3
-RUN echo 'alias pn="pnpm"' >> ~/.bashrc && echo 'alias px="pnpx"' >> ~/.bashrc
-
