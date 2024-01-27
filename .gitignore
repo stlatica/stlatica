@@ -19,3 +19,5 @@ next-env.d.ts
 
 # tmp
 packages/backend/tmp/*
+
+.pnpm-store

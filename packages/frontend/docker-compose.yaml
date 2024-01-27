@@ -7,14 +7,16 @@ services:
       - type: bind
         source: ./
         target: /app/packages/frontend
-    # ports:
-    #   - "127.0.0.1:3000:3000"
+      - type: bind
+        source: ../shared/
+        target: /app/packages/shared
+    ports:
+      - "127.0.0.1:3000:3000"
     network_mode: host
     working_dir: /app/packages/frontend
     tty: true
 
   nextjs:
-    container_name: nextjs
     build:
       # sharedアクセス等する場合は上げる
       context: ../../

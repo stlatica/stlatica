@@ -1,5 +1,5 @@
 # バイナリだけ召喚するために空の宣言
-FROM node:20.11.0 as node
+FROM node:20.11.0-slim as node
 
 # vrt用のビルド
 # バージョン指定は playwright のバージョン依存。合わせる必要あり
