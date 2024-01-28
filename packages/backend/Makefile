@@ -35,7 +35,7 @@ start-local-internalapi:
 	GO_ENV=local go run app/cmd/internalapi/main.go
 
 start-docker-internalapi:
-	GO_ENV=local SOURCE_DIR=./app/cmd/internalapi docker compose up -d stlatica_server
+	SOURCE_DIR=./app/cmd/internalapi docker compose up -d stlatica_server
 
 stop-docker-internalapi:
-	GO_ENV=local SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server
+	SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server
