@@ -175,6 +175,11 @@ users:
     operationId: getUsers
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
+      - in: query
+        name: user_name
+        schema:
+          type: string
+        description: ユーザ名
     responses:
       200:
         description: success
