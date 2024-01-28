@@ -11,8 +11,8 @@
     "ci:ladle": "ladle build",
     "ci:lint": "next lint --max-warnings 0",
     "ci:test": "vitest run --coverage",
-    "dev": "next dev --turbo",
-    "dev:legacy": "next dev",
+    "dev": "next dev --turbo -H 0.0.0.0",
+    "dev:legacy": "next dev -H 0.0.0.0",
     "vrt": "cross-env E2E_ENV=dev pnpm playwright test --project=visual-snapshot",
     "vrt:update": "cross-env E2E_ENV=dev pnpm playwright test --project=visual-snapshot -u",
     "ci:vrt": "pnpm playwright test --project=visual-snapshot",
@@ -23,7 +23,7 @@
     "plop": "plop --plopfile plop/plopfile.js",
     "pn": "pnpm",
     "start": "next start",
-    "test": "vitest --ui --coverage"
+    "test": "vitest --ui --api.host=0.0.0.0 --coverage"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.3",

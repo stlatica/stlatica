@@ -6,3 +6,6 @@ RUN echo 'alias pn="pnpm"' >> ~/.bashrc && echo 'alias px="pnpx"' >> ~/.bashrc &
 
 # 頻繁に変わる可能性があるので分離
 RUN npm install -g pnpm@8.14.3
+
+EXPOSE 3000
+EXPOSE 51204

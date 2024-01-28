@@ -1,8 +1,9 @@
 quick-dev: docker/build_node node_modules
-	docker compose run front_dev /bin/sh -c "pnpm dev"
+	docker compose run --rm --service-ports front_dev /bin/sh -c "pnpm dev"
+# --service-ports でcomposeのポートを使える
 
 dev: docker/build_node
-	docker compose run front_dev bash
+	docker compose run --rm --service-ports front_dev bash
 
 docker/clear-cache:
 	rm docker/build_node
@@ -20,7 +21,7 @@ vrt-update: docker/build_playwright
 # 以下内部用コマンド
 
 node_modules: package.json pnpm-lock.yaml
-	docker run --mount type=bind,source=./,target=/app stlatica_front_node pnpm install --frozen-lockfile
+	docker run --rm --mount type=bind,source=./,target=/app stlatica_front_node pnpm install --frozen-lockfile
 
 
 docker/build_node: docker/Dockerfile.node.dev

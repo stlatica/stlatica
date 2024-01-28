@@ -10,27 +10,16 @@ services:
       - type: bind
         source: ../shared/
         target: /app/packages/shared
-    # ports:
-    #   - "127.0.0.1:3000:3000"
-    network_mode: host
+    ports:
+      # nextjs
+      # - "127.0.0.1:3000:3000"
+      - "3000:3000"
+      # vitest
+      # - "127.0.0.1:51204:51204"
+      - "51204:51204"
     working_dir: /app/packages/frontend
     tty: true
 
-  nextjs:
-    build:
-      # sharedアクセス等する場合は上げる
-      context: ../../
-      dockerfile: packages/frontend/Dockerfile
-    # コンテナ終了を防ぎ中に入れるように
-    tty: true
-    ports:
-      - "3000:3000"
-      - "3010:3010"
-    volumes:
-      - type: bind
-        source: ./
-        target: /app/packages/frontend
-    working_dir: /app/packages/frontend
   # prism-internal:
   #   container_name: prism-internal
   #   image: stoplight/prism:4
