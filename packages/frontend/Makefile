@@ -2,6 +2,7 @@ quick-dev: docker/build_node node_modules
 	docker compose run --rm --service-ports front_dev /bin/sh -c "pnpm dev"
 # --service-ports でcomposeのポートを使える
 
+
 dev: docker/build_node
 	docker compose run --rm --service-ports front_dev bash
 
@@ -13,10 +14,10 @@ docker/stop:
 	docker compose down --remove-orphans
 
 vrt: docker/build_playwright
-	sh ./docker/vrt.sh vrt
+	docker compose run --rm --service-ports playwright_vrt /bin/sh -c "pnpm install --frozen-lockfile --force && pnpm vrt"
 
 vrt-update: docker/build_playwright
-	sh ./docker/vrt.sh vrt:update
+	docker compose run --rm --service-ports playwright_vrt /bin/sh -c "pnpm install --frozen-lockfile --force && pnpm vrt:update"
 
 # 以下内部用コマンド
 

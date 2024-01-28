@@ -20,6 +20,15 @@ services:
     working_dir: /app/packages/frontend
     tty: true
 
+  playwright_vrt:
+    image: playwright-vrt
+    volumes:
+      - type: bind
+        source: "./"
+        target: /app
+    ports:
+      - 127.0.0.1:9323:9323
+
   # prism-internal:
   #   container_name: prism-internal
   #   image: stoplight/prism:4
