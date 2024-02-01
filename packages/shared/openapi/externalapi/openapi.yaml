@@ -80,6 +80,83 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /.well-known/webfinger?resource=acct:{actor_id}@{server_domain}:
+    get:
+      operationId: getWebfinger
+      tags:
+        - Webfinger
+      summary: get Webfinger
+      description: get Webfinger
+      parameters:
+        - $ref: '#/components/parameters/actor_id'
+        - $ref: '#/components/parameters/server_domain'
+      responses:
+        200:
+          description: success
+          content:
+            application/jrd+json:
+              schema:
+                $ref: '#/components/schemas/Webfinger'
+              example:
+                subject: 'acct:example_actor@stlatica.hoge'
+                aliases:
+                  - 'https://stlatica.hoge/@example_actor'
+                  - 'https://stlatica.hoge/users/example_actor'
+                links:
+                  - rel: 'http://webfinger.net/rel/profile-page'
+                    type: 'text/html'
+                    href: 'https://stlatica.hoge/@example_actor'
+                  - rel: 'self'
+                    type: 'application/activity+json'
+                    href: 'https://stlatica.hoge/users/example_actor'
+                  - rel: 'http://ostatus.org/schema/1.0/subscribe'
+                    template: 'https://stlatica.hoge/authorize_interaction?uri={uri}'
+        400:
+          description: |
+            bad request \
+            error code:
+            - 'BAD_REQUEST'
+            - 'MISSING_PARAMETER'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: |
+            not found \
+            error code:
+            - 'NOT_FOUND'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        422:
+          description:  |
+            Unprocessable Entity \
+            error code:
+            - 'UNPROCESSABLE_ENTITY'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: |
+            internal server error \
+            error code:
+            - 'INTERNAL_SERVER_ERROR'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        503:
+          description: |
+            service unavailable \
+            error code:
+            - 'SERVICE_UNAVAILABLE'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /.well-known/host-meta:
     get:
       operationId: getHostMeta
@@ -94,10 +171,11 @@ paths:
             application/xml:
               schema:
                 type: string
+                # TODO: https://github.com/stlatica/stlatica/issues/236
                 example: |
-                  <?xml version="1.0"?>
-                  <XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
-                      <Link rel="lrdd" type="application/xrd+xml" template="https://stlatica.hoge/.well-known/webfinger?resource={uri}" />
+                  <?xml version='1.0'?>
+                  <XRD xmlns='http://docs.oasis-open.org/ns/xri/xrd-1.0'>
+                      <Link rel='lrdd' type='application/xrd+xml' template='https://stlatica.hoge/.well-known/webfinger?resource={uri}' />
                   </XRD>
         500:
           description: |
@@ -117,6 +195,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /.well-known/nodeinfo:
+    get:
+      operationId: supportNodeinfo
+      tags:
+        - SupportNodeinfo
+      summary: Indicate that nodeinfo is supported.
+      description: Indicate that nodeinfo is supported.
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              example:
+                links:
+                  - rel: 'http://nodeinfo.diaspora.software/ns/schema/2.1'
+                    href: 'https://example.org/external/v1/nodeinfo/2.1' # example.org is each domain.
+  /external/v1/nodeinfo/2.1:
+    get:
+      operationId: getNodeinfo
+      tags:
+        - nodeinfo
+      summary: get nodeinfo
+      description: get nodeinfo
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeInfo'
 components:
   parameters:
     actor_id:
@@ -127,6 +235,14 @@ components:
       schema:
         type: string
       example: 'actor_id'
+    server_domain:
+      in: path
+      required: true
+      name: domain_name
+      description: server domain
+      schema:
+        type: string
+      example: 'stlatica.hoge'
   schemas:
     SampleUser:
       type: object
@@ -140,7 +256,7 @@ components:
       type: object
       description: actor
       required:
-        - "@context"
+        - '@context'
         - id
         - type
         - preferredUsername
@@ -155,7 +271,7 @@ components:
         - manuallyApprovesFollowers
         - publicKey
       properties:
-        "@context":
+        '@context':
           $ref: '#/components/schemas/JSONLDContexts'
         id:
           $ref: '#/components/schemas/ActorID'
@@ -214,6 +330,17 @@ components:
             publicKeyPem:
               type: string
               example: -----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----
+    Webfinger:
+      type: object
+      description: Webfinger
+      required:
+        - 'actor_id'
+        - 'server_domain'
+      properties:
+        actor_id:
+          $ref: '#/components/parameters/actor_id'
+        server_domain:
+          $ref: '#/components/parameters/server_domain'
     JSONLDContexts:
       description: |
         以下のうちのいずれかを使用する
@@ -232,6 +359,28 @@ components:
       description: actor_id
       type: string
       example: 'actor_id'
+    NodeInfo:
+      type: object
+      description: nodeinfo
+      properties:
+        openRegistrations: 
+          type: boolean
+          example: false
+        protocols:
+          type: string
+          example: activitypub
+        software:
+          $ref: '#/components/schemas/Software'
+        usage:
+          $ref: '#/components/schemas/Usage'
+        services:
+          $ref: '#/components/schemas/Services'
+        metadata:
+          type: object
+        version:
+          # nodeinfoのバージョン
+          type: string
+          example: '2.1'
     ActorType:
       description: |
         actorの種別 \
@@ -244,6 +393,51 @@ components:
         - 'Organization'
         - 'Person'
         - 'Service'
+    Software: 
+      type: object
+      description: software infomation
+      properties:
+        name:
+          type: string
+          example: 'stlatica' #  [a-z0-9-] のみ使用可能
+        repository:
+          type: string
+          example: 'https://github.com/stlatica/stlatica'
+        version:
+          type: string
+          example: '0.1.0'
+    Usage:
+      type: object
+      description: Usage statistics for this server.
+      properties:
+        users:
+          $ref: '#/components/schemas/Users'
+    Users:
+      type: object
+      description: total user count
+      properties:
+        total:
+          type: integer
+          example: 1
+    Services:
+      type: object
+      description: The third party sites this server can connect to via their application API.
+      properties:
+        inbound:
+          $ref: '#/components/schemas/Inbound'
+        outbound:
+          $ref: '#/components/schemas/Outbound'
+    Inbound:
+      type: array
+      # TODO: https://github.com/stlatica/stlatica/issues/281
+      description: The third party sites this server can retrieve messages from for combined display with regular traffic.
+      minItems: 0
+      example: []
+    Outbound:
+      type: array
+      description: The third party sites this server can publish messages to on the behalf of a user.
+      minItems: 0
+      example: []
     ErrorResponse:
       type: object
       required:
