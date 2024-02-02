@@ -10,6 +10,8 @@ services:
     volumes:
       - ./db/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
   stlatica_server:
+    environment:
+      - GO_ENV=local.docker
     build:
       context: .
       dockerfile: Docker/Dockerfile_air
