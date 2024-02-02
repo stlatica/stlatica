@@ -9,5 +9,11 @@ export default {
 } satisfies StoryDefault;
 
 export const Story1: Story = () => {
-  return <LoginScene />;
+  return (
+    <LoginScene
+      onClick={() => {
+        console.log("clicked login button");
+      }}
+    />
+  );
 };
