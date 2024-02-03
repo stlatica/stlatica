@@ -7,12 +7,23 @@ pnpm dev
 
 [http://localhost:3000](http://localhost:3000) にサーバーが立ちます
 
-## quick start with Docker
+## quick start with Docker, Make
+
+※ざっくり作ったので随時コマンド名変更の可能性があります
 
 ```
-docker compose up -d
-docker exec -it frontend bash
-pnpm install && pnpm dev
+# 開発サーバーを立ち上げます
+make
+make quick-dev
+
+# 開発用のnodejsコンテナを起動し、入ります
+make dev
+
+# visual snapshot testを実行します
+make vrt
+
+# visual snapshot testを更新します
+make vrt-update
 ```
 
 # env
@@ -22,6 +33,7 @@ pnpm install && pnpm dev
 | volta ※1 | 1.1.1   |
 | node     | 18.17.1 |
 | pnpm     | 8.6.12  |
+| make     |         |
 
 ※ nvm等の他ツールがお好みであればnvm等でも可です
 
@@ -50,13 +62,13 @@ nodejsそのままをインストールするとバージョン切り替えが�
 ### with nvm
 
 ```sh
-nvm install node@18.17.1
+nvm install node@20
 ```
 
 ## pnpm
 
 ```sh
-npm install -g pnpm@8.6.12
+npm install -g pnpm@8
 ```
 
 ---
@@ -83,14 +95,6 @@ vitest ui を採用しているためブラウザで結果確認等できます
 ```sh
 pnpm test
 ```
-
-## Visual Regression Testing
-
-package/frontend 内で実行することを前提にスクリプトを作成しています
-
-docker環境必須です
-
-内容は1コマンドのため、中身を見て直接実行してもOKです（windows向け）
 
 ### 初回のみ
 
@@ -135,5 +139,3 @@ pnpm plop
 ```
 pnpm lint:fix
 ```
-
-
