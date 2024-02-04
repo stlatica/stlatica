@@ -13,7 +13,7 @@ type PlatGetInPort interface {
 	GetPlat(ctx context.Context, platID types.PlatID) (*entities.Plat, error)
 }
 
-// PlatPostInport is the interface for posting plat.
+// PlatPostInPort is the interface for posting plat.
 type PlatPostInPort interface {
 	// PostPlat returns Plat.
 	PostPlat(ctx context.Context, ActorID types.ActorID, content string) (*entities.Plat, error)

@@ -11,7 +11,8 @@ import (
 // PlatPoster is the interface for posting plat.
 type PlatPoster interface {
 	// PostPlat returns new plat.
-	PostPlat(ctx context.Context, actorID types.ActorID, content string, inPort ports.PlatPostInPort) (*entities.Plat, error)
+	PostPlat(ctx context.Context, actorID types.ActorID, content string,
+		inPort ports.PlatPostInPort) (*entities.Plat, error)
 }
 
 type platPoster struct{}
