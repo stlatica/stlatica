@@ -15,10 +15,15 @@ import (
 )
 
 func main() {
+	// load environment variables
 	err := godotenv.Load(fmt.Sprintf(".env.%s", os.Getenv("GO_ENV")))
 	if err != nil {
 		panic(err)
 	}
+
+	// initialize logger
+	loggerFactory := inits.NewLoggerFactory()
+	appLogger := loggerFactory.AppLogger()
 
 	// initialize echo server
 	e := echo.New()
@@ -30,9 +35,9 @@ func main() {
 
 	// initialize controllers
 	actorDAO := dao.NewActorDAO()
-	actorFactory := actordomain.NewFactory()
+	actorFactory := actordomain.NewFactory(appLogger)
 	initContent := &v1controllers.ControllerInitContents{
-		ActorUseCase: actorusecase.NewActorUseCase(actorFactory, actorDAO),
+		ActorUseCase: actorusecase.NewActorUseCase(appLogger, actorFactory, actorDAO),
 	}
 	v1controllers.RegisterHandlers(*initContent, e)
 
