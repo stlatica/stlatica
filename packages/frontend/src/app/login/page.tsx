@@ -3,15 +3,7 @@ import React from "react";
 import { LoginButton } from "@/components/button/LoginButton";
 import { TextEditor } from "@/components/common/TextEditor";
 
-type LoginSceneProps = {
-  readonly onClick?: () => void;
-  // children: React.ReactNode;
-};
-
-/**
- *
- */
-export const LoginScene: React.FC<LoginSceneProps> = ({ onClick }) => {
+export default function LoginScene() {
   return (
     <div className="grid h-full w-full place-content-center space-y-3 bg-gray-800">
       <div className="flex justify-center text-5xl">Stlatica</div>
@@ -22,8 +14,8 @@ export const LoginScene: React.FC<LoginSceneProps> = ({ onClick }) => {
         <TextEditor defaultValue="" maxlength={32} title="password" />
       </div>
       <div className="flex justify-center">
-        <LoginButton onClick={onClick} />
+        <LoginButton />
       </div>
     </div>
   );
-};
+}
