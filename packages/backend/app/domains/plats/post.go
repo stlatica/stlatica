@@ -8,16 +8,16 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 )
 
-// PlatPoster is the interface for posting plat.
-type PlatPoster interface {
-	// PostPlat returns new plat.
-	PostPlat(ctx context.Context, actorID types.ActorID, content string,
-		inPort ports.PlatPostInPort) (*entities.Plat, error)
+// PlatCreator is the interface for createing plat.
+type PlatCreator interface {
+	// CreatePlat returns new plat.
+	CreatePlat(ctx context.Context, actorID types.ActorID, content string,
+		inPort ports.PlatCreateInPort) (*entities.Plat, error)
 }
 
-type platPoster struct{}
+type platCreator struct{}
 
-func (g *platPoster) PostPlat(ctx context.Context, actorID types.ActorID,
-	content string, inPort ports.PlatPostInPort) (*entities.Plat, error) {
-	return inPort.PostPlat(ctx, actorID, content)
+func (g *platCreator) CreatePlat(ctx context.Context, actorID types.ActorID,
+	content string, inPort ports.PlatCreateInPort) (*entities.Plat, error) {
+	return inPort.CreatePlat(ctx, actorID, content)
 }
