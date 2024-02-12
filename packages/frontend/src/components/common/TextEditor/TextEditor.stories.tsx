@@ -10,8 +10,8 @@ export default {
 
 export const Story1: Story = () => {
   return (
-    <div className="h-32 bg-gray-800 p-6 text-white">
-      <TextEditor defaultValue="" maxlength={16} title="Name" />
+    <div className="h-32">
+      <TextEditor defaultValue="" label="Name" maxlength={16} />
     </div>
   );
 };
@@ -19,17 +19,17 @@ Story1.storyName = "Name-[none]";
 
 export const Story2: Story = () => {
   return (
-    <div className="h-32 bg-gray-800 p-6 text-white">
-      <TextEditor defaultValue="nobuchi" maxlength={16} title="Name" />
+    <div className="h-32">
+      <TextEditor defaultValue="nobuchi" label="Name" maxlength={16} />
     </div>
   );
 };
-Story2.storyName = "Name-[nobuchi]";
+Story2.storyName = "Name-[with lavel]";
 
 export const Story3: Story = () => {
   return (
-    <div className="h-96 bg-gray-800 p-6 text-white">
-      <TextEditor defaultValue="" maxlength={512} title="Self-introduction" />
+    <div className="h-96">
+      <TextEditor defaultValue="" label="Self-introduction" maxlength={512} />
     </div>
   );
 };
@@ -37,26 +37,13 @@ Story3.storyName = "self-introduction-[none]";
 
 export const Story4: Story = () => {
   return (
-    <div className="h-96 bg-gray-800 p-6 text-white">
+    <div className="h-96">
       <TextEditor
         defaultValue="CTRL OB(13期) 会計でした"
+        label="Self-introduction"
         maxlength={512}
-        title="Self-introduction"
       />
     </div>
   );
 };
-Story4.storyName = "self-introduction-[nobuchi]";
-
-export const Story5: Story = () => {
-  return (
-    <div className="h-96 bg-gray-200 p-6 text-black">
-      <TextEditor
-        defaultValue="親要素の背景色と文字色はcomponentのtextarea, label要素に引き継がれない"
-        maxlength={512}
-        title="Self-introduction"
-      />
-    </div>
-  );
-};
-Story5.storyName = "背景色は引き継げない";
+Story4.storyName = "self-introduction-[with lavel]";
