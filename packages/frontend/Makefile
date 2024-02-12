@@ -4,7 +4,8 @@ quick-dev: docker/build_node node_modules
 
 
 dev: docker/build_node node_modules
-	docker compose run --rm --service-ports front_dev bash
+	docker compose up --build -d front_dev 
+	docker compose exec -it front_dev bash
 
 docker/clear-cache:
 	rm docker/build_node

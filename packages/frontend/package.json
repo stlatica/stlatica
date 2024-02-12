@@ -16,6 +16,7 @@
     "vrt": "cross-env E2E_ENV=dev pnpm playwright test --project=visual-snapshot",
     "vrt:update": "cross-env E2E_ENV=dev pnpm playwright test --project=visual-snapshot -u",
     "ci:vrt": "pnpm playwright test --project=visual-snapshot",
+    "ladle:dev": "pnpm ladle dev -h 0.0.0.0",
     "e2e": "playwright test",
     "e2e:report": "playwright show-report playwright/html",
     "lint": "next lint",
