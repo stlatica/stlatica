@@ -8,6 +8,11 @@ export const muiTheme = createTheme({
   palette: {
     mode: "dark",
   },
+  typography: {
+    button: {
+      textTransform: "none",
+    },
+  },
 });
 
 export const Providers: React.FC<OnlyChildren> = ({ children }) => {
