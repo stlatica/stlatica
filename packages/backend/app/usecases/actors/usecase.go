@@ -6,6 +6,7 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/domains/actors"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
+	"github.com/stlatica/stlatica/packages/backend/app/logger"
 	"github.com/stlatica/stlatica/packages/backend/app/repositories/dao"
 )
 
@@ -18,14 +19,16 @@ type ActorUseCase interface {
 }
 
 // NewActorUseCase returns ActorUseCase.
-func NewActorUseCase(domainFactory actors.Factory, actorDAO dao.ActorDAO) ActorUseCase {
+func NewActorUseCase(appLogger *logger.AppLogger, domainFactory actors.Factory, actorDAO dao.ActorDAO) ActorUseCase {
 	return &actorUseCase{
+		appLogger:     appLogger,
 		actorDAO:      actorDAO,
 		domainFactory: domainFactory,
 	}
 }
 
 type actorUseCase struct {
+	appLogger     *logger.AppLogger
 	actorDAO      dao.ActorDAO
 	domainFactory actors.Factory
 }
