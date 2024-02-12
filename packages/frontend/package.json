@@ -26,7 +26,10 @@
     "test": "vitest --ui --api.host=0.0.0.0 --coverage"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.3",
+    "@mui/material": "^5.15.9",
     "@types/nanoid": "^3.0.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.3",
