@@ -13,6 +13,7 @@ import (
 type PlatDAO interface {
 	// GetPlat returns plat.
 	GetPlat(ctx context.Context, platID types.PlatID) (*domainentities.Plat, error)
+	CreatePlat(ctx context.Context, ActorID types.ActorID, content string) (error)
 }
 
 // NewPlatDAO returns PlatDAO.
@@ -39,4 +40,15 @@ func (dao *platDAO) GetPlat(ctx context.Context, platID types.PlatID) (*domainen
 		Content:   entity.Content,
 		CreatedAt: entity.CreatedAt,
 	}, nil
+}
+
+func (dao *platDAO) CreatePlat(ctx context.Context, actorID types.ActorID, content string) (error) {
+	plat := entities.Plat {
+		PlatID:    types.NewPlatID(),
+		ActorID:   actorID,
+		Content:   content,
+		CreatedAt: types.UnixTime(0),
+	}
+	err := plat.Insert(ctx, dao.ctxExecutor, boil.Infer())
+	return err
 }
