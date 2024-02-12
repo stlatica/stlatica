@@ -3,7 +3,7 @@ quick-dev: docker/build_node node_modules
 # --service-ports でcomposeのポートを使える
 
 
-dev: docker/build_node
+dev: docker/build_node node_modules
 	docker compose run --rm --service-ports front_dev bash
 
 docker/clear-cache:
