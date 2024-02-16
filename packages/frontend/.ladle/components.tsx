@@ -1,10 +1,30 @@
+import "../src/app/global.css";
+import "@mantine/core/styles.css";
+
 import React, { useEffect } from "react";
-import { ThemeProvider } from "@mui/material/styles";
 
 import { useLadleContext, ActionType, ThemeState } from "@ladle/react";
 import type { GlobalProvider } from "@ladle/react";
-import "../src/app/global.css";
-import { muiTheme } from "../src/app/providers";
+import {
+  ColorSchemeScript,
+  MantineProvider,
+  createTheme,
+  useMantineColorScheme,
+} from "@mantine/core";
+
+/**
+ * useMantineColorScheme は MantineProvider 以下でないと呼べないのでこうなる
+ */
+const MantineWrap: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { setColorScheme } = useMantineColorScheme();
+
+  const { globalState } = useLadleContext();
+
+  useEffect(() => {
+    setColorScheme(globalState.theme);
+  }, [globalState.theme]);
+  return <>{children}</>;
+};
 
 export const Provider: GlobalProvider = ({ children, globalState }) => {
   const { dispatch } = useLadleContext();
@@ -19,7 +39,9 @@ export const Provider: GlobalProvider = ({ children, globalState }) => {
 
   return (
     <>
-      <ThemeProvider theme={muiTheme}>{children}</ThemeProvider>
+      <MantineProvider defaultColorScheme={globalState.theme}>
+        <MantineWrap>{children}</MantineWrap>
+      </MantineProvider>
     </>
   );
 };

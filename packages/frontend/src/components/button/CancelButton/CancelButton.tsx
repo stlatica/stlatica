@@ -1,17 +1,17 @@
-import Button, { ButtonProps } from "@mui/material/Button";
+import { Button, ButtonProps } from "@mantine/core";
+import { MouseEventHandler } from "react";
 
-export type CancelButtonProps = ButtonProps;
+export type CancelButtonProps = {
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+} & ButtonProps;
 
 /**
  *
  */
-export const CancelButton: React.FC<CancelButtonProps> = (props) => {
-  const { children, ...others } = props;
+export const CancelButton: React.FC<CancelButtonProps> = ({ children, ...others }) => {
   return (
-    <Button type="button" variant="outlined" {...others}>
+    <Button type="button" variant="outline" {...others}>
       {children}
     </Button>
   );
 };
-
-export type SubmitButtonProps = ButtonProps;

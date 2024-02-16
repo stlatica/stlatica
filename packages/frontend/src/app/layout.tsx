@@ -1,17 +1,17 @@
-import "./global.css";
-import { ThemeProvider } from "@mui/material/styles";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import "@mantine/core/styles.css";
 
-import { muiTheme } from "./providers";
+import "./global.css";
+
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
 export default function RootLayout({ children }: { readonly children: React.ReactNode }) {
   return (
     <html lang="ja">
+      <head>
+        <ColorSchemeScript defaultColorScheme="dark" />
+      </head>
       <body>
-        {/* https://mui.com/material-ui/integrations/nextjs/ */}
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={muiTheme}>{children}</ThemeProvider>
-        </AppRouterCacheProvider>
+        <MantineProvider defaultColorScheme="dark">{children}</MantineProvider>
       </body>
     </html>
   );
