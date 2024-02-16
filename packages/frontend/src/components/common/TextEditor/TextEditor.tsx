@@ -1,11 +1,11 @@
-import TextField, { TextFieldProps } from "@mui/material/TextField";
+import { TextInput, TextInputProps } from "@mantine/core";
 import React from "react";
 
-type TextEditorProps = TextFieldProps & { readonly maxlength?: number };
+type TextEditorProps = TextInputProps;
 
 /**
  *
  */
-export const TextEditor: React.FC<TextEditorProps> = ({ maxlength, inputProps, ...others }) => {
-  return <TextField {...others} inputProps={{ ...inputProps, maxlength }} />;
+export const TextEditor: React.FC<TextEditorProps> = ({ ...others }) => {
+  return <TextInput {...others} />;
 };
