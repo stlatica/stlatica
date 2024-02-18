@@ -14,6 +14,7 @@ ErrorResponse:
         - 'INTERNAL_SERVER_ERROR'
         - 'SERVICE_UNAVAILABLE'
         - 'CONFLICT'
+        - 'UNPROCESSABLE_ENTITY'
       example: 'INTERNAL_SERVER_ERROR'
     message:
       type: string

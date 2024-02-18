@@ -116,8 +116,12 @@ users:
     summary: Create new user.
     description: Create new user.
     operationId: createUser
-    parameters:
-      - $ref: '../parameters/user_id.yaml#/user_id'
+    requestBody:
+      description: 新規ユーザーのID
+      content:
+        application/json:
+          schema:
+            $ref: '../parameters/user_id.yaml#/user_id'
     responses:
       201:
         description: Created.
@@ -145,6 +149,15 @@ users:
           user id conflict \
           error code:
           - 'CONFLICT'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      422:
+        description: |
+          user id or user name invalid \
+          error code:
+          - 'UNPROCESSABLE_ENTITY'
         content:
           application/json:
             schema:
@@ -185,6 +198,7 @@ users:
         description: success
         content:
           application/json:
+            type: array
             items:
               schema:
                 - $ref: '../schemas/User.yaml' 
