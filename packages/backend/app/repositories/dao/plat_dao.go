@@ -48,7 +48,6 @@ func (dao *platDAO) CreatePlat(ctx context.Context, actorID types.ActorID, conte
 		PlatID:    types.NewPlatID(),
 		ActorID:   actorID,
 		Content:   content,
-		CreatedAt: types.UnixTime(0),
 	}
 	err := plat.Insert(ctx, dao.ctxExecutor, boil.Infer())
 	return &domainentities.Plat{
