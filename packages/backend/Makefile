@@ -2,6 +2,9 @@ export GOBIN := $(PWD)/bin
 GO_PATH:=$(shell go env GOPATH)
 export PATH:=$(GOBIN):$(GO_PATH):$(PATH)
 
+list:
+	@grep "^[a-zA-Z\-]*:" Makefile | grep -v "grep" | sed -e 's/^/make /' | sed -e 's/://'
+
 install-tools:
 	@./tools/install_tools.sh "./tools/tools.go"
 
