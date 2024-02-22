@@ -13,6 +13,7 @@ import (
 type PlatUseCase interface {
 	// GetPlat returns plat.
 	GetPlat(ctx context.Context, platID types.PlatID) (*entities.Plat, error)
+	CreatePlat(ctx context.Context, actorID types.ActorID, content string) (*entities.Plat, error)
 }
 
 // NewPlatUseCase returns PlatUseCase.
@@ -36,10 +37,22 @@ func (u *platUseCase) GetPlat(ctx context.Context, platID types.PlatID) (*entiti
 	return getter.GetPlat(ctx, platID, portImpl)
 }
 
+func (u *platUseCase) CreatePlat(ctx context.Context, actorID types.ActorID, content string) (*entities.Plat, error) {
+	creator := u.domainFactory.NewPlatCreator()
+	portImpl := &platPortImpl{
+		platDAO: u.platDAO,
+	}
+	return creator.CreatePlat(ctx, actorID, content, portImpl)
+}
+
 type platPortImpl struct {
 	platDAO dao.PlatDAO
 }
 
 func (p *platPortImpl) GetPlat(ctx context.Context, platID types.PlatID) (*entities.Plat, error) {
 	return p.platDAO.GetPlat(ctx, platID)
+}
+
+func (p *platPortImpl) CreatePlat(ctx context.Context, actorID types.ActorID, content string) (*entities.Plat, error) {
+	return p.platDAO.CreatePlat(ctx, actorID, content)
 }
