@@ -1,23 +1,35 @@
 version: "3.9"
 services:
-  nextjs:
-    container_name: nextjs
-    build:
-      # sharedアクセス等する場合は上げる
-      context: ../
-      dockerfile: frontend/Dockerfile
-    # コンテナ終了を防ぎ中に入れるように
-    tty: true
-    ports:
-      - "3000:3000"
-      - "3010:3010"
+  front_dev:
+    image: stlatica_front_node
+    container_name: stlatica_front_dev
     volumes:
       - type: bind
         source: ./
+        target: /app/packages/frontend
+      - type: bind
+        source: ../shared/
+        target: /app/packages/shared
+    ports:
+      # nextjs
+      - "127.0.0.1:3000:3000"
+      # vitest
+      - "127.0.0.1:51204:51204"
+      # ladle
+      - "127.0.0.1:61000:61000"
+      - "127.0.0.1:24678:24678"
+    working_dir: /app/packages/frontend
+    tty: true
+
+  playwright_vrt:
+    image: playwright-vrt
+    volumes:
+      - type: bind
+        source: "./"
         target: /app
-      - "/app/.pnpm-store"
-      - "/app/node_modules"
-    working_dir: /app
+    ports:
+      - 127.0.0.1:9323:9323
+
   # prism-internal:
   #   container_name: prism-internal
   #   image: stoplight/prism:4

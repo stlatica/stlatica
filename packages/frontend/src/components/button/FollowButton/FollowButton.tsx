@@ -10,16 +10,8 @@ type FollowButtonProps = {
 
 export const FollowButton: React.FC<FollowButtonProps> = ({ isFollow, onClick }) => {
   if (isFollow) {
-    return (
-      <CancelButton className="w-[8em]" onClick={onClick}>
-        フォロー中
-      </CancelButton>
-    );
+    return <CancelButton onClick={onClick}>フォロー中</CancelButton>;
   }
 
-  return (
-    <SubmitButton className="w-[8em]" onClick={onClick}>
-      フォロー
-    </SubmitButton>
-  );
+  return <SubmitButton onClick={onClick}>フォロー</SubmitButton>;
 };
