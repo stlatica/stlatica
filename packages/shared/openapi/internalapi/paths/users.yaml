@@ -108,7 +108,6 @@ users_{user_id}:
           application/json:
             schema:
               $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
-
 users:
   post:
     tags:
