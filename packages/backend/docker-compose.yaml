@@ -28,3 +28,9 @@ services:
       - ../shared/openapi/externalapi:/openapi/externalapi
       - ../shared/openapi/internalapi:/openapi/internalapi
       - ../shared/openapi/tmp:/openapi/tmp
+  minio:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_minio
+    volumes:
+      # TODO

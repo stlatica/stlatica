@@ -1,0 +1,9 @@
+# (TODO) バージョンを固定
+FROM minio/minio:latest
+
+# (TODO)パスワードの保存場所を検討
+ENV MINIO_ROOT_USER=minio
+ENV MINIO_ROOT_PASSWORD=password
+
+ENTRYPOINT ["minio", "server", "/data", "--console-address", ":9001"]
+
