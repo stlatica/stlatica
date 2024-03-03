@@ -31,6 +31,9 @@ services:
   minio:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile_minio
+      dockerfile: ./docker/Dockerfile_Minio
+    ports:
+      - 9000:9000
+      - 9001:9001
     volumes:
-      # TODO
+      - ./data/minio:/data
