@@ -28,3 +28,12 @@ services:
       - ../shared/openapi/externalapi:/openapi/externalapi
       - ../shared/openapi/internalapi:/openapi/internalapi
       - ../shared/openapi/tmp:/openapi/tmp
+  minio:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_Minio
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - ./data/minio:/data

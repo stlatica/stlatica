@@ -18,3 +18,6 @@ next-env.d.ts
 packages/backend/tmp/*
 
 .pnpm-store
+
+# Minio
+packages/backend/data/minio/

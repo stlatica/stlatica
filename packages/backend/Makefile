@@ -42,3 +42,9 @@ start-docker-internalapi:
 
 stop-docker-internalapi:
 	SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server
+
+start-object-storage:
+	docker compose up minio
+
+stop-object-storage:
+	docker compose down minio
