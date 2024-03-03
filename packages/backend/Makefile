@@ -42,3 +42,9 @@ start-docker-internalapi:
 
 stop-docker-internalapi:
 	SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server
+
+# production
+
+# モックサーバーの起動
+prod/mock:
+	docker run --rm -p 127.0.0.1:8080:8080 --mount type=bind,source="./",target="/go/src" -w /go/src -it golang:1.20.6 /bin/sh -c "go run mock/cmd/internalapi/main.go"
