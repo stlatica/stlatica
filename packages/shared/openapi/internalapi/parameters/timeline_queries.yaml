@@ -1,0 +1,48 @@
+timeline_user_id:
+  in: query
+  name: user_id
+  required: true
+  schema:
+    type: string
+    properties:
+      user_id:
+        type: string
+        description: |
+          userを識別するための一意のID
+        example: 'user_id'
+timeline_type:
+  in: query
+  name: type
+  required: true
+  schema:
+    type: string
+    description: |
+      timelineの種類
+      - home: 指定したuser_idのplatの配列
+      - followers: 指定したuser_idのfollowerのplatの配列
+      - local: インスタンス内の全てのplatの配列
+    enum:
+      - 'home'
+      - 'followers'
+      - 'local'
+timeline_limit:
+  in: query
+  name: limit
+  required: false
+  schema:
+    type: integer
+    description: |
+      取得するplatの最大数
+      デフォルトは100
+    example: 100
+timeline_to_date:
+  in: query
+  name: to_date
+  required: false
+  schema:
+    type: string
+    format: date-time
+    description: |
+      この日時以前のplatを取得する
+      デフォルトは現在時刻
+    example: '2024-01-01T00:00:00Z'
