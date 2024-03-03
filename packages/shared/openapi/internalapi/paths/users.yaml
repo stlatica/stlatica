@@ -116,14 +116,25 @@ users:
     description: Create new user.
     operationId: createUser
     requestBody:
-      description: 新規ユーザーのID
+      description: 新規ユーザーのユーザ名とメールアドレス
       content:
         application/json:
           schema:
-            $ref: '../parameters/user_id.yaml#/user_id'
+            type: object
+            properties:
+              name:
+                type: string
+                example: 'stlatica taro'
+              email:
+                type: string
+                example: 'stlatica.taro@example.com'
     responses:
       201:
         description: Created.
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/UserID.yaml'
       400:
         description: |
           bad request \
