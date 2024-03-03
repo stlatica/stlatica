@@ -19,11 +19,11 @@ timeline_type:
     description: |
       timelineの種類
       - home: 指定したuser_idのplatの配列
-      - followers: 指定したuser_idのfollowerのplatの配列
+      - following: 指定したuser_idのfollowingのplatの配列
       - local: インスタンス内の全てのplatの配列
     enum:
       - 'home'
-      - 'followers'
+      - 'following'
       - 'local'
 timeline_limit:
   in: query
