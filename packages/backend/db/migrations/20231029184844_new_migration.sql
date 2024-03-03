@@ -5,7 +5,7 @@ CREATE TABLE `actors` (
   `display_name`  varchar(64) NOT NULL COMMENT 'name',
   `registed_at`   bigint UNSIGNED NOT NULL COMMENT 'Unix time',
   `is_public`     boolean NOT NULL COMMENT 'user is public',
-  `mailaddress`    varchar(256) NOT NULL COMMENT 'mail address',
+  `mail_address`  varchar(256) UNIQUE NOT NULL COMMENT 'mail address',
   PRIMARY KEY (`actor_id`)
 )
 DEFAULT CHARACTER SET utf8mb4
