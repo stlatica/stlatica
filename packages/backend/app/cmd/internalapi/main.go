@@ -1,6 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/cmd/inits"
 	v1controllers "github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1"
@@ -11,6 +15,16 @@ import (
 )
 
 func main() {
+	// load environment variables
+	err := godotenv.Load(fmt.Sprintf(".env.%s", os.Getenv("GO_ENV")))
+	if err != nil {
+		panic(err)
+	}
+
+	// initialize logger
+	loggerFactory := inits.NewLoggerFactory()
+	appLogger := loggerFactory.AppLogger()
+
 	// initialize echo server
 	e := echo.New()
 	e.HideBanner = true
@@ -21,14 +35,13 @@ func main() {
 
 	// initialize controllers
 	actorDAO := dao.NewActorDAO()
-	actorFactory := actordomain.NewFactory()
+	actorFactory := actordomain.NewFactory(appLogger)
 	initContent := &v1controllers.ControllerInitContents{
-		ActorUseCase: actorusecase.NewActorUseCase(actorFactory, actorDAO),
+		ActorUseCase: actorusecase.NewActorUseCase(appLogger, actorFactory, actorDAO),
 	}
 	v1controllers.RegisterHandlers(*initContent, e)
 
-	// TODO: port to be read from environment variables https://github.com/stlatica/stlatica/issues/50
-	err := e.Start(":8080")
+	err = e.Start(fmt.Sprintf(`:%s`, os.Getenv("STLATICA_SERVER_PORT")))
 	if err != nil {
 		panic(err)
 	}

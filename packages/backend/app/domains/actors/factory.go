@@ -1,5 +1,7 @@
 package actors
 
+import "github.com/stlatica/stlatica/packages/backend/app/logger"
+
 // Factory is a factory of actors package.
 type Factory interface {
 	// NewActorGetter returns a new actor getter.
@@ -7,12 +9,18 @@ type Factory interface {
 }
 
 // NewFactory returns a new factory of actors package.
-func NewFactory() Factory {
-	return &factory{}
+func NewFactory(appLogger *logger.AppLogger) Factory {
+	return &factory{
+		appLogger: appLogger,
+	}
 }
 
-type factory struct{}
+type factory struct {
+	appLogger *logger.AppLogger
+}
 
 func (f *factory) NewActorGetter() ActorGetter {
-	return &actorGetter{}
+	return &actorGetter{
+		appLogger: f.appLogger,
+	}
 }

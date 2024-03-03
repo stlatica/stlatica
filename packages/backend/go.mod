@@ -7,6 +7,7 @@ require (
 	github.com/friendsofgo/errors v0.9.2
 	github.com/getkin/kin-openapi v0.118.0
 	github.com/golangci/golangci-lint v1.54.1
+	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.11.1
 	github.com/pressly/goose/v3 v3.14.0
 	github.com/volatiletech/sqlboiler/v4 v4.15.0
@@ -240,7 +241,7 @@ require (
 	go.tmz.dev/musttag v0.7.1 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	go.uber.org/zap v1.24.0 // indirect
+	go.uber.org/zap v1.24.0
 	golang.org/x/arch v0.4.0 // indirect
 	golang.org/x/crypto v0.17.0 // indirect
 	golang.org/x/exp v0.0.0-20230510235704-dd950f8aeaea // indirect

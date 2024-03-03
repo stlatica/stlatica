@@ -1,0 +1,43 @@
+name: Bug Report
+description: Create a bug report for the Stlatica project
+labels: ['bug']
+body:    
+  - type: textarea
+    attributes:
+      label: Overview
+      description: |
+        概要を記載してください。
+        必要であればスクリーンショットの添付もあると Good!
+      placeholder: ログイン画面に問題がある
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Version
+      description: |
+        バージョン, またはコミットハッシュ等を記載
+  - type: textarea
+    attributes:
+      label: Actual
+      description: 実際確認された挙動
+      placeholder: ログインには成功しているようだが、画面遷移しない
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expect
+      description: 期待する動作
+      placeholder: ログインに成功し、ホーム画面が開く
+  - type: textarea
+    attributes:
+      label: To Reproduce
+      description: 再現手順を記載して下さい
+      placeholder: |
+        1. ログイン画面を開く
+        2. 正しい ID, パスワード を入力する
+        3. ログインボタンを押下する
+  - type: textarea
+    attributes:
+      label: Others
+      description: 補足情報等あればこちらに
+      placeholder: リロードでホームに遷移した

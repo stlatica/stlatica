@@ -6,6 +6,7 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/domains/actors/ports"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
+	"github.com/stlatica/stlatica/packages/backend/app/logger"
 )
 
 // ActorGetter is the interface for getting actor.
@@ -16,7 +17,9 @@ type ActorGetter interface {
 	GetActorByName(ctx context.Context, actorName string, inPort ports.ActorGetInPort) (*entities.Actor, error)
 }
 
-type actorGetter struct{}
+type actorGetter struct {
+	appLogger *logger.AppLogger
+}
 
 func (g *actorGetter) GetActor(ctx context.Context,
 	actorID types.ActorID, inPort ports.ActorGetInPort) (*entities.Actor, error) {

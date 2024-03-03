@@ -2,6 +2,9 @@ export GOBIN := $(PWD)/bin
 GO_PATH:=$(shell go env GOPATH)
 export PATH:=$(GOBIN):$(GO_PATH):$(PATH)
 
+list:
+	@grep "^[a-zA-Z\-]*:" Makefile | grep -v "grep" | sed -e 's/^/make /' | sed -e 's/://'
+
 install-tools:
 	@./tools/install_tools.sh "./tools/tools.go"
 
@@ -31,8 +34,11 @@ codegen-from-oapi:
 lint:
 	$(GOBIN)/golangci-lint run ./...
 
-start-internalapi:
+start-local-internalapi:
+	GO_ENV=local go run app/cmd/internalapi/main.go
+
+start-docker-internalapi:
 	SOURCE_DIR=./app/cmd/internalapi docker compose up -d stlatica_server
 
-stop-internalapi:
+stop-docker-internalapi:
 	SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server

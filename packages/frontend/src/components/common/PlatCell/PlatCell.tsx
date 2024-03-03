@@ -31,7 +31,7 @@ export const PlatCell: React.FC<PlatCellProps> = ({
         <div className="px-3">
           {/* ユーザ名 */}
           <div className="text-lg">{userName}</div> {/* ユーザID */}
-          <div className="text-sm text-gray-500">{userId}</div>{" "}
+          <div className="text-sm text-gray-500">{userId}</div>
         </div>
       </div>
       {/* platの内容 */}
