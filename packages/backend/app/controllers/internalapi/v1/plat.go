@@ -17,13 +17,13 @@ type GetPlatResponse struct {
 }
 
 func (c *platController) PostPlat(ectx echo.Context, actorIDStr string, content string) (*GetPlatResponse, error) {
-	actorID, err1 := ulid.Parse(actorIDStr)
-	if err1 != nil {
-		return &GetPlatResponse{}, err1
+	actorID, err := ulid.Parse(actorIDStr)
+	if err != nil {
+		return nil, err
 	}
-	plat, err2 := c.platUseCase.CreatePlat(ectx.Request().Context(), types.ActorID(actorID), content)
-	if err2 != nil {
-		return &GetPlatResponse{}, err2
+	plat, err := c.platUseCase.CreatePlat(ectx.Request().Context(), types.ActorID(actorID), content)
+	if err != nil {
+		return &GetPlatResponse{}, err
 	}
 	return &GetPlatResponse{
 		PlatID: plat.GetPlatID().String(),
@@ -31,13 +31,13 @@ func (c *platController) PostPlat(ectx echo.Context, actorIDStr string, content 
 }
 
 func (c *platController) GetPlat(ectx echo.Context, platIDStr string) (*GetPlatResponse, error) {
-	platID, err1 := ulid.Parse(platIDStr)
-	if err1 != nil {
-		return &GetPlatResponse{}, err1
+	platID, err := ulid.Parse(platIDStr)
+	if err != nil {
+		return &GetPlatResponse{}, err
 	}
-	plat, err2 := c.platUseCase.GetPlat(ectx.Request().Context(), types.PlatID(platID))
-	if err2 != nil {
-		return &GetPlatResponse{}, err2
+	plat, err := c.platUseCase.GetPlat(ectx.Request().Context(), types.PlatID(platID))
+	if err != nil {
+		return &GetPlatResponse{}, err
 	}
 	return &GetPlatResponse{
 		PlatID: plat.GetPlatID().String(),
