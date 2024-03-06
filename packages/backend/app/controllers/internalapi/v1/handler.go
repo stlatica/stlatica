@@ -38,18 +38,18 @@ func (h *handler) GetUser(ectx echo.Context, userID string) error {
 }
 
 func (h *handler) PostPlat(ectx echo.Context) error {
-	var plat string
-	err1 := ectx.Bind(&plat)
-	if err1 != nil {
-		return err1
+	var plat openapi.PlatPost
+	err := ectx.Bind(&plat)
+	if err != nil {
+		return err
 	}
-	actorIDStr := gjson.Get(plat, "user_id")
-	content := gjson.Get(plat, "content")
-	response, err2 := h.platController.PostPlat(ectx, actorIDStr.String(), content.String())
-	if err2 != nil {
-		return err2
+	actorIDStr := gjson.Get(plat.UserId, "user_id")
+	content := gjson.Get(plat.Content, "content")
+	response, err := h.platController.PostPlat(ectx, actorIDStr.String(), content.String())
+	if err != nil {
+		return err
 	}
-	return ectx.JSON(http.StatusOK, response)
+	return ectx.JSON(http.StatusCreated, response)
 }
 
 func (h *handler) DeletePlat(_ echo.Context, _ string) error {
