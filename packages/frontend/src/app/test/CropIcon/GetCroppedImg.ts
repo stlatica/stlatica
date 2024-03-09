@@ -51,7 +51,7 @@ export default async function getCroppedImg(imageSrc: string, pixelCrop: Area): 
   ctx.putImageData(data, 0, 0);
 
   // canvasを画像に変換
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     canvas.toBlob((file) => {
       if (file !== null) resolve(URL.createObjectURL(file));
     }, "image/jpeg");
