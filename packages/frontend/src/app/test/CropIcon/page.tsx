@@ -3,7 +3,7 @@ import { Button } from "@mantine/core";
 import React, { useState, useCallback } from "react";
 import Cropper, { Area } from "react-easy-crop";
 
-import getCroppedImg from "./getCroppedImg";
+import getCroppedImg from "./GetCroppedImg";
 
 // 参考
 // ファイルのアップロード：https://zenn.dev/yuyan/articles/f35da08770a135
@@ -50,12 +50,8 @@ export default function Home() {
    */
   const showCroppedImage = useCallback(async () => {
     if (!croppedAreaPixels) return;
-    try {
-      const croppedImage = await getCroppedImg(base64Image, croppedAreaPixels);
-      setCroppedImgSrc(croppedImage);
-    } catch (e) {
-      console.error(e);
-    }
+    const croppedImage = await getCroppedImg(base64Image, croppedAreaPixels);
+    setCroppedImgSrc(croppedImage);
   }, [croppedAreaPixels, base64Image]);
 
   return (
