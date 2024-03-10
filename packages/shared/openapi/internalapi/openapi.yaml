@@ -9,6 +9,8 @@ servers:
 paths:
   /internal/v1/users/{user_id}:
     $ref: './paths/users.yaml#/users_{user_id}'
+  /internal/v1/users/:
+    $ref: './paths/users.yaml#/users'
   /internal/v1/plats/{plat_id}:
     $ref: './paths/plats.yaml#/plat_{plat_id}'
   /internal/v1/plats/{plat_id}/favorites:
@@ -17,6 +19,8 @@ paths:
     $ref: './paths/plats.yaml#/plats'
   /internal/v1/timelines/{timeline_id}:
     $ref: './paths/timelines.yaml#/timelines_{timeline_id}'
+  /internal/v1/timelines:
+    $ref: './paths/timelines.yaml#/timelines'
   /internal/v1/images/{image_id}:
     $ref: './paths/images.yaml#/images_{image_id}'
 components:
