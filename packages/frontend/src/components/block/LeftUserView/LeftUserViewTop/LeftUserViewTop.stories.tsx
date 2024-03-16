@@ -9,5 +9,9 @@ export default {
 } satisfies StoryDefault;
 
 export const Story1: Story = () => {
-  return <LeftUserViewTop />;
+  return (
+    <div className="w-[300px]">
+      <LeftUserViewTop />
+    </div>
+  );
 };

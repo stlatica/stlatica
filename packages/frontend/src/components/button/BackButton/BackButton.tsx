@@ -4,14 +4,15 @@ import { MdArrowBack } from "react-icons/md";
 
 type BackButtonProps = {
   // children: React.ReactNode;
+  readonly onClick?: () => void;
 };
 
 /**
  *
  */
-export const BackButton: React.FC<BackButtonProps> = () => {
+export const BackButton: React.FC<BackButtonProps> = ({ onClick }) => {
   return (
-    <UnstyledButton onClick={() => {}}>
+    <UnstyledButton onClick={onClick}>
       <MdArrowBack size="3em" />
     </UnstyledButton>
   );
