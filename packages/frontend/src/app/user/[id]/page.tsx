@@ -1,4 +1,5 @@
 import { LeftUserView } from "@/components/block/LeftUserView";
+import { ProfileTab } from "@/components/timelines/ProfileTab";
 
 export default function Page({ params }: { readonly params: { id: string } }) {
   const { id } = params;
@@ -11,7 +12,11 @@ export default function Page({ params }: { readonly params: { id: string } }) {
         <div className="w-[350px] text-slate-900">
           <LeftUserView userID={id} />
         </div>
-        <div></div>
+        <div className="pr-2" />
+        <div className="w-[600px]">
+          <ProfileTab />
+          di
+        </div>
       </div>
     </main>
   );
