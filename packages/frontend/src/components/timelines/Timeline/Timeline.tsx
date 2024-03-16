@@ -13,7 +13,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
   return (
     // TODO: 90vh指定ではなく全高さを使うようにしたい
     <div className="h-[90vh] overflow-y-scroll">
-      <div className="flex h-full flex-col gap-2 bg-red-100">
+      <div className="flex h-full flex-col gap-2">
         <PlatCell
           content="はじめてのplat"
           favoriteCount={0}
