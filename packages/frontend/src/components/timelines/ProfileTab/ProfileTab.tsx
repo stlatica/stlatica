@@ -14,26 +14,36 @@ type ProfileTabProps = {
  */
 export const ProfileTab: React.FC<ProfileTabProps> = () => {
   return (
-    <Tabs defaultValue="timeline" radius="xl" variant="default">
-      <Tabs.List>
-        <Tabs.Tab value="timeline">Timeline</Tabs.Tab>
-        <Tabs.Tab value="reply">Reply</Tabs.Tab>
-        <Tabs.Tab value="media">Media</Tabs.Tab>
-        <Tabs.Tab value="favorite">Favorite</Tabs.Tab>
-      </Tabs.List>
+    <div>
+      <Tabs defaultValue="timeline" radius="xl" variant="default">
+        <Tabs.List>
+          <Tabs.Tab value="timeline">Timeline</Tabs.Tab>
+          <Tabs.Tab value="reply">Reply</Tabs.Tab>
+          <Tabs.Tab value="media">Media</Tabs.Tab>
+          <Tabs.Tab value="favorite">Favorite</Tabs.Tab>
+        </Tabs.List>
 
-      <Tabs.Panel value="timeline">
-        <Timeline />
-      </Tabs.Panel>
-      <Tabs.Panel value="reply">
-        <Timeline />
-      </Tabs.Panel>
-      <Tabs.Panel value="media">
-        <Timeline />
-      </Tabs.Panel>
-      <Tabs.Panel value="favorite">
-        <Timeline />
-      </Tabs.Panel>
-    </Tabs>
+        <Tabs.Panel value="timeline">
+          <div className="mt-2">
+            <Timeline />
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value="reply">
+          <div className="mt-2">
+            <Timeline />
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value="media">
+          <div className="mt-2">
+            <Timeline />
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value="favorite">
+          <div className="mt-2">
+            <Timeline />
+          </div>
+        </Tabs.Panel>
+      </Tabs>
+    </div>
   );
 };

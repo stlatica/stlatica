@@ -11,47 +11,50 @@ type TimelineProps = {
  */
 export const Timeline: React.FC<TimelineProps> = () => {
   return (
-    <div className="flex flex-col gap-2">
-      <PlatCell
-        content="はじめてのplat"
-        favoriteCount={0}
-        replyCount={0}
-        shareCount={0}
-        userId="test"
-        userName="テストユーザー"
-      />
-      <PlatCell
-        content="はじめてのplat"
-        favoriteCount={0}
-        replyCount={0}
-        shareCount={0}
-        userId="test"
-        userName="テストユーザー"
-      />
-      <PlatCell
-        content="はじめてのplat"
-        favoriteCount={0}
-        replyCount={0}
-        shareCount={0}
-        userId="test"
-        userName="テストユーザー"
-      />
-      <PlatCell
-        content="はじめてのplat"
-        favoriteCount={0}
-        replyCount={0}
-        shareCount={0}
-        userId="test"
-        userName="テストユーザー"
-      />
-      <PlatCell
-        content="はじめてのplat"
-        favoriteCount={0}
-        replyCount={0}
-        shareCount={0}
-        userId="test"
-        userName="テストユーザー"
-      />
+    // TODO: 90vh指定ではなく全高さを使うようにしたい
+    <div className="h-[90vh] overflow-y-scroll">
+      <div className="flex h-full flex-col gap-2 bg-red-100">
+        <PlatCell
+          content="はじめてのplat"
+          favoriteCount={0}
+          replyCount={0}
+          shareCount={0}
+          userId="test"
+          userName="テストユーザー"
+        />
+        <PlatCell
+          content="はじめてのplat"
+          favoriteCount={0}
+          replyCount={0}
+          shareCount={0}
+          userId="test"
+          userName="テストユーザー"
+        />
+        <PlatCell
+          content="はじめてのplat"
+          favoriteCount={0}
+          replyCount={0}
+          shareCount={0}
+          userId="test"
+          userName="テストユーザー"
+        />
+        <PlatCell
+          content="はじめてのplat"
+          favoriteCount={0}
+          replyCount={0}
+          shareCount={0}
+          userId="test"
+          userName="テストユーザー"
+        />
+        <PlatCell
+          content="はじめてのplat"
+          favoriteCount={0}
+          replyCount={0}
+          shareCount={0}
+          userId="test"
+          userName="テストユーザー"
+        />
+      </div>
     </div>
   );
 };
