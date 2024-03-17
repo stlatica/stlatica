@@ -3,7 +3,7 @@ FROM node:20.11.0-slim as node
 
 # vrt用のビルド
 # バージョン指定は playwright のバージョン依存。合わせる必要あり
-FROM mcr.microsoft.com/playwright:v1.40.1-jammy
+FROM mcr.microsoft.com/playwright:v1.42.1-jammy
 
 COPY --from=node /usr/local/include/ /usr/local/include/
 COPY --from=node /usr/local/lib/ /usr/local/lib/
