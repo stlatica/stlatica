@@ -6,7 +6,7 @@ export const IconEditor: React.FC = () => {
       <div className="absolute -translate-x-3.5 -translate-y-6 scale-75 bg-gray-800 px-2 text-gray-400">
         Icon
       </div>
-      <div className="h-[100px] w-[100px] bg-white text-black">tmp</div>
+      <div className="size-[100px] bg-white text-black">tmp</div>
       <div>zoom bar</div>
       <div>file path</div>
     </div>
