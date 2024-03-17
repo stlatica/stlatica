@@ -13,7 +13,7 @@ export const createImage = (url: string): Promise<HTMLImageElement> => {
       resolve(image);
     });
     image.addEventListener("error", (error) => {
-      reject(error);
+      reject(new Error(String(error)));
     });
     // CodeSandboxでCORSエラーを回避するために必要
     image.setAttribute("crossOrigin", "anonymous");

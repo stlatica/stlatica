@@ -56,7 +56,7 @@ export default function Home() {
 
   return (
     <div>
-      <div className="relative h-[300px] w-[300px]">
+      <div className="relative size-[300px]">
         <Cropper
           crop={crop}
           cropShape="round"
@@ -96,7 +96,7 @@ export default function Home() {
       </div>
       <div>
         {croppedImgSrc ? (
-          <img alt="Cropped" className="h-[300px] w-[300px]" src={croppedImgSrc} />
+          <img alt="Cropped" className="size-[300px]" src={croppedImgSrc} />
         ) : (
           <div>The cropped image is displayed here</div>
         )}

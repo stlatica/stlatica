@@ -5,7 +5,7 @@ WORKDIR /app
 RUN echo 'alias pn="pnpm"' >> ~/.bashrc && echo 'alias px="pnpx"' >> ~/.bashrc && apt update -y && apt install -y xdg-utils --fix-missing
 
 # 頻繁に変わる可能性があるので分離
-RUN npm install -g pnpm@8.15.1
+RUN npm install -g pnpm@8.15.4
 
 EXPOSE 3000
 EXPOSE 51204

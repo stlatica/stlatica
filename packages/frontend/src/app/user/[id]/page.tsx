@@ -7,7 +7,7 @@ export default function Page({ params }: { readonly params: { id: string } }) {
   // console.log(id);
 
   return (
-    <main className="h-[100vh]">
+    <main className="h-screen">
       <div className="flex h-full">
         <div className="w-[330px] text-slate-900">
           <LeftUserView userID={id} />
