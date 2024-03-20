@@ -1,0 +1,16 @@
+FROM ubuntu:22.04
+# FROM oven/bun:1.0.33-debian
+WORKDIR /app/frontend
+
+# apt updates
+RUN apt update -y && apt install -y curl unzip xdg-utils --fix-missing
+
+# install bun
+RUN curl https://bun.sh/install | bash -s "bun-v1.0.33"
+
+# エイリアスを設定
+COPY ./.alias /root
+RUN cat ~/.alias >> ~/.bashrc
+
+EXPOSE 3000
+EXPOSE 51204

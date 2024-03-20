@@ -1,0 +1,6 @@
+alias pnpm="bun"
+alias npm="bun"
+alias pnpx="bunx"
+alias npx="bunx"
+alias bun="bun"
+alias bunx="bunx"
