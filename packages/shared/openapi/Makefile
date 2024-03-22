@@ -20,7 +20,7 @@ external-bundle: docker-up
 
 
 internal-build: docker-up
-	${DOCKER_RUN} redocly build-docs  internalapi/openapi.yaml --output=build/internal.html
+	${DOCKER_RUN} redocly build-docs internalapi/openapi.yaml --output=build/internal.html
 external-build: docker-up
 	${DOCKER_RUN} redocly build-docs externalapi/openapi.yaml --output=build/external.html
 
@@ -31,9 +31,9 @@ external-serve:
 
 
 internal-mock: internal-bundle
-	${DOCKER_RUN} prism mock ./internalapi/openapi-bundled.yaml
-external-mock: internal-bundle
-	${DOCKER_RUN} prism mock ./externalapi/openapi-bundled.yaml
+	${DOCKER_RUN} prism mock ./internalapi/openapi-bundled.yaml --host 0.0.0.0
+external-mock: external-bundle
+	${DOCKER_RUN} prism mock ./externalapi/openapi-bundled.yaml --host 0.0.0.0
 
 
 docker-up:
