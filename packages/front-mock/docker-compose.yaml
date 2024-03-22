@@ -5,10 +5,10 @@ services:
     volumes:
       - type: bind
         source: ./
-        target: /app/packages/frontend
+        target: /app/express
       - type: bind
-        source: ../shared/
-        target: /app/packages/shared
+        source: ../shared/openapi
+        target: /app/openapi
     ports:
       # nextjs
       - "127.0.0.1:3000:3000"
@@ -17,5 +17,5 @@ services:
       # ladle
       - "127.0.0.1:61000:61000"
       - "127.0.0.1:24678:24678"
-    working_dir: /app/packages/frontend
+    working_dir: /app/express
     tty: true
