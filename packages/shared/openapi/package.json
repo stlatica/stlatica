@@ -10,7 +10,7 @@
 		"internal:lint": "pnpm redocly lint internalapi/openapi.yaml",
 		"internal:mock-start": "pnpm internal:bundle && pnpm prism mock ./internalapi/openapi-bundled.yaml",
 		"internal:mock": "pnpm internal:bundle && pnpm internal:mock-start",
-		"internal:preview": "pnpm redocly preview-docs internalapi/openapi.yaml -p 8080",
+		"internal:preview": "pnpm redocly preview-docs internalapi/openapi.yaml -p 8080 --host 0.0.0.0",
 		"internal:serve": "pnpm serve build/internal.html"
 	},
 	"dependencies": {

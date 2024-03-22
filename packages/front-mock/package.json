@@ -21,6 +21,7 @@
     "@types/node": "^20.11.30",
     "esbuild": "^0.20.2",
     "nodemon": "^3.1.0",
+    "openapi-typescript": "^6.7.5",
     "typescript": "^5.4.3"
   }
 }
