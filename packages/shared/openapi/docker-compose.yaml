@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  redocly:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+    container_name: stlatica_redocly
+    volumes:
+      - type: bind
+        source: ./
+        target: /openapi
+    ports:
+      - "8080:8080"
+    working_dir: /openapi
+    tty: true
