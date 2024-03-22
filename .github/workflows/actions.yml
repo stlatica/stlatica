@@ -13,6 +13,7 @@ jobs:
     outputs:
       is_frontend: ${{ steps.filter.outputs.is_frontend }}
       is_backend: ${{ steps.filter.outputs.is_backend }}
+      is_openapi: ${{ steps.filter.outputs.is_openapi }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -25,6 +26,8 @@ jobs:
             - 'packages/frontend/**'
           is_backend:
             - 'packages/backend/**'
+          is_openapi:
+            - 'packages/shared/openapi/**'
           
   build_frontend:
     needs: changes
@@ -170,3 +173,21 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+
+  lint_openapi:
+    needs: changes
+    if: ${{ needs.changes.outputs.is_openapi == 'true' }}
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: packages/shared/openapi
+    steps:
+      # リポジトリをチェックアウト
+      - uses: actions/checkout@v3
+      # TODO: github action 内のdocker build でキャッシュしたい https://github.com/stlatica/stlatica/issues/286
+      - name: build container image
+        run: make docker-build
+      - name: internal api lint
+        run: make internal-lint
+      - name: external api lint
+        run: make external-lint
