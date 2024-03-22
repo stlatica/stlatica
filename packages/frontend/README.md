@@ -3,6 +3,10 @@
 ```sh
 pnpm install
 pnpm dev
+
+# or
+
+make quick-dev
 ```
 
 [http://localhost:3000](http://localhost:3000) にサーバーが立ちます
