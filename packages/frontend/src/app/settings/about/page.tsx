@@ -1,7 +1,15 @@
-export default function Void() {
+import Link from "next/link";
+
+export default function About() {
   return (
-    <div>
-      Stlaticaは、既存のコミュニティにおける活動をさらに活発にすることを目的とした分散型SNSです。アナウンスやイベント管理などの機能を提供し、コミュニティ内での情報共有や活動への参加をより手軽にします。またActivityPubを採用しているため、複数のコミュニティ間での柔軟な連携も実現できます。仲間との絆を深め、効率的なコミュニケーションを追求しましょう！
+    <div className="flex">
+      <div className="flex w-40 flex-col">
+        <Link href="/">リリースノート</Link>
+        <Link href="/">Cookieのポリシー</Link>
+        <Link href="/">プライバシー</Link>
+        <Link href="/">利用規約</Link>
+        <Link href="/">Lisence</Link>
+      </div>
     </div>
   );
 }
