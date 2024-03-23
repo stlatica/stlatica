@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  redocly:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+    container_name: stlatica_redocly
+    volumes:
+      - type: bind
+        source: ./
+        target: /openapi
+    ports:
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:8081:8081"
+      - "127.0.0.1:8090:8090"
+      - "127.0.0.1:8091:8091"
+      # バックエンドのdockerと競合する可能性があるため4020に変更する仮措置
+      # prismは別のファイルとして分離したい
+      - "127.0.0.1:4020:4010"
+    working_dir: /openapi
+    tty: true
