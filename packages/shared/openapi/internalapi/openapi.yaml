@@ -3,13 +3,16 @@ info:
   title: stlatica_internal_api
   version: 0.1.0
   description: stlatica internal api
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 servers:
   - url: http://localhost:4010
     description: prism mock server
 paths:
   /internal/v1/users/{user_id}:
     $ref: './paths/users.yaml#/users_{user_id}'
-  /internal/v1/users/:
+  /internal/v1/users:
     $ref: './paths/users.yaml#/users'
   /internal/v1/plats/{plat_id}:
     $ref: './paths/plats.yaml#/plat_{plat_id}'
@@ -23,13 +26,11 @@ paths:
     $ref: './paths/timelines.yaml#/timelines'
   /internal/v1/images/{image_id}:
     $ref: './paths/images.yaml#/images_{image_id}'
+security:
+  - Bearer: []
 components:
-  schemas:
-    SampleUser:
-      type: object
-      required:
-        - username
-      properties:
-        username:
-          type: string
-          example: 'sample_user'
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      description: access token
