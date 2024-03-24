@@ -1,4 +1,4 @@
-# OpenAPI Files
+# OpenAPI
 
 > make
 
