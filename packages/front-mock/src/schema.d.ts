@@ -3,7 +3,6 @@
  * Do not make direct changes to the file.
  */
 
-
 export interface paths {
   "/internal/v1/users/{user_id}": {
     /**
@@ -131,7 +130,15 @@ export interface components {
        * @example INTERNAL_SERVER_ERROR
        * @enum {string}
        */
-      code: "BAD_REQUEST" | "MISSING_PARAMETER" | "UNAUTHORIZED" | "NOT_FOUND" | "INTERNAL_SERVER_ERROR" | "SERVICE_UNAVAILABLE" | "CONFLICT" | "UNPROCESSABLE_ENTITY";
+      code:
+        | "BAD_REQUEST"
+        | "MISSING_PARAMETER"
+        | "UNAUTHORIZED"
+        | "NOT_FOUND"
+        | "INTERNAL_SERVER_ERROR"
+        | "SERVICE_UNAVAILABLE"
+        | "CONFLICT"
+        | "UNPROCESSABLE_ENTITY";
       /** @example error message */
       message: string;
     };
@@ -203,7 +210,6 @@ export type $defs = Record<string, never>;
 export type external = Record<string, never>;
 
 export interface operations {
-
   /**
    * get user
    * @description get user

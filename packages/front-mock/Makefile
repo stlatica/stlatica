@@ -1,7 +1,8 @@
-# quick-dev: docker/build_node node_modules
-# 	docker compose run --rm --service-ports api_mock /bin/sh -c "pnpm dev"
-# # --service-ports でcomposeのポートを使える
+run: bundle
+	docker compose run --service-ports api_mock bash -c "pnpm start"
 
+down:
+	docker compose down
 
 dev: dev/up
 	docker compose exec -it api_mock bash
@@ -16,8 +17,6 @@ dev/up: docker/build_node
 dev/permission:
 	sudo chmod 777 -R .
 
-down:
-	docker compose down
 
 
 # 以下内部用コマンド
@@ -29,3 +28,7 @@ node_modules: package.json pnpm-lock.yaml
 docker/build_node: ../frontend/docker/Dockerfile.node.dev
 	docker build -t stlatica_front_node -f ../frontend/docker/Dockerfile.node.dev .
 # touch docker/build_node
+
+
+bundle:
+	docker compose run --service-ports api_mock bash -c "pnpm install && pnpm bundle"
