@@ -1,3 +1,4 @@
+# bunのイメージを使うより、ubuntuベースにした方が色々取り回しがよい
 FROM ubuntu:22.04
 # FROM oven/bun:1.0.33-debian
 WORKDIR /app/frontend

@@ -2,24 +2,22 @@ version: "3.9"
 services:
   front_dev:
     image: stlatica_front_bun
-    container_name: stlatica_front_dev
+    working_dir: /app/packages/frontend/stlatica-front
     volumes:
       - type: bind
-        source: ./
-        target: /app/packages/frontend
+        source: ./stlatica-front
+        target: /app/packages/frontend/stlatica-front
       - type: bind
         source: ../shared/
         target: /app/packages/shared
     ports:
-      # nextjs
-      - "127.0.0.1:3000:3000"
+      # remix
       - "127.0.0.1:5173:5173"
       # vitest
       - "127.0.0.1:51204:51204"
       # ladle
       - "127.0.0.1:61000:61000"
       - "127.0.0.1:24678:24678"
-    working_dir: /app/packages/frontend
     tty: true
 
   playwright_vrt:
