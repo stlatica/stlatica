@@ -5,27 +5,194 @@
 
 
 export interface paths {
-  "/internal/v1/users/{user_id}": external["paths/users.yaml"]["users_{user_id}"];
-  "/internal/v1/users/": external["paths/users.yaml"]["users"];
-  "/internal/v1/plats/{plat_id}": external["paths/plats.yaml"]["plat_{plat_id}"];
-  "/internal/v1/plats/{plat_id}/favorites": external["paths/plats.yaml"]["favorite_{plat_id}"];
-  "/internal/v1/plats": external["paths/plats.yaml"]["plats"];
-  "/internal/v1/timelines/{timeline_id}": external["paths/timelines.yaml"]["timelines_{timeline_id}"];
-  "/internal/v1/timelines": external["paths/timelines.yaml"]["timelines"];
-  "/internal/v1/images/{image_id}": external["paths/images.yaml"]["images_{image_id}"];
+  "/internal/v1/users/{user_id}": {
+    /**
+     * get user
+     * @description get user
+     */
+    get: operations["getUser"];
+    /**
+     * Delete User by ID.
+     * @description Delete User
+     */
+    delete: operations["deleteUser"];
+  };
+  "/internal/v1/users": {
+    /**
+     * Get users.
+     * @description Get users.
+     */
+    get: operations["getUsers"];
+    /**
+     * Create new user.
+     * @description Create new user.
+     */
+    post: operations["createUser"];
+  };
+  "/internal/v1/plats/{plat_id}": {
+    /**
+     * Get plat by ID.
+     * @description Returns plat.
+     */
+    get: operations["getPlat"];
+    /**
+     * Delete plat by ID.
+     * @description Delete plat.
+     */
+    delete: operations["deletePlat"];
+  };
+  "/internal/v1/plats/{plat_id}/favorites": {
+    /** Add "favorite" to a specific plat by ID. */
+    post: operations["postFavorite"];
+    /** Delete "favorite" to a specific plat by ID. */
+    delete: operations["deleteFavorite"];
+  };
+  "/internal/v1/plats": {
+    /**
+     * Post plat.
+     * @description Post plat.
+     */
+    post: operations["postPlat"];
+  };
+  "/internal/v1/timelines/{timeline_id}": {
+    /**
+     * get timeline
+     * @description get timeline \
+     * plat idの降順でplatの配列を取得する
+     */
+    get: operations["getTimeline"];
+  };
+  "/internal/v1/timelines": {
+    /**
+     * get timeline by query params
+     * @description get timeline by query params \
+     * 指定したクエリパラメータに一致するplatの配列を取得する
+     */
+    get: operations["getTimelineByQuery"];
+  };
+  "/internal/v1/images/{image_id}": {
+    /**
+     * get image
+     * @description get image \
+     * base64形式で返される
+     */
+    get: operations["getImage"];
+  };
 }
 
 export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    SampleUser: {
-      /** @example sample_user */
+    /**
+     * @description userを識別するための一意のID
+     *
+     * @example user_id
+     */
+    UserID: string;
+    /** @description user */
+    User: {
+      user_id: components["schemas"]["UserID"];
+      /**
+       * @description 画面上に表示されるユーザ名
+       * @example sample_actor
+       */
       username: string;
+      /**
+       * @description ユーザのプロフィール
+       * @example sample_actor
+       */
+      summary: string;
+      /**
+       * @description ユーザのアイコン画像のURL
+       * @example https://xxx/external/v1/images/sample_actor.png
+       */
+      icon: string;
+      /**
+       * @description follower数
+       * @example 20
+       */
+      followers_count: number;
+      /**
+       * @description following数
+       * @example 20
+       */
+      following_count: number;
+      /**
+       * @description 公開アカウントであるかどうか \
+       * external apiのmanuallyApprovesFollowersと同一の値となる
+       *
+       * @example true
+       */
+      is_public: boolean;
+    };
+    ErrorResponse: {
+      /**
+       * @example INTERNAL_SERVER_ERROR
+       * @enum {string}
+       */
+      code: "BAD_REQUEST" | "MISSING_PARAMETER" | "UNAUTHORIZED" | "NOT_FOUND" | "INTERNAL_SERVER_ERROR" | "SERVICE_UNAVAILABLE" | "CONFLICT" | "UNPROCESSABLE_ENTITY";
+      /** @example error message */
+      message: string;
+    };
+    /**
+     * @description platを識別するための一意のID
+     *
+     * @example 550e8400-e29b-41d4-a716-446655440000
+     */
+    PlatID: string;
+    /** @description plat */
+    Plat: {
+      plat_id: components["schemas"]["PlatID"];
+      /**
+       * @description platの本文
+       * @example これはサンプルのplatです。
+       */
+      content: string;
+      /** @description platに添付された画像のURL */
+      images?: string[];
+      /**
+       * Format: date-time
+       * @description platが作成された日時(ISO8601)
+       * @example 2024-01-01T00:00:00+09:00
+       */
+      created_at: string;
+    };
+    /** @description plat */
+    PlatPost: {
+      /**
+       * @description platの本文
+       * @example これはサンプルのplatです。
+       */
+      content: string;
+      user_id: components["schemas"]["UserID"];
     };
   };
   responses: never;
-  parameters: never;
+  parameters: {
+    /**
+     * @description userを識別するための一意のID
+     *
+     * @example user_id
+     */
+    user_id: string;
+    /**
+     * @description platを識別するための一意のID
+     *
+     * @example plat_id
+     */
+    plat_id: string;
+    /**
+     * @description timelineを識別するための一意のID
+     *
+     * @example timeline_id
+     */
+    timeline_id: string;
+    timeline_user_id: string;
+    timeline_type: "home" | "following" | "local";
+    timeline_limit?: number;
+    timeline_to_date?: string;
+  };
   requestBodies: never;
   headers: never;
   pathItems: never;
@@ -33,114 +200,755 @@ export interface components {
 
 export type $defs = Record<string, never>;
 
-export interface external {
-  "parameters/plat_id.yaml": unknown;
-  "parameters/timeline_id.yaml": unknown;
-  "parameters/timeline_queries.yaml": unknown;
-  "parameters/user_id.yaml": unknown;
-  "paths/images.yaml": {
-    "images_{image_id}": {
-      /**
-       * get image
-       * @description get image \
-       * base64形式で返される
-       */
-      get: operations["getImage"];
-    };
-  };
-  "paths/plats.yaml": {
-    "plat_{plat_id}": {
-      /**
-       * Get plat by ID.
-       * @description Returns plat.
-       */
-      get: operations["getPlat"];
-      /**
-       * Delete plat by ID.
-       * @description Delete plat.
-       */
-      delete: operations["deletePlat"];
-    };
-    plats: {
-      /**
-       * Post plat.
-       * @description Post plat.
-       */
-      post: operations["postPlat"];
-    };
-    "favorite_{plat_id}": {
-      /** Add "favorite" to a specific plat by ID. */
-      post: {
-        parameters: {
-          path: {
-            plat_id: external["parameters/plat_id.yaml"]["plat_id"];
-          };
-        };
-      };
-      /** Delete "favorite" to a specific plat by ID. */
-      delete: {
-        parameters: {
-          path: {
-            plat_id: external["parameters/plat_id.yaml"]["plat_id"];
-          };
-        };
-      };
-    };
-  };
-  "paths/timelines.yaml": {
-    timelines: {
-      /**
-       * get timeline by query params
-       * @description get timeline by query params \
-       * 指定したクエリパラメータに一致するplatの配列を取得する
-       */
-      get: operations["getTimelineByQuery"];
-    };
-    "timelines_{timeline_id}": {
-      /**
-       * get timeline
-       * @description get timeline \
-       * plat idの降順でplatの配列を取得する
-       */
-      get: operations["getTimeline"];
-    };
-  };
-  "paths/users.yaml": {
-    "users_{user_id}": {
-      /**
-       * get user
-       * @description get user
-       */
-      get: operations["getUser"];
-      /**
-       * Delete User by ID.
-       * @description Delete User
-       */
-      delete: operations["deleteUser"];
-    };
-    users: {
-      /**
-       * Get users.
-       * @description Get users.
-       */
-      get: operations["getUsers"];
-      /**
-       * Create new user.
-       * @description Create new user.
-       */
-      post: operations["createUser"];
-    };
-  };
-  "schemas/ErrorResponse.yaml": unknown;
-  "schemas/Plat.yaml": unknown;
-  "schemas/PlatID.yaml": unknown;
-  "schemas/PlatPost.yaml": unknown;
-  "schemas/User.yaml": unknown;
-  "schemas/UserID.yaml": unknown;
-}
+export type external = Record<string, never>;
 
 export interface operations {
 
+  /**
+   * get user
+   * @description get user
+   */
+  getUser: {
+    parameters: {
+      path: {
+        user_id: components["parameters"]["user_id"];
+      };
+    };
+    responses: {
+      /** @description success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["User"];
+        };
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /**
+   * Delete User by ID.
+   * @description Delete User
+   */
+  deleteUser: {
+    parameters: {
+      path: {
+        user_id: components["parameters"]["user_id"];
+      };
+    };
+    responses: {
+      /** @description No content. */
+      204: {
+        content: never;
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description unauthorized \
+       * error code:
+       * - 'UNAUTHORIZED'
+       */
+      401: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /**
+   * Get users.
+   * @description Get users.
+   */
+  getUsers: {
+    parameters: {
+      query?: {
+        /** @description ユーザ名 */
+        user_name?: string;
+      };
+    };
+    responses: {
+      /** @description success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["User"][];
+        };
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description unauthorized \
+       * error code:
+       * - 'UNAUTHORIZED'
+       */
+      401: {
+        content: never;
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /**
+   * Create new user.
+   * @description Create new user.
+   */
+  createUser: {
+    /** @description 新規ユーザーのユーザ名とメールアドレス */
+    requestBody?: {
+      content: {
+        "application/json": {
+          /** @example stlatica taro */
+          name?: string;
+          /** @example stlatica.taro@example.com */
+          email?: string;
+        };
+      };
+    };
+    responses: {
+      /** @description Created. */
+      201: {
+        content: {
+          "application/json": components["schemas"]["UserID"];
+        };
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description user id conflict \
+       * error code:
+       * - 'CONFLICT'
+       */
+      409: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description user id or user name invalid \
+       * error code:
+       * - 'UNPROCESSABLE_ENTITY'
+       */
+      422: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /**
+   * Get plat by ID.
+   * @description Returns plat.
+   */
+  getPlat: {
+    parameters: {
+      path: {
+        plat_id: components["parameters"]["plat_id"];
+      };
+    };
+    responses: {
+      /** @description success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Plat"];
+        };
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description unauthorized \
+       * error code:
+       * - 'UNAUTHORIZED'
+       */
+      401: {
+        content: never;
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /**
+   * Delete plat by ID.
+   * @description Delete plat.
+   */
+  deletePlat: {
+    parameters: {
+      path: {
+        plat_id: components["parameters"]["plat_id"];
+      };
+    };
+    responses: {
+      /** @description No content. */
+      204: {
+        content: never;
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description unauthorized \
+       * error code:
+       * - 'UNAUTHORIZED'
+       */
+      401: {
+        content: never;
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /** Add "favorite" to a specific plat by ID. */
+  postFavorite: {
+    parameters: {
+      path: {
+        plat_id: components["parameters"]["plat_id"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: never;
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description unauthorized \
+       * error code:
+       * - 'UNAUTHORIZED'
+       */
+      401: {
+        content: never;
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /** Delete "favorite" to a specific plat by ID. */
+  deleteFavorite: {
+    parameters: {
+      path: {
+        plat_id: components["parameters"]["plat_id"];
+      };
+    };
+    responses: {
+      /** @description No content. */
+      204: {
+        content: never;
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description unauthorized \
+       * error code:
+       * - 'UNAUTHORIZED'
+       */
+      401: {
+        content: never;
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /**
+   * Post plat.
+   * @description Post plat.
+   */
+  postPlat: {
+    /** @description 投稿内容 */
+    requestBody?: {
+      content: {
+        "application/json": components["schemas"]["PlatPost"];
+      };
+    };
+    responses: {
+      /** @description Created. */
+      201: {
+        content: never;
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description unauthorized \
+       * error code:
+       * - 'UNAUTHORIZED'
+       */
+      401: {
+        content: never;
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /**
+   * get timeline
+   * @description get timeline \
+   * plat idの降順でplatの配列を取得する
+   */
+  getTimeline: {
+    parameters: {
+      path: {
+        timeline_id: components["parameters"]["timeline_id"];
+      };
+    };
+    responses: {
+      /** @description success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Plat"][];
+        };
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /**
+   * get timeline by query params
+   * @description get timeline by query params \
+   * 指定したクエリパラメータに一致するplatの配列を取得する
+   */
+  getTimelineByQuery: {
+    parameters: {
+      query: {
+        user_id: components["parameters"]["timeline_user_id"];
+        type: components["parameters"]["timeline_type"];
+        limit?: components["parameters"]["timeline_limit"];
+        to_date?: components["parameters"]["timeline_to_date"];
+      };
+    };
+    responses: {
+      /** @description success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Plat"][];
+        };
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description not found \
+       * error code:
+       * - 'NOT_FOUND'
+       */
+      404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description unprocessable entity \
+       * error code:
+       * - 'INVALID_PARAMETER'
+       */
+      422: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
   /**
    * get image
    * @description get image \
@@ -173,7 +981,7 @@ export interface operations {
        */
       400: {
         content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
+          "application/json": components["schemas"]["ErrorResponse"];
         };
       };
       /**
@@ -191,7 +999,7 @@ export interface operations {
        */
       404: {
         content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
+          "application/json": components["schemas"]["ErrorResponse"];
         };
       };
       /**
@@ -201,7 +1009,7 @@ export interface operations {
        */
       500: {
         content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
+          "application/json": components["schemas"]["ErrorResponse"];
         };
       };
       /**
@@ -211,623 +1019,7 @@ export interface operations {
        */
       503: {
         content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-    };
-  };
-  /**
-   * Get plat by ID.
-   * @description Returns plat.
-   */
-  getPlat: {
-    parameters: {
-      path: {
-        plat_id: external["parameters/plat_id.yaml"]["plat_id"];
-      };
-    };
-    responses: {
-      /** @description success */
-      200: {
-        content: {
-          "application/json": external["schemas/Plat.yaml"]["Plat"];
-        };
-      };
-      /**
-       * @description bad request \
-       * error code:
-       * - 'BAD_REQUEST'
-       * - 'MISSING_PARAMETER'
-       */
-      400: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description unauthorized \
-       * error code:
-       * - 'UNAUTHORIZED'
-       */
-      401: {
-        content: never;
-      };
-      /**
-       * @description not found \
-       * error code:
-       * - 'NOT_FOUND'
-       */
-      404: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description internal server error \
-       * error code:
-       * - 'INTERNAL_SERVER_ERROR'
-       */
-      500: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description service unavailable \
-       * error code:
-       * - 'SERVICE_UNAVAILABLE'
-       */
-      503: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-    };
-  };
-  /**
-   * Delete plat by ID.
-   * @description Delete plat.
-   */
-  deletePlat: {
-    parameters: {
-      path: {
-        plat_id: external["parameters/plat_id.yaml"]["plat_id"];
-      };
-    };
-    responses: {
-      /** @description No content. */
-      204: {
-        content: never;
-      };
-      /**
-       * @description bad request \
-       * error code:
-       * - 'BAD_REQUEST'
-       * - 'MISSING_PARAMETER'
-       */
-      400: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description unauthorized \
-       * error code:
-       * - 'UNAUTHORIZED'
-       */
-      401: {
-        content: never;
-      };
-      /**
-       * @description not found \
-       * error code:
-       * - 'NOT_FOUND'
-       */
-      404: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description internal server error \
-       * error code:
-       * - 'INTERNAL_SERVER_ERROR'
-       */
-      500: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description service unavailable \
-       * error code:
-       * - 'SERVICE_UNAVAILABLE'
-       */
-      503: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-    };
-  };
-  /**
-   * Post plat.
-   * @description Post plat.
-   */
-  postPlat: {
-    /** @description 投稿内容 */
-    requestBody?: {
-      content: {
-        "application/json": external["schemas/PlatPost.yaml"]["PlatPost"];
-      };
-    };
-    responses: {
-      /** @description Created. */
-      201: {
-        content: never;
-      };
-      /**
-       * @description bad request \
-       * error code:
-       * - 'BAD_REQUEST'
-       * - 'MISSING_PARAMETER'
-       */
-      400: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description unauthorized \
-       * error code:
-       * - 'UNAUTHORIZED'
-       */
-      401: {
-        content: never;
-      };
-      /**
-       * @description not found \
-       * error code:
-       * - 'NOT_FOUND'
-       */
-      404: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description internal server error \
-       * error code:
-       * - 'INTERNAL_SERVER_ERROR'
-       */
-      500: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description service unavailable \
-       * error code:
-       * - 'SERVICE_UNAVAILABLE'
-       */
-      503: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-    };
-  };
-  /**
-   * get timeline by query params
-   * @description get timeline by query params \
-   * 指定したクエリパラメータに一致するplatの配列を取得する
-   */
-  getTimelineByQuery: {
-    parameters: {
-      query: {
-        user_id: external["parameters/timeline_queries.yaml"]["timeline_user_id"];
-        type: external["parameters/timeline_queries.yaml"]["timeline_type"];
-        limit?: external["parameters/timeline_queries.yaml"]["timeline_limit"];
-        to_date?: external["parameters/timeline_queries.yaml"]["timeline_to_date"];
-      };
-    };
-    responses: {
-      /** @description success */
-      200: {
-        content: {
-          "application/json": external["schemas/Plat.yaml"]["Plat"][];
-        };
-      };
-      /**
-       * @description bad request \
-       * error code:
-       * - 'BAD_REQUEST'
-       * - 'MISSING_PARAMETER'
-       */
-      400: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description not found \
-       * error code:
-       * - 'NOT_FOUND'
-       */
-      404: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description unprocessable entity \
-       * error code:
-       * - 'INVALID_PARAMETER'
-       */
-      422: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description internal server error \
-       * error code:
-       * - 'INTERNAL_SERVER_ERROR'
-       */
-      500: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description service unavailable \
-       * error code:
-       * - 'SERVICE_UNAVAILABLE'
-       */
-      503: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-    };
-  };
-  /**
-   * get timeline
-   * @description get timeline \
-   * plat idの降順でplatの配列を取得する
-   */
-  getTimeline: {
-    parameters: {
-      path: {
-        timeline_id: external["parameters/timeline_id.yaml"]["timeline_id"];
-      };
-    };
-    responses: {
-      /** @description success */
-      200: {
-        content: {
-          "application/json": external["schemas/Plat.yaml"]["Plat"][];
-        };
-      };
-      /**
-       * @description bad request \
-       * error code:
-       * - 'BAD_REQUEST'
-       * - 'MISSING_PARAMETER'
-       */
-      400: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description not found \
-       * error code:
-       * - 'NOT_FOUND'
-       */
-      404: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description internal server error \
-       * error code:
-       * - 'INTERNAL_SERVER_ERROR'
-       */
-      500: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description service unavailable \
-       * error code:
-       * - 'SERVICE_UNAVAILABLE'
-       */
-      503: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-    };
-  };
-  /**
-   * get user
-   * @description get user
-   */
-  getUser: {
-    parameters: {
-      path: {
-        user_id: external["parameters/user_id.yaml"]["user_id"];
-      };
-    };
-    responses: {
-      /** @description success */
-      200: {
-        content: {
-          "application/json": external["schemas/User.yaml"]["User"];
-        };
-      };
-      /**
-       * @description bad request \
-       * error code:
-       * - 'BAD_REQUEST'
-       * - 'MISSING_PARAMETER'
-       */
-      400: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description not found \
-       * error code:
-       * - 'NOT_FOUND'
-       */
-      404: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description internal server error \
-       * error code:
-       * - 'INTERNAL_SERVER_ERROR'
-       */
-      500: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description service unavailable \
-       * error code:
-       * - 'SERVICE_UNAVAILABLE'
-       */
-      503: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-    };
-  };
-  /**
-   * Delete User by ID.
-   * @description Delete User
-   */
-  deleteUser: {
-    parameters: {
-      path: {
-        user_id: external["parameters/user_id.yaml"]["user_id"];
-      };
-    };
-    responses: {
-      /** @description No content. */
-      204: {
-        content: never;
-      };
-      /**
-       * @description bad request \
-       * error code:
-       * - 'BAD_REQUEST'
-       * - 'MISSING_PARAMETER'
-       */
-      400: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description unauthorized \
-       * error code:
-       * - 'UNAUTHORIZED'
-       */
-      401: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description not found \
-       * error code:
-       * - 'NOT_FOUND'
-       */
-      404: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description internal server error \
-       * error code:
-       * - 'INTERNAL_SERVER_ERROR'
-       */
-      500: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description service unavailable \
-       * error code:
-       * - 'SERVICE_UNAVAILABLE'
-       */
-      503: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-    };
-  };
-  /**
-   * Get users.
-   * @description Get users.
-   */
-  getUsers: {
-    parameters: {
-      query?: {
-        /** @description ユーザ名 */
-        user_name?: string;
-      };
-      path: {
-        user_id: external["parameters/user_id.yaml"]["user_id"];
-      };
-    };
-    responses: {
-      /** @description success */
-      200: {
-        content: {
-          "application/json": unknown;
-        };
-      };
-      /**
-       * @description bad request \
-       * error code:
-       * - 'BAD_REQUEST'
-       * - 'MISSING_PARAMETER'
-       */
-      400: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description unauthorized \
-       * error code:
-       * - 'UNAUTHORIZED'
-       */
-      401: {
-        content: never;
-      };
-      /**
-       * @description not found \
-       * error code:
-       * - 'NOT_FOUND'
-       */
-      404: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description internal server error \
-       * error code:
-       * - 'INTERNAL_SERVER_ERROR'
-       */
-      500: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description service unavailable \
-       * error code:
-       * - 'SERVICE_UNAVAILABLE'
-       */
-      503: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-    };
-  };
-  /**
-   * Create new user.
-   * @description Create new user.
-   */
-  createUser: {
-    /** @description 新規ユーザーのユーザ名とメールアドレス */
-    requestBody?: {
-      content: {
-        "application/json": {
-          /** @example stlatica taro */
-          name?: string;
-          /** @example stlatica.taro@example.com */
-          email?: string;
-        };
-      };
-    };
-    responses: {
-      /**
-       * @description bad request \
-       * error code:
-       * - 'BAD_REQUEST'
-       * - 'MISSING_PARAMETER'
-       */
-      400: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description not found \
-       * error code:
-       * - 'NOT_FOUND'
-       */
-      404: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description user id conflict \
-       * error code:
-       * - 'CONFLICT'
-       */
-      409: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description user id or user name invalid \
-       * error code:
-       * - 'UNPROCESSABLE_ENTITY'
-       */
-      422: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description internal server error \
-       * error code:
-       * - 'INTERNAL_SERVER_ERROR'
-       */
-      500: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
-        };
-      };
-      /**
-       * @description service unavailable \
-       * error code:
-       * - 'SERVICE_UNAVAILABLE'
-       */
-      503: {
-        content: {
-          "application/json": external["schemas/ErrorResponse.yaml"]["ErrorResponse"];
+          "application/json": components["schemas"]["ErrorResponse"];
         };
       };
     };

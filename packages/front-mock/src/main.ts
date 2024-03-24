@@ -1,26 +1,28 @@
 import express from "express";
 const app = express();
-const port = 3000;
+const port = 4010;
 import type * as MyTypes from "./schema";
-
-// app.use(
-//   OpenApiValidator.middleware({
-//     apiSpec: "../openapi/internalapi/openapi-bundled.yaml",
-//     // apiSpec: "../openapi/internalapi/openapi.yaml",
-//     validateRequests: true, // (default)
-//     validateResponses: true, // false by default
-//   }),
-// );
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/internal/v1/users/hoge", (req, res) => {
-  type T = MyTypes.external["schemas/User.yaml"];
-  const ss: T = {};
+app.get("/internal/v1/timelines/*", (req, res) => {
+  type Res =
+    MyTypes.paths["/internal/v1/timelines/{timeline_id}"]["get"]["responses"]["200"]["content"]["application/json"];
 
-  res.send("Hello World!");
+  const ResGen = (): Res[number] => {
+    return {
+      plat_id: "string",
+      content: "",
+      images: undefined,
+      created_at: new Date().toISOString(),
+    };
+  };
+
+  const r: Res = [ResGen()];
+
+  res.send(r);
 });
 
 app.listen(port, () => {

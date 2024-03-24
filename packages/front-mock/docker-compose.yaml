@@ -10,9 +10,6 @@ services:
         source: ../shared/openapi
         target: /app/openapi
     ports:
-      # nextjs
-      - "127.0.0.1:4010:3000"
-      # vitest
-      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:4010:4010"
     working_dir: /app/express
     tty: true
