@@ -19,12 +19,9 @@ const Repository = "https://github.com/stlatica/stlatic"
 // SoftwareVersion is member of Software
 const SoftwareVersion = "0.1.0"
 
-// TestUserCount is member of is Users
-const TestUserCount = 1
-
 // NodeInfo is interface for NodeInfoData
 type NodeInfo interface {
-	GetNodeInfoData() NodeInfoData
+	GetNodeInfoData(userCount int) NodeInfoData
 }
 
 // NewNodeInfo is constructor for NodeInfo
@@ -38,7 +35,7 @@ type nodeInfo struct {
 	NodeInfoData
 }
 
-func (n *nodeInfo) GetNodeInfoData() NodeInfoData {
+func (n *nodeInfo) GetNodeInfoData(userCount int) NodeInfoData {
 	return NodeInfoData{
 		OpenRegistrations: os.Getenv("OPEN_REGISTRATIONS"), // 基本的には値を環境変数から読み込む形になるはず
 		Protocols:         Protocol,                        // 固定値は定数とかで置いてもいいかも
@@ -49,8 +46,7 @@ func (n *nodeInfo) GetNodeInfoData() NodeInfoData {
 		},
 		Usage: usage{
 			Users: users{
-				//TODO: ユーザ数のカウントに置き換え　https://github.com/stlatica/stlatica/issues/318
-				Total: TestUserCount,
+				Total: userCount,
 			},
 		},
 		Services: services{
