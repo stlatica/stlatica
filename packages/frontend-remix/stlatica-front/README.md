@@ -34,3 +34,7 @@ Make sure to deploy the output of `npm run build`
 
 - `build/server`
 - `build/client`
+
+# 削除予定メモ
+
+- tailwindcss

@@ -6,7 +6,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export const Layout = ({ children }: { readonly children: React.ReactNode }) => {
   return (
     <html lang="en">
       <head>
