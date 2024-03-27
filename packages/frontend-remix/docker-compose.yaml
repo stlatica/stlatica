@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  front_dev:
+    image: stlatica_front_bun
+    working_dir: /app/packages/frontend/stlatica-front
+    volumes:
+      - type: bind
+        source: ./stlatica-front
+        target: /app/packages/frontend/stlatica-front
+      - type: bind
+        source: ../shared/
+        target: /app/packages/shared
+    ports:
+      # remix
+      - "127.0.0.1:5173:5173"
+      # vitest
+      - "127.0.0.1:51204:51204"
+      # ladle
+      - "127.0.0.1:61000:61000"
+      - "127.0.0.1:24678:24678"
+    tty: true
+
+  playwright_vrt:
+    image: playwright-vrt
+    volumes:
+      - type: bind
+        source: "./"
+        target: /app
+    ports:
+      - 127.0.0.1:9323:9323
+
+  # prism-internal:
+  #   container_name: prism-internal
+  #   image: stoplight/prism:4
+  #   command: "mock -h 0.0.0.0 /tmp/api.oas3.yml"
+  #   volumes:
+  #     - ../shared/openapi/internalapi/openapi.yaml:/tmp/api.oas3.yml:ro
+  #   ports:
+  #     - "4010:4010"
