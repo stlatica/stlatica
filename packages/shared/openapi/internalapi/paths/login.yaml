@@ -1,0 +1,69 @@
+login:
+  post:
+    operationId: login
+    tags:
+      - Login
+    summary: login
+    description: login
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              preferred_user_id:
+                type: string
+                example: 'sample_userId'
+              password:
+                type: string
+                example: 'password'
+    responses:
+      200:
+        description: success
+        headers:
+          Set-Cookie:
+            description: |
+              Set-Cookieヘッダ \
+              ログイン情報を保持するためのCookie \
+              有効期限は1時間
+            schema:
+              type: string
+              example: 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c; Max-Age=3600; Secure; HttpOnly; SameSite=Strict'
+      400:
+        description: |
+          bad request \
+          error code:
+          - 'BAD_REQUEST'
+          - 'MISSING_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      401:
+        description: |
+          unauthorized \
+          error code:
+          - 'UNAUTHORIZED'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
