@@ -22,11 +22,11 @@ export const PlatCell: React.FC<PlatCellProps> = ({
   userName,
 }) => {
   return (
-    <div className="bg-gray-800 p-5 text-white">
+    <div className="border-2 border-gray-500 bg-gray-800 p-5 text-white">
       {/* ユーザプロファイル */}
       <div className="flex h-12">
         {/* アイコン */}
-        <div className="h-12 w-12 rounded-full bg-white text-black" />
+        <div className="size-12 rounded-full bg-white text-black" />
         {/* ユーザ名 と ユーザID */}
         <div className="px-3">
           {/* ユーザ名 */}

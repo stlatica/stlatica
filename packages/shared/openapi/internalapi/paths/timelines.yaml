@@ -1,3 +1,72 @@
+timelines:
+  get:
+    operationId: getTimelineByQuery
+    tags:
+      - Timeline
+    summary: get timeline by query params
+    description: |
+      get timeline by query params \
+      指定したクエリパラメータに一致するplatの配列を取得する
+    parameters:
+      - $ref: '../parameters/timeline_queries.yaml#/timeline_user_id'
+      - $ref: '../parameters/timeline_queries.yaml#/timeline_type'
+      - $ref: '../parameters/timeline_queries.yaml#/timeline_limit'
+      - $ref: '../parameters/timeline_queries.yaml#/timeline_to_date'
+    responses:
+      200:
+        description: success
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/Plat.yaml#/Plat'
+      400:
+        description: |
+          bad request \
+          error code:
+          - 'BAD_REQUEST'
+          - 'MISSING_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      404:
+        description: |
+          not found \
+          error code:
+          - 'NOT_FOUND'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      422:
+        description: |
+          unprocessable entity \
+          error code:
+          - 'INVALID_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
 timelines_{timeline_id}:
   get:
     operationId: getTimeline

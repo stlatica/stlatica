@@ -14,6 +14,10 @@ ladle: dev/up
 dev/up: docker/build_node node_modules
 	docker compose up --build -d front_dev
 
+# TODO: 権限のその場しのぎ対応 https://github.com/stlatica/stlatica/issues/354
+dev/permission:
+	sudo chmod 777 -R .
+
 down:
 	docker compose down
 

@@ -2,6 +2,9 @@ export GOBIN := $(PWD)/bin
 GO_PATH:=$(shell go env GOPATH)
 export PATH:=$(GOBIN):$(GO_PATH):$(PATH)
 
+list:
+	@grep "^[a-zA-Z\-]*:" Makefile | grep -v "grep" | sed -e 's/^/make /' | sed -e 's/://'
+
 install-tools:
 	@./tools/install_tools.sh "./tools/tools.go"
 
@@ -40,8 +43,14 @@ start-docker-internalapi:
 stop-docker-internalapi:
 	SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server
 
+
 start-object-storage:
 	docker compose up minio
 
 stop-object-storage:
 	docker compose down minio
+
+# モックサーバーの起動
+start-mock-internalapi:
+	docker run --rm -p 127.0.0.1:8080:8080 --mount type=bind,source="./",target="/go/src" -w /go/src -it golang:1.20.6 /bin/sh -c "go run mock/cmd/internalapi/main.go"
+
