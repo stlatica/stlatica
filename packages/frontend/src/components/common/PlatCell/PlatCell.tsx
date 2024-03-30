@@ -1,5 +1,6 @@
+import { Menu } from "@mantine/core";
 import React from "react";
-import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
+import { MdAutorenew, MdComment, MdStarBorder, MdMoreHoriz } from "react-icons/md";
 
 import { UserIcon } from "@/components/common/UserIcon";
 import { DateTime } from "@/components/others/DateTime";
@@ -42,12 +43,26 @@ export const PlatCell: React.FC<PlatCellProps> = ({
         {/* ユーザ名 と ユーザID */}
         <div className="px-3">
           {/* ユーザ名 */}
-          <div className="text-lg">{userName}</div> {/* ユーザID */}
+          <div className="text-lg">{userName}</div>
+          {/* ユーザID */}
           <div className="text-sm text-gray-500">{userId}</div>
+        </div>
+        {/* プルダウンメニュー    参考 : https://mantine.dev/core/menu/ */}
+        <div className="ml-auto">
+          <Menu>
+            <Menu.Target>
+              <MdMoreHoriz />
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item>Delete this plat</Menu.Item>
+              <Menu.Item>Mute this user</Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
         </div>
       </div>
       {/* platの内容 */}
       <div className="p-5">{content}</div>
+      {/* 投稿日時 */}
       <div>
         <DateTime date={createdAt} formatDate={formatDateLocale} />
       </div>
