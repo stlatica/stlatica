@@ -1,25 +1,25 @@
-DOCKER_VRT_RUN := docker compose run --rm --service-ports playwright_vrt /bin/sh -c
+DOCKER_VRT_RUN := docker-compose run --rm --service-ports playwright_vrt /bin/sh -c
 
 quick-dev: docker/build_node node_modules
-	docker compose run --rm --service-ports front_dev /bin/sh -c "pnpm dev"
+	docker-compose run --rm --service-ports front_dev /bin/sh -c "pnpm dev"
 # --service-ports でcomposeのポートを使える
 
 
 dev: dev/up
-	docker compose exec -it front_dev bash
+	docker-compose exec -it front_dev bash
 
 ladle: dev/up
-	docker compose exec -it front_dev pnpm ladle:dev
+	docker-compose exec -it front_dev pnpm ladle:dev
 
 dev/up: docker/build_node node_modules
-	docker compose up --build -d front_dev
+	docker-compose up --build -d front_dev
 
 # TODO: 権限のその場しのぎ対応 https://github.com/stlatica/stlatica/issues/354
 dev/permission:
 	sudo chmod 777 -R .
 
 down:
-	docker compose down
+	docker-compose down
 
 
 docker/clear-cache:
@@ -27,7 +27,7 @@ docker/clear-cache:
 	rm docker/build_playwright
 
 docker/stop: 
-	docker compose down --remove-orphans
+	docker-compose down --remove-orphans
 
 vrt: docker/build_playwright
 	${DOCKER_VRT_RUN} "pnpm install --frozen-lockfile --force && pnpm vrt"
