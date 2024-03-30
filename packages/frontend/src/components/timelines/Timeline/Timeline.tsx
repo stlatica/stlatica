@@ -16,6 +16,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
       <div className="flex h-full flex-col gap-2">
         <PlatCell
           content="はじめてのplat"
+          createdAt="2021-01-30T00:00:00+09:00"
           favoriteCount={0}
           replyCount={0}
           shareCount={0}
@@ -24,6 +25,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
         />
         <PlatCell
           content="はじめてのplat"
+          createdAt="2021-01-30T00:00:00+09:00"
           favoriteCount={0}
           replyCount={0}
           shareCount={0}
@@ -32,6 +34,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
         />
         <PlatCell
           content="はじめてのplat"
+          createdAt="2021-01-30T00:00:00+09:00"
           favoriteCount={0}
           replyCount={0}
           shareCount={0}
@@ -40,6 +43,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
         />
         <PlatCell
           content="はじめてのplat"
+          createdAt="2021-01-30T00:00:00+09:00"
           favoriteCount={0}
           replyCount={0}
           shareCount={0}
@@ -48,6 +52,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
         />
         <PlatCell
           content="はじめてのplat"
+          createdAt="2021-01-30T00:00:00+09:00"
           favoriteCount={0}
           replyCount={0}
           shareCount={0}

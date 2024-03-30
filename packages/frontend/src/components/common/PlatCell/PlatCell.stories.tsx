@@ -12,6 +12,7 @@ export const Story1: Story = () => {
   return (
     <PlatCell
       content="3週連続でレート下がってるんだが。"
+      createdAt="2021-01-30T00:00:00+09:00"
       favoriteCount={4}
       replyCount={0}
       shareCount={1}
@@ -26,6 +27,7 @@ export const Story2: Story = () => {
   return (
     <PlatCell
       content="nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) "
+      createdAt="2021-01-30T00:00:00+09:00"
       favoriteCount={8}
       replyCount={1}
       shareCount={3}
@@ -41,6 +43,7 @@ export const Story3: Story = () => {
     <div className="w-[310px]">
       <PlatCell
         content="nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) "
+        createdAt="2021-01-30T00:00:00+09:00"
         favoriteCount={8}
         replyCount={1}
         shareCount={3}
@@ -57,6 +60,7 @@ export const Story4: Story = () => {
     <div className="w-[700px]">
       <PlatCell
         content="nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) "
+        createdAt="2021-01-30T00:00:00+09:00"
         favoriteCount={8}
         replyCount={1}
         shareCount={3}
@@ -73,6 +77,7 @@ export const Story5: Story = () => {
     <div className="w-[1000px]">
       <PlatCell
         content="nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) "
+        createdAt="2021-01-30T00:00:00+09:00"
         favoriteCount={8}
         replyCount={1}
         shareCount={3}

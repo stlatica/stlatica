@@ -1,8 +1,11 @@
 import React from "react";
 import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
 
+import { DateTime } from "@/components/others/DateTime";
+
 type PlatCellProps = {
   readonly content: string;
+  readonly createdAt: string;
   readonly favoriteCount: number;
   readonly replyCount: number;
   readonly shareCount: number;
@@ -15,12 +18,16 @@ type PlatCellProps = {
  */
 export const PlatCell: React.FC<PlatCellProps> = ({
   content,
+  createdAt,
   favoriteCount,
   replyCount,
   shareCount,
   userId,
   userName,
 }) => {
+  const formatDateLocale = (date: Date): string => {
+    return date.toLocaleString();
+  };
   return (
     <div className="border-2 border-gray-500 bg-gray-800 p-5 text-white">
       {/* ユーザプロファイル */}
@@ -36,6 +43,9 @@ export const PlatCell: React.FC<PlatCellProps> = ({
       </div>
       {/* platの内容 */}
       <div className="p-5">{content}</div>
+      <div>
+        <DateTime date={createdAt} formatDate={formatDateLocale} />
+      </div>
       {/* 下部のアイコン */}
       <div className="flex">
         {/* 返信数 */}
