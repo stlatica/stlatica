@@ -1,5 +1,7 @@
 import React from "react";
 
+import { UserIconSampleImage } from "@/components/common/UserIcon/UserIconSampleImage";
+
 import { PlatCell } from "./PlatCell";
 
 import type { Story, StoryDefault } from "@ladle/react";
@@ -16,6 +18,7 @@ export const Story1: Story = () => {
       favoriteCount={4}
       replyCount={0}
       shareCount={1}
+      userIcon={UserIconSampleImage}
       userId="@Nobuchi32384"
       userName="夏ノブチ"
     />
@@ -31,6 +34,7 @@ export const Story2: Story = () => {
       favoriteCount={8}
       replyCount={1}
       shareCount={3}
+      userIcon={UserIconSampleImage}
       userId="@Nobuchi79323"
       userName="冬ノブチ"
     />
@@ -47,6 +51,7 @@ export const Story3: Story = () => {
         favoriteCount={8}
         replyCount={1}
         shareCount={3}
+        userIcon={UserIconSampleImage}
         userId="@Nobuchi79323"
         userName="冬ノブチ"
       />
@@ -64,6 +69,7 @@ export const Story4: Story = () => {
         favoriteCount={8}
         replyCount={1}
         shareCount={3}
+        userIcon={UserIconSampleImage}
         userId="@Nobuchi79323"
         userName="冬ノブチ"
       />
@@ -81,6 +87,7 @@ export const Story5: Story = () => {
         favoriteCount={8}
         replyCount={1}
         shareCount={3}
+        userIcon={UserIconSampleImage}
         userId="@Nobuchi79323"
         userName="冬ノブチ"
       />

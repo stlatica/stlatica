@@ -1,6 +1,7 @@
 import React from "react";
 
 import { PlatCell } from "@/components/common/PlatCell";
+import { UserIconSampleImage } from "@/components/common/UserIcon/UserIconSampleImage";
 
 type TimelineProps = {
   // children: React.ReactNode;
@@ -20,6 +21,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
           favoriteCount={0}
           replyCount={0}
           shareCount={0}
+          userIcon={UserIconSampleImage}
           userId="test"
           userName="テストユーザー"
         />
@@ -29,6 +31,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
           favoriteCount={0}
           replyCount={0}
           shareCount={0}
+          userIcon={UserIconSampleImage}
           userId="test"
           userName="テストユーザー"
         />
@@ -38,6 +41,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
           favoriteCount={0}
           replyCount={0}
           shareCount={0}
+          userIcon={UserIconSampleImage}
           userId="test"
           userName="テストユーザー"
         />
@@ -47,6 +51,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
           favoriteCount={0}
           replyCount={0}
           shareCount={0}
+          userIcon={UserIconSampleImage}
           userId="test"
           userName="テストユーザー"
         />
@@ -56,6 +61,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
           favoriteCount={0}
           replyCount={0}
           shareCount={0}
+          userIcon={UserIconSampleImage}
           userId="test"
           userName="テストユーザー"
         />
