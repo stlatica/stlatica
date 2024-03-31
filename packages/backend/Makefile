@@ -45,7 +45,7 @@ stop-docker-internalapi:
 
 
 start-object-storage:
-	docker compose up minio
+	docker compose up -d minio
 
 stop-object-storage:
 	docker compose down minio
