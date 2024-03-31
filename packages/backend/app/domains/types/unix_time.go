@@ -14,6 +14,11 @@ func NewUnixTimeFromTime(time time.Time) UnixTime {
 	return UnixTime(time.Unix())
 }
 
+// NewUnixTimeFromCurrentTime returns a new unix time from current time.
+func NewUnixTimeFromCurrentTime() UnixTime {
+	return NewUnixTimeFromTime(time.Now())
+}
+
 // Value implements driver.Valuer interface.
 func (ut UnixTime) Value() (driver.Value, error) {
 	return int64(ut), nil
