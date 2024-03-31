@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1/openapi"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/actors"
-	"github.com/tidwall/gjson"
+	"github.com/stlatica/stlatica/packages/backend/app/usecases/plats"
 )
 
 type handler struct {
@@ -18,6 +18,9 @@ func newHandler(initContent ControllerInitContents) openapi.ServerInterface {
 	return &handler{
 		userController: &userController{
 			actorUseCase: initContent.ActorUseCase,
+		},
+		platController: &platController{
+			platUseCase: initContent.PlatUseCase,
 		},
 	}
 }
@@ -43,9 +46,7 @@ func (h *handler) PostPlat(ectx echo.Context) error {
 	if err != nil {
 		return err
 	}
-	actorIDStr := gjson.Get(plat.UserId, "user_id")
-	content := gjson.Get(plat.Content, "content")
-	response, err := h.platController.PostPlat(ectx, actorIDStr.String(), content.String())
+	response, err := h.platController.PostPlat(ectx, plat.UserId, plat.Content)
 	if err != nil {
 		return err
 	}
@@ -75,4 +76,5 @@ func (h *handler) GetImage(_ echo.Context, _ string) error {
 // ControllerInitContents is the struct to hold the dependencies for the controller.
 type ControllerInitContents struct {
 	ActorUseCase actors.ActorUseCase
+	PlatUseCase  plats.PlatUseCase
 }
