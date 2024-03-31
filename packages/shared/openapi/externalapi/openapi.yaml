@@ -3,6 +3,12 @@ info:
   title: stlatica_external_api
   version: 0.1.0
   description: stlatica external api
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:4010
+    description: prism mock server
 paths:
   /external/v1/sample_users/{sample_user_id}:
     get:
@@ -80,7 +86,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /.well-known/webfinger?resource=acct:{actor_id}@{server_domain}:
+  /.well-known/webfinger:
     get:
       operationId: getWebfinger
       tags:
@@ -88,8 +94,18 @@ paths:
       summary: get Webfinger
       description: get Webfinger
       parameters:
-        - $ref: '#/components/parameters/actor_id'
-        - $ref: '#/components/parameters/server_domain'
+        - in: query
+          required: true
+          name: resource
+          description: |
+            resource
+            
+            format: acct:{actor_id}@{server_domain}
+              - actor_id: actor_id e.g.) 'example_actor'
+              - server_domain: server_domain e.g.) 'stlatica.hoge'
+          schema:
+            type: string
+          example: 'acct:{actor_id}@{server_domain}'
       responses:
         200:
           description: success
@@ -97,20 +113,6 @@ paths:
             application/jrd+json:
               schema:
                 $ref: '#/components/schemas/Webfinger'
-              example:
-                subject: 'acct:example_actor@stlatica.hoge'
-                aliases:
-                  - 'https://stlatica.hoge/@example_actor'
-                  - 'https://stlatica.hoge/users/example_actor'
-                links:
-                  - rel: 'http://webfinger.net/rel/profile-page'
-                    type: 'text/html'
-                    href: 'https://stlatica.hoge/@example_actor'
-                  - rel: 'self'
-                    type: 'application/activity+json'
-                    href: 'https://stlatica.hoge/users/example_actor'
-                  - rel: 'http://ostatus.org/schema/1.0/subscribe'
-                    template: 'https://stlatica.hoge/authorize_interaction?uri={uri}'
         400:
           description: |
             bad request \
@@ -235,14 +237,6 @@ components:
       schema:
         type: string
       example: 'actor_id'
-    server_domain:
-      in: path
-      required: true
-      name: domain_name
-      description: server domain
-      schema:
-        type: string
-      example: 'stlatica.hoge'
   schemas:
     SampleUser:
       type: object
@@ -334,13 +328,42 @@ components:
       type: object
       description: Webfinger
       required:
-        - 'actor_id'
-        - 'server_domain'
+        - subject
+        - aliases
+        - links
       properties:
-        actor_id:
-          $ref: '#/components/parameters/actor_id'
-        server_domain:
-          $ref: '#/components/parameters/server_domain'
+        subject:
+          type: string
+          example: 'acct:example_actor@stlatica.hoge'
+        aliases:
+          type: string
+          example:
+            - 'https://stlatica.hoge/@example_actor'
+            - 'https://stlatica.hoge/users/example_actor'
+        links:
+          type: array
+          items:
+            type: object
+            properties:
+              rel:
+                type: string
+                example:
+                  - 'http://webfinger.net/rel/profile-page'
+                  - 'self'
+                  - 'http://ostatus.org/schema/1.0/subscribe'
+              type:
+                type: string
+                example:
+                  - 'text/html'
+                  - 'application/activity+json'
+              href:
+                type: string
+                example:
+                  - 'https://stlatica.hoge/@example_actor'
+                  - 'https://stlatica.hoge/users/example_actor'
+              template:
+                type: string
+                example: 'https://stlatica.hoge/authorize_interaction?uri={uri}'
     JSONLDContexts:
       description: |
         以下のうちのいずれかを使用する
@@ -455,3 +478,4 @@ components:
         message:
           type: string
           example: 'error message'
+security: []

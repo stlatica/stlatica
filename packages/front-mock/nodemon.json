@@ -1,0 +1,10 @@
+{
+  "watch": [
+    "src"
+  ],
+  "ext": "ts",
+  "ignore": [
+    "*.test.ts"
+  ],
+  "exec": "pnpm bundle && pnpm start"
+}

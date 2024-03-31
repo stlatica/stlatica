@@ -1,0 +1,29 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "esbuild src/main.ts --minify --bundle --sourcemap --platform=node --outfile=build/express.js",
+    "dev": "nodemon",
+    "lint": "biome check --apply ./src",
+    "start": "node --enable-source-maps build/express.js",
+    "ts": "tsc --project tsconfig.json --noEmit",
+    "gen": "openapi-typescript ../openapi/internalapi/openapi-bundled.yaml -o ./src/schema.d.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^3.6.0",
+    "express": "^4.19.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.6.1",
+    "@types/node": "^20.11.30",
+    "esbuild": "^0.20.2",
+    "nodemon": "^3.1.0",
+    "openapi-typescript": "^6.7.5",
+    "typescript": "^5.4.3"
+  }
+}
