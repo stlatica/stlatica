@@ -1,7 +1,7 @@
 -- +goose Up
 -- +goose StatementBegin
 CREATE TABLE `user_auth_credentials` (
-  `user_id`     char(64) NOT NULL COMMENT 'UserID',
+  `user_id`     char(26) NOT NULL COMMENT 'UserID',
   `user_password`   varchar(64) NOT NULL COMMENT 'UserPassword',
   PRIMARY KEY(`user_id`),
   FOREIGN KEY (`user_id`) REFERENCES `actors` (`actor_id`)
