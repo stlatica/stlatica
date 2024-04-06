@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  api_mock:
+    image: stlatica_front_node
+    volumes:
+      - type: bind
+        source: ./
+        target: /app/express
+      - type: bind
+        source: ../shared/openapi
+        target: /app/openapi
+    ports:
+      - "127.0.0.1:4010:4010"
+    working_dir: /app/express
+    tty: true
