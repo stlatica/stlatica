@@ -6,6 +6,7 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/plats/ports"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
+	"github.com/stlatica/stlatica/packages/backend/app/logger"
 )
 
 // PlatGetter is the interface for getting plat.
@@ -14,7 +15,9 @@ type PlatGetter interface {
 	GetPlat(ctx context.Context, platID types.PlatID, inPort ports.PlatGetInPort) (*entities.Plat, error)
 }
 
-type platGetter struct{}
+type platGetter struct {
+	appLogger *logger.AppLogger
+}
 
 func (g *platGetter) GetPlat(ctx context.Context,
 	platID types.PlatID, inPort ports.PlatGetInPort) (*entities.Plat, error) {

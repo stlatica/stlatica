@@ -9,8 +9,10 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/cmd/inits"
 	v1controllers "github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1"
 	actordomain "github.com/stlatica/stlatica/packages/backend/app/domains/actors"
+	platdomain "github.com/stlatica/stlatica/packages/backend/app/domains/plats"
 	"github.com/stlatica/stlatica/packages/backend/app/repositories/dao"
 	actorusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/actors"
+	platusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/plats"
 	_ "github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql/driver"
 )
 
@@ -35,9 +37,12 @@ func main() {
 
 	// initialize controllers
 	actorDAO := dao.NewActorDAO()
+	platDAO := dao.NewPlatDAO()
 	actorFactory := actordomain.NewFactory(appLogger)
+	platFactory := platdomain.NewFactory(appLogger)
 	initContent := &v1controllers.ControllerInitContents{
 		ActorUseCase: actorusecase.NewActorUseCase(appLogger, actorFactory, actorDAO),
+		PlatUseCase:  platusecase.NewPlatUseCase(appLogger, platFactory, platDAO),
 	}
 	v1controllers.RegisterHandlers(*initContent, e)
 
