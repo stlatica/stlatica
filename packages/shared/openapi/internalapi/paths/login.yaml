@@ -26,7 +26,15 @@ login:
             description: |
               Set-Cookieヘッダ \
               ログイン情報を保持するためのCookie \
-              有効期限は1時間
+              有効期限は1時間 \
+              保存する情報
+              ・token
+              属性
+              ・Max-Age
+              ・Secure
+              ・httponly
+              ・HttpOnly
+              ・SameSite=Strict
             schema:
               type: string
               example: 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c; Max-Age=3600; Secure; HttpOnly; SameSite=Strict'
