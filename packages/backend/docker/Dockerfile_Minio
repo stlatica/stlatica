@@ -1,0 +1,4 @@
+# (TODO) バージョンを固定
+FROM minio/minio:latest
+
+ENTRYPOINT ["minio", "server", "/data", "--console-address", ":9001"]

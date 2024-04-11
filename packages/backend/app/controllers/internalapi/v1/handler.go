@@ -6,16 +6,21 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1/openapi"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/actors"
+	"github.com/stlatica/stlatica/packages/backend/app/usecases/plats"
 )
 
 type handler struct {
 	*userController
+	*platController
 }
 
 func newHandler(initContent ControllerInitContents) openapi.ServerInterface {
 	return &handler{
 		userController: &userController{
 			actorUseCase: initContent.ActorUseCase,
+		},
+		platController: &platController{
+			platUseCase: initContent.PlatUseCase,
 		},
 	}
 }
@@ -35,16 +40,29 @@ func (h *handler) GetUser(ectx echo.Context, userID string) error {
 	return ectx.JSON(http.StatusOK, response)
 }
 
-func (h *handler) PostPlat(_ echo.Context) error {
-	panic("implement me")
+func (h *handler) PostPlat(ectx echo.Context) error {
+	var plat openapi.PlatPost
+	err := ectx.Bind(&plat)
+	if err != nil {
+		return err
+	}
+	response, err := h.platController.PostPlat(ectx, plat.UserId, plat.Content)
+	if err != nil {
+		return err
+	}
+	return ectx.JSON(http.StatusCreated, response)
 }
 
 func (h *handler) DeletePlat(_ echo.Context, _ string) error {
 	panic("implement me")
 }
 
-func (h *handler) GetPlat(_ echo.Context, _ string) error {
-	panic("implement me")
+func (h *handler) GetPlat(ectx echo.Context, platIDStr string) error {
+	response, err := h.platController.GetPlat(ectx, platIDStr)
+	if err != nil {
+		return err
+	}
+	return ectx.JSON(http.StatusCreated, response)
 }
 
 func (h *handler) GetTimeline(_ echo.Context, _ string) error {
@@ -58,4 +76,5 @@ func (h *handler) GetImage(_ echo.Context, _ string) error {
 // ControllerInitContents is the struct to hold the dependencies for the controller.
 type ControllerInitContents struct {
 	ActorUseCase actors.ActorUseCase
+	PlatUseCase  plats.PlatUseCase
 }
