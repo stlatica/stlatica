@@ -11,13 +11,13 @@ import (
 // PlatCreator is the interface for createing plat.
 type PlatCreator interface {
 	// CreatePlat returns new plat.
-	CreatePlat(ctx context.Context, actorID types.ActorID, content string,
+	CreatePlat(ctx context.Context, userID types.UserID, content string,
 		inPort ports.PlatCreateInPort) (*entities.Plat, error)
 }
 
 type platCreator struct{}
 
-func (g *platCreator) CreatePlat(ctx context.Context, actorID types.ActorID,
+func (g *platCreator) CreatePlat(ctx context.Context, userID types.UserID,
 	content string, inPort ports.PlatCreateInPort) (*entities.Plat, error) {
-	return inPort.CreatePlat(ctx, actorID, content)
+	return inPort.CreatePlat(ctx, userID, content)
 }

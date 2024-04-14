@@ -23,16 +23,16 @@ func NewAppLogger(logger pkglogger.Logger) *AppLogger {
 }
 
 // Info prints info log
-func (l *AppLogger) Info(ctx context.Context, msg string, traceID string, executedTime time.Time, actorID string) {
+func (l *AppLogger) Info(ctx context.Context, msg string, traceID string, executedTime time.Time, userID string) {
 	l.logger.Info(ctx, msg)
 }
 
 // Error prints error log
-func (l *AppLogger) Error(ctx context.Context, msg string, traceID string, executedTime time.Time, actorID string) {
+func (l *AppLogger) Error(ctx context.Context, msg string, traceID string, executedTime time.Time, userID string) {
 	l.logger.Error(ctx, msg)
 }
 
 // Warn prints warn log
-func (l *AppLogger) Warn(ctx context.Context, msg string, traceID string, executedTime time.Time, actorID string) {
+func (l *AppLogger) Warn(ctx context.Context, msg string, traceID string, executedTime time.Time, userID string) {
 	l.logger.Warn(ctx, msg)
 }

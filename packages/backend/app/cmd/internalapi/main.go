@@ -8,9 +8,9 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/cmd/inits"
 	v1controllers "github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1"
-	actordomain "github.com/stlatica/stlatica/packages/backend/app/domains/actors"
+	userdomain "github.com/stlatica/stlatica/packages/backend/app/domains/users"
 	"github.com/stlatica/stlatica/packages/backend/app/repositories/dao"
-	actorusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/actors"
+	userusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 	_ "github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql/driver"
 )
 
@@ -34,10 +34,10 @@ func main() {
 	inits.NewDB()
 
 	// initialize controllers
-	actorDAO := dao.NewActorDAO()
-	actorFactory := actordomain.NewFactory(appLogger)
+	userDAO := dao.NewUserDAO()
+	userFactory := userdomain.NewFactory(appLogger)
 	initContent := &v1controllers.ControllerInitContents{
-		ActorUseCase: actorusecase.NewActorUseCase(appLogger, actorFactory, actorDAO),
+		UserUseCase: userusecase.NewUserUseCase(appLogger, userFactory, userDAO),
 	}
 	v1controllers.RegisterHandlers(*initContent, e)
 
