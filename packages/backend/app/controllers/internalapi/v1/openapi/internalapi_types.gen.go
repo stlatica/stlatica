@@ -7,14 +7,34 @@ import (
 	"time"
 )
 
+const (
+	BearerScopes = "Bearer.Scopes"
+)
+
 // Defines values for ErrorResponseCode.
 const (
 	BADREQUEST          ErrorResponseCode = "BAD_REQUEST"
+	CONFLICT            ErrorResponseCode = "CONFLICT"
 	INTERNALSERVERERROR ErrorResponseCode = "INTERNAL_SERVER_ERROR"
 	MISSINGPARAMETER    ErrorResponseCode = "MISSING_PARAMETER"
 	NOTFOUND            ErrorResponseCode = "NOT_FOUND"
 	SERVICEUNAVAILABLE  ErrorResponseCode = "SERVICE_UNAVAILABLE"
 	UNAUTHORIZED        ErrorResponseCode = "UNAUTHORIZED"
+	UNPROCESSABLEENTITY ErrorResponseCode = "UNPROCESSABLE_ENTITY"
+)
+
+// Defines values for TimelineType.
+const (
+	TimelineTypeFollowing TimelineType = "following"
+	TimelineTypeHome      TimelineType = "home"
+	TimelineTypeLocal     TimelineType = "local"
+)
+
+// Defines values for GetTimelineByQueryParamsType.
+const (
+	GetTimelineByQueryParamsTypeFollowing GetTimelineByQueryParamsType = "following"
+	GetTimelineByQueryParamsTypeHome      GetTimelineByQueryParamsType = "home"
+	GetTimelineByQueryParamsTypeLocal     GetTimelineByQueryParamsType = "local"
 )
 
 // ErrorResponse defines model for ErrorResponse.
@@ -87,8 +107,51 @@ type PlatId = string
 // TimelineId defines model for timeline_id.
 type TimelineId = string
 
+// TimelineLimit 取得するplatの最大数
+// デフォルトは100
+type TimelineLimit = int
+
+// TimelineToDate この日時以前のplatを取得する
+// デフォルトは現在時刻
+type TimelineToDate = time.Time
+
+// TimelineType timelineの種類
+// - home: 指定したuser_idのplatの配列
+// - following: 指定したuser_idのfollowingのplatの配列
+// - local: インスタンス内の全てのplatの配列
+type TimelineType string
+
+// TimelineUserId defines model for timeline_user_id.
+type TimelineUserId = string
+
 // UserId defines model for user_id.
 type UserId = string
 
+// GetTimelineByQueryParams defines parameters for GetTimelineByQuery.
+type GetTimelineByQueryParams struct {
+	UserId TimelineUserId               `form:"user_id" json:"user_id"`
+	Type   GetTimelineByQueryParamsType `form:"type" json:"type"`
+	Limit  *TimelineLimit               `form:"limit,omitempty" json:"limit,omitempty"`
+	ToDate *TimelineToDate              `form:"to_date,omitempty" json:"to_date,omitempty"`
+}
+
+// GetTimelineByQueryParamsType defines parameters for GetTimelineByQuery.
+type GetTimelineByQueryParamsType string
+
+// GetUsersParams defines parameters for GetUsers.
+type GetUsersParams struct {
+	// UserName ユーザ名
+	UserName *string `form:"user_name,omitempty" json:"user_name,omitempty"`
+}
+
+// CreateUserJSONBody defines parameters for CreateUser.
+type CreateUserJSONBody struct {
+	Email *string `json:"email,omitempty"`
+	Name  *string `json:"name,omitempty"`
+}
+
 // PostPlatJSONRequestBody defines body for PostPlat for application/json ContentType.
 type PostPlatJSONRequestBody = PlatPost
+
+// CreateUserJSONRequestBody defines body for CreateUser for application/json ContentType.
+type CreateUserJSONRequestBody CreateUserJSONBody

@@ -22,6 +22,26 @@ func RegisterHandlers(server *echo.Echo) {
 
 type handler struct{}
 
+func (h *handler) DeleteFavorite(_ echo.Context, _ openapi.PlatId) error {
+	panic("implement me")
+}
+
+func (h *handler) PostFavorite(_ echo.Context, _ openapi.PlatId) error {
+	panic("implement me")
+}
+
+func (h *handler) GetUsers(_ echo.Context, _ openapi.GetUsersParams) error {
+	panic("implement me")
+}
+
+func (h *handler) CreateUser(_ echo.Context) error {
+	panic("implement me")
+}
+
+func (h *handler) DeleteUser(_ echo.Context, _ openapi.UserId) error {
+	panic("implement me")
+}
+
 func (h *handler) PostPlat(_ echo.Context) error {
 	panic("implement me")
 }
@@ -60,6 +80,10 @@ func (h *handler) GetTimeline(ectx echo.Context, _ string) error {
 		})
 	}
 	return ectx.JSON(http.StatusOK, plats)
+}
+
+func (h *handler) GetTimelineByQuery(_ echo.Context, _ openapi.GetTimelineByQueryParams) error {
+	panic("implement me")
 }
 
 // GetImage is the handler for GET /images/{image_id}, ServerInterface implementation.
