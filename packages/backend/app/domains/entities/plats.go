@@ -16,6 +16,8 @@ type Plat struct { // ulid
 	Content string `json:"content"`
 	// Unix time
 	CreatedAt types.UnixTime `json:"created_at"`
+	// Unix time
+	UpdatedAt types.UnixTime `json:"updated_at"`
 }
 
 // GetPlatID is get plat_id value, if receiver is nil, returns the specified value.
@@ -48,4 +50,12 @@ func (m *Plat) GetCreatedAt() types.UnixTime {
 		return types.UnixTime(0)
 	}
 	return m.CreatedAt
+}
+
+// GetUpdatedAt is get updated_at value, if receiver is nil, returns the specified value.
+func (m *Plat) GetUpdatedAt() types.UnixTime {
+	if m == nil {
+		return types.UnixTime(0)
+	}
+	return m.UpdatedAt
 }

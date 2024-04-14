@@ -30,6 +30,8 @@ type Plat struct { // ulid
 	Content string `boil:"content" json:"content" toml:"content" yaml:"content"`
 	// Unix time
 	CreatedAt types.UnixTime `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
+	// Unix time
+	UpdatedAt types.UnixTime `boil:"updated_at" json:"updated_at" toml:"updated_at" yaml:"updated_at"`
 
 	R *platR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L platL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -40,11 +42,13 @@ var PlatColumns = struct {
 	UserID    string
 	Content   string
 	CreatedAt string
+	UpdatedAt string
 }{
 	PlatID:    "plat_id",
 	UserID:    "user_id",
 	Content:   "content",
 	CreatedAt: "created_at",
+	UpdatedAt: "updated_at",
 }
 
 var PlatTableColumns = struct {
@@ -52,11 +56,13 @@ var PlatTableColumns = struct {
 	UserID    string
 	Content   string
 	CreatedAt string
+	UpdatedAt string
 }{
 	PlatID:    "plats.plat_id",
 	UserID:    "plats.user_id",
 	Content:   "plats.content",
 	CreatedAt: "plats.created_at",
+	UpdatedAt: "plats.updated_at",
 }
 
 // Generated where
@@ -152,11 +158,13 @@ var PlatWhere = struct {
 	UserID    whereHelpertypes_UserID
 	Content   whereHelperstring
 	CreatedAt whereHelpertypes_UnixTime
+	UpdatedAt whereHelpertypes_UnixTime
 }{
 	PlatID:    whereHelpertypes_PlatID{field: "`plats`.`plat_id`"},
 	UserID:    whereHelpertypes_UserID{field: "`plats`.`user_id`"},
 	Content:   whereHelperstring{field: "`plats`.`content`"},
 	CreatedAt: whereHelpertypes_UnixTime{field: "`plats`.`created_at`"},
+	UpdatedAt: whereHelpertypes_UnixTime{field: "`plats`.`updated_at`"},
 }
 
 // PlatRels is where relationship names are stored.
@@ -187,8 +195,8 @@ func (r *platR) GetUser() *User {
 type platL struct{}
 
 var (
-	platAllColumns            = []string{"plat_id", "user_id", "content", "created_at"}
-	platColumnsWithoutDefault = []string{"plat_id", "user_id", "content", "created_at"}
+	platAllColumns            = []string{"plat_id", "user_id", "content", "created_at", "updated_at"}
+	platColumnsWithoutDefault = []string{"plat_id", "user_id", "content", "created_at", "updated_at"}
 	platColumnsWithDefault    = []string{}
 	platPrimaryKeyColumns     = []string{"plat_id"}
 	platGeneratedColumns      = []string{}
@@ -510,6 +518,9 @@ func (o *Plat) Insert(ctx context.Context, exec boil.ContextExecutor, columns bo
 		if queries.MustTime(o.CreatedAt).IsZero() {
 			queries.SetScanner(&o.CreatedAt, currTime)
 		}
+		if queries.MustTime(o.UpdatedAt).IsZero() {
+			queries.SetScanner(&o.UpdatedAt, currTime)
+		}
 	}
 
 	nzDefaults := queries.NonZeroDefaultSet(platColumnsWithDefault, o)
@@ -598,6 +609,12 @@ CacheNoHooks:
 // See boil.Columns.UpdateColumnSet documentation to understand column list inference for updates.
 // Update does not automatically update the record in case of default values. Use .Reload() to refresh the records.
 func (o *Plat) Update(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) error {
+	if !boil.TimestampsAreSkipped(ctx) {
+		currTime := time.Now().In(boil.GetLocation())
+
+		queries.SetScanner(&o.UpdatedAt, currTime)
+	}
+
 	var err error
 	key := makeCacheKey(columns, nil)
 	platUpdateCacheMut.RLock()

@@ -15,11 +15,15 @@ type User struct { // ulid
 	// preferred user name
 	PreferredUserName string `json:"preferred_user_name"`
 	// Unix time
-	RegisteredAt uint64 `json:"registered_at"`
+	RegisteredAt types.UnixTime `json:"registered_at"`
 	// user is public
 	IsPublic bool `json:"is_public"`
 	// mail address
 	MailAddress string `json:"mail_address"`
+	// Unix time
+	CreatedAt types.UnixTime `json:"created_at"`
+	// Unix time
+	UpdatedAt types.UnixTime `json:"updated_at"`
 }
 
 // GetUserID is get user_id value, if receiver is nil, returns the specified value.
@@ -47,9 +51,9 @@ func (m *User) GetPreferredUserName() string {
 }
 
 // GetRegisteredAt is get registered_at value, if receiver is nil, returns the specified value.
-func (m *User) GetRegisteredAt() uint64 {
+func (m *User) GetRegisteredAt() types.UnixTime {
 	if m == nil {
-		return 0
+		return types.UnixTime(0)
 	}
 	return m.RegisteredAt
 }
@@ -68,4 +72,20 @@ func (m *User) GetMailAddress() string {
 		return ""
 	}
 	return m.MailAddress
+}
+
+// GetCreatedAt is get created_at value, if receiver is nil, returns the specified value.
+func (m *User) GetCreatedAt() types.UnixTime {
+	if m == nil {
+		return types.UnixTime(0)
+	}
+	return m.CreatedAt
+}
+
+// GetUpdatedAt is get updated_at value, if receiver is nil, returns the specified value.
+func (m *User) GetUpdatedAt() types.UnixTime {
+	if m == nil {
+		return types.UnixTime(0)
+	}
+	return m.UpdatedAt
 }
