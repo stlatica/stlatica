@@ -6,13 +6,17 @@ import (
 	"go.uber.org/zap"
 )
 
+const callerSkipCount = 2
+
 type zapLogger struct {
 	orgLogger *zap.Logger
 }
 
 // NewZapLogger creates new instance that implements Logger interface
 func NewZapLogger() Logger {
-	logger, err := zap.NewDevelopment(zap.AddCallerSkip(1))
+	config := zap.NewDevelopmentConfig()
+	config.DisableStacktrace = true
+	logger, err := config.Build(zap.AddCallerSkip(callerSkipCount))
 	if err != nil {
 		panic(err)
 	}

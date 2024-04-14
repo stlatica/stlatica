@@ -5,6 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1/openapi"
+	"github.com/stlatica/stlatica/packages/backend/app/logger"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/plats"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 )
@@ -26,9 +27,11 @@ func newHandler(initContent ControllerInitContents) openapi.ServerInterface {
 }
 
 // RegisterHandlers adds each server route to the EchoRouter.
-func RegisterHandlers(initContent ControllerInitContents, server *echo.Echo) {
+func RegisterHandlers(initContent ControllerInitContents, server *echo.Echo, appLogger *logger.AppLogger) {
 	handler := newHandler(initContent)
 	openapi.RegisterHandlers(server, handler)
+
+	server.HTTPErrorHandler = NewErrorHandler(server, appLogger)
 }
 
 // GetUser is the handler for GET /users/{user_id}, ServerInterface implementation.
