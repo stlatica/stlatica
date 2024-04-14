@@ -16,5 +16,5 @@ type PlatGetInPort interface {
 // PlatCreateInPort is the interface for posting plat.
 type PlatCreateInPort interface {
 	// CreatePlat returns Plat.
-	CreatePlat(ctx context.Context, ActorID types.ActorID, content string) (*entities.Plat, error)
+	CreatePlat(ctx context.Context, UserID types.UserID, content string) (*entities.Plat, error)
 }

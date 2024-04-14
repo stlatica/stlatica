@@ -29,11 +29,15 @@ type User struct { // ulid
 	// preferred user name
 	PreferredUserName string `boil:"preferred_user_name" json:"preferred_user_name" toml:"preferred_user_name" yaml:"preferred_user_name"`
 	// Unix time
-	RegisteredAt uint64 `boil:"registered_at" json:"registered_at" toml:"registered_at" yaml:"registered_at"`
+	RegisteredAt types.UnixTime `boil:"registered_at" json:"registered_at" toml:"registered_at" yaml:"registered_at"`
 	// user is public
 	IsPublic bool `boil:"is_public" json:"is_public" toml:"is_public" yaml:"is_public"`
 	// mail address
 	MailAddress string `boil:"mail_address" json:"mail_address" toml:"mail_address" yaml:"mail_address"`
+	// Unix time
+	CreatedAt types.UnixTime `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
+	// Unix time
+	UpdatedAt types.UnixTime `boil:"updated_at" json:"updated_at" toml:"updated_at" yaml:"updated_at"`
 
 	R *userR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L userL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -46,6 +50,8 @@ var UserColumns = struct {
 	RegisteredAt      string
 	IsPublic          string
 	MailAddress       string
+	CreatedAt         string
+	UpdatedAt         string
 }{
 	UserID:            "user_id",
 	PreferredUserID:   "preferred_user_id",
@@ -53,6 +59,8 @@ var UserColumns = struct {
 	RegisteredAt:      "registered_at",
 	IsPublic:          "is_public",
 	MailAddress:       "mail_address",
+	CreatedAt:         "created_at",
+	UpdatedAt:         "updated_at",
 }
 
 var UserTableColumns = struct {
@@ -62,6 +70,8 @@ var UserTableColumns = struct {
 	RegisteredAt      string
 	IsPublic          string
 	MailAddress       string
+	CreatedAt         string
+	UpdatedAt         string
 }{
 	UserID:            "users.user_id",
 	PreferredUserID:   "users.preferred_user_id",
@@ -69,32 +79,11 @@ var UserTableColumns = struct {
 	RegisteredAt:      "users.registered_at",
 	IsPublic:          "users.is_public",
 	MailAddress:       "users.mail_address",
+	CreatedAt:         "users.created_at",
+	UpdatedAt:         "users.updated_at",
 }
 
 // Generated where
-
-type whereHelperuint64 struct{ field string }
-
-func (w whereHelperuint64) EQ(x uint64) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
-func (w whereHelperuint64) NEQ(x uint64) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
-func (w whereHelperuint64) LT(x uint64) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
-func (w whereHelperuint64) LTE(x uint64) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
-func (w whereHelperuint64) GT(x uint64) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
-func (w whereHelperuint64) GTE(x uint64) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
-func (w whereHelperuint64) IN(slice []uint64) qm.QueryMod {
-	values := make([]interface{}, 0, len(slice))
-	for _, value := range slice {
-		values = append(values, value)
-	}
-	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
-}
-func (w whereHelperuint64) NIN(slice []uint64) qm.QueryMod {
-	values := make([]interface{}, 0, len(slice))
-	for _, value := range slice {
-		values = append(values, value)
-	}
-	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
-}
 
 type whereHelperbool struct{ field string }
 
@@ -109,16 +98,20 @@ var UserWhere = struct {
 	UserID            whereHelpertypes_UserID
 	PreferredUserID   whereHelperstring
 	PreferredUserName whereHelperstring
-	RegisteredAt      whereHelperuint64
+	RegisteredAt      whereHelpertypes_UnixTime
 	IsPublic          whereHelperbool
 	MailAddress       whereHelperstring
+	CreatedAt         whereHelpertypes_UnixTime
+	UpdatedAt         whereHelpertypes_UnixTime
 }{
 	UserID:            whereHelpertypes_UserID{field: "`users`.`user_id`"},
 	PreferredUserID:   whereHelperstring{field: "`users`.`preferred_user_id`"},
 	PreferredUserName: whereHelperstring{field: "`users`.`preferred_user_name`"},
-	RegisteredAt:      whereHelperuint64{field: "`users`.`registered_at`"},
+	RegisteredAt:      whereHelpertypes_UnixTime{field: "`users`.`registered_at`"},
 	IsPublic:          whereHelperbool{field: "`users`.`is_public`"},
 	MailAddress:       whereHelperstring{field: "`users`.`mail_address`"},
+	CreatedAt:         whereHelpertypes_UnixTime{field: "`users`.`created_at`"},
+	UpdatedAt:         whereHelpertypes_UnixTime{field: "`users`.`updated_at`"},
 }
 
 // UserRels is where relationship names are stored.
@@ -149,8 +142,8 @@ func (r *userR) GetPlats() PlatSlice {
 type userL struct{}
 
 var (
-	userAllColumns            = []string{"user_id", "preferred_user_id", "preferred_user_name", "registered_at", "is_public", "mail_address"}
-	userColumnsWithoutDefault = []string{"user_id", "preferred_user_id", "preferred_user_name", "registered_at", "is_public", "mail_address"}
+	userAllColumns            = []string{"user_id", "preferred_user_id", "preferred_user_name", "registered_at", "is_public", "mail_address", "created_at", "updated_at"}
+	userColumnsWithoutDefault = []string{"user_id", "preferred_user_id", "preferred_user_name", "registered_at", "is_public", "mail_address", "created_at", "updated_at"}
 	userColumnsWithDefault    = []string{}
 	userPrimaryKeyColumns     = []string{"user_id"}
 	userGeneratedColumns      = []string{}
@@ -466,6 +459,16 @@ func (o *User) Insert(ctx context.Context, exec boil.ContextExecutor, columns bo
 	}
 
 	var err error
+	if !boil.TimestampsAreSkipped(ctx) {
+		currTime := time.Now().In(boil.GetLocation())
+
+		if queries.MustTime(o.CreatedAt).IsZero() {
+			queries.SetScanner(&o.CreatedAt, currTime)
+		}
+		if queries.MustTime(o.UpdatedAt).IsZero() {
+			queries.SetScanner(&o.UpdatedAt, currTime)
+		}
+	}
 
 	nzDefaults := queries.NonZeroDefaultSet(userColumnsWithDefault, o)
 
@@ -553,6 +556,12 @@ CacheNoHooks:
 // See boil.Columns.UpdateColumnSet documentation to understand column list inference for updates.
 // Update does not automatically update the record in case of default values. Use .Reload() to refresh the records.
 func (o *User) Update(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) error {
+	if !boil.TimestampsAreSkipped(ctx) {
+		currTime := time.Now().In(boil.GetLocation())
+
+		queries.SetScanner(&o.UpdatedAt, currTime)
+	}
+
 	var err error
 	key := makeCacheKey(columns, nil)
 	userUpdateCacheMut.RLock()

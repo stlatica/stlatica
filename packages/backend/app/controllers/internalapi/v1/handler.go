@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1/openapi"
-	"github.com/stlatica/stlatica/packages/backend/app/usecases/actors"
+	"github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 )
 
 type handler struct {
@@ -15,7 +15,7 @@ type handler struct {
 func newHandler(initContent ControllerInitContents) openapi.ServerInterface {
 	return &handler{
 		userController: &userController{
-			actorUseCase: initContent.ActorUseCase,
+			userUseCase: initContent.UserUseCase,
 		},
 	}
 }
@@ -81,5 +81,5 @@ func (h *handler) DeleteFavorite(_ echo.Context, _ openapi.PlatId) error {
 
 // ControllerInitContents is the struct to hold the dependencies for the controller.
 type ControllerInitContents struct {
-	ActorUseCase actors.ActorUseCase
+	UserUseCase users.UserUseCase
 }

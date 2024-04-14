@@ -40,6 +40,16 @@ third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"'
 
 [[types]]
 [types.match]
+name="registered_at"
+db_type="bigint"
+nullable=false
+[types.replace]
+type="types.UnixTime"
+[types.imports]
+third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
+
+[[types]]
+[types.match]
 name="user_id"
 db_type="char"
 nullable=false

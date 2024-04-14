@@ -6,6 +6,7 @@ CREATE TABLE `timelines` (
   `name`        varchar(64) NOT NULL COMMENT 'name',
   `description` varchar(255) NOT NULL COMMENT 'description',
   `created_at`  bigint UNSIGNED NOT NULL COMMENT 'Unix time',
+  `updated_at`  bigint UNSIGNED NOT NULL COMMENT 'Unix time',
   PRIMARY KEY (`timeline_id`),
   CONSTRAINT `fk_timelines_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 )
