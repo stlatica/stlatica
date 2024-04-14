@@ -33,7 +33,5 @@ security:
 components:
   securitySchemes:
     Bearer:
-      type: apiKey
-      name: token
-      in: cookie
-      description: access token
+      type: http
+      scheme: bearer
