@@ -1,3 +1,5 @@
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/stlatica/stlatica?filename=%2Fpackages%2Fbackend%2Fgo.mod)
+
 # Setup
 
 ## Go
@@ -71,4 +73,3 @@ openapi の定義から Go のコードを自動生成します。 \
 
 開発中に仕様するスクリプトやコマンドは`Makefile`に集約しています。\
 新しくシェルスクリプトなど追加する場合、`Makefile`からも呼び出すことができる形にしてください。
-
