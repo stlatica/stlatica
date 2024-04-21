@@ -26,6 +26,8 @@ paths:
     $ref: './paths/timelines.yaml#/timelines'
   /internal/v1/images/{image_id}:
     $ref: './paths/images.yaml#/images_{image_id}'
+  /internal/v1/login:
+    $ref: './paths/login.yaml#/login'
 security:
   - Bearer: []
 components:
@@ -33,4 +35,3 @@ components:
     Bearer:
       type: http
       scheme: bearer
-      description: access token
