@@ -1,32 +1,36 @@
-version: "3.9"
 services:
   front_dev:
-    image: stlatica_front_node
-    container_name: stlatica_front_dev
+    build:
+      context: docker
+      dockerfile: Dockerfile.node
+      target: dev
+    working_dir: /app/packages/frontend/remix
     volumes:
       - type: bind
-        source: ./
-        target: /app/packages/frontend
+        source: ./remix
+        target: /app/packages/frontend/remix
       - type: bind
         source: ../shared/
         target: /app/packages/shared
     ports:
-      # nextjs
-      - "127.0.0.1:3000:3000"
+      # remix
+      - "127.0.0.1:5173:5173"
       # vitest
       - "127.0.0.1:51204:51204"
       # ladle
       - "127.0.0.1:61000:61000"
-      - "127.0.0.1:24678:24678"
-    working_dir: /app/packages/frontend
     tty: true
 
   playwright_vrt:
-    image: playwright-vrt
+    build:
+      context: docker
+      dockerfile: Dockerfile.node
+      target: e2e
+    working_dir: /app/packages/frontend/remix
     volumes:
       - type: bind
-        source: "./"
-        target: /app
+        source: ./remix
+        target: /app/packages/frontend/remix
     ports:
       - 127.0.0.1:9323:9323
 
