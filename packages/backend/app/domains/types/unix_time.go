@@ -14,6 +14,11 @@ func NewUnixTimeFromTime(time time.Time) UnixTime {
 	return UnixTime(time.Unix())
 }
 
+// ConvertToTime converts UnixTime to time.Time.
+func (ut UnixTime) ConvertToTime() time.Time {
+	return time.Unix(int64(ut), 0)
+}
+
 // NewUnixTimeFromCurrentTime returns a new unix time from current time.
 func NewUnixTimeFromCurrentTime() UnixTime {
 	return NewUnixTimeFromTime(time.Now())

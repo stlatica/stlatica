@@ -10,29 +10,6 @@ servers:
   - url: http://localhost:4010
     description: prism mock server
 paths:
-  /external/v1/sample_users/{sample_user_id}:
-    get:
-      operationId: getSampleUser
-      tags:
-        - SampleUser
-      summary: Get sample_user
-      description: get sample_user
-      parameters:
-        - in: path
-          name: sample_user_id
-          required: true
-          description: sample_user_id
-          schema:
-            type: string
-      responses:
-        200:
-          description: success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SampleUser'
-        500:
-          description: internal server error
   /external/v1/actors/{actor_id}:
     get:
       operationId: getActor
@@ -238,14 +215,6 @@ components:
         type: string
       example: 'actor_id'
   schemas:
-    SampleUser:
-      type: object
-      required:
-        - username
-      properties:
-        username:
-          type: string
-          example: 'sample_user'
     Actor:
       type: object
       description: actor
