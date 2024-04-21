@@ -8,11 +8,11 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/cmd/inits"
 	v1controllers "github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1"
-	userdomain "github.com/stlatica/stlatica/packages/backend/app/domains/users"
 	platdomain "github.com/stlatica/stlatica/packages/backend/app/domains/plats"
+	userdomain "github.com/stlatica/stlatica/packages/backend/app/domains/users"
 	"github.com/stlatica/stlatica/packages/backend/app/repositories/dao"
-	userusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 	platusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/plats"
+	userusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 	_ "github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql/driver"
 )
 
@@ -42,7 +42,7 @@ func main() {
 	platFactory := platdomain.NewFactory(appLogger)
 	initContent := &v1controllers.ControllerInitContents{
 		UserUseCase: userusecase.NewUserUseCase(appLogger, userFactory, userDAO),
-		PlatUseCase:  platusecase.NewPlatUseCase(appLogger, platFactory, platDAO),
+		PlatUseCase: platusecase.NewPlatUseCase(appLogger, platFactory, platDAO),
 	}
 	v1controllers.RegisterHandlers(*initContent, e)
 

@@ -100,5 +100,5 @@ func (h *handler) DeleteFavorite(_ echo.Context, _ openapi.PlatId) error {
 // ControllerInitContents is the struct to hold the dependencies for the controller.
 type ControllerInitContents struct {
 	UserUseCase users.UserUseCase
-	PlatUseCase  plats.PlatUseCase
+	PlatUseCase plats.PlatUseCase
 }

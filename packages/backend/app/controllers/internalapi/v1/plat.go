@@ -16,12 +16,12 @@ type GetPlatResponse struct {
 	PlatID string `json:"plat_id"`
 }
 
-func (c *platController) PostPlat(ectx echo.Context, actorIDStr string, content string) (*GetPlatResponse, error) {
-	actorID, err := ulid.Parse(actorIDStr)
+func (c *platController) PostPlat(ectx echo.Context, userIDStr string, content string) (*GetPlatResponse, error) {
+	userID, err := ulid.Parse(userIDStr)
 	if err != nil {
 		return nil, err
 	}
-	plat, err := c.platUseCase.CreatePlat(ectx.Request().Context(), types.ActorID(actorID), content)
+	plat, err := c.platUseCase.CreatePlat(ectx.Request().Context(), types.UserID(userID), content)
 	if err != nil {
 		return nil, err
 	}

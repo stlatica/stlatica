@@ -45,9 +45,9 @@ func (dao *platDAO) GetPlat(ctx context.Context, platID types.PlatID) (*domainen
 func (dao *platDAO) CreatePlat(ctx context.Context, userID types.UserID, content string) (
 	*domainentities.Plat, error) {
 	plat := entities.Plat{
-		PlatID:  types.NewPlatID(),
-		UserID:  userID,
-		Content: content,
+		PlatID:    types.NewPlatID(),
+		UserID:    userID,
+		Content:   content,
 		CreatedAt: types.NewUnixTimeFromCurrentTime(),
 	}
 	ctx = boil.SkipTimestamps(ctx)
