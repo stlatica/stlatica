@@ -6,6 +6,7 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/plats"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
+	"github.com/stlatica/stlatica/packages/backend/app/logger"
 	"github.com/stlatica/stlatica/packages/backend/app/repositories/dao"
 )
 
@@ -17,14 +18,16 @@ type PlatUseCase interface {
 }
 
 // NewPlatUseCase returns PlatUseCase.
-func NewPlatUseCase(domainFactory plats.Factory, platDAO dao.PlatDAO) PlatUseCase {
+func NewPlatUseCase(appLogger *logger.AppLogger, domainFactory plats.Factory, platDAO dao.PlatDAO) PlatUseCase {
 	return &platUseCase{
+		appLogger:     appLogger,
 		platDAO:       platDAO,
 		domainFactory: domainFactory,
 	}
 }
 
 type platUseCase struct {
+	appLogger     *logger.AppLogger
 	platDAO       dao.PlatDAO
 	domainFactory plats.Factory
 }

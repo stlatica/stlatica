@@ -6,6 +6,7 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/plats/ports"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
+	"github.com/stlatica/stlatica/packages/backend/app/logger"
 )
 
 // PlatCreator is the interface for createing plat.
@@ -15,7 +16,9 @@ type PlatCreator interface {
 		inPort ports.PlatCreateInPort) (*entities.Plat, error)
 }
 
-type platCreator struct{}
+type platCreator struct {
+	appLogger *logger.AppLogger
+}
 
 func (g *platCreator) CreatePlat(ctx context.Context, userID types.UserID,
 	content string, inPort ports.PlatCreateInPort) (*entities.Plat, error) {
