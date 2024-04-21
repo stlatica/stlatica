@@ -10,7 +10,6 @@
         "gruntfuggly.todo-tree",
         "arjun.swagger-viewer",
         "42crunch.vscode-openapi",
-        "bradlc.vscode-tailwindcss",
         "ms-playwright.playwright"
     ]
 }

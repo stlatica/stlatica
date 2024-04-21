@@ -19,6 +19,12 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "eslint.useESLintClass": true,
   "editor.formatOnSave": true,
   "files.eol": "\n",
   "editor.tabSize": 2

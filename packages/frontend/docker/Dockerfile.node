@@ -1,0 +1,34 @@
+FROM node:20.12-slim as base
+
+RUN npm install -g pnpm@8.15.6
+
+# 環境：開発用
+FROM base as dev
+
+# RUN apt update -y && apt install -y xdg-utils --fix-missing && apt clean
+
+# エイリアスを設定
+COPY ./.alias /root
+RUN cat ~/.alias >> ~/.bashrc
+
+# ENV DEBUG=eslint:linter
+
+WORKDIR /app/frontend
+
+EXPOSE 5173
+EXPOSE 51204
+EXPOSE 61000
+
+# 環境：e2e用
+FROM mcr.microsoft.com/playwright:v1.42.1-jammy as e2e
+# バージョン指定は playwright のバージョン依存。合わせる必要あり
+
+# Dockerの並列実行やキャッシュを考慮すると playwright install --with-deps より良いため
+# playwrightの公式イメージを利用している
+# コンテナ移し替えをするせいで完全に同環境にならないのが懸念事項ではある
+
+COPY --from=base /usr/local/include/ /usr/local/include/
+COPY --from=base /usr/local/lib/ /usr/local/lib/
+COPY --from=base /usr/local/bin/ /usr/local/bin/
+
+

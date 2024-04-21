@@ -1,50 +1,79 @@
 DOCKER_VRT_RUN := docker compose run --rm --service-ports playwright_vrt /bin/sh -c
 
-quick-dev: docker/build_node node_modules
-	docker compose run --rm --service-ports front_dev /bin/sh -c "pnpm dev"
-# --service-ports でcomposeのポートを使える
+.DEFAULT_GOAL := help
+
+# << main commands >>
+
+dev: util/build remix/node_modules ## run remix server ##
+	docker compose run --rm -p 127.0.0.1:5173:5173 front_dev /bin/sh -c "pnpm run dev"
+
+bash: util/build ## run bash (for package install etc.) ##
+	docker compose run --rm -it front_dev bash
+
+ladle: util/build remix/node_modules ## run ladle (storybook server)
+	docker compose run --rm -p 127.0.0.1:61000:61000  front_dev bash -c "pnpm run ladle dev"
+
+lint: util/build remix/node_modules ## lint & format
+	docker compose run --rm front_dev bash -c "pnpm run lint"
+
+test: util/build remix/node_modules ## run vitest ui
+	docker compose run --rm -p 127.0.0.1:51204:51204 front_dev /bin/sh -c "pnpm run test"
+
+build: util/build remix/node_modules ## run build
+	docker compose run --rm front_dev /bin/sh -c "pnpm run build"
+
+start: util/build ## start builded server
+	docker compose run --rm -p 127.0.0.1:3000:3000 front_dev /bin/sh -c "pnpm run start"
 
 
-dev: dev/up
-	docker compose exec -it front_dev bash
+vrt: util/build remix/node_modules ## run visual regression test
+	${DOCKER_VRT_RUN} "pnpm run vrt"
 
-ladle: dev/up
-	docker compose exec -it front_dev pnpm ladle:dev
+vrt/update: util/build remix/node_modules ## update visual regression snapshots
+	${DOCKER_VRT_RUN} "pnpm run vrt:update"
 
-dev/up: docker/build_node node_modules
-	docker compose up --build -d front_dev
+# << ci commands >>
+
+util/ci-checks: ci/lint ci/test ci/build ci/vrt ## run all ci checks
+
+ci/lint: util/build remix/node_modules
+	docker compose run --rm -p 127.0.0.1:51204:51204 front_dev /bin/sh -c "pnpm run lint:ci"
+
+ci/test: util/build remix/node_modules
+	docker compose run --rm -p 127.0.0.1:51204:51204 front_dev /bin/sh -c "pnpm run test:ci"
+
+ci/vrt: vrt
+
+ci/build: build
+
+# << utility commands >>
+
 
 # TODO: 権限のその場しのぎ対応 https://github.com/stlatica/stlatica/issues/354
-dev/permission:
+util/permission: ## fix file permission (TODO #354)
 	sudo chmod 777 -R .
 
-down:
-	docker compose down
+
+# https://ktrysmt.github.io/blog/write-useful-help-command-by-shell/
+help: ## print this message ## make
+	@echo "Example operations by makefile."
+	@echo ""
+	@echo "Usage: make SUB_COMMAND argument_name=argument_value"
+	@echo ""
+	@echo "Command list:"
+	@echo ""
+	@printf "\033[36m%-30s\033[0m %-50s %s\n" "[Sub command]" "[Description]" "[Example]"
+	@grep -E '^[/a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | perl -pe 's%^([/a-zA-Z_-]+):.*?(##)%$$1 $$2%' | awk -F " *?## *?" '{printf "\033[36m%-30s\033[0m %-50s %s\n", $$1, $$2, $$3}'
+
+# docker/stop:
+# 	docker compose down --remove-orphans
+
+# << internal commands >>
+
+util/build:
+	docker compose build front_dev playwright_vrt
+
+remix/node_modules: remix/package.json remix/pnpm-lock.yaml
+	docker compose run --rm front_dev pnpm install --frozen-lockfile
 
 
-docker/clear-cache:
-	rm docker/build_node
-	rm docker/build_playwright
-
-docker/stop: 
-	docker compose down --remove-orphans
-
-vrt: docker/build_playwright
-	${DOCKER_VRT_RUN} "pnpm install --frozen-lockfile --force && pnpm vrt"
-
-vrt/update: docker/build_playwright
-	${DOCKER_VRT_RUN} "pnpm install --frozen-lockfile --force && pnpm vrt:update"
-
-# 以下内部用コマンド
-
-node_modules: package.json pnpm-lock.yaml
-	docker run --rm --mount type=bind,source=./,target=/app stlatica_front_node pnpm install --frozen-lockfile
-
-
-docker/build_node: docker/Dockerfile.node.dev
-	docker build -t stlatica_front_node -f docker/Dockerfile.node.dev .
-# touch docker/build_node
-
-docker/build_playwright: docker/Dockerfile.vrt
-	docker build -t playwright-vrt --file docker/Dockerfile.vrt ./
-# touch docker/build_playwright
