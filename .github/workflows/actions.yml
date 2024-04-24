@@ -140,7 +140,7 @@ jobs:
     runs-on: ubuntu-22.04
     defaults:
       run:
-        working-directory: packages/frontend
+        working-directory: packages/frontend/remix
     steps:
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
