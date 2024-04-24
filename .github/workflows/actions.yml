@@ -44,7 +44,7 @@ jobs:
       # pnpm 8をインストール
       - uses: pnpm/action-setup@v2
         with: 
-          version: 8
+          version: 9
 
       # node.jsをインストール
       - name: Node.js 
@@ -149,7 +149,7 @@ jobs:
       # pnpm 8をインストール
       - uses: pnpm/action-setup@v2
         with: 
-          version: 8
+          version: 9
 
       # node.jsをインストール
       - name: Node.js 
