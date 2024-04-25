@@ -1,5 +1,6 @@
 import React from "react";
 
+import { container } from "./LeftUserView.css";
 import { LeftUserViewTop } from "./LeftUserViewTop";
 
 type LeftUserViewProps = {
@@ -12,7 +13,7 @@ type LeftUserViewProps = {
  */
 export const LeftUserView: React.FC<LeftUserViewProps> = ({ userID }) => {
   return (
-    <div className="size-full bg-gray-200 p-3">
+    <div className={container}>
       <LeftUserViewTop />
       <div className="text-xl">User Name Hereeeeeeeee</div>
       <div className="text-gray-400">@{userID}</div>
