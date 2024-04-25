@@ -156,7 +156,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           cache: 'pnpm'
-          cache-dependency-path: packages/frontend/
+          cache-dependency-path: packages/frontend/remix
 
       # 依存関係先をインストール
       - name: Install dependencies
@@ -172,7 +172,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # リポジトリのアップロード
-          path: './packages/frontend/ladle-build'
+          path: './packages/frontend/remix/ladle-build'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
