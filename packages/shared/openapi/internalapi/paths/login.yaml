@@ -29,6 +29,7 @@ login:
               有効期限は1時間 \
               保存する情報
               ・token
+              ・session id
               属性
               ・Max-Age
               ・Secure
@@ -37,7 +38,7 @@ login:
               ・SameSite=Strict
             schema:
               type: string
-              example: 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c; Max-Age=3600; Secure; HttpOnly; SameSite=Strict'
+              example: 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c; sessionId=b56a5598-e689-4429-a77e-c09200c577e0;Max-Age=3600; Secure; HttpOnly; SameSite=Strict'
       400:
         description: |
           bad request \
