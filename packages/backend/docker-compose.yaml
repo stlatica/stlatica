@@ -37,3 +37,11 @@ services:
       - 9001:9001
     volumes:
       - ./data/minio:/data
+  valkey:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_Valkey
+    ports:
+      - 6379:6379
+    volumes:
+      - ./data/redis:/data

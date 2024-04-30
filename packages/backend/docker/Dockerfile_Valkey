@@ -1,0 +1,4 @@
+FROM valkey/valkey:7.2.5
+
+COPY docker/valkey.conf /usr/local/etc/valkey/valkey.conf
+CMD ["valkey-server"]

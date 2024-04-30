@@ -50,6 +50,12 @@ start-object-storage:
 stop-object-storage:
 	docker compose down minio
 
+start-kvs:
+	docker compose up valkey
+
+stop-kvs:
+	docker compose down valkey
+
 # モックサーバーの起動
 start-mock-internalapi:
 	docker run --rm -p 127.0.0.1:8080:8080 --mount type=bind,source="./",target="/go/src" -w /go/src -it golang:1.20.6 /bin/sh -c "go run mock/cmd/internalapi/main.go"
