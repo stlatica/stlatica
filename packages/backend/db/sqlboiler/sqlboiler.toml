@@ -16,7 +16,7 @@ port=4000
 user="root"
 pass=""
 sslmode="false"
-whitelist=["users","plats"]
+whitelist=["users","plats","timelines"]
 
 [[types]]
 [types.match]
@@ -65,5 +65,15 @@ db_type="char"
 nullable=false
 [types.replace]
 type="types.PlatID"
+[types.imports]
+third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
+
+[[types]]
+[types.match]
+name="timeline_id"
+db_type="char"
+nullable=false
+[types.replace]
+type="types.TimelineID"
 [types.imports]
 third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
