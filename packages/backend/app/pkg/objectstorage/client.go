@@ -24,7 +24,7 @@ type Client interface {
 	// GetObject gets an object from object storage.
 	GetObject(ctx context.Context, bucketName string, objectName string) (io.ReadCloser, error)
 	// PutObject puts an object to object storage.
-	PutObject(ctx context.Context, bucketName string, objectName string, reader io.Reader) error
+	PutObject(ctx context.Context, bucketName string, objectName string, reader io.Reader, contentType string) error
 }
 
 type client struct {
@@ -89,11 +89,12 @@ func (c *client) GetObject(ctx context.Context, bucketName string, objectName st
 }
 
 func (c *client) PutObject(ctx context.Context,
-	bucketName string, objectName string, reader io.Reader) error {
+	bucketName string, objectName string, reader io.Reader, contentType string) error {
 	_, err := c.orgClient.PutObject(ctx, &s3.PutObjectInput{
-		Bucket: aws.String(bucketName),
-		Key:    aws.String(objectName),
-		Body:   reader,
+		Bucket:      aws.String(bucketName),
+		Key:         aws.String(objectName),
+		Body:        reader,
+		ContentType: aws.String(contentType),
 	})
 	return err
 }
