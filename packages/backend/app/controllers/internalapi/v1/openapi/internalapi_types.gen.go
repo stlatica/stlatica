@@ -127,6 +127,15 @@ type TimelineUserId = string
 // UserId defines model for user_id.
 type UserId = string
 
+// UploadImageTextBody defines parameters for UploadImage.
+type UploadImageTextBody = string
+
+// LoginJSONBody defines parameters for Login.
+type LoginJSONBody struct {
+	Password        *string `json:"password,omitempty"`
+	PreferredUserId *string `json:"preferred_user_id,omitempty"`
+}
+
 // GetTimelineByQueryParams defines parameters for GetTimelineByQuery.
 type GetTimelineByQueryParams struct {
 	UserId TimelineUserId               `form:"user_id" json:"user_id"`
@@ -149,6 +158,12 @@ type CreateUserJSONBody struct {
 	Email *string `json:"email,omitempty"`
 	Name  *string `json:"name,omitempty"`
 }
+
+// UploadImageTextRequestBody defines body for UploadImage for text/plain ContentType.
+type UploadImageTextRequestBody = UploadImageTextBody
+
+// LoginJSONRequestBody defines body for Login for application/json ContentType.
+type LoginJSONRequestBody LoginJSONBody
 
 // PostPlatJSONRequestBody defines body for PostPlat for application/json ContentType.
 type PostPlatJSONRequestBody = PlatPost
