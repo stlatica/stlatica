@@ -44,7 +44,7 @@ func main() {
 		UserUseCase: userusecase.NewUserUseCase(appLogger, userFactory, userDAO),
 		PlatUseCase: platusecase.NewPlatUseCase(appLogger, platFactory, platDAO),
 	}
-	v1controllers.RegisterHandlers(*initContent, e)
+	v1controllers.RegisterHandlers(*initContent, e, appLogger)
 
 	err = e.Start(fmt.Sprintf(`:%s`, os.Getenv("STLATICA_SERVER_PORT")))
 	if err != nil {
