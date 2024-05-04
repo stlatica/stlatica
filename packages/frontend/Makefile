@@ -11,7 +11,10 @@ bash: util/build ## run bash (for package install etc.) ##
 	docker compose run --rm -it front_dev bash
 
 ladle: util/build remix/node_modules ## run ladle (storybook server)
-	docker compose run --rm -p 127.0.0.1:61000:61000  front_dev bash -c "pnpm run ladle dev"
+	docker compose run --rm front_dev_ladle bash -c "pnpm run ladle dev"
+
+ladle-no-hmr: util/build remix/node_modules ## ladle for docker windows / mac
+	docker compose run --rm -p 127.0.0.1:61000:61000 -p 127.0.0.1:24678:24678 front_dev bash -c "pnpm run ladle dev"
 
 lint: util/build remix/node_modules ## lint & format
 	docker compose run --rm front_dev bash -c "pnpm run lint"
