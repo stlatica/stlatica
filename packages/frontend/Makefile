@@ -46,6 +46,9 @@ ci/vrt: vrt
 
 ci/build: build
 
+
+ci/all-check: util/ci-checks
+
 # << utility commands >>
 
 
