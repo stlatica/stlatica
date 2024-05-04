@@ -18,6 +18,9 @@ pass=""
 sslmode="false"
 whitelist=["users","plats"]
 
+[aliases.tables.plats]
+up_singular     = "PlatBase"
+
 [[types]]
 [types.match]
 name="created_at"
