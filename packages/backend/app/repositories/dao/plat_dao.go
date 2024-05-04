@@ -29,22 +29,24 @@ type platDAO struct {
 }
 
 func (dao *platDAO) GetPlat(ctx context.Context, platID types.PlatID) (*domainentities.Plat, error) {
-	entity, err := entities.FindPlat(ctx, dao.ctxExecutor, platID)
+	entity, err := entities.FindPlatBase(ctx, dao.ctxExecutor, platID)
 	if err != nil {
 		return nil, err
 	}
 
 	return &domainentities.Plat{
-		PlatID:    entity.PlatID,
-		UserID:    entity.UserID,
-		Content:   entity.Content,
-		CreatedAt: entity.CreatedAt,
+		PlatBase: domainentities.PlatBase{
+			PlatID:    entity.PlatID,
+			UserID:    entity.UserID,
+			Content:   entity.Content,
+			CreatedAt: entity.CreatedAt,
+		},
 	}, nil
 }
 
 func (dao *platDAO) CreatePlat(ctx context.Context, userID types.UserID, content string) (
 	*domainentities.Plat, error) {
-	plat := entities.Plat{
+	plat := entities.PlatBase{
 		PlatID:    types.NewPlatID(),
 		UserID:    userID,
 		Content:   content,
@@ -53,9 +55,11 @@ func (dao *platDAO) CreatePlat(ctx context.Context, userID types.UserID, content
 	ctx = boil.SkipTimestamps(ctx)
 	err := plat.Insert(ctx, dao.ctxExecutor, boil.Infer())
 	return &domainentities.Plat{
-		PlatID:    plat.PlatID,
-		UserID:    plat.UserID,
-		Content:   plat.Content,
-		CreatedAt: plat.CreatedAt,
+		PlatBase: domainentities.PlatBase{
+			PlatID:    plat.PlatID,
+			UserID:    plat.UserID,
+			Content:   plat.Content,
+			CreatedAt: plat.CreatedAt,
+		},
 	}, err
 }
