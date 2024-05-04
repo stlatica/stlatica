@@ -18,5 +18,4 @@ services:
       # prismは別のファイルとして分離したい
       - "127.0.0.1:4020:4010"
     working_dir: /openapi
-    tty: true
     init: true
