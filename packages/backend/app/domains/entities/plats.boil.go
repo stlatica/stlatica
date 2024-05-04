@@ -7,8 +7,8 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 )
 
-// Plat is Plat entity object.
-type Plat struct { // ulid
+// PlatBase is PlatBase entity object.
+type PlatBase struct { // ulid
 	PlatID types.PlatID `json:"plat_id"`
 	// user_id
 	UserID types.UserID `json:"user_id"`
@@ -21,7 +21,7 @@ type Plat struct { // ulid
 }
 
 // GetPlatID is get plat_id value, if receiver is nil, returns the specified value.
-func (m *Plat) GetPlatID() types.PlatID {
+func (m *PlatBase) GetPlatID() types.PlatID {
 	if m == nil {
 		return types.PlatID{}
 	}
@@ -29,7 +29,7 @@ func (m *Plat) GetPlatID() types.PlatID {
 }
 
 // GetUserID is get user_id value, if receiver is nil, returns the specified value.
-func (m *Plat) GetUserID() types.UserID {
+func (m *PlatBase) GetUserID() types.UserID {
 	if m == nil {
 		return types.UserID{}
 	}
@@ -37,7 +37,7 @@ func (m *Plat) GetUserID() types.UserID {
 }
 
 // GetContent is get content value, if receiver is nil, returns the specified value.
-func (m *Plat) GetContent() string {
+func (m *PlatBase) GetContent() string {
 	if m == nil {
 		return ""
 	}
@@ -45,7 +45,7 @@ func (m *Plat) GetContent() string {
 }
 
 // GetCreatedAt is get created_at value, if receiver is nil, returns the specified value.
-func (m *Plat) GetCreatedAt() types.UnixTime {
+func (m *PlatBase) GetCreatedAt() types.UnixTime {
 	if m == nil {
 		return types.UnixTime(0)
 	}
@@ -53,7 +53,7 @@ func (m *Plat) GetCreatedAt() types.UnixTime {
 }
 
 // GetUpdatedAt is get updated_at value, if receiver is nil, returns the specified value.
-func (m *Plat) GetUpdatedAt() types.UnixTime {
+func (m *PlatBase) GetUpdatedAt() types.UnixTime {
 	if m == nil {
 		return types.UnixTime(0)
 	}

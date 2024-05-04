@@ -123,7 +123,7 @@ var UserRels = struct {
 
 // userR is where relationships are stored.
 type userR struct {
-	Plats PlatSlice `boil:"Plats" json:"Plats" toml:"Plats" yaml:"Plats"`
+	Plats PlatBaseSlice `boil:"Plats" json:"Plats" toml:"Plats" yaml:"Plats"`
 }
 
 // NewStruct creates a new relationship struct
@@ -131,7 +131,7 @@ func (*userR) NewStruct() *userR {
 	return &userR{}
 }
 
-func (r *userR) GetPlats() PlatSlice {
+func (r *userR) GetPlats() PlatBaseSlice {
 	if r == nil {
 		return nil
 	}
@@ -322,7 +322,7 @@ func (userL) LoadPlats(ctx context.Context, e boil.ContextExecutor, singular boo
 		return errors.Wrap(err, "failed to eager load plats")
 	}
 
-	var resultSlice []*Plat
+	var resultSlice []*PlatBase
 	if err = queries.Bind(results, &resultSlice); err != nil {
 		return errors.Wrap(err, "failed to bind eager loaded slice plats")
 	}
@@ -365,7 +365,7 @@ func (userL) LoadPlats(ctx context.Context, e boil.ContextExecutor, singular boo
 // of the user, optionally inserting them as new records.
 // Appends related to o.R.Plats.
 // Sets related.R.User appropriately.
-func (o *User) AddPlats(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Plat) error {
+func (o *User) AddPlats(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*PlatBase) error {
 	var err error
 	for _, rel := range related {
 		if insert {
