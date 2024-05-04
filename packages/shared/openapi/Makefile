@@ -1,72 +1,37 @@
-DOCKER_RUN := docker compose exec -it redocly
+DOCKER_RUN := docker compose run -it redocly
 
-x: help
+.DEFAULT_GOAL := help
 
+internal/preview: docker-build ## API定義確認サーバーを起動します
+	docker compose run -it -p 127.0.0.1:8080:8080 redocly redocly preview-docs --host 0.0.0.0 internalapi/openapi.yaml -p 8080
+external/preview: docker-build ## API定義確認サーバーを起動します
+	docker compose run -it -p 127.0.0.1:8081:8081 redocly redocly preview-docs --host 0.0.0.0 externalapi/openapi.yaml -p 8081
 
-internal-preview: docker-up
-	${DOCKER_RUN} redocly preview-docs --host 0.0.0.0 internalapi/openapi.yaml -p 8080
-external-preview: docker-up
-	${DOCKER_RUN} redocly preview-docs --host 0.0.0.0 externalapi/openapi.yaml -p 8081
+internal/lint: docker-build ## lintチェックします
+	docker compose run -it redocly redocly lint internalapi/openapi.yaml
+external/lint: docker-build ## lintチェックします
+	docker compose run -it redocly redocly lint externalapi/openapi.yaml
 
-internal-lint: docker-up
-	${DOCKER_RUN} redocly lint internalapi/openapi.yaml
-external-lint: docker-up
-	${DOCKER_RUN} redocly lint externalapi/openapi.yaml
+internal/bundle: docker-build ## 1ファイルにバンドルします
+	docker compose run -it redocly redocly bundle internalapi/openapi.yaml --output=build/openapi-bundled-internal.yaml
+external/bundle: docker-build ## 1ファイルにバンドルします
+	docker compose run -it redocly redocly bundle externalapi/openapi.yaml --output=build/openapi-bundled-external.yaml
 
-internal-bundle: docker-up
-	${DOCKER_RUN} redocly bundle internalapi/openapi.yaml --output=internalapi/openapi-bundled.yaml
-external-bundle: docker-up
-	${DOCKER_RUN} redocly bundle externalapi/openapi.yaml --output=externalapi/openapi-bundled.yaml
+internal/build: docker-build ## 定義をhtmlのドキュメントで出力します
+	docker compose run -it redocly redocly build-docs internalapi/openapi.yaml --output=build/internal.html
+external/build: docker-build ## 定義をhtmlのドキュメントで出力します
+	docker compose run -it redocly redocly build-docs externalapi/openapi.yaml --output=build/external.html
 
-
-internal-build: docker-up
-	${DOCKER_RUN} redocly build-docs internalapi/openapi.yaml --output=build/internal.html
-external-build: docker-up
-	${DOCKER_RUN} redocly build-docs externalapi/openapi.yaml --output=build/external.html
-
-internal-serve:
-	${DOCKER_RUN} serve build/internal.html --host 0.0.0.0 -p 8090
-external-serve:
-	${DOCKER_RUN} serve build/external.html --host 0.0.0.0 -p 8091
-
-
-internal-mock: internal-bundle
-	${DOCKER_RUN} prism mock ./internalapi/openapi-bundled.yaml --host 0.0.0.0
-external-mock: external-bundle
-	${DOCKER_RUN} prism mock ./externalapi/openapi-bundled.yaml --host 0.0.0.0
-
-
-docker-up:
-	docker compose up -d redocly
+internal/mock: docker-build internal/bundle ## prismでモックサーバーを起動します
+	docker compose run -it -p 127.0.0.1:4010:4010 redocly prism mock ./internalapi/openapi-bundled.yaml --host 0.0.0.0
+external/mock: docker-build external/bundle ## prismでモックサーバーを起動します
+	docker compose run -it -p 127.0.0.1:4010:4010 redocly prism mock ./externalapi/openapi-bundled.yaml --host 0.0.0.0
 
 docker-build:
-	docker compose build redocly
-
-docker-down:
-	docker compose down --remove-orphans
+	docker compose build 
 
 
-help:
-	# > internal-preview
-	# > external-preview
-	# API定義確認サーバーを起動します
-	#
-	# > internal-lint
-	# > external-lint
-	# lintチェックします
-	#
-	# > internal-bundle
-	# > external-bundle
-	# 1ファイルにバンドルします
-	#
-	# > internal-build
-	# > external-build
-	# 定義をhtmlのドキュメントで出力します
-	#
-	# > internal-serve
-	# > external-serve
-	# buildしたファイルを確認します
-	#
-	# > internal-mock
-	# > external-mock
-	# prismでモックサーバーを起動します
+# https://ktrysmt.github.io/blog/write-useful-help-command-by-shell/
+help: ## print this message
+	@printf "\033[36m%-25s\033[0m %-50s %s\n" "[command]" "[Description]" 
+	@grep -E '^[/a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
