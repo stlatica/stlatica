@@ -1,32 +1,43 @@
 import { Stack } from "@mantine/core";
 import React from "react";
+import useSWR from "swr";
 
-import { PlatCell } from "@/components/common/PlatCell";
+import { PlatCellWithFetch } from "@/components/common/PlatCell/PlatCellWithFetch";
+import { useTimeline } from "@/features/globalStore/TimelineStore";
+import { Plat } from "@/openapi/stlaticaInternalApi.schemas";
 
 import { container } from "./Timeline.css";
 
 type TimelineProps = {
-  // children: React.ReactNode;
+  /**
+   * cache key
+   */
+  readonly url: string;
+  readonly fetcher: (url: string) => Promise<Plat[]>;
 };
 
 /**
  *
  */
-export const Timeline: React.FC<TimelineProps> = () => {
+export const Timeline: React.FC<TimelineProps> = ({ url, fetcher }) => {
+  const { data, mutate } = useTimeline(url);
+
+  useSWR(
+    url,
+    async (u) => {
+      const res = await fetcher(u);
+      mutate(res);
+      return res;
+    },
+    {
+      refreshInterval: 1000,
+    }
+  );
+
   return (
     <Stack className={container}>
-      {new Array(10).fill(0).map((_, i) => {
-        return (
-          <PlatCell
-            key={i}
-            content="はじめてのplat"
-            favoriteCount={i * 10}
-            replyCount={0}
-            shareCount={i}
-            userId="test"
-            userName="テストユーザー"
-          />
-        );
+      {data.map(({ plat_id }, i) => {
+        return <PlatCellWithFetch key={i} id={plat_id} />;
       })}
     </Stack>
   );

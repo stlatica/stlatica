@@ -7,6 +7,8 @@ import { useLadleContext, ActionType, ThemeState } from "@ladle/react";
 import type { GlobalProvider } from "@ladle/react";
 import { MantineProvider, useMantineColorScheme } from "@mantine/core";
 
+import { Providers } from "../src/Providers";
+
 /**
  * useMantineColorScheme は MantineProvider 以下でないと呼べないのでこうなる
  */
@@ -34,9 +36,9 @@ export const Provider: GlobalProvider = ({ children, globalState }) => {
 
   return (
     <>
-      <MantineProvider defaultColorScheme={globalState.theme}>
+      <Providers>
         <MantineWrap>{children}</MantineWrap>
-      </MantineProvider>
+      </Providers>
     </>
   );
 };
