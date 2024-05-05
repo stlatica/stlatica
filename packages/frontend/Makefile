@@ -4,10 +4,10 @@ DOCKER_VRT_RUN := docker compose run --rm --service-ports playwright_vrt /bin/sh
 
 # << main commands >>
 
-dev: util/build remix/node_modules ## run remix server ##
+dev: util/build remix/node_modules ## run remix server
 	docker compose run --rm -p 127.0.0.1:5173:5173 front_dev /bin/sh -c "pnpm run dev"
 
-bash: util/build ## run bash (for package install etc.) ##
+bash: util/build ## run bash (for package install etc.)
 	docker compose run --rm -it front_dev bash
 
 ladle: util/build remix/node_modules ## run ladle (storybook server)
@@ -57,16 +57,9 @@ util/permission: ## fix file permission (TODO #354)
 	sudo chmod 777 -R .
 
 
-# https://ktrysmt.github.io/blog/write-useful-help-command-by-shell/
 help: ## print this message ## make
-	@echo "Example operations by makefile."
-	@echo ""
-	@echo "Usage: make SUB_COMMAND argument_name=argument_value"
-	@echo ""
-	@echo "Command list:"
-	@echo ""
-	@printf "\033[36m%-30s\033[0m %-50s %s\n" "[Sub command]" "[Description]" "[Example]"
-	@grep -E '^[/a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | perl -pe 's%^([/a-zA-Z_-]+):.*?(##)%$$1 $$2%' | awk -F " *?## *?" '{printf "\033[36m%-30s\033[0m %-50s %s\n", $$1, $$2, $$3}'
+	@printf "\033[36m%-25s\033[0m %-50s %s\n" "[command]" "[Description]" 
+	@grep -E '^[/a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
 
 # docker/stop:
 # 	docker compose down --remove-orphans

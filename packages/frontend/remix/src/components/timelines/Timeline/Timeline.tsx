@@ -1,6 +1,9 @@
+import { Stack } from "@mantine/core";
 import React from "react";
 
 import { PlatCell } from "@/components/common/PlatCell";
+
+import { container } from "./Timeline.css";
 
 type TimelineProps = {
   // children: React.ReactNode;
@@ -11,50 +14,20 @@ type TimelineProps = {
  */
 export const Timeline: React.FC<TimelineProps> = () => {
   return (
-    // TODO: 90vh指定ではなく全高さを使うようにしたい
-    <div className="h-[90vh] overflow-y-scroll">
-      <div className="flex h-full flex-col gap-2">
-        <PlatCell
-          content="はじめてのplat"
-          favoriteCount={0}
-          replyCount={0}
-          shareCount={0}
-          userId="test"
-          userName="テストユーザー"
-        />
-        <PlatCell
-          content="はじめてのplat"
-          favoriteCount={0}
-          replyCount={0}
-          shareCount={0}
-          userId="test"
-          userName="テストユーザー"
-        />
-        <PlatCell
-          content="はじめてのplat"
-          favoriteCount={0}
-          replyCount={0}
-          shareCount={0}
-          userId="test"
-          userName="テストユーザー"
-        />
-        <PlatCell
-          content="はじめてのplat"
-          favoriteCount={0}
-          replyCount={0}
-          shareCount={0}
-          userId="test"
-          userName="テストユーザー"
-        />
-        <PlatCell
-          content="はじめてのplat"
-          favoriteCount={0}
-          replyCount={0}
-          shareCount={0}
-          userId="test"
-          userName="テストユーザー"
-        />
-      </div>
-    </div>
+    <Stack className={container}>
+      {new Array(10).fill(0).map((_, i) => {
+        return (
+          <PlatCell
+            key={i}
+            content="はじめてのplat"
+            favoriteCount={i * 10}
+            replyCount={0}
+            shareCount={i}
+            userId="test"
+            userName="テストユーザー"
+          />
+        );
+      })}
+    </Stack>
   );
 };

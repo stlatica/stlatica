@@ -22,6 +22,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@mantine/core": "^7.6.2",
     "@mantine/hooks": "^7.6.2",
+    "@mantine/vanilla-extract": "^7.9.0",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",

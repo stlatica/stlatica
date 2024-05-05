@@ -3,6 +3,7 @@ import { LinksFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
 import "@mantine/core/styles.css";
+
 // for tailwind
 import stylesheet from "./routes/global.css?url";
 

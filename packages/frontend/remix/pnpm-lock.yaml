@@ -17,6 +17,9 @@ importers:
       '@mantine/hooks':
         specifier: ^7.6.2
         version: 7.7.1(react@18.2.0)
+      '@mantine/vanilla-extract':
+        specifier: ^7.9.0
+        version: 7.9.0(@mantine/core@7.7.1(@mantine/hooks@7.7.1(react@18.2.0))(@types/react@18.2.74)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
       '@remix-run/node':
         specifier: ^2.8.1
         version: 2.8.1(typescript@5.4.4)
@@ -963,6 +966,11 @@ packages:
     resolution: {integrity: sha512-3YH2FzKMlg840tb04PBDcDXyBCi9puFOxEBVgc6Y/pN6KFqfOoAnQE/YvgOtwSNXZlbTWyDlQoYj+3je7pA7og==}
     peerDependencies:
       react: ^18.2.0
+
+  '@mantine/vanilla-extract@7.9.0':
+    resolution: {integrity: sha512-E2QSsf/6SSlmu8ntVWEitfkze6RwSEigbnV9N8VYjIUgTfdsWcUzTeDLWRPBAkDuu6p+eMeA3+BzP63dhbhJXQ==}
+    peerDependencies:
+      '@mantine/core': 7.9.0
 
   '@mdx-js/mdx@2.3.0':
     resolution: {integrity: sha512-jLuwRlz8DQfQNiUCJR50Y09CGPq3fLtmtUQfVrj79E0JWu3dvsVcxVIcfhR5h0iXu+/z++zDrYeiJqifRynJkA==}
@@ -6736,6 +6744,10 @@ snapshots:
     dependencies:
       react: 18.2.0
 
+  '@mantine/vanilla-extract@7.9.0(@mantine/core@7.7.1(@mantine/hooks@7.7.1(react@18.2.0))(@types/react@18.2.74)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))':
+    dependencies:
+      '@mantine/core': 7.7.1(@mantine/hooks@7.7.1(react@18.2.0))(@types/react@18.2.74)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+
   '@mdx-js/mdx@2.3.0':
     dependencies:
       '@types/estree-jsx': 1.0.5
@@ -7739,7 +7751,7 @@ snapshots:
       '@babel/plugin-syntax-typescript': 7.24.1(@babel/core@7.24.4)
       '@vanilla-extract/babel-plugin-debug-ids': 1.0.5
       '@vanilla-extract/css': 1.14.2
-      esbuild: 0.17.6
+      esbuild: 0.19.12
       eval: 0.1.8
       find-up: 5.0.0
       javascript-stringify: 2.1.0
@@ -7764,7 +7776,7 @@ snapshots:
       '@babel/plugin-syntax-typescript': 7.24.1(@babel/core@7.24.4)
       '@vanilla-extract/babel-plugin-debug-ids': 1.0.5
       '@vanilla-extract/css': 1.14.2
-      esbuild: 0.17.6
+      esbuild: 0.19.12
       eval: 0.1.8
       find-up: 5.0.0
       javascript-stringify: 2.1.0
