@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FollowButton } from "./FollowButton";
 
 export default {
-  title: "components/button/FollowButton",
+  title: "button/FollowButton",
 } satisfies StoryDefault;
 
 export const Story1: Story = () => {
