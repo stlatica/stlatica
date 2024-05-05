@@ -191,6 +191,6 @@ jobs:
       - name: build container image
         run: make docker-build
       - name: internal api lint
-        run: make internal-lint
+        run: make internal/lint
       - name: external api lint
-        run: make external-lint
+        run: make external/lint
