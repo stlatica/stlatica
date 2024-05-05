@@ -42,10 +42,22 @@ export const useTimeline = (url: string) => {
       return { plat_id: x.plat_id, created_at: new Date(x.created_at) };
     });
 
-    // 新しいデータを合体しつつソート
-    const newData = r.concat(data).sort(SimpleSortObject("created_at"));
+    // 新しいデータを合体
+    const merged = r.concat(data);
 
-    _mutate(newData).catch((e: unknown) => {
+    // 重複排除
+    const filtered = Array.from(
+      new Map(
+        merged.map((user) => {
+          return [user.plat_id, user];
+        })
+      ).values()
+    );
+
+    // ソート
+    const sorted = filtered.sort(SimpleSortObject("created_at"));
+
+    _mutate(sorted).catch((e: unknown) => {
       // TODO: #437 フロント用共通エラー処理関数を作る
       // eslint-disable-next-line no-console
       console.error(e);
