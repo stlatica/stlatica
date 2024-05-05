@@ -21,7 +21,7 @@ export const Story1: Story = () => {
 
   return <Timeline url="story/timeline/story1" fetcher={fetcher} />;
 };
-Story1.storyName = "1.基本";
+Story1.storyName = "1 基本 20件";
 
 export const Story2: Story = () => {
   const fetcher = () => {
@@ -29,6 +29,6 @@ export const Story2: Story = () => {
       resolve([GenerateDummyPlat(), GenerateDummyPlat(), GenerateDummyPlat()]);
     });
   };
-  return <Timeline url="story/timeline/story2" fetcher={fetcher} />;
+  return <Timeline url="story/timeline/story2" user_id="sample_user" />;
 };
-Story2.storyName = "2.仮動作確認";
+Story2.storyName = "2 仮動作確認 3件ずつ増";

@@ -55,7 +55,7 @@ export const useTimeline = (url: string) => {
     );
 
     // ソート
-    const sorted = filtered.sort(SimpleSortObject("created_at"));
+    const sorted = filtered.sort(SimpleSortObject("created_at", "reverse"));
 
     _mutate(sorted).catch((e: unknown) => {
       // TODO: #437 フロント用共通エラー処理関数を作る
@@ -73,17 +73,3 @@ export const useTimeline = (url: string) => {
     mutate,
   };
 };
-
-// /**
-//  * platの情報を取得する
-//  */
-// export const useGetPlatFromStore = (platID: string) => {
-//   const ret = useSWR(PlatPrefixedKey(platID), {
-//     revalidateOnFocus: false,
-//     revalidateOnMount: false,
-//     revalidateOnReconnect: false,
-//     revalidateIfStale: false,
-//   });
-
-//   return ret;
-// };
