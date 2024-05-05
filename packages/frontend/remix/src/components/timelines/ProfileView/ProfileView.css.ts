@@ -1,9 +1,8 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "@/styles/mantine.css";
-
 export const container = style({
-  overflowY: "scroll",
+  width: "100%",
   height: "100%",
-  gap: vars.spacing.xs,
+  padding: "0.75rem",
+  backgroundColor: "rgb(229 231 235)",
 });

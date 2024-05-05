@@ -100,8 +100,8 @@ importers:
         specifier: ^7.3.1
         version: 7.5.0(eslint@8.57.0)(typescript@5.4.4)
       '@vanilla-extract/vite-plugin':
-        specifier: ^4.0.7
-        version: 4.0.7(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38))(vite@5.2.8(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38)))
+        specifier: ^3.9.5
+        version: 3.9.5(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38))(vite@5.2.8(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38)))
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@5.2.8(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38)))
@@ -1640,16 +1640,13 @@ packages:
   '@vanilla-extract/integration@6.5.0':
     resolution: {integrity: sha512-E2YcfO8vA+vs+ua+gpvy1HRqvgWbI+MTlUpxA8FvatOvybuNcWAY0CKwQ/Gpj7rswYKtC6C7+xw33emM6/ImdQ==}
 
-  '@vanilla-extract/integration@7.1.2':
-    resolution: {integrity: sha512-jpjw0L3P1E+U9L8OAFVMGpPFbNPD+/Vpfew7oOKBYipCrRZEqShu3WLXuUxjXz/mcIH7KCS5nasIdy2VclbEaQ==}
-
   '@vanilla-extract/private@1.0.4':
     resolution: {integrity: sha512-8FGD6AejeC/nXcblgNCM5rnZb9KXa4WNkR03HCWtdJBpANjTgjHEglNLFnhuvdQ78tC6afaxBPI+g7F2NX3tgg==}
 
-  '@vanilla-extract/vite-plugin@4.0.7':
-    resolution: {integrity: sha512-uRAFWdq5Eq0ybpgW2P0LNOw8eW+MTg/OFo5K0Hsl2cKu/Tu2tabCsBf6vNjfhDrm4jBShHy1wJIVcYxf6sczVQ==}
+  '@vanilla-extract/vite-plugin@3.9.5':
+    resolution: {integrity: sha512-CWI/CtrVW6i3HKccI6T7uGQkTJ8bd8Xl2UMBg3Pkr7dwWMmavXTeucV0I9KSbmXaYXSbEj+Q8c9y0xAZwtmTig==}
     peerDependencies:
-      vite: ^4.0.3 || ^5.0.0
+      vite: ^2.2.3 || ^3.0.0 || ^4.0.3 || ^5.0.0
 
   '@vitejs/plugin-react-swc@3.6.0':
     resolution: {integrity: sha512-XFRbsGgpGxGzEV5i5+vRiro1bwcIaZDIdBRP16qwm+jP68ue/S8FJTBEgOeojtVDYrbSua3XFp71kC8VJE6v+g==}
@@ -7770,36 +7767,14 @@ snapshots:
       - supports-color
       - terser
 
-  '@vanilla-extract/integration@7.1.2(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38))':
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/plugin-syntax-typescript': 7.24.1(@babel/core@7.24.4)
-      '@vanilla-extract/babel-plugin-debug-ids': 1.0.5
-      '@vanilla-extract/css': 1.14.2
-      esbuild: 0.19.12
-      eval: 0.1.8
-      find-up: 5.0.0
-      javascript-stringify: 2.1.0
-      lodash: 4.17.21
-      mlly: 1.6.1
-      outdent: 0.8.0
-      vite: 5.2.8(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38))
-      vite-node: 1.4.0(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38))
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-
   '@vanilla-extract/private@1.0.4': {}
 
-  '@vanilla-extract/vite-plugin@4.0.7(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38))(vite@5.2.8(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38)))':
+  '@vanilla-extract/vite-plugin@3.9.5(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38))(vite@5.2.8(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38)))':
     dependencies:
-      '@vanilla-extract/integration': 7.1.2(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38))
+      '@vanilla-extract/integration': 6.5.0(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38))
+      outdent: 0.8.0
+      postcss: 8.4.38
+      postcss-load-config: 4.0.2(postcss@8.4.38)
       vite: 5.2.8(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38))
     transitivePeerDependencies:
       - '@types/node'
@@ -7810,6 +7785,7 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+      - ts-node
 
   '@vitejs/plugin-react-swc@3.6.0(vite@5.2.8(@types/node@20.12.5)(sugarss@4.0.1(postcss@8.4.38)))':
     dependencies:

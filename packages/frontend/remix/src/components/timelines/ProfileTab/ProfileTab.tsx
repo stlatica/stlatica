@@ -1,3 +1,4 @@
+import { useNavigateSafe } from "@/features/acl/useNavigate";
 import { Tabs } from "@mantine/core";
 import { useNavigate, useParams } from "@remix-run/react";
 import React from "react";
@@ -10,7 +11,7 @@ type ProfileTabProps = {
  * Profile 表示用のタブ
  */
 export const ProfileTab: React.FC<ProfileTabProps> = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigateSafe();
   const { tabValue } = useParams();
 
   return (
