@@ -3,6 +3,7 @@ import * as D from "date-fns";
 import express from "express";
 import type * as MyTypes from "./schema";
 import { InitArray } from "./utils";
+import { fakerJA as faker } from "@faker-js/faker";
 
 const app = express();
 const port = 4010;
@@ -49,9 +50,12 @@ const GenerateTimeline = () => {
 
     return {
       plat_id: randomUUID(),
-      content: `メッセージ ${time}`,
+      content: faker.lorem.sentence({ min: 1, max: 30 }),
+      // ; `メッセージ ${time}`,
       images: [],
-      created_at: time,
+      created_at: faker.date
+        .between({ to: new Date(), from: D.subSeconds(new Date(), 2) })
+        .toISOString(),
     };
   };
 
