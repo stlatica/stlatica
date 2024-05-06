@@ -21,15 +21,13 @@ export const PlatCellWithFetch: React.FC<Props> = ({ id }) => {
   }
 
   return (
-    <span>
-      <PlatCell
-        content={data.data.content}
-        favoriteCount={20}
-        replyCount={1}
-        shareCount={10}
-        userId="test"
-        userName="テストユーザー"
-      />
-    </span>
+    <PlatCell
+      content={data.data.content}
+      favoriteCount={20}
+      replyCount={1}
+      shareCount={10}
+      userId="test"
+      userName="テストユーザー"
+    />
   );
 };

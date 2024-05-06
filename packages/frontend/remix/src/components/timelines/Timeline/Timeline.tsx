@@ -1,9 +1,12 @@
+import { Button } from "@mantine/core";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import React, { useEffect } from "react";
 
 import { PlatCellWithFetch } from "@/components/common/PlatCell/PlatCellWithFetch";
 import { useTimeline } from "@/features/globalStore/TimelineStore";
 import { useGetTimelineByQuery } from "@/openapi/stlaticaInternalApi";
+
+import * as styles from "./Timeline.css";
 
 type TimelineProps = {
   /**
@@ -55,58 +58,47 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
   const items = virtualizer.getVirtualItems();
 
   return (
-    <div
-      ref={parentRef}
-      style={{
-        height: "100%",
-        overflowY: "auto",
-        contain: "strict",
-      }}
-    >
-      <div
-        style={{
-          height: virtualizer.getTotalSize(),
-          width: "100%",
-          position: "relative",
+    <>
+      <Button
+        fullWidth
+        variant="outline"
+        onClick={() => {
+          virtualizer.scrollToIndex(0);
         }}
       >
+        scroll to the top
+      </Button>
+      <div ref={parentRef} className={styles.container}>
         <div
+          className={styles.scrollArea}
+          // eslint-disable-next-line react/forbid-dom-props
           style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            transform: `translateY(${items[0]?.start ?? 0}px)`,
+            height: virtualizer.getTotalSize(),
           }}
         >
-          {items.map((virtualRow) => {
-            const { plat_id } = data[virtualRow.index];
-            return (
-              <div
-                key={virtualRow.key}
-                data-index={virtualRow.index}
-                ref={virtualizer.measureElement}
-                className={virtualRow.index % 2 ? "ListItemOdd" : "ListItemEven"}
-              >
-                <PlatCellWithFetch key={plat_id} id={plat_id} />
-
-                {/* <div style={{ padding: "10px 0" }}>
-                    <div>Row {virtualRow.index}</div>
-                    <div>{sentences[virtualRow.index]}</div>
-                  </div> */}
-              </div>
-            );
-          })}
+          <div
+            className={styles.positionHelper}
+            // eslint-disable-next-line react/forbid-dom-props
+            style={{
+              transform: `translateY(${String(items[0]?.start ?? 0)}px)`,
+            }}
+          >
+            {items.map((virtualRow) => {
+              const { plat_id } = data[virtualRow.index];
+              return (
+                <div
+                  key={virtualRow.key}
+                  data-index={virtualRow.index}
+                  ref={virtualizer.measureElement}
+                  className={styles.item}
+                >
+                  <PlatCellWithFetch key={plat_id} id={plat_id} />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
-
-  // return (
-  //   <Stack className={container}>
-  //     {data.map(({ plat_id }, i) => {
-  //       return <PlatCellWithFetch key={i} id={plat_id} />;
-  //     })}
-  //   </Stack>
-  // );
 };
