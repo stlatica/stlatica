@@ -18,7 +18,7 @@ type TimelineProps = {
 /**
  *
  */
-export const Timeline: React.FC<TimelineProps> = ({ url, user_id }) => {
+export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
   const { data, mutate } = useTimeline(url);
 
   const { data: tl } = useGetTimelineByQuery(
@@ -40,19 +40,6 @@ export const Timeline: React.FC<TimelineProps> = ({ url, user_id }) => {
     }
     mutate(tl.data);
   }, [mutate, tl]);
-
-  // // タイムラインAPIからTL取得していないので後でちゃんと置き換える
-  // useSWR(
-  //   url,
-  //   async (u) => {
-  //     const res = await fetcher(u);
-  //     mutate(res);
-  //     return res;
-  //   },
-  //   {
-  //     refreshInterval: 1000,
-  //   }
-  // );
 
   return (
     <Stack className={container}>

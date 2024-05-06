@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-import { Timeline } from "@/components/timelines/Timeline";
+import { ProfileTimeline } from "@/components/timelines/Timeline";
 
 export const loader = ({ params }: LoaderFunctionArgs) => {
   const { id } = params;
@@ -18,7 +18,7 @@ export default function Page() {
 
   return (
     <>
-      <Timeline />
+      <ProfileTimeline url={`user/${id}`} user_id={id} />
     </>
   );
 }
