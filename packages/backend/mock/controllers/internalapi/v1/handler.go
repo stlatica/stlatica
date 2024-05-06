@@ -95,6 +95,14 @@ func (h *handler) GetImage(ectx echo.Context, imageID string) error {
 	return ectx.String(http.StatusOK, mockSmallImage)
 }
 
+func (h *handler) UploadImage(_ echo.Context) error {
+	panic("implement me")
+}
+
+func (h *handler) Login(_ echo.Context) error {
+	panic("implement me")
+}
+
 func (h *handler) GetUser(_ echo.Context, _ string) error {
 	panic("implement me")
 }
