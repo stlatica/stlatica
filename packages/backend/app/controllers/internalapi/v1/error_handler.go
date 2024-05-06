@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
-	"github.com/stlatica/stlatica/packages/backend/app/logger"
+	"github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
 )
 
 // NewErrorHandler returns a new HTTPErrorHandler.

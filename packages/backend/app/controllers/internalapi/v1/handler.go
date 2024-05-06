@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1/openapi"
-	"github.com/stlatica/stlatica/packages/backend/app/logger"
+	"github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/plats"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 )
