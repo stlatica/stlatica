@@ -1,5 +1,4 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 
 export const loader = ({ params }: LoaderFunctionArgs) => {
   const { id } = params;

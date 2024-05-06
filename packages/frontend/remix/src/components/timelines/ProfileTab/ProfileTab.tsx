@@ -1,7 +1,8 @@
-import { useNavigateSafe } from "@/features/acl/useNavigate";
 import { Tabs } from "@mantine/core";
-import { useNavigate, useParams } from "@remix-run/react";
+import { useParams } from "@remix-run/react";
 import React from "react";
+
+import { useNavigateSafe } from "@/features/acl/useNavigate";
 
 type ProfileTabProps = {
   // children: React.ReactNode;
