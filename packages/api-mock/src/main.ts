@@ -60,7 +60,7 @@ const GenerateTimeline = () => {
   };
 
   // 戻り値を生成
-  const r: Res = InitArray(Math.floor(Math.random() * 10)).map((_, i) =>
+  const r: Res = InitArray(1 + Math.floor(Math.random() * 10)).map((_, i) =>
     ResGen(i)
   );
 
