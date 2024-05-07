@@ -1,4 +1,4 @@
 /bin
 
 # Minio
-packages/backend/data/minio/
+/data/minio/

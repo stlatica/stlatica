@@ -1,6 +1,6 @@
 package plats
 
-import "github.com/stlatica/stlatica/packages/backend/app/logger"
+import "github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
 
 // Factory is a factory of plats package.
 type Factory interface {

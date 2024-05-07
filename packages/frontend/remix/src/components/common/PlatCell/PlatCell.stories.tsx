@@ -5,7 +5,7 @@ import { PlatCell } from "./PlatCell";
 import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
-  title: "components/common/PlatCell",
+  title: "common/PlatCell",
 } satisfies StoryDefault;
 
 export const Story1: Story = () => {

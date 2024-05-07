@@ -1,3 +1,62 @@
+images:
+  post:
+    tags:
+      - images
+    summary: upload image
+    description: |
+      upload image \
+      base64形式で受け取る
+    operationId: uploadImage
+    requestBody:
+      required: true
+      content:
+        text/plain:
+          schema:
+            type: string
+    responses:
+      201:
+        description: created
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image_id:
+                  type: string
+                  example: 'image_id'
+      400:
+        description: |
+          bad request \
+          error code:
+          - 'BAD_REQUEST'
+          - 'MISSING_PARAMETER'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      401:
+        description: |
+          unauthorized \
+          error code:
+          - 'UNAUTHORIZED'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
 images_{image_id}:
   get:
     tags:

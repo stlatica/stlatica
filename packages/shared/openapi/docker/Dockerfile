@@ -1,5 +1,5 @@
 FROM node:20.11.1-alpine
 
-RUN npm install --global @redocly/cli@1.10.5 @stoplight/prism-cli@5.6.0
+RUN npm install --global @redocly/cli@1.12.0 @stoplight/prism-cli@5.8.1
 
 EXPOSE 8080

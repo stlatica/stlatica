@@ -1,0 +1,8 @@
+alias npm="pnpm"
+alias npx="pnpm dlx"
+alias pnpm="pnpm"
+alias pnpx="pnpm dlx"
+alias pn="pnpm"
+alias px="pnpm dlx"
+alias bun="pnpm"
+alias bunx="pnpm dlx"

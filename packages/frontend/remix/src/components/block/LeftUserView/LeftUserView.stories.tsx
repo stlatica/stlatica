@@ -3,7 +3,7 @@ import { LeftUserView } from "./LeftUserView";
 import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
-  title: "components/block/LeftUserView",
+  title: "block/LeftUserView",
 } satisfies StoryDefault;
 
 export const Story1: Story = () => {

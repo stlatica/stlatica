@@ -1,11 +1,13 @@
 package v1
 
 import (
+	"io"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1/openapi"
-	"github.com/stlatica/stlatica/packages/backend/app/logger"
+	"github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
+	"github.com/stlatica/stlatica/packages/backend/app/usecases/images"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/plats"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 )
@@ -13,6 +15,7 @@ import (
 type handler struct {
 	*userController
 	*platController
+	*imageController
 }
 
 func newHandler(initContent ControllerInitContents) openapi.ServerInterface {
@@ -22,6 +25,9 @@ func newHandler(initContent ControllerInitContents) openapi.ServerInterface {
 		},
 		platController: &platController{
 			platUseCase: initContent.PlatUseCase,
+		},
+		imageController: &imageController{
+			imageUseCase: initContent.ImageUseCase,
 		},
 	}
 }
@@ -92,6 +98,18 @@ func (h *handler) GetImage(_ echo.Context, _ string) error {
 	panic("implement me")
 }
 
+func (h *handler) UploadImage(ectx echo.Context) error {
+	imageBase64, err := io.ReadAll(ectx.Request().Body)
+	if err != nil {
+		return err
+	}
+	response, err := h.imageController.UploadImage(ectx, string(imageBase64))
+	if err != nil {
+		return err
+	}
+	return ectx.JSON(http.StatusCreated, response)
+}
+
 func (h *handler) PostFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }
@@ -100,8 +118,13 @@ func (h *handler) DeleteFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }
 
+func (h *handler) Login(_ echo.Context) error {
+	panic("implement me")
+}
+
 // ControllerInitContents is the struct to hold the dependencies for the controller.
 type ControllerInitContents struct {
-	UserUseCase users.UserUseCase
-	PlatUseCase plats.PlatUseCase
+	UserUseCase  users.UserUseCase
+	PlatUseCase  plats.PlatUseCase
+	ImageUseCase images.ImageUseCase
 }

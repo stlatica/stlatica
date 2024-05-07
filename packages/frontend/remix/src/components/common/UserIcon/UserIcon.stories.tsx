@@ -1,11 +1,10 @@
-
 import { UserIcon } from "./UserIcon";
 import { UserIconSampleImage } from "./UserIconSampleImage";
 
 import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
-  title: "components/common/UserIcon",
+  title: "common/UserIcon",
 } satisfies StoryDefault;
 
 export const Story1: Story = () => {
