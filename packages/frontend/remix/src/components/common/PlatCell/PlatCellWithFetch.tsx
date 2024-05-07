@@ -1,3 +1,4 @@
+import { UserIconSampleImage } from "@/components/common/UserIcon/UserIconSampleImage";
 import { useGetPlat } from "@/openapi/stlaticaInternalApi";
 
 import { PlatCell } from "./PlatCell";
@@ -26,6 +27,7 @@ export const PlatCellWithFetch: React.FC<Props> = ({ id }) => {
       favoriteCount={20}
       replyCount={1}
       shareCount={10}
+      userIcon={UserIconSampleImage}
       userId="test"
       userName="テストユーザー"
     />
