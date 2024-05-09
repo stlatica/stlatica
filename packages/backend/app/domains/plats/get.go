@@ -6,7 +6,7 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/plats/ports"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
-	"github.com/stlatica/stlatica/packages/backend/app/logger"
+	"github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
 )
 
 // PlatGetter is the interface for getting plat.

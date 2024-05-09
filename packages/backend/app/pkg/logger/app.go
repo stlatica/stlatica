@@ -4,19 +4,17 @@ package logger
 import (
 	"context"
 	"time"
-
-	pkglogger "github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
 )
 
 // AppLogger is a logger for application.
 // It is used to log application specific logs.
 // ref: https://github.com/stlatica/stlatica/blob/main/docs/designs/log_design.md
 type AppLogger struct {
-	logger pkglogger.Logger
+	logger Logger
 }
 
 // NewAppLogger creates AppLogger
-func NewAppLogger(logger pkglogger.Logger) *AppLogger {
+func NewAppLogger(logger Logger) *AppLogger {
 	return &AppLogger{
 		logger: logger,
 	}

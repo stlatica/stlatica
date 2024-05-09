@@ -1,7 +1,10 @@
 version: "3.9"
 services:
   api_mock:
-    image: stlatica_front_node
+    build:
+      context: docker
+      dockerfile: Dockerfile.node
+      target: dev
     volumes:
       - type: bind
         source: ./

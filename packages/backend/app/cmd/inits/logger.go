@@ -1,8 +1,7 @@
 package inits
 
 import (
-	"github.com/stlatica/stlatica/packages/backend/app/logger"
-	pkglogger "github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
+	"github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
 )
 
 // LoggerFactory is a factory of logger
@@ -13,14 +12,14 @@ type LoggerFactory interface {
 
 // NewLoggerFactory creates LoggerFactory
 func NewLoggerFactory() LoggerFactory {
-	zapLogger := pkglogger.NewZapLogger()
+	zapLogger := logger.NewZapLogger()
 	return &loggerFactory{
 		logger: zapLogger,
 	}
 }
 
 type loggerFactory struct {
-	logger pkglogger.Logger
+	logger logger.Logger
 }
 
 func (f *loggerFactory) AppLogger() *logger.AppLogger {

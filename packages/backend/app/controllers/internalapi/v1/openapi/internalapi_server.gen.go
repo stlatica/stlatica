@@ -13,9 +13,15 @@ import (
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// upload image
+	// (POST /internal/v1/images)
+	UploadImage(ctx echo.Context) error
 	// get image
 	// (GET /internal/v1/images/{image_id})
 	GetImage(ctx echo.Context, imageId string) error
+	// login
+	// (POST /internal/v1/login)
+	Login(ctx echo.Context) error
 	// Post plat.
 	// (POST /internal/v1/plats)
 	PostPlat(ctx echo.Context) error
@@ -56,6 +62,17 @@ type ServerInterfaceWrapper struct {
 	Handler ServerInterface
 }
 
+// UploadImage converts echo context to params.
+func (w *ServerInterfaceWrapper) UploadImage(ctx echo.Context) error {
+	var err error
+
+	ctx.Set(BearerScopes, []string{})
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.UploadImage(ctx)
+	return err
+}
+
 // GetImage converts echo context to params.
 func (w *ServerInterfaceWrapper) GetImage(ctx echo.Context) error {
 	var err error
@@ -71,6 +88,17 @@ func (w *ServerInterfaceWrapper) GetImage(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.GetImage(ctx, imageId)
+	return err
+}
+
+// Login converts echo context to params.
+func (w *ServerInterfaceWrapper) Login(ctx echo.Context) error {
+	var err error
+
+	ctx.Set(BearerScopes, []string{})
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.Login(ctx)
 	return err
 }
 
@@ -311,7 +339,9 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
+	router.POST(baseURL+"/internal/v1/images", wrapper.UploadImage)
 	router.GET(baseURL+"/internal/v1/images/:image_id", wrapper.GetImage)
+	router.POST(baseURL+"/internal/v1/login", wrapper.Login)
 	router.POST(baseURL+"/internal/v1/plats", wrapper.PostPlat)
 	router.DELETE(baseURL+"/internal/v1/plats/:plat_id", wrapper.DeletePlat)
 	router.GET(baseURL+"/internal/v1/plats/:plat_id", wrapper.GetPlat)
