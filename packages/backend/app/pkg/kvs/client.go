@@ -3,7 +3,6 @@ package kvs
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"github.com/redis/go-redis/v9"
 	"github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
@@ -18,7 +17,7 @@ type Client interface {
 }
 
 type client struct {
-	client    *redis.Client
+	orgClient redis.Client
 	appLogger *logger.AppLogger
 }
 
@@ -34,19 +33,18 @@ func NewClient(ctx context.Context, appLogger *logger.AppLogger, addr string,
 	// pingを飛ばす
 	_, err := rdb.Ping(ctx).Result()
 	if err != nil {
-		log.Fatalf("Err: Could not connect to Redis: %v", err)
-		return nil
+		panic(fmt.Sprintf("Err: Could not connect to Redis: %v", err))
 	}
 
 	return &client{
-		client:    rdb,
+		orgClient: *rdb,
 		appLogger: appLogger,
 	}
 }
 
 // SetValue sets a key value pair in key-value store
 func (c *client) SetValue(ctx context.Context, key string, value string) error {
-	err := c.client.Set(ctx, key, value, 0).Err()
+	err := c.orgClient.Set(ctx, key, value, 0).Err()
 	if err != nil {
 		return fmt.Errorf("failed to set value: %w", err)
 	}
@@ -55,7 +53,7 @@ func (c *client) SetValue(ctx context.Context, key string, value string) error {
 
 // GetValue retrieves a value for a given key from key-value store.
 func (c *client) GetValue(ctx context.Context, key string) (string, error) {
-	val, err := c.client.Get(ctx, key).Result()
+	val, err := c.orgClient.Get(ctx, key).Result()
 	if err != nil {
 		return "", fmt.Errorf("failed to get value: %w", err)
 	}
