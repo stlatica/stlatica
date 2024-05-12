@@ -4,9 +4,11 @@
 package entities
 
 var TableNames = struct {
-	Plats string
-	Users string
+	Plats     string
+	Timelines string
+	Users     string
 }{
-	Plats: "plats",
-	Users: "users",
+	Plats:     "plats",
+	Timelines: "timelines",
+	Users:     "users",
 }
