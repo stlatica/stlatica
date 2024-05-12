@@ -100,6 +100,10 @@ func (h *handler) DeleteFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }
 
+func (h *handler) Login(_ echo.Context) error {
+	panic("implement me")
+}
+
 // ControllerInitContents is the struct to hold the dependencies for the controller.
 type ControllerInitContents struct {
 	UserUseCase users.UserUseCase

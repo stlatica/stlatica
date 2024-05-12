@@ -8,16 +8,30 @@ Plat:
   properties:
     plat_id:
       $ref: '../schemas/PlatID.yaml#/PlatID'
+    user_id:
+      $ref: '../schemas/UserID.yaml#/UserID'
     content:
       type: string
       description: platの本文
       example: 'これはサンプルのplatです。'
-    images:
+    image_urls:
       type: array
       description: platに添付された画像のURL
       items:
         type: string
         example: 'https://xxx/internal/v1/images/1'
+    reply_count:
+      type: integer
+      description: platに対するリプライの数
+      example: 1
+    replat_count:
+      type: integer
+      description: platがリプラットされた数
+      example: 1
+    favorite_count:
+      type: integer
+      description: platがお気に入りされた数
+      example: 1
     created_at:
       type: string
       description: platが作成された日時(ISO8601)
