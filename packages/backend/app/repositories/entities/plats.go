@@ -21,8 +21,8 @@ import (
 	"github.com/volatiletech/strmangle"
 )
 
-// Plat is an object representing the database table.
-type Plat struct { // ulid
+// PlatBase is an object representing the database table.
+type PlatBase struct { // ulid
 	PlatID types.PlatID `boil:"plat_id" json:"plat_id" toml:"plat_id" yaml:"plat_id"`
 	// user_id
 	UserID types.UserID `boil:"user_id" json:"user_id" toml:"user_id" yaml:"user_id"`
@@ -37,7 +37,7 @@ type Plat struct { // ulid
 	L platL  `boil:"-" json:"-" toml:"-" yaml:"-"`
 }
 
-var PlatColumns = struct {
+var PlatBaseColumns = struct {
 	PlatID    string
 	UserID    string
 	Content   string
@@ -51,7 +51,7 @@ var PlatColumns = struct {
 	UpdatedAt: "updated_at",
 }
 
-var PlatTableColumns = struct {
+var PlatBaseTableColumns = struct {
 	PlatID    string
 	UserID    string
 	Content   string
@@ -153,7 +153,7 @@ func (w whereHelpertypes_UnixTime) GTE(x types.UnixTime) qm.QueryMod {
 	return qmhelper.Where(w.field, qmhelper.GTE, x)
 }
 
-var PlatWhere = struct {
+var PlatBaseWhere = struct {
 	PlatID    whereHelpertypes_PlatID
 	UserID    whereHelpertypes_UserID
 	Content   whereHelperstring
@@ -167,8 +167,8 @@ var PlatWhere = struct {
 	UpdatedAt: whereHelpertypes_UnixTime{field: "`plats`.`updated_at`"},
 }
 
-// PlatRels is where relationship names are stored.
-var PlatRels = struct {
+// PlatBaseRels is where relationship names are stored.
+var PlatBaseRels = struct {
 	User string
 }{
 	User: "User",
@@ -176,7 +176,7 @@ var PlatRels = struct {
 
 // platR is where relationships are stored.
 type platR struct {
-	User *User `boil:"User" json:"User" toml:"User" yaml:"User"`
+	User *UserBase `boil:"User" json:"User" toml:"User" yaml:"User"`
 }
 
 // NewStruct creates a new relationship struct
@@ -184,7 +184,7 @@ func (*platR) NewStruct() *platR {
 	return &platR{}
 }
 
-func (r *platR) GetUser() *User {
+func (r *platR) GetUser() *UserBase {
 	if r == nil {
 		return nil
 	}
@@ -203,9 +203,9 @@ var (
 )
 
 type (
-	// PlatSlice is an alias for a slice of pointers to Plat.
-	// This should almost always be used instead of []Plat.
-	PlatSlice []*Plat
+	// PlatBaseSlice is an alias for a slice of pointers to PlatBase.
+	// This should almost always be used instead of []PlatBase.
+	PlatBaseSlice []*PlatBase
 
 	platQuery struct {
 		*queries.Query
@@ -214,7 +214,7 @@ type (
 
 // Cache for insert, update and upsert
 var (
-	platType                 = reflect.TypeOf(&Plat{})
+	platType                 = reflect.TypeOf(&PlatBase{})
 	platMapping              = queries.MakeStructMapping(platType)
 	platPrimaryKeyMapping, _ = queries.BindMapping(platType, platMapping, platPrimaryKeyColumns)
 	platInsertCacheMut       sync.RWMutex
@@ -234,8 +234,8 @@ var (
 )
 
 // One returns a single plat record from the query.
-func (q platQuery) One(ctx context.Context, exec boil.ContextExecutor) (*Plat, error) {
-	o := &Plat{}
+func (q platQuery) One(ctx context.Context, exec boil.ContextExecutor) (*PlatBase, error) {
+	o := &PlatBase{}
 
 	queries.SetLimit(q.Query, 1)
 
@@ -250,19 +250,19 @@ func (q platQuery) One(ctx context.Context, exec boil.ContextExecutor) (*Plat, e
 	return o, nil
 }
 
-// All returns all Plat records from the query.
-func (q platQuery) All(ctx context.Context, exec boil.ContextExecutor) (PlatSlice, error) {
-	var o []*Plat
+// All returns all PlatBase records from the query.
+func (q platQuery) All(ctx context.Context, exec boil.ContextExecutor) (PlatBaseSlice, error) {
+	var o []*PlatBase
 
 	err := q.Bind(ctx, exec, &o)
 	if err != nil {
-		return nil, errors.Wrap(err, "entities: failed to assign all query results to Plat slice")
+		return nil, errors.Wrap(err, "entities: failed to assign all query results to PlatBase slice")
 	}
 
 	return o, nil
 }
 
-// Count returns the count of all Plat records in the query.
+// Count returns the count of all PlatBase records in the query.
 func (q platQuery) Count(ctx context.Context, exec boil.ContextExecutor) (int64, error) {
 	var count int64
 
@@ -294,7 +294,7 @@ func (q platQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bool,
 }
 
 // User pointed to by the foreign key.
-func (o *Plat) User(mods ...qm.QueryMod) userQuery {
+func (o *PlatBase) User(mods ...qm.QueryMod) userQuery {
 	queryMods := []qm.QueryMod{
 		qm.Where("`user_id` = ?", o.UserID),
 	}
@@ -306,28 +306,28 @@ func (o *Plat) User(mods ...qm.QueryMod) userQuery {
 
 // LoadUser allows an eager lookup of values, cached into the
 // loaded structs of the objects. This is for an N-1 relationship.
-func (platL) LoadUser(ctx context.Context, e boil.ContextExecutor, singular bool, maybePlat interface{}, mods queries.Applicator) error {
-	var slice []*Plat
-	var object *Plat
+func (platL) LoadUser(ctx context.Context, e boil.ContextExecutor, singular bool, maybePlatBase interface{}, mods queries.Applicator) error {
+	var slice []*PlatBase
+	var object *PlatBase
 
 	if singular {
 		var ok bool
-		object, ok = maybePlat.(*Plat)
+		object, ok = maybePlatBase.(*PlatBase)
 		if !ok {
-			object = new(Plat)
-			ok = queries.SetFromEmbeddedStruct(&object, &maybePlat)
+			object = new(PlatBase)
+			ok = queries.SetFromEmbeddedStruct(&object, &maybePlatBase)
 			if !ok {
-				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", object, maybePlat))
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", object, maybePlatBase))
 			}
 		}
 	} else {
-		s, ok := maybePlat.(*[]*Plat)
+		s, ok := maybePlatBase.(*[]*PlatBase)
 		if ok {
 			slice = *s
 		} else {
-			ok = queries.SetFromEmbeddedStruct(&slice, maybePlat)
+			ok = queries.SetFromEmbeddedStruct(&slice, maybePlatBase)
 			if !ok {
-				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", slice, maybePlat))
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", slice, maybePlatBase))
 			}
 		}
 	}
@@ -375,12 +375,12 @@ func (platL) LoadUser(ctx context.Context, e boil.ContextExecutor, singular bool
 
 	results, err := query.QueryContext(ctx, e)
 	if err != nil {
-		return errors.Wrap(err, "failed to eager load User")
+		return errors.Wrap(err, "failed to eager load UserBase")
 	}
 
-	var resultSlice []*User
+	var resultSlice []*UserBase
 	if err = queries.Bind(results, &resultSlice); err != nil {
-		return errors.Wrap(err, "failed to bind eager loaded slice User")
+		return errors.Wrap(err, "failed to bind eager loaded slice UserBase")
 	}
 
 	if err = results.Close(); err != nil {
@@ -423,7 +423,7 @@ func (platL) LoadUser(ctx context.Context, e boil.ContextExecutor, singular bool
 // SetUser of the plat to the related item.
 // Sets o.R.User to related.
 // Adds o to related.R.Plats.
-func (o *Plat) SetUser(ctx context.Context, exec boil.ContextExecutor, insert bool, related *User) error {
+func (o *PlatBase) SetUser(ctx context.Context, exec boil.ContextExecutor, insert bool, related *UserBase) error {
 	var err error
 	if insert {
 		if err = related.Insert(ctx, exec, boil.Infer()); err != nil {
@@ -458,7 +458,7 @@ func (o *Plat) SetUser(ctx context.Context, exec boil.ContextExecutor, insert bo
 
 	if related.R == nil {
 		related.R = &userR{
-			Plats: PlatSlice{o},
+			Plats: PlatBaseSlice{o},
 		}
 	} else {
 		related.R.Plats = append(related.R.Plats, o)
@@ -478,10 +478,10 @@ func Plats(mods ...qm.QueryMod) platQuery {
 	return platQuery{q}
 }
 
-// FindPlat retrieves a single record by ID with an executor.
+// FindPlatBase retrieves a single record by ID with an executor.
 // If selectCols is empty Find will return all columns.
-func FindPlat(ctx context.Context, exec boil.ContextExecutor, platID types.PlatID, selectCols ...string) (*Plat, error) {
-	platObj := &Plat{}
+func FindPlatBase(ctx context.Context, exec boil.ContextExecutor, platID types.PlatID, selectCols ...string) (*PlatBase, error) {
+	platObj := &PlatBase{}
 
 	sel := "*"
 	if len(selectCols) > 0 {
@@ -506,7 +506,7 @@ func FindPlat(ctx context.Context, exec boil.ContextExecutor, platID types.PlatI
 
 // Insert a single record using an executor.
 // See boil.Columns.InsertColumnSet documentation to understand column list inference for inserts.
-func (o *Plat) Insert(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) error {
+func (o *PlatBase) Insert(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) error {
 	if o == nil {
 		return errors.New("entities: no plats provided for insertion")
 	}
@@ -605,10 +605,10 @@ CacheNoHooks:
 	return nil
 }
 
-// Update uses an executor to update the Plat.
+// Update uses an executor to update the PlatBase.
 // See boil.Columns.UpdateColumnSet documentation to understand column list inference for updates.
 // Update does not automatically update the record in case of default values. Use .Reload() to refresh the records.
-func (o *Plat) Update(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) error {
+func (o *PlatBase) Update(ctx context.Context, exec boil.ContextExecutor, columns boil.Columns) error {
 	if !boil.TimestampsAreSkipped(ctx) {
 		currTime := time.Now().In(boil.GetLocation())
 
@@ -678,7 +678,7 @@ func (q platQuery) UpdateAll(ctx context.Context, exec boil.ContextExecutor, col
 }
 
 // UpdateAll updates all rows with the specified column values, using an executor.
-func (o PlatSlice) UpdateAll(ctx context.Context, exec boil.ContextExecutor, cols M) error {
+func (o PlatBaseSlice) UpdateAll(ctx context.Context, exec boil.ContextExecutor, cols M) error {
 	ln := int64(len(o))
 	if ln == 0 {
 		return nil
@@ -721,11 +721,11 @@ func (o PlatSlice) UpdateAll(ctx context.Context, exec boil.ContextExecutor, col
 	return nil
 }
 
-// Delete deletes a single Plat record with an executor.
+// Delete deletes a single PlatBase record with an executor.
 // Delete will match against the primary key column to find the record to delete.
-func (o *Plat) Delete(ctx context.Context, exec boil.ContextExecutor) error {
+func (o *PlatBase) Delete(ctx context.Context, exec boil.ContextExecutor) error {
 	if o == nil {
-		return errors.New("entities: no Plat provided for delete")
+		return errors.New("entities: no PlatBase provided for delete")
 	}
 
 	args := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(o)), platPrimaryKeyMapping)
@@ -761,7 +761,7 @@ func (q platQuery) DeleteAll(ctx context.Context, exec boil.ContextExecutor) err
 }
 
 // DeleteAll deletes all rows in the slice, using an executor.
-func (o PlatSlice) DeleteAll(ctx context.Context, exec boil.ContextExecutor) error {
+func (o PlatBaseSlice) DeleteAll(ctx context.Context, exec boil.ContextExecutor) error {
 	if len(o) == 0 {
 		return nil
 	}
@@ -790,8 +790,8 @@ func (o PlatSlice) DeleteAll(ctx context.Context, exec boil.ContextExecutor) err
 
 // Reload refetches the object from the database
 // using the primary keys with an executor.
-func (o *Plat) Reload(ctx context.Context, exec boil.ContextExecutor) error {
-	ret, err := FindPlat(ctx, exec, o.PlatID)
+func (o *PlatBase) Reload(ctx context.Context, exec boil.ContextExecutor) error {
+	ret, err := FindPlatBase(ctx, exec, o.PlatID)
 	if err != nil {
 		return err
 	}
@@ -802,12 +802,12 @@ func (o *Plat) Reload(ctx context.Context, exec boil.ContextExecutor) error {
 
 // ReloadAll refetches every row with matching primary key column values
 // and overwrites the original object slice with the newly updated slice.
-func (o *PlatSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) error {
+func (o *PlatBaseSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) error {
 	if o == nil || len(*o) == 0 {
 		return nil
 	}
 
-	slice := PlatSlice{}
+	slice := PlatBaseSlice{}
 	var args []interface{}
 	for _, obj := range *o {
 		pkeyArgs := queries.ValuesFromMapping(reflect.Indirect(reflect.ValueOf(obj)), platPrimaryKeyMapping)
@@ -821,7 +821,7 @@ func (o *PlatSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) er
 
 	err := q.Bind(ctx, exec, &slice)
 	if err != nil {
-		return errors.Wrap(err, "entities: unable to reload all in PlatSlice")
+		return errors.Wrap(err, "entities: unable to reload all in PlatBaseSlice")
 	}
 
 	*o = slice
@@ -829,8 +829,8 @@ func (o *PlatSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) er
 	return nil
 }
 
-// PlatExists checks if the Plat row exists.
-func PlatExists(ctx context.Context, exec boil.ContextExecutor, platID types.PlatID) (bool, error) {
+// PlatBaseExists checks if the PlatBase row exists.
+func PlatBaseExists(ctx context.Context, exec boil.ContextExecutor, platID types.PlatID) (bool, error) {
 	var exists bool
 	sql := "select exists(select 1 from `plats` where `plat_id`=? limit 1)"
 
@@ -849,7 +849,7 @@ func PlatExists(ctx context.Context, exec boil.ContextExecutor, platID types.Pla
 	return exists, nil
 }
 
-// Exists checks if the Plat row exists.
-func (o *Plat) Exists(ctx context.Context, exec boil.ContextExecutor) (bool, error) {
-	return PlatExists(ctx, exec, o.PlatID)
+// Exists checks if the PlatBase row exists.
+func (o *PlatBase) Exists(ctx context.Context, exec boil.ContextExecutor) (bool, error) {
+	return PlatBaseExists(ctx, exec, o.PlatID)
 }
