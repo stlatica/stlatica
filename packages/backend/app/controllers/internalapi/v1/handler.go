@@ -77,7 +77,7 @@ func (h *handler) GetPlat(ectx echo.Context, platIDStr string) error {
 	if err != nil {
 		return err
 	}
-	return ectx.JSON(http.StatusCreated, response)
+	return ectx.JSON(http.StatusOK, response)
 }
 
 func (h *handler) GetTimeline(_ echo.Context, _ string) error {
