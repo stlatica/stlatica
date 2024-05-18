@@ -4,8 +4,19 @@ import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
 import { PlatMenuButton } from "@/components/button/PlatMenuButton";
 import { UserIcon } from "@/components/common/UserIcon";
 
+const dateObj = (dateStr: string): Date => {
+  return new Date(dateStr);
+};
+
+const formatter = new Intl.DateTimeFormat("ja-JP", {
+  dateStyle: "medium",
+  timeStyle: "medium",
+  timeZone: "Asia/Tokyo",
+});
+
 type PlatCellProps = {
   readonly content: string;
+  readonly date: string;
   readonly favoriteCount: number;
   readonly replyCount: number;
   readonly shareCount: number;
@@ -19,6 +30,7 @@ type PlatCellProps = {
  */
 export const PlatCell: React.FC<PlatCellProps> = ({
   content,
+  date,
   favoriteCount,
   replyCount,
   shareCount,
@@ -48,6 +60,10 @@ export const PlatCell: React.FC<PlatCellProps> = ({
       </div>
       {/* platの内容 */}
       <div className="p-5">{content}</div>
+      {/* 投稿日時 */}
+      <div>
+        <div>{formatter.format(dateObj(date))}</div>
+      </div>
       {/* 下部のアイコン */}
       <div className="flex">
         {/* 返信数 */}
