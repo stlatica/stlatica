@@ -18,6 +18,12 @@ pass=""
 sslmode="false"
 whitelist=["users","plats"]
 
+[aliases.tables.users]
+up_singular     = "UserBase"
+
+[aliases.tables.plats]
+up_singular     = "PlatBase"
+
 [[types]]
 [types.match]
 name="created_at"
