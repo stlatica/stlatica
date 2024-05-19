@@ -71,7 +71,7 @@ jobs:
 
       #  コンポーネントカタログをビルド
       - name: catalog build
-        run: pnpm ci:ladle
+        run: pnpm ladle:ci
 
   visual-regression-testing:
     needs: changes
