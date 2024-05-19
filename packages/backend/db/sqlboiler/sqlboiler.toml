@@ -16,13 +16,16 @@ port=4000
 user="root"
 pass=""
 sslmode="false"
-whitelist=["users","plats"]
+whitelist=["users","plats","timelines"]
 
 [aliases.tables.users]
 up_singular     = "UserBase"
 
 [aliases.tables.plats]
 up_singular     = "PlatBase"
+
+[aliases.tables.timelines]
+up_singular    = "TimelineBase"
 
 [[types]]
 [types.match]
@@ -71,5 +74,15 @@ db_type="char"
 nullable=false
 [types.replace]
 type="types.PlatID"
+[types.imports]
+third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
+
+[[types]]
+[types.match]
+name="timeline_id"
+db_type="char"
+nullable=false
+[types.replace]
+type="types.TimelineID"
 [types.imports]
 third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
