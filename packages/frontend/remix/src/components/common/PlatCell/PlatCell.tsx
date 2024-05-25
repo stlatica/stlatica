@@ -1,11 +1,14 @@
 import React from "react";
 import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
 
+import { UserIcon } from "@/components/common/UserIcon";
+
 type PlatCellProps = {
   readonly content: string;
   readonly favoriteCount: number;
   readonly replyCount: number;
   readonly shareCount: number;
+  readonly userIcon: string;
   readonly userId: string;
   readonly userName: string;
 };
@@ -18,6 +21,7 @@ export const PlatCell: React.FC<PlatCellProps> = ({
   favoriteCount,
   replyCount,
   shareCount,
+  userIcon,
   userId,
   userName,
 }) => {
@@ -26,7 +30,9 @@ export const PlatCell: React.FC<PlatCellProps> = ({
       {/* ユーザプロファイル */}
       <div className="flex h-12">
         {/* アイコン */}
-        <div className="size-12 rounded-full bg-white text-black" />
+        <div className="size-12">
+          <UserIcon iconImage={userIcon} />
+        </div>
         {/* ユーザ名 と ユーザID */}
         <div className="px-3">
           {/* ユーザ名 */}
