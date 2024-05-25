@@ -1,6 +1,7 @@
 import React from "react";
 import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
 
+import { PlatMenuButton } from "@/components/button/PlatMenuButton";
 import { UserIcon } from "@/components/common/UserIcon";
 
 type PlatCellProps = {
@@ -36,8 +37,13 @@ export const PlatCell: React.FC<PlatCellProps> = ({
         {/* ユーザ名 と ユーザID */}
         <div className="px-3">
           {/* ユーザ名 */}
-          <div className="text-lg">{userName}</div> {/* ユーザID */}
+          <div className="text-lg">{userName}</div>
+          {/* ユーザID */}
           <div className="text-sm text-gray-500">{userId}</div>
+        </div>
+        {/* プルダウンメニュー    参考 : https://mantine.dev/core/menu/ */}
+        <div className="ml-auto">
+          <PlatMenuButton />
         </div>
       </div>
       {/* platの内容 */}
