@@ -1,13 +1,11 @@
-User:
+UserLightweight:
   type: object
-  description: user
+  description: user without follow counts
   required:
     - user_id
     - username
     - summary
     - icon
-    - followers_count
-    - following_count
     - is_public
   properties:
     user_id:
@@ -24,14 +22,6 @@ User:
       type: string
       description: ユーザのアイコン画像のURL
       example: 'https://xxx/external/v1/images/sample_actor.png'
-    followers_count:
-      type: integer
-      description: follower数
-      example: 20
-    following_count:
-      type: integer
-      description: following数
-      example: 20
     is_public:
       type: boolean
       description: |
