@@ -2,10 +2,10 @@ DOCKER_RUN := docker compose run -it redocly
 
 .DEFAULT_GOAL := help
 
-internal/preview: docker-build ## API定義確認サーバーを起動します
-	docker compose run -it -p 127.0.0.1:8080:8080 redocly redocly preview-docs --host 0.0.0.0 internalapi/openapi.yaml -p 8080
-external/preview: docker-build ## API定義確認サーバーを起動します
-	docker compose run -it -p 127.0.0.1:8081:8081 redocly redocly preview-docs --host 0.0.0.0 externalapi/openapi.yaml -p 8081
+internal/preview: docker-build ## API定義確認サーバーを起動します(hot reload)
+	docker compose run -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:32201:32201 redocly redocly preview-docs --host 0.0.0.0 internalapi/openapi.yaml -p 8080
+external/preview: docker-build ## API定義確認サーバーを起動します(hot reload)
+	docker compose run -it -p 127.0.0.1:8081:8081 -p 127.0.0.1:32201:32201 redocly redocly preview-docs --host 0.0.0.0 externalapi/openapi.yaml -p 8081
 
 internal/lint: docker-build ## lintチェックします
 	docker compose run redocly redocly lint internalapi/openapi.yaml
