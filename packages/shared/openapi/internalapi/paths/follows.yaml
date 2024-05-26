@@ -57,7 +57,7 @@ users_{user_id}_followers:
         $ref: "../schemas/ErrorResponse.yaml#/ErrorCodes/503"
 
 
-users_follow_{user_id}:
+users_{user_id}_follow:
   post:
     tags:
       - Follows
