@@ -4,10 +4,6 @@ import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
 import { PlatMenuButton } from "@/components/button/PlatMenuButton";
 import { UserIcon } from "@/components/common/UserIcon";
 
-const dateObj = (dateStr: string): Date => {
-  return new Date(dateStr);
-};
-
 const formatter = new Intl.DateTimeFormat("ja-JP", {
   dateStyle: "medium",
   timeStyle: "medium",
@@ -62,7 +58,7 @@ export const PlatCell: React.FC<PlatCellProps> = ({
       <div className="p-5">{content}</div>
       {/* 投稿日時 */}
       <div>
-        <div>{formatter.format(dateObj(date))}</div>
+        <div>{formatter.format(new Date(date))}</div>
       </div>
       {/* 下部のアイコン */}
       <div className="flex">
