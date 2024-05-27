@@ -7,6 +7,7 @@ users_{user_id}_follows:
     operationId: getFollowUsers
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
+      - $ref: '../parameters/user_pagination_id.yaml#/user_pagination_id'
     responses:
       200:
         description: success
@@ -36,6 +37,7 @@ users_{user_id}_followers:
     operationId: getFollowers
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
+      - $ref: '../parameters/user_pagination_id.yaml#/user_pagination_id'
     responses:
       200:
         description: success
