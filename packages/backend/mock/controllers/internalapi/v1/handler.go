@@ -103,10 +103,6 @@ func (h *handler) UploadImage(_ echo.Context) error {
 	panic("implement me")
 }
 
-func (h *handler) Login(_ echo.Context) error {
-	panic("implement me")
-}
-
 func (h *handler) GetUser(_ echo.Context, _ string) error {
 	panic("implement me")
 }
