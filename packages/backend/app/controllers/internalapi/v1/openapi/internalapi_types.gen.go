@@ -139,6 +139,9 @@ type TimelineUserId = string
 // UserId defines model for user_id.
 type UserId = string
 
+// UploadImageTextBody defines parameters for UploadImage.
+type UploadImageTextBody = string
+
 // LoginJSONBody defines parameters for Login.
 type LoginJSONBody struct {
 	Password        *string `json:"password,omitempty"`
@@ -167,6 +170,9 @@ type CreateUserJSONBody struct {
 	Email *string `json:"email,omitempty"`
 	Name  *string `json:"name,omitempty"`
 }
+
+// UploadImageTextRequestBody defines body for UploadImage for text/plain ContentType.
+type UploadImageTextRequestBody = UploadImageTextBody
 
 // LoginJSONRequestBody defines body for Login for application/json ContentType.
 type LoginJSONRequestBody LoginJSONBody

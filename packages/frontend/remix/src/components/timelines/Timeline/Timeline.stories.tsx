@@ -1,11 +1,12 @@
-import { Timeline } from "./Timeline";
+import { ProfileTimeline } from "./Timeline";
 
 import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
-  title: "components/timelines/Timeline",
+  title: "timelines/Timeline",
 } satisfies StoryDefault;
 
-export const Story1: Story = () => {
-  return <Timeline />;
+export const Story2: Story = () => {
+  return <ProfileTimeline url="story/timeline/story2" user_id="sample_user" />;
 };
+Story2.storyName = "Profile Timeline";

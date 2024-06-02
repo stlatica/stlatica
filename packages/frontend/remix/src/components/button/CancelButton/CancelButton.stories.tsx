@@ -3,7 +3,7 @@ import { CancelButton } from "./CancelButton";
 import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
-  title: "components/button/CancelButton",
+  title: "button/CancelButton",
 } satisfies StoryDefault;
 
 export const Sample1: Story = () => {

@@ -32,8 +32,10 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile_Minio
+    env_file:
+      ./.env.local.docker
     ports:
-      - 9000:9000
-      - 9001:9001
+      - "9000:9000"
+      - "9001:9001"
     volumes:
       - ./data/minio:/data

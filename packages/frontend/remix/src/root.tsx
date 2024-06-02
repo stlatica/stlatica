@@ -1,9 +1,12 @@
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { ColorSchemeScript } from "@mantine/core";
 import { LinksFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
 import "@mantine/core/styles.css";
+
 // for tailwind
+
+import { Providers } from "./Providers";
 import stylesheet from "./routes/global.css?url";
 
 export const links: LinksFunction = () => {
@@ -41,7 +44,7 @@ export const Layout = ({ children }: { readonly children: React.ReactNode }) => 
         <ColorSchemeScript defaultColorScheme="dark" />
       </head>
       <body>
-        <MantineProvider defaultColorScheme="dark">{children}</MantineProvider>
+        <Providers>{children}</Providers>
         <ScrollRestoration />
         <Scripts />
       </body>

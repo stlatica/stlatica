@@ -1,8 +1,6 @@
-// import { nanoid } from "nanoid";
-
-// /**
-//  *
-//  */
-// export const CreateID = (): string => {
-//   return nanoid();
-// };
+/**
+ * Generate UUID
+ */
+export const CreateID = (): string => {
+  return crypto.randomUUID();
+};

@@ -1,6 +1,6 @@
 package users
 
-import "github.com/stlatica/stlatica/packages/backend/app/logger"
+import "github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
 
 // Factory is a factory of users package.
 type Factory interface {
