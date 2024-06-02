@@ -22,6 +22,10 @@ func RegisterHandlers(server *echo.Echo) {
 
 type handler struct{}
 
+func (h *handler) Login(_ echo.Context) error {
+	panic("implement me")
+}
+
 func (h *handler) DeleteFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }
@@ -71,7 +75,7 @@ func (h *handler) GetTimeline(ectx echo.Context, _ string) error {
 				rand.Reader,
 			).String(),
 			Content: fmt.Sprintf("plat %d", i),
-			Images: &[]string{
+			ImageUrls: &[]string{
 				"localhost:8080/internal/v1/images/1",
 				"localhost:8080/internal/v1/images/2",
 				"localhost:8080/internal/v1/images/3",
@@ -96,10 +100,6 @@ func (h *handler) GetImage(ectx echo.Context, imageID string) error {
 }
 
 func (h *handler) UploadImage(_ echo.Context) error {
-	panic("implement me")
-}
-
-func (h *handler) Login(_ echo.Context) error {
 	panic("implement me")
 }
 

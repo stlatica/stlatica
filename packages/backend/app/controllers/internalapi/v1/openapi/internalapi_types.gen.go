@@ -54,11 +54,23 @@ type Plat struct {
 	// CreatedAt platが作成された日時(ISO8601)
 	CreatedAt time.Time `json:"created_at"`
 
-	// Images platに添付された画像のURL
-	Images *[]string `json:"images,omitempty"`
+	// FavoriteCount platがお気に入りされた数
+	FavoriteCount *int `json:"favorite_count,omitempty"`
+
+	// ImageUrls platに添付された画像のURL
+	ImageUrls *[]string `json:"image_urls,omitempty"`
 
 	// PlatId platを識別するための一意のID
 	PlatId PlatID `json:"plat_id"`
+
+	// ReplatCount platがリプラットされた数
+	ReplatCount *int `json:"replat_count,omitempty"`
+
+	// ReplyCount platに対するリプライの数
+	ReplyCount *int `json:"reply_count,omitempty"`
+
+	// UserId userを識別するための一意のID
+	UserId *UserID `json:"user_id,omitempty"`
 }
 
 // PlatID platを識別するための一意のID
