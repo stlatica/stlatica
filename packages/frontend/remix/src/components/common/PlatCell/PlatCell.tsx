@@ -1,11 +1,22 @@
 import React from "react";
 import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
 
+import { PlatMenuButton } from "@/components/button/PlatMenuButton";
+import { UserIcon } from "@/components/common/UserIcon";
+
+const formatter = new Intl.DateTimeFormat("ja-JP", {
+  dateStyle: "medium",
+  timeStyle: "medium",
+  timeZone: "Asia/Tokyo",
+});
+
 type PlatCellProps = {
   readonly content: string;
+  readonly date: string;
   readonly favoriteCount: number;
   readonly replyCount: number;
   readonly shareCount: number;
+  readonly userIcon: string;
   readonly userId: string;
   readonly userName: string;
 };
@@ -15,9 +26,11 @@ type PlatCellProps = {
  */
 export const PlatCell: React.FC<PlatCellProps> = ({
   content,
+  date,
   favoriteCount,
   replyCount,
   shareCount,
+  userIcon,
   userId,
   userName,
 }) => {
@@ -26,16 +39,27 @@ export const PlatCell: React.FC<PlatCellProps> = ({
       {/* ユーザプロファイル */}
       <div className="flex h-12">
         {/* アイコン */}
-        <div className="size-12 rounded-full bg-white text-black" />
+        <div className="size-12">
+          <UserIcon iconImage={userIcon} />
+        </div>
         {/* ユーザ名 と ユーザID */}
         <div className="px-3">
           {/* ユーザ名 */}
-          <div className="text-lg">{userName}</div> {/* ユーザID */}
+          <div className="text-lg">{userName}</div>
+          {/* ユーザID */}
           <div className="text-sm text-gray-500">{userId}</div>
+        </div>
+        {/* プルダウンメニュー    参考 : https://mantine.dev/core/menu/ */}
+        <div className="ml-auto">
+          <PlatMenuButton />
         </div>
       </div>
       {/* platの内容 */}
       <div className="p-5">{content}</div>
+      {/* 投稿日時 */}
+      <div>
+        <div>{formatter.format(new Date(date))}</div>
+      </div>
       {/* 下部のアイコン */}
       <div className="flex">
         {/* 返信数 */}
