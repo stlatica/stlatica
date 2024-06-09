@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
@@ -31,6 +32,10 @@ func NewAdapter(client objectstorage.Client) ports.ImageAdapter {
 	return &imageAdapter{
 		client: client,
 	}
+}
+
+func (a *imageAdapter) GetImage(ctx context.Context, imageIDStr string) (io.ReadCloser, error) {
+	return a.client.GetObject(ctx, BucketName, imageIDStr)
 }
 
 func (a *imageAdapter) UploadImage(ctx context.Context, imageID types.ImageID, imageBinary []byte) error {

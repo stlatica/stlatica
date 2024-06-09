@@ -94,8 +94,18 @@ func (h *handler) GetTimelineByQuery(_ echo.Context, _ openapi.GetTimelineByQuer
 	panic("implement me")
 }
 
-func (h *handler) GetImage(_ echo.Context, _ string) error {
-	panic("implement me")
+func (h *handler) GetImage(ectx echo.Context, imageIDStr string) error {
+	rc, err := h.imageController.GetImage(ectx, imageIDStr)
+	if err != nil {
+		return err
+	}
+	ectx.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	ectx.Response().WriteHeader(http.StatusOK)
+	_, err = io.Copy(ectx.Response(), rc.ImageStream)
+	if err != nil {
+		return err
+	}
+	return ectx.JSON(http.StatusOK, ectx.Response())
 }
 
 func (h *handler) UploadImage(ectx echo.Context) error {

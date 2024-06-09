@@ -2,9 +2,16 @@ package ports
 
 import (
 	"context"
+	"io"
 
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 )
+
+// ImageGetOutPort is the interface for getting image.
+type ImageGetOutPort interface {
+	// GetImage gets image.
+	GetImage(ctx context.Context, imageIDStr string) (io.ReadCloser, error)
+}
 
 // ImageUploadOutPort is the interface for uploading image.
 type ImageUploadOutPort interface {
