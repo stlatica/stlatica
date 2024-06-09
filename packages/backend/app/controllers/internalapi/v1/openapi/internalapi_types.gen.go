@@ -116,6 +116,13 @@ type UserID = string
 // PlatId defines model for plat_id.
 type PlatId = string
 
+// TimelineFromDate この日時以降のplatを取得する
+// from_dateおよびto_dateは以下の制約を持つ
+// - from_dateもしくはto_dateいずれかの指定は必須
+// - from_dateとto_dateを同時に指定することはできない
+// - to_dateと同時に指定された場合、status code 422を返す
+type TimelineFromDate = time.Time
+
 // TimelineId defines model for timeline_id.
 type TimelineId = string
 
@@ -124,7 +131,10 @@ type TimelineId = string
 type TimelineLimit = int
 
 // TimelineToDate この日時以前のplatを取得する
-// デフォルトは現在時刻
+// from_dateおよびto_dateは以下の制約を持つ
+// - from_dateもしくはto_dateいずれかの指定は必須
+// - from_dateとto_dateを同時に指定することはできない
+// - from_dateと同時に指定された場合、status code 422を返す
 type TimelineToDate = time.Time
 
 // TimelineType timelineの種類
@@ -150,10 +160,11 @@ type LoginJSONBody struct {
 
 // GetTimelineByQueryParams defines parameters for GetTimelineByQuery.
 type GetTimelineByQueryParams struct {
-	UserId TimelineUserId               `form:"user_id" json:"user_id"`
-	Type   GetTimelineByQueryParamsType `form:"type" json:"type"`
-	Limit  *TimelineLimit               `form:"limit,omitempty" json:"limit,omitempty"`
-	ToDate *TimelineToDate              `form:"to_date,omitempty" json:"to_date,omitempty"`
+	UserId   TimelineUserId               `form:"user_id" json:"user_id"`
+	Type     GetTimelineByQueryParamsType `form:"type" json:"type"`
+	Limit    *TimelineLimit               `form:"limit,omitempty" json:"limit,omitempty"`
+	FromDate *TimelineFromDate            `form:"from_date,omitempty" json:"from_date,omitempty"`
+	ToDate   *TimelineToDate              `form:"to_date,omitempty" json:"to_date,omitempty"`
 }
 
 // GetTimelineByQueryParamsType defines parameters for GetTimelineByQuery.
