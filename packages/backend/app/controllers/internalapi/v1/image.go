@@ -22,14 +22,12 @@ type GetImageResponse struct {
 	ImageStream io.ReadCloser
 }
 
-func (c *imageController) GetImage(ectx echo.Context, imageIDStr string) (*GetImageResponse, error) {
+func (c *imageController) GetImage(ectx echo.Context, imageIDStr string) (io.ReadCloser, error) {
 	imageStream, err := c.imageUseCase.GetImage(ectx.Request().Context(), imageIDStr)
 	if err != nil {
 		return nil, err
 	}
-	return &GetImageResponse{
-		ImageStream: imageStream,
-	}, nil
+	return imageStream, nil
 }
 
 func (c *imageController) UploadImage(ectx echo.Context, imageBase64 string) (*PostImageResponse, error) {

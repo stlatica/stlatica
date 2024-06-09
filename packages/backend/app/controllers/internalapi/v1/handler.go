@@ -95,17 +95,16 @@ func (h *handler) GetTimelineByQuery(_ echo.Context, _ openapi.GetTimelineByQuer
 }
 
 func (h *handler) GetImage(ectx echo.Context, imageIDStr string) error {
-	rc, err := h.imageController.GetImage(ectx, imageIDStr)
+	imageStream, err := h.imageController.GetImage(ectx, imageIDStr)
 	if err != nil {
 		return err
 	}
-	ectx.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	ectx.Response().WriteHeader(http.StatusOK)
-	_, err = io.Copy(ectx.Response(), rc.ImageStream)
+	response := ectx.Response()
+	_, err = io.Copy(response, imageStream)
 	if err != nil {
 		return err
 	}
-	return ectx.JSON(http.StatusOK, ectx.Response())
+	return nil
 }
 
 func (h *handler) UploadImage(ectx echo.Context) error {
