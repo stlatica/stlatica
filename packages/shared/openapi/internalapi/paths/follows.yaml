@@ -1,16 +1,3 @@
-# common
-limit:
-  in: query
-  required: false
-  name: limit
-  description: |
-    取得数。default = 100
-  schema:
-    type: integer
-    minimum: 1
-    maximum: 100
-  example: 100
-
 users_{user_id}_follows:
   get:
     tags:
@@ -21,7 +8,7 @@ users_{user_id}_follows:
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
       - $ref: '../parameters/user_pagination_id.yaml#/user_pagination_id'
-      - $ref: '#/limit'
+      - $ref: '../parameters/timeline_limit.yaml#/limit'
 
     responses:
       200:
@@ -53,7 +40,7 @@ users_{user_id}_followers:
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
       - $ref: '../parameters/user_pagination_id.yaml#/user_pagination_id'
-      - $ref: '#/limit'
+      - $ref: '../parameters/timeline_limit.yaml#/limit'
     responses:
       200:
         description: success
