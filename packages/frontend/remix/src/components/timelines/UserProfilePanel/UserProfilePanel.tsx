@@ -28,11 +28,11 @@ export const UserProfilePanel: React.FC<LeftUserViewProps> = ({ userID }) => {
 
   return (
     <Paper className={container}>
-      <img className={header} alt="header" src="https://via.placeholder.com/700/79b74a/fff.webp" />
+      <img className={header} alt="header" src="https://via.placeholder.com/400/79b74a/fff" />
 
       <div className={parent}>
         <div className={icon}>
-          <UserIcon iconImage="https://via.placeholder.com/100/b7794a/fff.webp" />
+          <UserIcon iconImage="https://via.placeholder.com/400/b7794a/fff" />
         </div>
       </div>
 
