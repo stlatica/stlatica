@@ -203,6 +203,14 @@ module.exports = {
       },
     },
 
+    // vanilla extract 用
+    {
+      files: ["**/*.css.ts"],
+      rules: {
+        "@typescript-eslint/restrict-template-expressions": "off",
+      },
+    },
+
     // ストーリー, テストファイルでの制限緩和
     {
       files: ["*/**/*.stories.tsx", "*/**/*.test.tsx"],
