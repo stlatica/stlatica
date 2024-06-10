@@ -19,7 +19,7 @@ e.g.) Closes #10
 - [ ] 動作検証の結果を記載した
 - [ ] 関連するドキュメントの更新をした
 - [ ] 適切なLabelを設定した(e.g. frontend, documentation)
-- [ ] 適切なProjectを設定した(e.g. Minimum Structure)
+<!-- - [ ] 適切なProjectを設定した(e.g. Minimum Structure) -->
 
 # Others
 <!-- 補足等あれば記載してください。 -->
