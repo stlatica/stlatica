@@ -1,9 +1,19 @@
-import { Title, Text, Paper } from "@mantine/core";
+import { Title, Text, Paper, ActionIcon } from "@mantine/core";
 import React from "react";
+import { TbDots } from "react-icons/tb";
 
+import { FollowButton } from "@/components/button/FollowButton";
 import { UserIcon } from "@/components/common/UserIcon";
 
-import { FollowsLine, container, header, icon, parent, texts } from "./UserProfilePanel.css";
+import {
+  FollowsLine,
+  container,
+  header,
+  icon,
+  parent,
+  texts,
+  toolPalette,
+} from "./UserProfilePanel.css";
 
 type LeftUserViewProps = {
   readonly userID: string;
@@ -18,16 +28,19 @@ export const UserProfilePanel: React.FC<LeftUserViewProps> = ({ userID }) => {
 
   return (
     <Paper className={container}>
-      <img
-        className={header}
-        alt="header"
-        src="https://generative-placeholders.glitch.me/image?width=400&height=300&style=triangles&gap=100"
-      />
+      <img className={header} alt="header" src="https://via.placeholder.com/700/79b74a/fff.webp" />
 
       <div className={parent}>
         <div className={icon}>
-          <UserIcon iconImage="https://generative-placeholders.glitch.me/image?width=300&height=300&style=mondrian" />
+          <UserIcon iconImage="https://via.placeholder.com/100/b7794a/fff.webp" />
         </div>
+      </div>
+
+      <div className={toolPalette}>
+        <ActionIcon variant="outline" color="gray" radius="xl">
+          <TbDots />
+        </ActionIcon>
+        <FollowButton isFollow={false} />
       </div>
 
       <Paper className={texts}>

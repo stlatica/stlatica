@@ -20,7 +20,6 @@ const width = 100;
 
 export const parent = style({
   position: "relative",
-  height: `${width / 2}px`,
   marginBottom: "0.5rem",
   marginLeft: `${width / 5}px`,
 });
@@ -33,6 +32,16 @@ export const icon = style({
   borderRadius: "50%",
   position: "absolute",
   top: `-${width / 2}px`,
+});
+
+export const toolPalette = style({
+  height: `${width / 2}px`,
+  display: "flex",
+  flexDirection: "row",
+  gap: "1rem",
+  justifyContent: "flex-end",
+  marginRight: "1rem",
+  alignItems: "center",
 });
 
 export const texts = style({

@@ -22,6 +22,15 @@ Object.keys(stories).forEach((storyKey) => {
     await page.goto(`${url}/?story=${storyKey}&mode=preview`);
     // stories are code-splitted, wait for them to be loaded
     await page.waitForSelector("[data-storyloaded]");
+
+    // 画像がすべてロードされるまで待つ
+    await page.waitForFunction(() => {
+      const images = Array.from(document.querySelectorAll("img"));
+      return images.every((img) => {
+        return img.complete;
+      });
+    });
+
     // take a screenshot and compare it with the baseline
     await expect(page).toHaveScreenshot(`${storyKey}.png`, {
       // CIとの環境差分で落ちる場合はここを調整
