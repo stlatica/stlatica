@@ -1,0 +1,11 @@
+limit:
+  in: query
+  required: false
+  name: limit
+  description: |
+    取得数。default = 100
+  schema:
+    type: integer
+    minimum: 1
+    maximum: 100
+  example: 100
