@@ -7,6 +7,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/stlatica/stlatica/packages/backend/app/adapters/images"
 	"github.com/stlatica/stlatica/packages/backend/app/cmd/inits"
 	v1controllers "github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1"
@@ -39,6 +40,11 @@ func main() {
 	e := echo.New()
 	e.HideBanner = true
 	e.HidePort = true
+
+	// CORS
+	if os.Getenv("GO_ENV") == "local" || os.Getenv("GO_ENV") == "local.docker" {
+		e.Use(middleware.CORS())
+	}
 
 	// initialize database
 	inits.NewDB()
