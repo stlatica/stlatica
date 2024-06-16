@@ -7,6 +7,7 @@ import (
 	"github.com/oklog/ulid/v2"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/plats"
+	"github.com/stlatica/stlatica/packages/backend/app/usecases/plats/ports"
 )
 
 type platController struct {
@@ -58,4 +59,46 @@ func (c *platController) GetPlat(ectx echo.Context, platIDStr string) (*GetPlatR
 		FavoriteCount: 0,          // TODO: Return actual value https://github.com/stlatica/stlatica/issues/441
 		CreatedAt:     plat.GetCreatedAt().ConvertToTime(),
 	}, nil
+}
+
+func (c *platController) GetPlatsByQuery(ectx echo.Context,
+	timelineTypeStr string, toDate *time.Time, fromDate *time.Time, limit *int) ([]*GetPlatResponse, error) {
+	var toDateUnixTime, fromDateUnixTime types.UnixTime
+	var limitValue uint64
+	if toDate != nil {
+		toDateUnixTime = types.NewUnixTimeFromTime(*toDate)
+	}
+	if fromDate != nil {
+		fromDateUnixTime = types.NewUnixTimeFromTime(*fromDate)
+	}
+	if limit != nil {
+		limitValue = uint64(*limit)
+	}
+
+	userID := types.UserID{} // TODO: Get user id from context https://github.com/stlatica/stlatica/issues/460
+	getParams := ports.PlatsGetParams{
+		TimelineType: types.TimelineType(timelineTypeStr),
+		ToDate:       toDateUnixTime,
+		FromDate:     fromDateUnixTime,
+		Limit:        limitValue,
+	}
+	requestedPlats, err := c.platUseCase.GetPlats(ectx.Request().Context(), userID, getParams)
+	if err != nil {
+		return nil, err
+	}
+
+	response := make([]*GetPlatResponse, 0, len(requestedPlats))
+	for _, plat := range requestedPlats {
+		response = append(response, &GetPlatResponse{
+			PlatID:        plat.GetPlatID().String(),
+			UserID:        plat.GetUserID().String(),
+			Content:       plat.GetContent(),
+			ImageURLs:     []string{}, // TODO: Return actual value https://github.com/stlatica/stlatica/issues/441
+			ReplyCount:    0,          // TODO: Return actual value https://github.com/stlatica/stlatica/issues/441
+			RePlatCount:   0,          // TODO: Return actual value https://github.com/stlatica/stlatica/issues/441
+			FavoriteCount: 0,          // TODO: Return actual value https://github.com/stlatica/stlatica/issues/441
+			CreatedAt:     plat.GetCreatedAt().ConvertToTime(),
+		})
+	}
+	return response, nil
 }

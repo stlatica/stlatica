@@ -214,6 +214,13 @@ func (w *ServerInterfaceWrapper) GetTimelineByQuery(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter limit: %s", err))
 	}
 
+	// ------------- Optional query parameter "from_date" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "from_date", ctx.QueryParams(), &params.FromDate)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter from_date: %s", err))
+	}
+
 	// ------------- Optional query parameter "to_date" -------------
 
 	err = runtime.BindQueryParameter("form", true, false, "to_date", ctx.QueryParams(), &params.ToDate)
