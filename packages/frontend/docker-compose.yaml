@@ -1,17 +1,17 @@
 services:
-  front_dev:
+  dev:
     build:
-      context: docker
-      dockerfile: Dockerfile.node
+      context: .
+      dockerfile: docker/Dockerfile.node
       target: dev
-    working_dir: /app/packages/frontend/remix
+    working_dir: /stlatica/packages/frontend/remix
     volumes:
       - type: bind
-        source: ./remix
-        target: /app/packages/frontend/remix
+        source: ../../
+        target: /stlatica
       - type: bind
-        source: ../shared/
-        target: /app/packages/shared
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
     ports:
       # remix
       - "127.0.0.1:5173:5173"
@@ -19,44 +19,39 @@ services:
       - "127.0.0.1:51204:51204"
       # ladle
       - "127.0.0.1:61000:61000"
-    tty: true
-
-  # ladleのHMRが機能していないのでnet: host で対応する
-  # https://github.com/tajo/ladle/issues/557
-  front_dev_ladle:
-    build:
-      context: docker
-      dockerfile: Dockerfile.node
-      target: dev
-    working_dir: /app/packages/frontend/remix
-    volumes:
-      - type: bind
-        source: ./remix
-        target: /app/packages/frontend/remix
-      - type: bind
-        source: ../shared/
-        target: /app/packages/shared
-    network_mode: host
-    tty: true
-
-  playwright_vrt:
-    build:
-      context: docker
-      dockerfile: Dockerfile.node
-      target: e2e
-    working_dir: /app/packages/frontend/remix
-    volumes:
-      - type: bind
-        source: ./remix
-        target: /app/packages/frontend/remix
-    ports:
+      # playwright
       - 127.0.0.1:9323:9323
+    environment:
+      LANG: ja_JP.UTF-8
+      LC_CTYPE: ja_JP.UTF-8
+    tty: true
 
-  # prism-internal:
-  #   container_name: prism-internal
-  #   image: stoplight/prism:4
-  #   command: "mock -h 0.0.0.0 /tmp/api.oas3.yml"
+  # # ladleのHMRが機能していないのでnet: host で対応する
+  # # https://github.com/tajo/ladle/issues/557
+  # front_dev_ladle:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/Dockerfile.node
+  #     target: dev
+  #   working_dir: /packages/frontend/remix
   #   volumes:
-  #     - ../shared/openapi/internalapi/openapi.yaml:/tmp/api.oas3.yml:ro
-  #   ports:
-  #     - "4010:4010"
+  #     - type: bind
+  #       source: ./remix
+  #       target: /stlatica/packages/frontend/remix
+  #     - type: bind
+  #       source: ../shared/
+  #       target: /stlatica/packages/shared
+  #     - type: bind
+  #       source: ../../.git
+  #       target: /stlatica/.git
+  #   network_mode: host
+  #   tty: true
+
+  # # prism-internal:
+  # #   container_name: prism-internal
+  # #   image: stoplight/prism:4
+  # #   command: "mock -h 0.0.0.0 /tmp/api.oas3.yml"
+  # #   volumes:
+  # #     - ../shared/openapi/internalapi/openapi.yaml:/tmp/api.oas3.yml:ro
+  # #   ports:
+  # #     - "4010:4010"
