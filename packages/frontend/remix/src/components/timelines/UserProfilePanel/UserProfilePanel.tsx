@@ -4,6 +4,8 @@ import { TbDots } from "react-icons/tb";
 
 import { FollowButton } from "@/components/button/FollowButton";
 import { UserIcon } from "@/components/common/UserIcon";
+import { SampleImageBrown400 } from "@/features/sample/sample-image/SampleImageBrown400";
+import { SampleImageGreen400 } from "@/features/sample/sample-image/SampleImageGreen400";
 
 import {
   FollowsLine,
@@ -28,11 +30,11 @@ export const UserProfilePanel: React.FC<LeftUserViewProps> = ({ userID }) => {
 
   return (
     <Paper className={container}>
-      <img className={header} alt="header" src="https://via.placeholder.com/400/79b74a/fff" />
+      <img className={header} alt="header" src={SampleImageGreen400} />
 
       <div className={parent}>
         <div className={icon}>
-          <UserIcon iconImage="https://via.placeholder.com/400/b7794a/fff" />
+          <UserIcon iconImage={SampleImageBrown400} />
         </div>
       </div>
 
