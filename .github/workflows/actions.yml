@@ -113,7 +113,7 @@ jobs:
       # format
       - name: Run gofmt
         run: gofmt -w .
-      # auto cimmit
+      # auto commit
       - name: auto commit
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
