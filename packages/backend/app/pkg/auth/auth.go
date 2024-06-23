@@ -19,12 +19,12 @@ type SignType interface {
 }
 
 type PWAuth[T SignType] interface {
-	Auth(key T) (AccessToken, error)
+	Auth(key T) (AccessToken[T], error)
 }
 
-type TokenAuth interface {
-	Verify(key ecdsa.PublicKey) (AccessToken, error)
-	QuickVerify(key ecdsa.PublicKey) (bool, error)
+type TokenAuth[T SignType] interface {
+	Verify(alg jwa.SignatureAlgorithm, key T) (AccessToken[T], error)
+	QuickVerify(alg jwa.SignatureAlgorithm, key T) (bool, error)
 }
 
 // UserCredential 認証に必要な情報を格納
@@ -46,7 +46,7 @@ type accessTokenEvidence[T SignType] struct {
 	key       *T
 }
 
-type AccessToken struct {
+type AccessToken[T SignType] struct {
 	token []byte
 }
 
@@ -60,21 +60,21 @@ func NewUserCredentials[T SignType](id string, pw string, alg jwa.SignatureAlgor
 	}
 }
 
-func NewAccessToken(token []byte) AccessToken {
-	return AccessToken{token: token}
+func NewAccessToken[T SignType](token []byte) AccessToken[T] {
+	return AccessToken[T]{token: token}
 }
 
 // Auth ID, PWで認証を行い、アクセストークンを返す
-func (u *UserCredential[T]) Auth(podName string) (AccessToken, error) {
+func (u *UserCredential[T]) Auth(podName string, alg jwa.SignatureAlgorithm, key T) (AccessToken[T], error) {
 	storedPw := u.requestStoredPW()
 	// PW check
 	if !u.verifyPW(storedPw) {
-		return AccessToken{[]byte("")}, errors.New("invalid pw")
+		return AccessToken[T]{[]byte("")}, errors.New("invalid pw")
 	}
 	u.setTime()
 
 	ate := u.toTokenEvidence(podName)
-	accessToken := ate.makeJWS()
+	accessToken := ate.makeJWS(alg, key)
 	sessionId := uuid.New().String()
 
 	saveTokens(sessionId, accessToken)
@@ -152,21 +152,23 @@ func (a *accessTokenEvidence[T]) DeserializeAccessToken(token []byte, key *T) er
 	return nil
 }
 
-func (a *accessTokenEvidence[T]) makeJWS() AccessToken {
+// トークンの生成
+// サーバで使用される署名アルゴリズムは1つに限る
+func (a *accessTokenEvidence[T]) makeJWS(alg jwa.SignatureAlgorithm, key T) AccessToken[T] {
 	jsonData := a.serialize()
-	token, err := jws.Sign(jsonData, a.alg, a.key)
+	token, err := jws.Sign(jsonData, alg, key)
 	if err != nil {
 		panic(err)
 	}
-	return AccessToken{token: token}
+	return AccessToken[T]{token: token}
 }
 
-func (a *AccessToken) Export() []byte {
+func (a *AccessToken[T]) Export() []byte {
 	return a.token
 }
 
-func (a *AccessToken) QuickVerify() bool {
-	_, err := jws.Verify(a.token, a.alg, a.key)
+func (a *AccessToken[T]) QuickVerify(alg jwa.SignatureAlgorithm, key T) bool {
+	_, err := jws.Verify(a.token, alg, key)
 	if err != nil {
 		panic(err)
 		return false
@@ -176,19 +178,19 @@ func (a *AccessToken) QuickVerify() bool {
 	return true
 }
 
-func (a *AccessToken) Verify() AccessToken {
-	ate := accessTokenEvidence{id: "", createdBy: 9e18, sessionId: "", podName: ""}
-	jwt, err := jws.Verify(a.token, a.alg, key)
+func (a *AccessToken[T]) Verify(alg jwa.SignatureAlgorithm, key T) AccessToken[T] {
+	ate := accessTokenEvidence[T]{id: "", createdBy: 9e18, sessionId: "", podName: ""}
+	jwt, err := jws.Verify(a.token, alg, key)
 	if err != nil {
-		return AccessToken{[]byte("")}
+		return AccessToken[T]{[]byte("")}
 	}
 	// TODO: request stored access token
 	_ = jwt
 
-	return AccessToken{}
+	return AccessToken[T]{}
 }
 
-func saveTokens(sessionId string, accessToken AccessToken) {
+func saveTokens[T SignType](sessionId string, accessToken AccessToken[T]) {
 	refreshToken := uuid.New()
 	// TODO: save access token
 	// TODO: save refresh token
