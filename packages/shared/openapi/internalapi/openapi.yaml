@@ -14,6 +14,12 @@ paths:
     $ref: './paths/users.yaml#/users_{user_id}'
   /internal/v1/users:
     $ref: './paths/users.yaml#/users'
+  /internal/v1/users/{user_id}/follows:
+    $ref: './paths/follows.yaml#/users_{user_id}_follows'
+  /internal/v1/users/{user_id}/followers:
+    $ref: './paths/follows.yaml#/users_{user_id}_followers'
+  /internal/v1/users/{user_id}/follow:
+    $ref: './paths/follows.yaml#/users_{user_id}_follow'
   /internal/v1/plats/{plat_id}:
     $ref: './paths/plats.yaml#/plat_{plat_id}'
   /internal/v1/plats/{plat_id}/favorites:
@@ -26,6 +32,8 @@ paths:
     $ref: './paths/timelines.yaml#/timelines'
   /internal/v1/images/{image_id}:
     $ref: './paths/images.yaml#/images_{image_id}'
+  /internal/v1/images:
+    $ref: './paths/images.yaml#/images'
   /internal/v1/login:
     $ref: './paths/login.yaml#/login'
 security:

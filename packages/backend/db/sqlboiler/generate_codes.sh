@@ -1,11 +1,12 @@
-export GOBIN=$(PWD)/bin
+export WORKING_DIR=$(PWD)
+export GOBIN=$WORKING_DIR/bin
 GO_PATH=$(go env GOPATH)
 export PATH=$GOBIN:$GO_PATH:$PATH
 
 OUTPUT_PATH_KEY="output"
 OUTPUT_PACKAGE_KEY="pkgname"
 TEMPLATE_KEY="templates"
-ENTITIES_OUTPUT_PATH="app\/domains\/entities"
+ENTITIES_OUTPUT_PATH="app/domains/entities"
 ENTITIES_OUTPUT_PACKAGE="entities"
 ENTITIES_TEMPLATE='["db\/sqlboiler\/templates"]'
 REPOSITORIES_OUTPUT_PATH="app\/repositories\/entities"
@@ -17,7 +18,7 @@ REPOSITORIES_TEMPLATE=\
 SQLBOILER_TOML=$(cat db/sqlboiler/sqlboiler.toml)
 
 # sqlboiler.toml内の値を変更(entityを生成するための設定)
-MODIFIED_SQLBOILER_SETTING=$(echo "$SQLBOILER_TOML" | sed -e "s/\($OUTPUT_PATH_KEY=\)\".*\"/\1\"$ENTITIES_OUTPUT_PATH\"/")
+MODIFIED_SQLBOILER_SETTING=$(echo "$SQLBOILER_TOML" | sed -e "s/\($OUTPUT_PATH_KEY=\)\".*\"/\1\"\/tmp\"/")
 MODIFIED_SQLBOILER_SETTING=$(echo "$MODIFIED_SQLBOILER_SETTING" | sed -e "s/\($OUTPUT_PACKAGE_KEY=\)\".*\"/\1\"$ENTITIES_OUTPUT_PACKAGE\"/")
 MODIFIED_SQLBOILER_SETTING=$(echo "$MODIFIED_SQLBOILER_SETTING" | sed -e "s/\($TEMPLATE_KEY=\)\[.*\]/\1$ENTITIES_TEMPLATE/")
 
@@ -25,6 +26,13 @@ TMP_CONFIG=$(mktemp /tmp/sqlboiler4.toml)
 echo "$MODIFIED_SQLBOILER_SETTING" > $TMP_CONFIG
 $GOBIN/sqlboiler --config=$TMP_CONFIG mysql
 
+cd /tmp
+for file in *.go; do
+    newname="${file%.go}.boil.go"
+
+    mv "$file" "$WORKING_DIR/$ENTITIES_OUTPUT_PATH/$newname"
+done
+cd $WORKING_DIR
 rm $TMP_CONFIG
 
 # sqlboiler.toml内の値を変更(repositoryを生成するための設定)

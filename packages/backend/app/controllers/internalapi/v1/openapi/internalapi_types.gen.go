@@ -54,11 +54,23 @@ type Plat struct {
 	// CreatedAt platが作成された日時(ISO8601)
 	CreatedAt time.Time `json:"created_at"`
 
-	// Images platに添付された画像のURL
-	Images *[]string `json:"images,omitempty"`
+	// FavoriteCount platがお気に入りされた数
+	FavoriteCount *int `json:"favorite_count,omitempty"`
+
+	// ImageUrls platに添付された画像のURL
+	ImageUrls *[]string `json:"image_urls,omitempty"`
 
 	// PlatId platを識別するための一意のID
 	PlatId PlatID `json:"plat_id"`
+
+	// ReplatCount platがリプラットされた数
+	ReplatCount *int `json:"replat_count,omitempty"`
+
+	// ReplyCount platに対するリプライの数
+	ReplyCount *int `json:"reply_count,omitempty"`
+
+	// UserId userを識別するための一意のID
+	UserId *UserID `json:"user_id,omitempty"`
 }
 
 // PlatID platを識別するための一意のID
@@ -104,6 +116,13 @@ type UserID = string
 // PlatId defines model for plat_id.
 type PlatId = string
 
+// TimelineFromDate この日時以降のplatを取得する
+// from_dateおよびto_dateは以下の制約を持つ
+// - from_dateもしくはto_dateいずれかの指定は必須
+// - from_dateとto_dateを同時に指定することはできない
+// - to_dateと同時に指定された場合、status code 422を返す
+type TimelineFromDate = time.Time
+
 // TimelineId defines model for timeline_id.
 type TimelineId = string
 
@@ -112,7 +131,10 @@ type TimelineId = string
 type TimelineLimit = int
 
 // TimelineToDate この日時以前のplatを取得する
-// デフォルトは現在時刻
+// from_dateおよびto_dateは以下の制約を持つ
+// - from_dateもしくはto_dateいずれかの指定は必須
+// - from_dateとto_dateを同時に指定することはできない
+// - from_dateと同時に指定された場合、status code 422を返す
 type TimelineToDate = time.Time
 
 // TimelineType timelineの種類
@@ -127,12 +149,22 @@ type TimelineUserId = string
 // UserId defines model for user_id.
 type UserId = string
 
+// UploadImageTextBody defines parameters for UploadImage.
+type UploadImageTextBody = string
+
+// LoginJSONBody defines parameters for Login.
+type LoginJSONBody struct {
+	Password        *string `json:"password,omitempty"`
+	PreferredUserId *string `json:"preferred_user_id,omitempty"`
+}
+
 // GetTimelineByQueryParams defines parameters for GetTimelineByQuery.
 type GetTimelineByQueryParams struct {
-	UserId TimelineUserId               `form:"user_id" json:"user_id"`
-	Type   GetTimelineByQueryParamsType `form:"type" json:"type"`
-	Limit  *TimelineLimit               `form:"limit,omitempty" json:"limit,omitempty"`
-	ToDate *TimelineToDate              `form:"to_date,omitempty" json:"to_date,omitempty"`
+	UserId   TimelineUserId               `form:"user_id" json:"user_id"`
+	Type     GetTimelineByQueryParamsType `form:"type" json:"type"`
+	Limit    *TimelineLimit               `form:"limit,omitempty" json:"limit,omitempty"`
+	FromDate *TimelineFromDate            `form:"from_date,omitempty" json:"from_date,omitempty"`
+	ToDate   *TimelineToDate              `form:"to_date,omitempty" json:"to_date,omitempty"`
 }
 
 // GetTimelineByQueryParamsType defines parameters for GetTimelineByQuery.
@@ -149,6 +181,12 @@ type CreateUserJSONBody struct {
 	Email *string `json:"email,omitempty"`
 	Name  *string `json:"name,omitempty"`
 }
+
+// UploadImageTextRequestBody defines body for UploadImage for text/plain ContentType.
+type UploadImageTextRequestBody = UploadImageTextBody
+
+// LoginJSONRequestBody defines body for Login for application/json ContentType.
+type LoginJSONRequestBody LoginJSONBody
 
 // PostPlatJSONRequestBody defines body for PostPlat for application/json ContentType.
 type PostPlatJSONRequestBody = PlatPost

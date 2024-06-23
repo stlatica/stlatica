@@ -35,6 +35,20 @@ timeline_limit:
       取得するplatの最大数
       デフォルトは100
     example: 100
+timeline_from_date:
+  in: query
+  name: from_date
+  required: false
+  schema:
+    type: string
+    format: date-time
+    description: |
+      この日時以降のplatを取得する
+      from_dateおよびto_dateは以下の制約を持つ
+      - from_dateもしくはto_dateいずれかの指定は必須
+      - from_dateとto_dateを同時に指定することはできない
+      - to_dateと同時に指定された場合、status code 422を返す
+    example: '2024-01-01T00:00:00Z'
 timeline_to_date:
   in: query
   name: to_date
@@ -44,5 +58,8 @@ timeline_to_date:
     format: date-time
     description: |
       この日時以前のplatを取得する
-      デフォルトは現在時刻
+      from_dateおよびto_dateは以下の制約を持つ
+      - from_dateもしくはto_dateいずれかの指定は必須
+      - from_dateとto_dateを同時に指定することはできない
+      - from_dateと同時に指定された場合、status code 422を返す
     example: '2024-01-01T00:00:00Z'

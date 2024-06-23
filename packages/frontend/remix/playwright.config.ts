@@ -12,6 +12,7 @@ export default {
     },
   ],
   reporter: [["html", { host: "0.0.0.0", outputFolder: "e2e/report" }]],
+  use: {},
   projects: [
     {
       name: "visual-snapshot",

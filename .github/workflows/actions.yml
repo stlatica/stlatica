@@ -69,9 +69,9 @@ jobs:
       - name: build check
         run: pnpm build
 
-      # #  コンポーネントカタログをビルド
-      # - name: catalog build
-      #   run: pnpm ci:ladle
+      #  コンポーネントカタログをビルド
+      - name: catalog build
+        run: pnpm ladle:ci
 
   visual-regression-testing:
     needs: changes
@@ -120,62 +120,6 @@ jobs:
       # - name: Go build check
       #   run: |
       #     go build -v ./...
-  ladle_deploy:
-    # アクセス権限
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    # 同時にビルドが走った際に、先のビルドを優先
-    concurrency:
-      group: 'pages'
-      cancel-in-progress: true
-    # 依存ビルド
-    needs: build_frontend
-    # main でのみ実行
-    if: ${{github.ref == 'refs/heads/main'}}
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-22.04
-    defaults:
-      run:
-        working-directory: packages/frontend/remix
-    steps:
-      # リポジトリをチェックアウト
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
-      # pnpm 8をインストール
-      - uses: pnpm/action-setup@v2
-        with: 
-          version: 9
-
-      # node.jsをインストール
-      - name: Node.js 
-        uses: actions/setup-node@v3
-        with:
-          cache: 'pnpm'
-          cache-dependency-path: packages/frontend/
-
-      # 依存関係先をインストール
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      
-      #  コンポーネントカタログをビルド (2回目)
-      - name: catalog build
-        run: pnpm ladle:ci
-      
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # リポジトリのアップロード
-          path: './packages/frontend/ladle-build'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
 
   lint_openapi:
     needs: changes
@@ -191,6 +135,6 @@ jobs:
       - name: build container image
         run: make docker-build
       - name: internal api lint
-        run: make internal-lint
+        run: make internal/lint
       - name: external api lint
-        run: make external-lint
+        run: make external/lint

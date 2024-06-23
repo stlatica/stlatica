@@ -3,7 +3,7 @@ import { TextEditor } from "./TextEditor";
 import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
-  title: "components/common/TextEditor",
+  title: "common/TextEditor",
 } satisfies StoryDefault;
 
 export const Story1: Story = () => {

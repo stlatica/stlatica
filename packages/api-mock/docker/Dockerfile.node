@@ -1,0 +1,12 @@
+FROM node:20.12.2-slim as base
+
+RUN npm install -g pnpm@9.0.6
+
+# 環境：開発用
+FROM base as dev
+
+# エイリアスを設定
+# COPY ./.alias /root
+# RUN cat ~/.alias >> ~/.bashrc
+
+WORKDIR /app

@@ -22,8 +22,34 @@ type {{$table_alias.UpSingular}} struct {
 	{{end -}}
 	{{- if .Table.IsJoinTable -}}
 	{{- else}}
+  R *{{$table_alias.UpSingular}}R `{{generateTags $.Tags $.RelationTag}}json:"{{$.RelationTag}}"`
 	{{end -}}
 }
+
+// {{$table_alias.UpSingular}}R is where relationships are stored.
+type {{$table_alias.UpSingular}}R struct {
+	{{range .Table.FKeys -}}
+	{{- $ftable := $.Aliases.Table .ForeignTable -}}
+	{{- $relAlias := $table_alias.Relationship .Name -}}
+	{{$relAlias.Foreign}} *{{$ftable.UpSingular}} `{{generateTags $.Tags $relAlias.Foreign}}json:"{{$relAlias.Foreign}}"`
+	{{end -}}
+
+	{{range .Table.ToOneRelationships -}}
+	{{- $ftable := $.Aliases.Table .ForeignTable -}}
+	{{- $relAlias := $ftable.Relationship .Name -}}
+	{{$relAlias.Local}} *{{$ftable.UpSingular}} `{{generateTags $.Tags $relAlias.Local}}json:"{{$relAlias.Local}}"`
+	{{end -}}
+
+	{{range .Table.ToManyRelationships -}}
+	{{- $ftable := $.Aliases.Table .ForeignTable -}}
+	{{- $relAlias := $.Aliases.ManyRelationship .ForeignTable .Name .JoinTable .JoinLocalFKeyName -}}
+	{{$relAlias.Local}} {{printf "%sSlice" $ftable.UpSingular}} `{{generateTags $.Tags $relAlias.Local}}json:"{{$relAlias.Local}}"`
+	{{end -}}
+}
+
+// {{$table_alias.UpSingular}}Slice is an alias for a slice of pointers to {{$table_alias.UpSingular}}.
+// This should almost always be used instead of []{{$table_alias.UpSingular}}.
+type {{$table_alias.UpSingular}}Slice []*{{$table_alias.UpSingular}}
 
 {{range $column := .Table.Columns -}}
 {{- $col_alias := $table_alias.Column $column.Name -}}
@@ -42,7 +68,7 @@ func (m *{{$table_alias.UpSingular}}) Get{{$col_alias}}() {{$column.Type}} {
         return decimal.Zero()
         {{else if or (eq $column.Type "times.Date") (eq $column.Type "times.Timestamp") -}}
         return {{$column.Type}}{}
-        {{else if or (eq $column.Type "types.PlatID") (eq $column.Type "types.UserID") -}}
+        {{else if or (eq $column.Type "types.PlatID") (eq $column.Type "types.UserID") (eq $column.Type "types.TimelineID") -}}
         return {{$column.Type}}{}
     	{{else -}}
         return {{$column.Type}}(0)
@@ -51,3 +77,20 @@ func (m *{{$table_alias.UpSingular}}) Get{{$col_alias}}() {{$column.Type}} {
     return m.{{$col_alias}}
 }
 {{end -}}
+
+{{- if or .Table.IsJoinTable .Table.IsView -}}
+{{- else -}}
+	{{- range $rel := .Table.ToManyRelationships -}}
+		{{- $ltable := $.Aliases.Table $rel.Table -}}
+		{{- $ftable := $.Aliases.Table $rel.ForeignTable -}}
+		{{- $relAlias := $.Aliases.ManyRelationship $rel.ForeignTable $rel.Name $rel.JoinTable $rel.JoinLocalFKeyName -}}
+// {{$relAlias.Local}} is get {{$relAlias.Local}} relationship, if receiver is nil, returns empty {{$ftable.UpSingular}}Slice
+{{- if not (eq $relAlias.Local $ftable.UpPlural)}} via {{$rel.ForeignColumn}} column{{- end}}.
+func (o *{{$ltable.UpSingular}}) {{$relAlias.Local}}() {{$ftable.UpSingular}}Slice {
+  if o == nil {
+    return {{$ftable.UpSingular}}Slice{}
+  }
+	return o.R.{{$relAlias.Local}}
+}
+{{end -}}
+{{- end -}}

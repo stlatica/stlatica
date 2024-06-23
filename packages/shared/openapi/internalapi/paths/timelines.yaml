@@ -11,6 +11,7 @@ timelines:
       - $ref: '../parameters/timeline_queries.yaml#/timeline_user_id'
       - $ref: '../parameters/timeline_queries.yaml#/timeline_type'
       - $ref: '../parameters/timeline_queries.yaml#/timeline_limit'
+      - $ref: '../parameters/timeline_queries.yaml#/timeline_from_date'
       - $ref: '../parameters/timeline_queries.yaml#/timeline_to_date'
     responses:
       200:

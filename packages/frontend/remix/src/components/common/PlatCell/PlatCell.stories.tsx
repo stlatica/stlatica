@@ -1,19 +1,22 @@
+import { UserIconSampleImage } from "@/components/common/UserIcon/UserIconSampleImage";
 
 import { PlatCell } from "./PlatCell";
 
 import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
-  title: "components/common/PlatCell",
+  title: "common/PlatCell",
 } satisfies StoryDefault;
 
 export const Story1: Story = () => {
   return (
     <PlatCell
       content="3週連続でレート下がってるんだが。"
+      date="2021-01-30T00:00:00+09:00"
       favoriteCount={4}
       replyCount={0}
       shareCount={1}
+      userIcon={UserIconSampleImage}
       userId="@Nobuchi32384"
       userName="夏ノブチ"
     />
@@ -25,9 +28,11 @@ export const Story2: Story = () => {
   return (
     <PlatCell
       content="nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) "
+      date="2021-01-30T00:00:00+09:00"
       favoriteCount={8}
       replyCount={1}
       shareCount={3}
+      userIcon={UserIconSampleImage}
       userId="@Nobuchi79323"
       userName="冬ノブチ"
     />
@@ -40,9 +45,11 @@ export const Story3: Story = () => {
     <div className="w-[310px]">
       <PlatCell
         content="nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) "
+        date="2021-01-30T00:00:00+09:00"
         favoriteCount={8}
         replyCount={1}
         shareCount={3}
+        userIcon={UserIconSampleImage}
         userId="@Nobuchi79323"
         userName="冬ノブチ"
       />
@@ -56,9 +63,11 @@ export const Story4: Story = () => {
     <div className="w-[700px]">
       <PlatCell
         content="nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) "
+        date="2021-01-30T00:00:00+09:00"
         favoriteCount={8}
         replyCount={1}
         shareCount={3}
+        userIcon={UserIconSampleImage}
         userId="@Nobuchi79323"
         userName="冬ノブチ"
       />
@@ -72,9 +81,11 @@ export const Story5: Story = () => {
     <div className="w-[1000px]">
       <PlatCell
         content="nobuchiさんのパナソニックグループ プログラミングコンテスト2023（AtCoder Beginner Contest 326）での成績：4526位, パフォーマンス：670相当, レーティング：789→777 (-12) "
+        date="2021-01-30T00:00:00+09:00"
         favoriteCount={8}
         replyCount={1}
         shareCount={3}
+        userIcon={UserIconSampleImage}
         userId="@Nobuchi79323"
         userName="冬ノブチ"
       />

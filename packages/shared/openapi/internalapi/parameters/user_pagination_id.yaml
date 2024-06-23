@@ -1,0 +1,9 @@
+user_pagination_id:
+  in: query
+  required: false
+  name: user_pagination_id
+  description: |
+    userを識別するための一意のID。未指定の場合、先頭から取得
+  schema:
+    type: string
+  example: 'user_pagination_id'

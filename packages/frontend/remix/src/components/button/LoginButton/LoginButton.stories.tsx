@@ -3,7 +3,7 @@ import { LoginButton } from "./LoginButton";
 import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
-  title: "components/button/LoginButton",
+  title: "button/LoginButton",
 } satisfies StoryDefault;
 
 export const Story1: Story = () => {
