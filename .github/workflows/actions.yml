@@ -110,6 +110,14 @@ jobs:
         with:
           go-version: '1.20.6'
           cache: false
+      # format
+      - name: Run gofmt
+        run: gofmt -w .
+      # auto commit
+      - name: auto commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "format code"
       # lint
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
