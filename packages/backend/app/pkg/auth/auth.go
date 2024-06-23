@@ -7,13 +7,16 @@ import (
 	"crypto/rsa"
 	"crypto/sha256"
 	"encoding/json"
-	"errors"
+	"time"
+
+	"github.com/friendsofgo/errors"
 	"github.com/google/uuid"
 	"github.com/lestrrat-go/jwx/jwa"
 	"github.com/lestrrat-go/jwx/jws"
 	"github.com/stlatica/stlatica/packages/backend/app/pkg/kvs"
-	"time"
 )
+
+const unseenEpoch = 9e18
 
 // SignType 公開鍵だからばら撒いていいじゃん
 // SignType 使用可能な署名アルゴリズムに対応した鍵に制限
@@ -28,8 +31,8 @@ type PWAuth[T SignType] interface {
 
 // TokenAuth トークンを用いたユーザー認証
 type TokenAuth[T SignType] interface {
-	Verify(ctx context.Context, client kvs.Client, alg jwa.SignatureAlgorithm, key *T, lifetime int64) bool
-	QuickVerify(ctx context.Context, client kvs.Client, alg jwa.SignatureAlgorithm, key *T, lifetime int64) bool
+	Verify(ctx context.Context, client kvs.Client, alg jwa.SignatureAlgorithm, key *T, lifetime int64) (bool, error)
+	QuickVerify(ctx context.Context, client kvs.Client, alg jwa.SignatureAlgorithm, key *T, lifetime int64) (bool, error)
 }
 
 // UserCredential 認証に必要な情報を格納
@@ -45,7 +48,7 @@ type UserCredential[T SignType] struct {
 type accessTokenEvidence[T SignType] struct {
 	id        string
 	createdBy int64
-	sessionId string
+	sessionID string
 	podName   string
 	alg       jwa.SignatureAlgorithm
 	// key       *T
@@ -56,22 +59,26 @@ type AccessToken[T SignType] struct {
 	token []byte
 }
 
+// NewUserCredentials 認証情報を格納
 func NewUserCredentials[T SignType](id string, pw string, alg jwa.SignatureAlgorithm, key *T) UserCredential[T] {
 	return UserCredential[T]{
 		id:        id,
 		pw:        pw,
-		createdBy: 9e18,
+		createdBy: unseenEpoch,
 		alg:       alg,
 		key:       key,
 	}
 }
 
+// NewAccessToken アクセストークンを格納
 func NewAccessToken[T SignType](token []byte) AccessToken[T] {
 	return AccessToken[T]{token: token}
 }
 
 // Auth ID, PWで認証を行い、アクセストークンを返す
-func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client, podName string, alg jwa.SignatureAlgorithm, key *T) (AccessToken[T], error) {
+func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client,
+	podName string, alg jwa.SignatureAlgorithm, key *T) (AccessToken[T], error) {
+	// PWの取得
 	storedPw := u.requestStoredPW(ctx, client, u.id)
 	// PW check
 	if !u.verifyPW(storedPw) {
@@ -80,10 +87,13 @@ func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client, podName
 	u.setTime()
 
 	ate := u.toTokenEvidence(podName)
-	accessToken := ate.makeJWS(alg, key)
-	sessionId := uuid.New().String()
+	accessToken, err := ate.makeJWS(alg, key)
+	if err != nil {
+		return AccessToken[T]{[]byte("")}, err
+	}
+	sessionID := uuid.New().String()
 
-	saveTokens(ctx, client, sessionId, &accessToken)
+	saveTokens(ctx, client, sessionID, &accessToken)
 
 	return accessToken, nil
 }
@@ -109,22 +119,23 @@ func (u *UserCredential[T]) setTime() {
 
 // toTokenEvidence accessTokenEvidenceの生成
 func (u *UserCredential[T]) toTokenEvidence(podName string) accessTokenEvidence[T] {
-	return accessTokenEvidence[T]{id: u.id, createdBy: u.createdBy, sessionId: uuid.New().String(), podName: podName, alg: u.alg}
+	return accessTokenEvidence[T]{id: u.id, createdBy: u.createdBy,
+		sessionID: uuid.New().String(), podName: podName, alg: u.alg}
 }
 
 // serialize トークン生成に必要な情報をシリアライズ
 func (a *accessTokenEvidence[T]) serialize() []byte {
 	jsonData, err := json.Marshal(
 		&struct {
-			Id        string `json:"id,omitempty"`
+			ID        string `json:"id,omitempty"`
 			CreatedBy int64  `json:"created_by,omitempty"`
-			SessionId string `json:"session_id,omitempty"`
+			SessionID string `json:"session_id,omitempty"`
 			PodName   string `json:"pod_name,omitempty"`
 			Alg       string `json:"alg,omitempty"`
 		}{
-			Id:        a.id,
+			ID:        a.id,
 			CreatedBy: a.createdBy,
-			SessionId: a.sessionId,
+			SessionID: a.sessionID,
 			PodName:   a.podName,
 			Alg:       a.alg.String(),
 		})
@@ -137,20 +148,19 @@ func (a *accessTokenEvidence[T]) serialize() []byte {
 // DeserializeAccessToken トークン生成に必要な情報をデシリアライズ
 func (a *accessTokenEvidence[T]) DeserializeAccessToken(token []byte) error {
 	tmp := &struct {
-		Id        string
-		CreatedBy int64
-		SessionId string
-		PodName   string
-		Alg       string
+		ID        string `json:"id,omitempty"`
+		CreatedBy int64  `json:"created_by,omitempty"`
+		SessionID string `json:"session_id,omitempty"`
+		PodName   string `json:"pod_name,omitempty"`
+		Alg       string `json:"alg,omitempty"`
 	}{}
 	err := json.Unmarshal(token, &tmp)
 	if err != nil {
-		panic(err)
 		return err
 	}
-	a.id = tmp.Id
+	a.id = tmp.ID
 	a.createdBy = tmp.CreatedBy
-	a.sessionId = tmp.SessionId
+	a.sessionID = tmp.SessionID
 	a.podName = tmp.PodName
 	switch tmp.Alg {
 	case "EdDSA":
@@ -168,13 +178,13 @@ func (a *accessTokenEvidence[T]) DeserializeAccessToken(token []byte) error {
 
 // サーバで使用される署名アルゴリズムは1つに限る
 // makeJWS 署名付きトークンの生成
-func (a *accessTokenEvidence[T]) makeJWS(alg jwa.SignatureAlgorithm, key *T) AccessToken[T] {
+func (a *accessTokenEvidence[T]) makeJWS(alg jwa.SignatureAlgorithm, key *T) (AccessToken[T], error) {
 	jsonData := a.serialize()
 	token, err := jws.Sign(jsonData, alg, key)
 	if err != nil {
-		panic(err)
+		return AccessToken[T]{[]byte("")}, err
 	}
-	return AccessToken[T]{token: token}
+	return AccessToken[T]{token: token}, nil
 }
 
 // Export トークンのエクスポート
@@ -183,90 +193,98 @@ func (a *AccessToken[T]) Export() []byte {
 }
 
 // QuickVerify 高速なトークンの検証、保存されたトークンと比較を行わない
-func (a *AccessToken[T]) QuickVerify(ctx context.Context, client kvs.Client, alg jwa.SignatureAlgorithm, key *T, lifetime int64) bool {
-	jwt, err := jws.Verify(a.token, alg, key)
-	if err != nil {
-		panic(err)
-		return false
-	}
-
-	// デシリアライズ
-	ate := accessTokenEvidence[T]{id: "", createdBy: 9e18, sessionId: "", podName: ""}
-	err = ate.DeserializeAccessToken(jwt)
-	if err != nil {
-		panic(err)
-	}
-	// 有効期限の確認とトークンの再発行を試行
-	if ate.verifyExpirationDate(lifetime) {
-		return true
-	} else {
-		// トークンの再発行を試行
-		if a.refresh(ctx, client, ate, key) {
-			return true
-		} else {
-			return false
-		}
-	}
-
-}
-
-// Verify 保存されたトークンとの比較を含めたトークンの検証
-func (a *AccessToken[T]) Verify(ctx context.Context, client kvs.Client, alg jwa.SignatureAlgorithm, key *T, lifetime int64) bool {
+func (a *AccessToken[T]) QuickVerify(ctx context.Context, client kvs.Client,
+	alg jwa.SignatureAlgorithm, key *T, lifetime int64) (bool, error) {
 	// 署名の検証
 	jwt, err := jws.Verify(a.token, alg, key)
 	if err != nil {
-		panic(err)
-		return false
+		return false, err
 	}
 
 	// デシリアライズ
-	ate := accessTokenEvidence[T]{id: "", createdBy: 9e18, sessionId: "", podName: ""}
+	ate := accessTokenEvidence[T]{id: "", createdBy: unseenEpoch, sessionID: "", podName: ""}
 	err = ate.DeserializeAccessToken(jwt)
 	if err != nil {
-		panic(err)
+		return false, err
+	}
+	// 有効期限の確認
+	if ate.verifyExpirationDate(lifetime) {
+		return true, nil
+	}
+	// トークンの再発行を試行
+	res, err := a.refresh(ctx, client, ate, key)
+	if err != nil {
+		return false, err
+	}
+	return res, nil
+}
+
+// Verify 保存されたトークンとの比較を含めたトークンの検証
+func (a *AccessToken[T]) Verify(ctx context.Context, client kvs.Client,
+	alg jwa.SignatureAlgorithm, key *T, lifetime int64) (bool, error) {
+	// 署名の検証
+	jwt, err := jws.Verify(a.token, alg, key)
+	if err != nil {
+		return false, err
+	}
+
+	// デシリアライズ
+	ate := accessTokenEvidence[T]{id: "", createdBy: unseenEpoch, sessionID: "", podName: ""}
+	err = ate.DeserializeAccessToken(jwt)
+	if err != nil {
+		return false, err
 	}
 	// 有効期限の確認
 	if !ate.verifyExpirationDate(lifetime) {
-		return false
+		return false, nil
 	}
 
 	// 有効期限の確認, 保存されたトークンの比較とトークンの再発行を試行
 	if ate.verifyExpirationDate(lifetime) {
-		storedToken := ate.requestStoredToken(ctx, client)
-		return string(storedToken) == string(a.token)
-	} else {
-		// トークンの再発行を試行
-		return a.refresh(ctx, client, ate, key)
+		var storedToken []byte
+		storedToken, err = ate.requestStoredToken(ctx, client)
+		if err != nil {
+			return false, err
+		}
+		return string(storedToken) == string(a.token), nil
 	}
-
-	return true
+	// トークンの再発行を試行
+	var res bool
+	res, err = a.refresh(ctx, client, ate, key)
+	if err != nil {
+		return false, err
+	}
+	return res, nil
 }
 
 // refresh トークンの再発行
-func (a *AccessToken[T]) refresh(ctx context.Context, client kvs.Client, ate accessTokenEvidence[T], key *T) bool {
+func (a *AccessToken[T]) refresh(ctx context.Context, client kvs.Client,
+	ate accessTokenEvidence[T], key *T) (bool, error) {
 	// リフレッシュトークンの検証
 	_, err := ate.requestRefreshToken(ctx, client, a.Export())
 	if err != nil {
-		panic(err)
-		return false
+		return false, err
 	}
 	// トークンの再発行
-	a.token = ate.regenerate(ctx, client, key)
-	saveTokens(ctx, client, ate.sessionId, a)
-	return true
+	a.token, err = ate.regenerate(key)
+	if err != nil {
+		return false, err
+	}
+	saveTokens(ctx, client, ate.sessionID, a)
+	return true, nil
 }
 
 // saveTokens トークンをDBに保存
-func saveTokens[T SignType](ctx context.Context, client kvs.Client, sessionId string, accessToken *AccessToken[T]) {
+func saveTokens[T SignType](ctx context.Context, client kvs.Client, sessionID string, accessToken *AccessToken[T]) {
 	// save access token
-	err := client.SetValue(ctx, sessionId, string(accessToken.Export()))
+	err := client.SetValue(ctx, sessionID, string(accessToken.Export()))
 	if err != nil {
 		panic(err)
 	}
 	// save refresh token
 	// TODO: 有効期限の設定, redisのexpireを利用予定
 	refreshToken := uuid.New()
-	tmp := append([]byte(sessionId), accessToken.Export()...)
+	tmp := append([]byte(sessionID), accessToken.Export()...)
 	key := sha256.Sum256(tmp)
 	err = client.SetValue(ctx, string(key[:]), refreshToken.String())
 	if err != nil {
@@ -280,12 +298,12 @@ func (a *accessTokenEvidence[T]) verifyExpirationDate(lifetime int64) bool {
 }
 
 // requestRefreshToken 保存されたリフレッシュトークンの要求
-func (a *accessTokenEvidence[T]) requestRefreshToken(ctx context.Context, client kvs.Client, accessToken []byte) (string, error) {
-	tmp := append([]byte(a.sessionId), accessToken...)
+func (a *accessTokenEvidence[T]) requestRefreshToken(ctx context.Context, client kvs.Client,
+	accessToken []byte) (string, error) {
+	tmp := append([]byte(a.sessionID), accessToken...)
 	key := sha256.Sum256(tmp)
 	refreshToken, err := client.GetValue(ctx, string(key[:]))
 	if err != nil {
-		panic(err)
 		return "", err
 	}
 
@@ -297,27 +315,30 @@ func (a *accessTokenEvidence[T]) setNewTime() {
 	a.createdBy = time.Now().Unix()
 }
 
-// setNewSessionId セッションIDの更新
-func (a *accessTokenEvidence[T]) setNewSessionId() {
-	a.sessionId = uuid.New().String()
+// setNewSessionID セッションIDの更新
+func (a *accessTokenEvidence[T]) setNewSessionID() {
+	a.sessionID = uuid.New().String()
 }
 
 // regenerate トークンの再発行
-func (a *accessTokenEvidence[T]) regenerate(ctx context.Context, client kvs.Client, key *T) []byte {
+func (a *accessTokenEvidence[T]) regenerate(key *T) ([]byte, error) {
 	// リフレッシュトークンの検証は必要？
 	// トークンの情報の更新
 	a.setNewTime()
-	a.setNewSessionId()
+	a.setNewSessionID()
 	// トークンの再発行
-	newToken := a.makeJWS(a.alg, key)
+	newToken, err := a.makeJWS(a.alg, key)
+	if err != nil {
+		return []byte(""), err
+	}
 
-	return newToken.Export()
+	return newToken.Export(), nil
 }
 
-func (a *accessTokenEvidence[T]) requestStoredToken(ctx context.Context, client kvs.Client) []byte {
-	storedToken, err := client.GetValue(ctx, a.sessionId)
+func (a *accessTokenEvidence[T]) requestStoredToken(ctx context.Context, client kvs.Client) ([]byte, error) {
+	storedToken, err := client.GetValue(ctx, a.sessionID)
 	if err != nil {
-		panic(err)
+		return []byte(""), err
 	}
-	return []byte(storedToken)
+	return []byte(storedToken), nil
 }
