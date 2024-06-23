@@ -99,8 +99,17 @@ func (h *handler) GetTimelineByQuery(ectx echo.Context, params openapi.GetTimeli
 	return ectx.JSON(http.StatusOK, response)
 }
 
-func (h *handler) GetImage(_ echo.Context, _ string) error {
-	panic("implement me")
+func (h *handler) GetImage(ectx echo.Context, imageIDStr string) error {
+	imageStream, err := h.imageController.GetImage(ectx, imageIDStr)
+	if err != nil {
+		return err
+	}
+	response := ectx.Response()
+	_, err = io.Copy(response, imageStream)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (h *handler) UploadImage(ectx echo.Context) error {

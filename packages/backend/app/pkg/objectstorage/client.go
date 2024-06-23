@@ -34,7 +34,7 @@ type client struct {
 
 // NewClient creates a new object storage client.
 func NewClient(ctx context.Context, appLogger *logger.AppLogger, endpoint string,
-	accessKey string, secretKey string) Client {
+	region string, accessKey string, secretKey string) Client {
 	cred := credentials.NewStaticCredentialsProvider(accessKey, secretKey, "")
 
 	cfg, err := config.LoadDefaultConfig(ctx, config.WithCredentialsProvider(cred))
@@ -45,6 +45,7 @@ func NewClient(ctx context.Context, appLogger *logger.AppLogger, endpoint string
 	s3Client := s3.NewFromConfig(cfg, func(options *s3.Options) {
 		options.UsePathStyle = true
 		options.BaseEndpoint = aws.String(endpoint)
+		options.Region = region
 	})
 
 	return &client{
