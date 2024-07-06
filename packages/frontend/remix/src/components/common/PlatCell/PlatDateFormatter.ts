@@ -2,15 +2,12 @@ import { MathFloor } from "@/utilities/utilities";
 
 /**
  * 二つの日時データの差を、日・時・分・秒に分解して求める。
- *
- * @param
- * @returns
  */
 export const PlatDateFormatter = (args: { platTimestamp: Date; currentTime: Date }): string => {
   const diff = args.currentTime.getTime() - args.platTimestamp.getTime();
 
-  if (diff < 0) {
-    throw new Error("Invalid time difference: platTimestamp is later than currentTime.");
+  if (diff <= 0.0) {
+    return `現在`;
   }
 
   const seconds = MathFloor(diff / 1000);
