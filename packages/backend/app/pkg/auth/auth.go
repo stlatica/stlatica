@@ -26,7 +26,8 @@ type SignType interface {
 
 // PWAuth パスワードを用いたユーザー認証
 type PWAuth[T SignType] interface {
-	Auth(key T) (AccessToken[T], error)
+	Auth(ctx context.Context, client kvs.Client,
+		podName string, alg jwa.SignatureAlgorithm, key *T) (AccessToken[T], error)
 }
 
 // TokenAuth トークンを用いたユーザー認証
@@ -79,7 +80,10 @@ func NewAccessToken[T SignType](token []byte) AccessToken[T] {
 func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client,
 	podName string, alg jwa.SignatureAlgorithm, key *T) (AccessToken[T], error) {
 	// PWの取得
-	storedPw := u.requestStoredPW(ctx, client, u.id)
+	storedPw, err := u.requestStoredPW(ctx, client, u.id)
+	if err != nil {
+		return AccessToken[T]{[]byte("")}, err
+	}
 	// PW check
 	if !u.verifyPW(storedPw) {
 		return AccessToken[T]{[]byte("")}, errors.New("invalid id or pw")
@@ -93,18 +97,21 @@ func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client,
 	}
 	sessionID := uuid.New().String()
 
-	saveTokens(ctx, client, sessionID, &accessToken)
+	err = saveTokens(ctx, client, sessionID, &accessToken)
+	if err != nil {
+		return AccessToken[T]{[]byte("")}, err
+	}
 
 	return accessToken, nil
 }
 
 // requestStoredPW ユーザーIDをキーにして保存されたPWを取得
-func (u *UserCredential[T]) requestStoredPW(ctx context.Context, client kvs.Client, key string) string {
+func (u *UserCredential[T]) requestStoredPW(ctx context.Context, client kvs.Client, key string) (string, error) {
 	storedPW, err := client.GetValue(ctx, key)
 	if err != nil {
-		panic(err)
+		return "", errors.New(`invalid ID`)
 	}
-	return storedPW
+	return storedPW, nil
 }
 
 // verifyPW パスワードの検証
@@ -124,7 +131,7 @@ func (u *UserCredential[T]) toTokenEvidence(podName string) accessTokenEvidence[
 }
 
 // serialize トークン生成に必要な情報をシリアライズ
-func (a *accessTokenEvidence[T]) serialize() []byte {
+func (a *accessTokenEvidence[T]) serialize() ([]byte, error) {
 	jsonData, err := json.Marshal(
 		&struct {
 			ID        string `json:"id,omitempty"`
@@ -140,9 +147,9 @@ func (a *accessTokenEvidence[T]) serialize() []byte {
 			Alg:       a.alg.String(),
 		})
 	if err != nil {
-		panic(err)
+		return []byte(""), err
 	}
-	return jsonData
+	return jsonData, nil
 }
 
 // DeserializeAccessToken トークン生成に必要な情報をデシリアライズ
@@ -179,7 +186,10 @@ func (a *accessTokenEvidence[T]) DeserializeAccessToken(token []byte) error {
 // サーバで使用される署名アルゴリズムは1つに限る
 // makeJWS 署名付きトークンの生成
 func (a *accessTokenEvidence[T]) makeJWS(alg jwa.SignatureAlgorithm, key *T) (AccessToken[T], error) {
-	jsonData := a.serialize()
+	jsonData, err := a.serialize()
+	if err != nil {
+		return AccessToken[T]{[]byte("")}, err
+	}
 	token, err := jws.Sign(jsonData, alg, key)
 	if err != nil {
 		return AccessToken[T]{[]byte("")}, err
@@ -270,16 +280,20 @@ func (a *AccessToken[T]) refresh(ctx context.Context, client kvs.Client,
 	if err != nil {
 		return false, err
 	}
-	saveTokens(ctx, client, ate.sessionID, a)
+	err = saveTokens(ctx, client, ate.sessionID, a)
+	if err != nil {
+		return false, err
+	}
 	return true, nil
 }
 
 // saveTokens トークンをDBに保存
-func saveTokens[T SignType](ctx context.Context, client kvs.Client, sessionID string, accessToken *AccessToken[T]) {
+func saveTokens[T SignType](ctx context.Context, client kvs.Client, sessionID string,
+	accessToken *AccessToken[T]) error {
 	// save access token
 	err := client.SetValue(ctx, sessionID, string(accessToken.Export()))
 	if err != nil {
-		panic(err)
+		return err
 	}
 	// save refresh token
 	// TODO: 有効期限の設定, redisのexpireを利用予定
@@ -288,8 +302,9 @@ func saveTokens[T SignType](ctx context.Context, client kvs.Client, sessionID st
 	key := sha256.Sum256(tmp)
 	err = client.SetValue(ctx, string(key[:]), refreshToken.String())
 	if err != nil {
-		panic(err)
+		return err
 	}
+	return nil
 }
 
 // verifyExpirationDate トークンの有効期限の確認
