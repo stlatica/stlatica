@@ -4,14 +4,14 @@ services:
       context: .
       dockerfile: docker/Dockerfile.node
       target: dev
-    working_dir: /stlatica/packages/frontend/remix
+    working_dir: /stlatica/packages/frontend
     volumes:
       - type: bind
         source: ../../
         target: /stlatica
-      - type: bind
-        source: /tmp/.X11-unix
-        target: /tmp/.X11-unix
+      # - type: bind
+      #   source: /tmp/.X11-unix
+      #   target: /tmp/.X11-unix
     ports:
       # remix
       - "127.0.0.1:5173:5173"
@@ -25,27 +25,6 @@ services:
       LANG: ja_JP.UTF-8
       LC_CTYPE: ja_JP.UTF-8
     tty: true
-
-  # # ladleのHMRが機能していないのでnet: host で対応する
-  # # https://github.com/tajo/ladle/issues/557
-  # front_dev_ladle:
-  #   build:
-  #     context: .
-  #     dockerfile: docker/Dockerfile.node
-  #     target: dev
-  #   working_dir: /packages/frontend/remix
-  #   volumes:
-  #     - type: bind
-  #       source: ./remix
-  #       target: /stlatica/packages/frontend/remix
-  #     - type: bind
-  #       source: ../shared/
-  #       target: /stlatica/packages/shared
-  #     - type: bind
-  #       source: ../../.git
-  #       target: /stlatica/.git
-  #   network_mode: host
-  #   tty: true
 
   # # prism-internal:
   # #   container_name: prism-internal
