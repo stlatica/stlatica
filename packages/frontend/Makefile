@@ -29,6 +29,7 @@ vrt/update: node_modules ## update visual regression snapshots
 
 # << ci commands >>
 
+# 実行時間順で制御できるように分割している
 util/ci-checks: ci/lint ci/test ci/build ci/vrt ## run all ci checks
 
 ci/lint: node_modules
@@ -41,16 +42,7 @@ ci/vrt: vrt
 
 ci/build: build
 
-
-ci/all-check: util/ci-checks
-
 # << utility commands >>
-
-
-# TODO: 権限のその場しのぎ対応 https://github.com/stlatica/stlatica/issues/354
-util/permission: ## fix file permission (TODO #354)
-	sudo chmod 777 -R .
-
 
 help: ## print this message ## make
 	@printf "\033[36m%-25s\033[0m %-50s %s\n" "[command]" "[Description]" 
@@ -61,5 +53,4 @@ help: ## print this message ## make
 
 node_modules: package.json pnpm-lock.yaml
 	pnpm install --frozen-lockfile
-
 
