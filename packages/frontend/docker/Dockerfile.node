@@ -27,7 +27,28 @@ RUN corepack enable npm pnpm
 
 USER node
 
-# ***** 開発コンテナ設定 *****
+# ******************************************
+# * vrt 実行用
+# ******************************************
+FROM base as vrt
+
+WORKDIR /stlatica/packages/frontend
+
+COPY --chown=$USERNAME:$USERNAME pnpm-lock.yaml ./
+RUN pnpm fetch
+
+# COPY package.json pnpm-lock.yaml ./
+# 色々厄介な部分があるので一旦やっつけ実装
+COPY --chown=$USERNAME:$USERNAME . ./
+
+# pnpm fetch でキャッシュだけ切り離すと少し早くできるかも知れない
+RUN corepack enable pnpm \
+  && pnpm install
+
+# ******************************************
+# * 開発コンテナ設定 
+# ******************************************
+
 FROM base as dev
 
 WORKDIR /tmp/docker-builder
@@ -62,7 +83,7 @@ USER node
 #   && git config --global sequence.editor 'code --wait'
 
 # ***** pnpm settings *****
-COPY ./package.json .
+COPY --chown=$USERNAME:$USERNAME ./package.json .
 
 RUN corepack install \
   # for mac config 
@@ -98,11 +119,11 @@ USER ubuntu
 FROM ubuntu-node as builder
 
 WORKDIR /builder
-COPY . .
+COPY --chown=$USERNAME:$USERNAME . .
 RUN pnpm install --frozen-lockfile && pnpm build
 
 # ビルドしたものを移し替えた、ほぼ最小構成の実行コンテナ
 FROM ubuntu-node as prod
 
 WORKDIR /stlatica
-COPY --from=builder /builder/build .
+COPY --chown=$USERNAME:$USERNAME --from=builder /builder/build .

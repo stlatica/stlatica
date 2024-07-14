@@ -42,6 +42,18 @@ ci/vrt: vrt
 
 ci/build: build
 
+docker/vrt: ## 暫定措置: run 'pnpm vrt' in docker
+	docker compose run --build --rm vrt bash -c "pnpm vrt"
+
+docker/vrt-debug:
+	docker compose run --build --rm vrt bash
+
+docker/vrt-update:## 暫定措置: run 'pnpm vrt:update' in docker
+	docker compose run --build --rm vrt bash -c "pnpm vrt:update"
+
+# docker/vrt-build:
+# 	docker compose build vrt
+
 # << utility commands >>
 
 help: ## print this message ## make
