@@ -10,7 +10,7 @@ import (
 // ImageAdapter is the interface for getting image.
 type ImageAdapter interface {
 	// GetImage gets image.
-	GetImage(ctx context.Context, imageIDStr string) (io.ReadCloser, error)
+	GetImage(ctx context.Context, imageID types.ImageID) (io.ReadCloser, error)
 	// UploadImage uploads image.
 	UploadImage(ctx context.Context, imageID types.ImageID, imageBinary []byte) error
 }

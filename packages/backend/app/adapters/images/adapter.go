@@ -34,8 +34,8 @@ func NewAdapter(client objectstorage.Client) ports.ImageAdapter {
 	}
 }
 
-func (a *imageAdapter) GetImage(ctx context.Context, imageIDStr string) (io.ReadCloser, error) {
-	return a.client.GetObject(ctx, BucketName, imageIDStr)
+func (a *imageAdapter) GetImage(ctx context.Context, imageID types.ImageID) (io.ReadCloser, error) {
+	return a.client.GetObject(ctx, BucketName, imageID.String())
 }
 
 func (a *imageAdapter) UploadImage(ctx context.Context, imageID types.ImageID, imageBinary []byte) error {

@@ -13,7 +13,7 @@ import (
 // ImageUseCase is the interface for handling image.
 type ImageUseCase interface {
 	// GetImage gets image.
-	GetImage(ctx context.Context, imageIDStr string) (io.ReadCloser, error)
+	GetImage(ctx context.Context, imageID types.ImageID) (io.ReadCloser, error)
 	// UploadImage uploads image.
 	UploadImage(ctx context.Context, imageBinary []byte) (types.ImageID, error)
 }
@@ -34,12 +34,12 @@ type imageUseCase struct {
 	domainFactory images.Factory
 }
 
-func (u *imageUseCase) GetImage(ctx context.Context, imageIDStr string) (io.ReadCloser, error) {
+func (u *imageUseCase) GetImage(ctx context.Context, imageID types.ImageID) (io.ReadCloser, error) {
 	getter := u.domainFactory.NewImageGetter()
 	portImpl := &imagePortImpl{
 		imageAdapter: u.imageAdapter,
 	}
-	return getter.GetImage(ctx, imageIDStr, portImpl)
+	return getter.GetImage(ctx, imageID, portImpl)
 }
 
 func (u *imageUseCase) UploadImage(ctx context.Context, imageBinary []byte) (types.ImageID, error) {
@@ -54,8 +54,8 @@ type imagePortImpl struct {
 	imageAdapter ports.ImageAdapter
 }
 
-func (p *imagePortImpl) GetImage(ctx context.Context, imageIDStr string) (io.ReadCloser, error) {
-	return p.imageAdapter.GetImage(ctx, imageIDStr)
+func (p *imagePortImpl) GetImage(ctx context.Context, imageID types.ImageID) (io.ReadCloser, error) {
+	return p.imageAdapter.GetImage(ctx, imageID)
 }
 
 func (p *imagePortImpl) UploadImage(ctx context.Context, imageID types.ImageID, imageBinary []byte) error {

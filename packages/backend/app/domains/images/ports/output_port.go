@@ -10,7 +10,7 @@ import (
 // ImageGetOutPort is the interface for getting image.
 type ImageGetOutPort interface {
 	// GetImage gets image.
-	GetImage(ctx context.Context, imageIDStr string) (io.ReadCloser, error)
+	GetImage(ctx context.Context, imageID types.ImageID) (io.ReadCloser, error)
 }
 
 // ImageUploadOutPort is the interface for uploading image.

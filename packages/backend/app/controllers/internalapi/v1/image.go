@@ -5,6 +5,8 @@ import (
 	"io"
 
 	"github.com/labstack/echo/v4"
+	"github.com/oklog/ulid/v2"
+	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/images"
 )
 
@@ -23,11 +25,11 @@ type GetImageResponse struct {
 }
 
 func (c *imageController) GetImage(ectx echo.Context, imageIDStr string) (io.ReadCloser, error) {
-	imageStream, err := c.imageUseCase.GetImage(ectx.Request().Context(), imageIDStr)
+	imageID, err := ulid.Parse(imageIDStr)
 	if err != nil {
 		return nil, err
 	}
-	return imageStream, nil
+	return c.imageUseCase.GetImage(ectx.Request().Context(), types.ImageID(imageID))
 }
 
 func (c *imageController) UploadImage(ectx echo.Context, imageBase64 string) (*PostImageResponse, error) {
