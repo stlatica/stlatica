@@ -9,7 +9,7 @@
     "lint": "biome check --apply ./src",
     "start": "node --enable-source-maps build/express.js",
     "ts": "tsc --project tsconfig.json --noEmit",
-    "gen": "openapi-typescript ../openapi/internalapi/openapi-bundled.yaml -o ./src/schema.d.ts"
+    "gen": "openapi-typescript ../openapi/build/openapi-bundled-internal.yaml -o ./src/schema.d.ts"
   },
   "keywords": [],
   "author": "",

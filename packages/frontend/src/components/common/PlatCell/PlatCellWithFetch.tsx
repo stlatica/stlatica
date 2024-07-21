@@ -1,3 +1,4 @@
+import { SampleImageBrown400 } from "@/features/sample/sample-image/SampleImageBrown400";
 import { useGetPlat } from "@/openapi/stlaticaInternalApi";
 
 import { PlatCell } from "./PlatCell";
@@ -28,6 +29,8 @@ export const PlatCellWithFetch: React.FC<Props> = ({ id }) => {
       shareCount={10}
       userId="test"
       userName="テストユーザー"
+      date={data.data.created_at}
+      userIcon={SampleImageBrown400}
     />
   );
 };
