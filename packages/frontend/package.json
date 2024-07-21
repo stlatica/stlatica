@@ -26,6 +26,7 @@
     "@remix-run/node": "^2.10.3",
     "@remix-run/react": "^2.10.3",
     "@remix-run/serve": "^2.10.3",
+    "@tanstack/react-virtual": "^3.8.3",
     "@vanilla-extract/css": "^1.15.3",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
