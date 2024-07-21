@@ -1,0 +1,16 @@
+node_modules
+
+/coverage
+
+/.cache
+/build
+.env
+
+
+ladle-build
+e2e/report/**
+!e2e/report/.gitkeep
+e2e/**/output/*
+e2e/snapshots/output
+
+.pnpm-store

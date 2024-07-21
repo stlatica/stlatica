@@ -15,42 +15,42 @@ jobs:
       is_backend: ${{ steps.filter.outputs.is_backend }}
       is_openapi: ${{ steps.filter.outputs.is_openapi }}
     steps:
-    - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.head_ref }}
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
-          is_frontend: 
-            - 'packages/frontend/**'
-          is_backend:
-            - 'packages/backend/**'
-          is_openapi:
-            - 'packages/shared/openapi/**'
-          
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            is_frontend: 
+              - 'packages/frontend/**'
+            is_backend:
+              - 'packages/backend/**'
+            is_openapi:
+              - 'packages/shared/openapi/**'
+
   build_frontend:
     needs: changes
     if: ${{ needs.changes.outputs.is_frontend == 'true' }}
     runs-on: ubuntu-22.04
     defaults:
       run:
-        working-directory: packages/frontend/remix
-    steps: 
+        working-directory: packages/frontend
+    steps:
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
       # pnpm 8をインストール
       - uses: pnpm/action-setup@v2
-        with: 
+        with:
           version: 9
 
       # node.jsをインストール
-      - name: Node.js 
+      - name: Node.js
         uses: actions/setup-node@v3
         with:
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: packages/frontend/
 
       # 依存関係先をインストール
@@ -84,14 +84,11 @@ jobs:
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
       # TODO: github action 内のdocker build でキャッシュしたい https://github.com/stlatica/stlatica/issues/286
-      - name: build container image
-        run: make util/build
       - name: pull lfs snapshots
         run: git lfs pull
       - name: Run vrt tests in container
-        run: make vrt
+        run: make docker/vrt
         timeout-minutes: 2
-
 
   build_backend:
     needs: changes
@@ -100,7 +97,7 @@ jobs:
     defaults:
       run:
         working-directory: packages/backend
-    steps: 
+    steps:
       # リポジトリをチェックアウト
       - uses: actions/checkout@v3
         with:
@@ -108,7 +105,7 @@ jobs:
       # setup go install
       - uses: actions/setup-go@v4
         with:
-          go-version: '1.20.6'
+          go-version: "1.20.6"
           cache: false
       # format
       - name: Run gofmt
@@ -121,7 +118,7 @@ jobs:
       # lint
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
-        with: 
+        with:
           version: latest
           working-directory: packages/backend
       # TODO:Build

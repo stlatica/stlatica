@@ -1,34 +1,129 @@
-FROM node:20.12.2-slim as base
+FROM node:20.15.1-slim as node
+FROM mcr.microsoft.com/playwright:v1.42.1-jammy as playwright
+FROM ubuntu:22.04 as ubuntu
 
-RUN npm install -g pnpm@9.2.0
+# ***** playwright を搭載した nodejs 環境を開発のベースとして使う *****
+FROM playwright as base
 
-# 環境：開発用
+ARG USERNAME=node
+ARG GROUPNAME=node
+ARG UID=1000
+ARG GID=1000
+
+RUN userdel pwuser
+RUN groupadd -g $GID $GROUPNAME && \
+  useradd -m -s /bin/bash -u $UID -g $GID $USERNAME
+
+# ***** nodejs の実行バイナリを載せ替え *****
+COPY --from=node /usr/local/include/ /usr/local/include/
+COPY --from=node /usr/local/lib/ /usr/local/lib/
+COPY --from=node /usr/local/bin/ /usr/local/bin/
+
+# ***** corepack *****
+# unlink が root で実施の必要あり
+# yarn が原因でエラーが出る (消したくてもなぜか消えない)
+# https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.jammy の npm install -g yarn が原因か
+RUN corepack enable npm pnpm 
+
+USER node
+
+# ******************************************
+# * vrt 実行用
+# ******************************************
+FROM base as vrt
+
+WORKDIR /stlatica/packages/frontend
+
+COPY --chown=$USERNAME:$USERNAME pnpm-lock.yaml ./
+RUN pnpm fetch
+
+# COPY package.json pnpm-lock.yaml ./
+# 色々厄介な部分があるので一旦やっつけ実装
+COPY --chown=$USERNAME:$USERNAME . ./
+
+# pnpm fetch でキャッシュだけ切り離すと少し早くできるかも知れない
+RUN corepack enable pnpm \
+  && pnpm install
+
+# ******************************************
+# * 開発コンテナ設定 
+# ******************************************
+
 FROM base as dev
 
-# RUN apt update -y && apt install -y xdg-utils --fix-missing && apt clean
+WORKDIR /tmp/docker-builder
+USER root
 
-# エイリアスを設定
-COPY ./.alias /root
-RUN cat ~/.alias >> ~/.bashrc
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh 
+
+# ***** apt *****
+# 開発に必要な依存関係類のインストール
+RUN apt update -y \
+  && apt install -y \
+  git \
+  git-lfs \
+  make \
+  bash-completion \
+  less \
+  # vim \
+  # x11-apps \
+  # language-pack-ja \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/*
+
+# apt install したもの類のセットアップを実行
+RUN git lfs install
+
+# ***** change general user *****
+USER node
+
+# git 操作に vscode を使うようにする
+# この時点でオプションを追加するとdevcontainer のホスト側マウントが機能しなくなってしまうので、起動時コマンドの方で追加する
+# RUN git config --global core.editor 'code --wait' \
+#   && git config --global sequence.editor 'code --wait'
+
+# ***** pnpm settings *****
+COPY --chown=$USERNAME:$USERNAME ./package.json .
+
+RUN corepack install \
+  # for mac config 
+  && pnpm config set store-dir /home/node/.pnpm-store \
+  && rm ./package.json
+
+# # ***** command alias *****
+COPY ./docker/.alias .
+RUN cat ./.alias >> ~/.bashrc
 
 # ENV DEBUG=eslint:linter
 
-WORKDIR /app/frontend
+WORKDIR /stlatica/packages/frontend
 
 EXPOSE 5173
 EXPOSE 51204
 EXPOSE 61000
+EXPOSE 9323
 
-# 環境：e2e用
-FROM mcr.microsoft.com/playwright:v1.42.1-jammy as e2e
-# バージョン指定は playwright のバージョン依存。合わせる必要あり
+# ******************************************
+# * 以下本番用
+# ******************************************
+FROM ubuntu as ubuntu-node
 
-# Dockerの並列実行やキャッシュを考慮すると playwright install --with-deps より良いため
-# playwrightの公式イメージを利用している
-# コンテナ移し替えをするせいで完全に同環境にならないのが懸念事項ではある
+# nodejs の実行バイナリを載せ替え
+COPY --from=node /usr/local/include/ /usr/local/include/
+COPY --from=node /usr/local/lib/ /usr/local/lib/
+COPY --from=node /usr/local/bin/ /usr/local/bin/
 
-COPY --from=base /usr/local/include/ /usr/local/include/
-COPY --from=base /usr/local/lib/ /usr/local/lib/
-COPY --from=base /usr/local/bin/ /usr/local/bin/
+USER ubuntu
 
+# ビルドする
+FROM ubuntu-node as builder
 
+WORKDIR /builder
+COPY --chown=$USERNAME:$USERNAME . .
+RUN pnpm install --frozen-lockfile && pnpm build
+
+# ビルドしたものを移し替えた、ほぼ最小構成の実行コンテナ
+FROM ubuntu-node as prod
+
+WORKDIR /stlatica
+COPY --chown=$USERNAME:$USERNAME --from=builder /builder/build .
