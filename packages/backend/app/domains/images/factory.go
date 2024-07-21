@@ -8,6 +8,8 @@ type Factory interface {
 	NewImageGetter() ImageGetter
 	// NewImageUploader returns a new image uploader.
 	NewImageUploader() ImageUploader
+	// NewImageDeleter returns a new image deleter.
+	NewImageDeleter() ImageDeleter
 }
 
 // NewFactory returns a new factory of images package.
@@ -29,6 +31,12 @@ func (f *factory) NewImageGetter() ImageGetter {
 
 func (f *factory) NewImageUploader() ImageUploader {
 	return &imageUploader{
+		appLogger: f.appLogger,
+	}
+}
+
+func (f *factory) NewImageDeleter() ImageDeleter {
+	return &imageDeleter{
 		appLogger: f.appLogger,
 	}
 }

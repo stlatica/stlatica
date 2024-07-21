@@ -16,6 +16,8 @@ type ImageUseCase interface {
 	GetImage(ctx context.Context, imageID types.ImageID) (io.ReadCloser, error)
 	// UploadImage uploads image.
 	UploadImage(ctx context.Context, imageBinary []byte) (types.ImageID, error)
+	// DeleteImage deletes image.
+	DeleteImage(ctx context.Context, imageID types.ImageID) error
 }
 
 // NewImageUseCase returns ImageUseCase.
@@ -50,6 +52,14 @@ func (u *imageUseCase) UploadImage(ctx context.Context, imageBinary []byte) (typ
 	return uploader.UploadImage(ctx, imageBinary, portImpl)
 }
 
+func (u *imageUseCase) DeleteImage(ctx context.Context, imageID types.ImageID) error {
+	deleter := u.domainFactory.NewImageDeleter()
+	portImpl := &imagePortImpl{
+		imageAdapter: u.imageAdapter,
+	}
+	return deleter.DeleteImage(ctx, imageID, portImpl)
+}
+
 type imagePortImpl struct {
 	imageAdapter ports.ImageAdapter
 }
@@ -60,4 +70,8 @@ func (p *imagePortImpl) GetImage(ctx context.Context, imageID types.ImageID) (io
 
 func (p *imagePortImpl) UploadImage(ctx context.Context, imageID types.ImageID, imageBinary []byte) error {
 	return p.imageAdapter.UploadImage(ctx, imageID, imageBinary)
+}
+
+func (p *imagePortImpl) DeleteImage(ctx context.Context, imageID types.ImageID) error {
+	return p.imageAdapter.DeleteImage(ctx, imageID)
 }

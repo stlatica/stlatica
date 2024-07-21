@@ -124,6 +124,14 @@ func (h *handler) UploadImage(ectx echo.Context) error {
 	return ectx.JSON(http.StatusCreated, response)
 }
 
+func (h *handler) DeleteImage(ectx echo.Context, imageIDStr string) error {
+	err := h.imageController.DeleteImage(ectx, imageIDStr)
+	if err != nil {
+		return err
+	}
+	return ectx.NoContent(http.StatusNoContent)
+}
+
 func (h *handler) PostFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }

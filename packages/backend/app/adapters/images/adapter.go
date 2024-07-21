@@ -48,6 +48,10 @@ func (a *imageAdapter) UploadImage(ctx context.Context, imageID types.ImageID, i
 	return a.client.PutObject(ctx, BucketName, imageID.String(), reader, mine)
 }
 
+func (a *imageAdapter) DeleteImage(ctx context.Context, imageID types.ImageID) error {
+	return a.client.DeleteObject(ctx, BucketName, imageID.String())
+}
+
 func validateMineType(data []byte) (string, error) {
 	mine := http.DetectContentType(data)
 
