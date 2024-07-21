@@ -9,6 +9,7 @@ export default {
       //   ? "pnpm ladle serve"
       //   : "pnpm ladle build && pnpm ladle preview -p 61000",
       url: `http://localhost:61000`,
+      reuseExistingServer: true,
     },
   ],
   reporter: [["html", { host: "0.0.0.0", outputFolder: "e2e/report" }]],
