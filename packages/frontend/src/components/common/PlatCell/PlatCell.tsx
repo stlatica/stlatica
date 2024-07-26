@@ -4,6 +4,8 @@ import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
 import { PlatMenuButton } from "@/components/button/PlatMenuButton";
 import { UserIcon } from "@/components/common/UserIcon";
 
+import * as styles from "./PlatCell.css";
+
 const formatter = new Intl.DateTimeFormat("ja-JP", {
   dateStyle: "medium",
   timeStyle: "medium",
@@ -35,50 +37,50 @@ export const PlatCell: React.FC<PlatCellProps> = ({
   userName,
 }) => {
   return (
-    <div className="border-2 border-gray-500 bg-gray-800 p-5 text-white">
+    <div className={styles.container}>
       {/* ユーザプロファイル */}
-      <div className="flex h-12">
+      <div className={styles.userProfile}>
         {/* アイコン */}
-        <div className="size-12">
+        <div className={styles.userIcon}>
           <UserIcon iconImage={userIcon} />
         </div>
         {/* ユーザ名 と ユーザID */}
-        <div className="px-3">
+        <div className={styles.userDetails}>
           {/* ユーザ名 */}
-          <div className="text-lg">{userName}</div>
+          <div className={styles.userName}>{userName}</div>
           {/* ユーザID */}
-          <div className="text-sm text-gray-500">{userId}</div>
+          <div className={styles.userId}>{userId}</div>
         </div>
-        {/* プルダウンメニュー    参考 : https://mantine.dev/core/menu/ */}
-        <div className="ml-auto">
+        {/* プルダウンメニュー */}
+        <div className={styles.menuButton}>
           <PlatMenuButton />
         </div>
       </div>
       {/* platの内容 */}
-      <div className="p-5">{content}</div>
+      <div className={styles.contentStyle}>{content}</div>
       {/* 投稿日時 */}
       <div>
         <div>{formatter.format(new Date(date))}</div>
       </div>
       {/* 下部のアイコン */}
-      <div className="flex">
+      <div className={styles.bottomIcons}>
         {/* 返信数 */}
-        <div className="flex flex-1 items-center">
-          <div className="px-2">
+        <div className={styles.iconContainer}>
+          <div className={styles.iconPadding}>
             <MdComment size="2em" />
           </div>
           <div>{replyCount}</div>
         </div>
         {/* シェア数 */}
-        <div className="flex flex-1 items-center">
-          <div className="px-2">
+        <div className={styles.iconContainer}>
+          <div className={styles.iconPadding}>
             <MdAutorenew size="2em" />
           </div>
           <div>{shareCount}</div>
         </div>
         {/* いいね数 */}
-        <div className="flex flex-1 items-center">
-          <div className="px-2">
+        <div className={styles.iconContainer}>
+          <div className={styles.iconPadding}>
             <MdStarBorder size="2em" />
           </div>
           <div>{favoriteCount}</div>

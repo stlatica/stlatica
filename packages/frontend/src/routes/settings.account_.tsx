@@ -1,7 +1,9 @@
+import { flexContainer, flexColumn } from "@/styles/routes/settings.css";
+
 export default function Page() {
   return (
-    <div className="flex">
-      <div className="flex flex-col">
+    <div className={flexContainer}>
+      <div className={flexColumn}>
         <a href="/settings/account/user_id">ユーザIDの変更</a>
         <a href="/settings/account/email">メールアドレスの変更</a>
         <a href="/settings/account/password">パスワードの変更</a>

@@ -1,7 +1,9 @@
+import { container } from "@/styles/routes/index.css";
+
 export default function Home() {
   return (
     <main>
-      <div className="flex flex-col">
+      <div className={container}>
         <a href="/edit_profile">EditProfile</a>
         <a href="/user/sample_user">User Page</a>
         <a href="/test">実験用ページ</a>

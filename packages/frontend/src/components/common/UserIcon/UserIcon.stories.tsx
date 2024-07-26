@@ -9,7 +9,7 @@ export default {
 
 export const Story1: Story = () => {
   return (
-    <div className="w-24">
+    <div style={{ width: "100px" }}>
       <UserIcon iconImage={UserIconSampleImage} />
     </div>
   );
@@ -18,8 +18,8 @@ Story1.storyName = "display icon 100px";
 
 export const Story2: Story = () => {
   return (
-    <div className="w-72">
-      <UserIcon iconImage={UserIconSampleImage} />;
+    <div style={{ width: "300px" }}>
+      <UserIcon iconImage={UserIconSampleImage} />
     </div>
   );
 };
@@ -27,8 +27,8 @@ Story2.storyName = "display icon 300px";
 
 export const Story3: Story = () => {
   return (
-    <div className="w-full">
-      <UserIcon iconImage={UserIconSampleImage} />;
+    <div style={{ width: "100%" }}>
+      <UserIcon iconImage={UserIconSampleImage} />
     </div>
   );
 };
