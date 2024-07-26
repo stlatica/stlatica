@@ -1,6 +1,6 @@
 import React from "react";
 
-import { container } from "./ProfileView.css";
+import { container, textSmall } from "./ProfileView.css";
 
 type LeftUserViewProps = {
   readonly userID: string;
@@ -18,7 +18,7 @@ export const LeftUserView: React.FC<LeftUserViewProps> = ({ userID }) => {
       <div>
         <hr />
       </div>
-      <div className="text-sm">
+      <div className={textSmall}>
         ここに自己紹介をかきまああああああああああああああああああああああああああああああああああああす文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数
       </div>
     </div>
