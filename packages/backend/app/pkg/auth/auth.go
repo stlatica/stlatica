@@ -26,7 +26,7 @@ type SignType interface {
 // PWAuth パスワードを用いたユーザー認証
 type PWAuth[T SignType] interface {
 	Auth(ctx context.Context, client kvs.Client,
-		podName string, alg jwa.SignatureAlgorithm, key *T) (AccessToken[T], error)
+		podName string) (AccessToken[T], error)
 }
 
 // TokenAuth トークンを用いたユーザー認証
@@ -37,7 +37,7 @@ type TokenAuth[T SignType] interface {
 
 // UserCredential 認証に必要な情報を格納
 type UserCredential[T SignType] struct {
-	id        string
+	actorID   string
 	pw        string
 	createdBy int64
 	alg       jwa.SignatureAlgorithm
@@ -59,9 +59,9 @@ type AccessToken[T SignType] struct {
 }
 
 // NewUserCredentials 認証情報を格納
-func NewUserCredentials[T SignType](id string, pw string, alg jwa.SignatureAlgorithm, key *T) UserCredential[T] {
-	return UserCredential[T]{
-		id:        id,
+func NewUserCredentials[T SignType](id string, pw string, alg jwa.SignatureAlgorithm, key *T) PWAuth[T] {
+	return &UserCredential[T]{
+		actorID:   id,
 		pw:        pw,
 		createdBy: unseenEpoch,
 		alg:       alg,
@@ -76,20 +76,20 @@ func NewAccessToken[T SignType](token []byte) AccessToken[T] {
 
 // Auth ID, PWで認証を行い、アクセストークンを返す
 func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client,
-	podName string, alg jwa.SignatureAlgorithm, key *T) (AccessToken[T], error) {
+	podName string) (AccessToken[T], error) {
 	// PWの取得
-	storedPw, err := u.requestStoredPW(ctx, client, u.id)
+	storedPw, err := u.requestStoredPW(ctx, client, u.actorID)
 	if err != nil {
 		return AccessToken[T]{[]byte("")}, err
 	}
 	// PW check
 	if !u.verifyPW(storedPw) {
-		return AccessToken[T]{[]byte("")}, errors.New("invalid id or pw")
+		return AccessToken[T]{[]byte("")}, errors.New("invalid actorID or pw")
 	}
-	u.setTime()
+	u.setCurrentTime()
 
 	ate := u.toTokenEvidence(podName)
-	accessToken, err := ate.makeJWS(alg, key)
+	accessToken, err := ate.makeJWS(u.alg, u.key)
 	if err != nil {
 		return AccessToken[T]{[]byte("")}, err
 	}
@@ -117,14 +117,14 @@ func (u *UserCredential[T]) verifyPW(storedPw string) bool {
 	return u.pw == storedPw
 }
 
-// setTime トークン生成時刻の設定
-func (u *UserCredential[T]) setTime() {
+// setCurrentTime トークン生成時刻の設定
+func (u *UserCredential[T]) setCurrentTime() {
 	u.createdBy = time.Now().Unix()
 }
 
 // toTokenEvidence accessTokenEvidenceの生成
 func (u *UserCredential[T]) toTokenEvidence(podName string) accessTokenEvidence[T] {
-	return accessTokenEvidence[T]{id: u.id, createdBy: u.createdBy,
+	return accessTokenEvidence[T]{id: u.actorID, createdBy: u.createdBy,
 		sessionID: uuid.New().String(), podName: podName, alg: u.alg}
 }
 
@@ -132,7 +132,7 @@ func (u *UserCredential[T]) toTokenEvidence(podName string) accessTokenEvidence[
 func (a *accessTokenEvidence[T]) serialize() ([]byte, error) {
 	jsonData, err := json.Marshal(
 		&struct {
-			ID        string `json:"id,omitempty"`
+			ID        string `json:"actorID,omitempty"`
 			CreatedBy int64  `json:"created_by,omitempty"`
 			SessionID string `json:"session_id,omitempty"`
 			PodName   string `json:"pod_name,omitempty"`
@@ -144,16 +144,13 @@ func (a *accessTokenEvidence[T]) serialize() ([]byte, error) {
 			PodName:   a.podName,
 			Alg:       a.alg.String(),
 		})
-	if err != nil {
-		return []byte(""), err
-	}
-	return jsonData, nil
+	return jsonData, err
 }
 
 // DeserializeAccessToken トークン生成に必要な情報をデシリアライズ
 func (a *accessTokenEvidence[T]) DeserializeAccessToken(token []byte) error {
 	tmp := &struct {
-		ID        string `json:"id,omitempty"`
+		ID        string `json:"actorID,omitempty"`
 		CreatedBy int64  `json:"created_by,omitempty"`
 		SessionID string `json:"session_id,omitempty"`
 		PodName   string `json:"pod_name,omitempty"`
