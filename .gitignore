@@ -18,3 +18,4 @@ next-env.d.ts
 packages/backend/tmp/*
 
 .pnpm-store
+node_modules
