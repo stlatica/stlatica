@@ -18,7 +18,6 @@ import (
 
 const unseenEpoch = 9e18
 
-// SignType 公開鍵だからばら撒いていいじゃん
 // SignType 使用可能な署名アルゴリズムに対応した鍵に制限
 type SignType interface {
 	ecdsa.PrivateKey | ed25519.PrivateKey | rsa.PrivateKey
