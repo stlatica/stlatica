@@ -14,7 +14,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/pressly/goose/v3 v3.14.0
-	github.com/volatiletech/sqlboiler/v4 v4.15.0
+	github.com/volatiletech/sqlboiler/v4 v4.16.2
 	github.com/volatiletech/strmangle v0.0.6
 	golang.org/x/tools v0.12.0
 )
