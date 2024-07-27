@@ -51,7 +51,6 @@ type accessTokenEvidence[T SignType] struct {
 	sessionID string
 	podName   string
 	alg       jwa.SignatureAlgorithm
-	// key       *T
 }
 
 // AccessToken トークンを格納
