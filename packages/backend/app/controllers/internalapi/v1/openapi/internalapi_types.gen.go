@@ -113,6 +113,28 @@ type User struct {
 // UserID userを識別するための一意のID
 type UserID = string
 
+// UserLightweight user without follow counts
+type UserLightweight struct {
+	// Icon ユーザのアイコン画像のURL
+	Icon string `json:"icon"`
+
+	// IsPublic 公開アカウントであるかどうか \
+	// external apiのmanuallyApprovesFollowersと同一の値となる
+	IsPublic bool `json:"is_public"`
+
+	// Summary ユーザのプロフィール
+	Summary string `json:"summary"`
+
+	// UserId userを識別するための一意のID
+	UserId UserID `json:"user_id"`
+
+	// Username 画面上に表示されるユーザ名
+	Username string `json:"username"`
+}
+
+// Limit defines model for limit.
+type Limit = int
+
 // PlatId defines model for plat_id.
 type PlatId = string
 
@@ -149,6 +171,21 @@ type TimelineUserId = string
 // UserId defines model for user_id.
 type UserId = string
 
+// UserPaginationId defines model for user_pagination_id.
+type UserPaginationId = string
+
+// N400 defines model for 400.
+type N400 = ErrorResponse
+
+// N404 defines model for 404.
+type N404 = ErrorResponse
+
+// N500 defines model for 500.
+type N500 = ErrorResponse
+
+// N503 defines model for 503.
+type N503 = ErrorResponse
+
 // UploadImageTextBody defines parameters for UploadImage.
 type UploadImageTextBody = string
 
@@ -180,6 +217,24 @@ type GetUsersParams struct {
 type CreateUserJSONBody struct {
 	Email *string `json:"email,omitempty"`
 	Name  *string `json:"name,omitempty"`
+}
+
+// GetFollowersParams defines parameters for GetFollowers.
+type GetFollowersParams struct {
+	// UserPaginationId userを識別するための一意のID。未指定の場合、先頭から取得
+	UserPaginationId *UserPaginationId `form:"user_pagination_id,omitempty" json:"user_pagination_id,omitempty"`
+
+	// Limit 取得数。default = 100
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// GetFollowUsersParams defines parameters for GetFollowUsers.
+type GetFollowUsersParams struct {
+	// UserPaginationId userを識別するための一意のID。未指定の場合、先頭から取得
+	UserPaginationId *UserPaginationId `form:"user_pagination_id,omitempty" json:"user_pagination_id,omitempty"`
+
+	// Limit 取得数。default = 100
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // UploadImageTextRequestBody defines body for UploadImage for text/plain ContentType.
