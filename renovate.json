@@ -5,8 +5,22 @@
   ],
   "packageRules": [
     {
+      "paths": ["packages/frontend/**", "packages/api-mock/**"],
+      "extends": [    
+        "config:js-app",
+        "group:allNonMajor"
+      ],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
+    },
+    {
+      "paths": ["packages/backend/**"],
+      "matchPackageNames": [
+        "*golang*",
+        "*mysql*",
+        "*redis*"
+      ],
+      "automerge": false
     }
   ]
 }
