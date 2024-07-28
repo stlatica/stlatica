@@ -22,28 +22,8 @@ func RegisterHandlers(server *echo.Echo) {
 
 type handler struct{}
 
-// DeleteFollow implements openapi.ServerInterface.
-func (h *handler) DeleteFollow(_ echo.Context, _ string) error {
-	panic("unimplemented")
-}
-
 // DeleteImage implements openapi.ServerInterface.
 func (h *handler) DeleteImage(_ echo.Context, _ string) error {
-	panic("unimplemented")
-}
-
-// GetFollowUsers implements openapi.ServerInterface.
-func (h *handler) GetFollowUsers(_ echo.Context, _ string, _ openapi.GetFollowUsersParams) error {
-	panic("unimplemented")
-}
-
-// GetFollowers implements openapi.ServerInterface.
-func (h *handler) GetFollowers(_ echo.Context, _ string, _ openapi.GetFollowersParams) error {
-	panic("unimplemented")
-}
-
-// PostFollow implements openapi.ServerInterface.
-func (h *handler) PostFollow(_ echo.Context, _ string) error {
 	panic("unimplemented")
 }
 
