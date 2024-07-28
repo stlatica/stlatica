@@ -55,6 +55,18 @@ type ServerInterface interface {
 	// get user
 	// (GET /internal/v1/users/{user_id})
 	GetUser(ctx echo.Context, userId UserId) error
+	// Delete follow user.
+	// (DELETE /internal/v1/users/{user_id}/follow)
+	DeleteFollow(ctx echo.Context, userId UserId) error
+	// Add new follow user.
+	// (POST /internal/v1/users/{user_id}/follow)
+	PostFollow(ctx echo.Context, userId UserId) error
+	// Get follower list.
+	// (GET /internal/v1/users/{user_id}/followers)
+	GetFollowers(ctx echo.Context, userId UserId, params GetFollowersParams) error
+	// Get follow user list.
+	// (GET /internal/v1/users/{user_id}/follows)
+	GetFollows(ctx echo.Context, userId UserId, params GetFollowsParams) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -318,6 +330,110 @@ func (w *ServerInterfaceWrapper) GetUser(ctx echo.Context) error {
 	return err
 }
 
+// DeleteFollow converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteFollow(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "user_id" -------------
+	var userId UserId
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "user_id", runtime.ParamLocationPath, ctx.Param("user_id"), &userId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter user_id: %s", err))
+	}
+
+	ctx.Set(BearerScopes, []string{})
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.DeleteFollow(ctx, userId)
+	return err
+}
+
+// PostFollow converts echo context to params.
+func (w *ServerInterfaceWrapper) PostFollow(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "user_id" -------------
+	var userId UserId
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "user_id", runtime.ParamLocationPath, ctx.Param("user_id"), &userId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter user_id: %s", err))
+	}
+
+	ctx.Set(BearerScopes, []string{})
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.PostFollow(ctx, userId)
+	return err
+}
+
+// GetFollowers converts echo context to params.
+func (w *ServerInterfaceWrapper) GetFollowers(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "user_id" -------------
+	var userId UserId
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "user_id", runtime.ParamLocationPath, ctx.Param("user_id"), &userId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter user_id: %s", err))
+	}
+
+	ctx.Set(BearerScopes, []string{})
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetFollowersParams
+	// ------------- Optional query parameter "user_pagination_id" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "user_pagination_id", ctx.QueryParams(), &params.UserPaginationId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter user_pagination_id: %s", err))
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", ctx.QueryParams(), &params.Limit)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter limit: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetFollowers(ctx, userId, params)
+	return err
+}
+
+// GetFollows converts echo context to params.
+func (w *ServerInterfaceWrapper) GetFollows(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "user_id" -------------
+	var userId UserId
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "user_id", runtime.ParamLocationPath, ctx.Param("user_id"), &userId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter user_id: %s", err))
+	}
+
+	ctx.Set(BearerScopes, []string{})
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetFollowsParams
+	// ------------- Optional query parameter "user_pagination_id" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "user_pagination_id", ctx.QueryParams(), &params.UserPaginationId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter user_pagination_id: %s", err))
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", ctx.QueryParams(), &params.Limit)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter limit: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetFollows(ctx, userId, params)
+	return err
+}
+
 // This is a simple interface which specifies echo.Route addition functions which
 // are present on both echo.Echo and echo.Group, since we want to allow using
 // either of them for path registration
@@ -360,5 +476,9 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	router.POST(baseURL+"/internal/v1/users", wrapper.CreateUser)
 	router.DELETE(baseURL+"/internal/v1/users/:user_id", wrapper.DeleteUser)
 	router.GET(baseURL+"/internal/v1/users/:user_id", wrapper.GetUser)
+	router.DELETE(baseURL+"/internal/v1/users/:user_id/follow", wrapper.DeleteFollow)
+	router.POST(baseURL+"/internal/v1/users/:user_id/follow", wrapper.PostFollow)
+	router.GET(baseURL+"/internal/v1/users/:user_id/followers", wrapper.GetFollowers)
+	router.GET(baseURL+"/internal/v1/users/:user_id/follows", wrapper.GetFollows)
 
 }

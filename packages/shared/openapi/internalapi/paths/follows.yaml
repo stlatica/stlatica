@@ -4,7 +4,7 @@ users_{user_id}_follows:
       - Follows
     summary: Get follow user list.
     description: Get follow user list.
-    operationId: getFollowUsers
+    operationId: getFollows
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
       - $ref: '../parameters/user_pagination_id.yaml#/user_pagination_id'

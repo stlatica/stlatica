@@ -30,8 +30,10 @@ type UserBase struct { // ulid
 
 // UserBaseR is where relationships are stored.
 type UserBaseR struct {
-	Plats     PlatBaseSlice     `json:"Plats"`
-	Timelines TimelineBaseSlice `json:"Timelines"`
+	Plats                     PlatBaseSlice         `json:"Plats"`
+	Timelines                 TimelineBaseSlice     `json:"Timelines"`
+	FollowUserUserRelations   UserRelationBaseSlice `json:"FollowUserUserRelations"`
+	FollowerUserUserRelations UserRelationBaseSlice `json:"FollowerUserUserRelations"`
 }
 
 // UserBaseSlice is an alias for a slice of pointers to UserBase.
@@ -116,4 +118,20 @@ func (o *UserBase) Timelines() TimelineBaseSlice {
 		return TimelineBaseSlice{}
 	}
 	return o.R.Timelines
+}
+
+// FollowUserUserRelations is get FollowUserUserRelations relationship, if receiver is nil, returns empty UserRelationBaseSlice via follow_user_id column.
+func (o *UserBase) FollowUserUserRelations() UserRelationBaseSlice {
+	if o == nil {
+		return UserRelationBaseSlice{}
+	}
+	return o.R.FollowUserUserRelations
+}
+
+// FollowerUserUserRelations is get FollowerUserUserRelations relationship, if receiver is nil, returns empty UserRelationBaseSlice via follower_user_id column.
+func (o *UserBase) FollowerUserUserRelations() UserRelationBaseSlice {
+	if o == nil {
+		return UserRelationBaseSlice{}
+	}
+	return o.R.FollowerUserUserRelations
 }
