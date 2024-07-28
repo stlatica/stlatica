@@ -132,6 +132,22 @@ func (h *handler) DeleteFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }
 
+func (h *handler) GetFollows(_ echo.Context, _ openapi.UserId, _ openapi.GetFollowsParams) error {
+	panic("implement me")
+}
+
+func (h *handler) PostFollow(_ echo.Context, _ openapi.UserId) error {
+	panic("implement me")
+}
+
+func (h *handler) DeleteFollow(_ echo.Context, _ openapi.UserId) error {
+	panic("implement me")
+}
+
+func (h *handler) GetFollowers(_ echo.Context, _ openapi.UserId, _ openapi.GetFollowersParams) error {
+	panic("implement me")
+}
+
 func (h *handler) Login(_ echo.Context) error {
 	panic("implement me")
 }
