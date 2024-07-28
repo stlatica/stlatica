@@ -16,6 +16,9 @@ type UserGetter interface {
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context,
 		preferredUserID string, inPort ports.UserGetInPort) (*entities.User, error)
+	// GetFollows returns follows of user.
+	GetFollows(ctx context.Context,
+		getParams ports.FollowsGetParams, inPort ports.UserGetInPort) ([]*entities.User, error)
 }
 
 type userGetter struct {
@@ -30,4 +33,21 @@ func (g *userGetter) GetUser(ctx context.Context,
 func (g *userGetter) GetUserByPreferredUserID(ctx context.Context,
 	preferredUserID string, inPort ports.UserGetInPort) (*entities.User, error) {
 	return inPort.GetUserByPreferredUserID(ctx, preferredUserID)
+}
+
+func (g *userGetter) GetFollows(ctx context.Context,
+	getParams ports.FollowsGetParams, inPort ports.UserGetInPort) ([]*entities.User, error) {
+	var limit uint64
+	if getParams.Limit == 0 {
+		limit = 100
+	} else {
+		limit = getParams.Limit
+	}
+
+	params := ports.FollowsGetParams{
+		UserID:           getParams.UserID,
+		UserPaginationID: getParams.UserPaginationID,
+		Limit:            limit,
+	}
+	return inPort.GetFollows(ctx, params)
 }
