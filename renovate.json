@@ -5,6 +5,10 @@
   ],
   "packageRules": [
     {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
       "paths": ["packages/frontend/**", "packages/api-mock/**"],
       "extends": [    
         "config:js-app",
