@@ -21,7 +21,7 @@ ErrorResponse:
       example: 'error message'
 
 ErrorCodes:
-  400:
+  E400:
     description: |
       bad request \
       error code:
@@ -31,12 +31,12 @@ ErrorCodes:
       application/json:
         schema:
           $ref: "#/ErrorResponse"
-  401:
+  E401:
     description: |
       unauthorized \
       error code:
       - 'UNAUTHORIZED'
-  404:
+  E404:
     description: |
       not found \
       error code:
@@ -45,7 +45,7 @@ ErrorCodes:
       application/json:
         schema:
           $ref: "#/ErrorResponse"
-  500:
+  E500:
     description: |
       internal server error \
       error code:
@@ -54,7 +54,7 @@ ErrorCodes:
       application/json:
         schema:
           $ref: "#/ErrorResponse"
-  503:
+  E503:
     description: |
       service unavailable \
       error code:

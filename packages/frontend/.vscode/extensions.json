@@ -1,15 +1,11 @@
 {
     "recommendations": [
-        "formulahendry.auto-close-tag",
         "formulahendry.auto-rename-tag",
         "usernamehw.errorlens",
         "dbaeumer.vscode-eslint",
-        "ecmel.vscode-html-css",
         "esbenp.prettier-vscode",
         "natqe.reload",
         "gruntfuggly.todo-tree",
-        "arjun.swagger-viewer",
-        "42crunch.vscode-openapi",
         "ms-playwright.playwright"
     ]
 }

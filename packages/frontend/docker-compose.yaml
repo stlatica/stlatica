@@ -1,62 +1,52 @@
 services:
-  front_dev:
+  dev:
     build:
-      context: docker
-      dockerfile: Dockerfile.node
+      context: .
+      dockerfile: docker/Dockerfile.node
       target: dev
-    working_dir: /app/packages/frontend/remix
+    working_dir: /stlatica/packages/frontend
     volumes:
       - type: bind
-        source: ./remix
-        target: /app/packages/frontend/remix
-      - type: bind
-        source: ../shared/
-        target: /app/packages/shared
-    ports:
-      # remix
-      - "127.0.0.1:5173:5173"
-      # vitest
-      - "127.0.0.1:51204:51204"
-      # ladle
-      - "127.0.0.1:61000:61000"
+        source: ../../
+        target: /stlatica
+      # - type: bind
+      #   source: /tmp/.X11-unix
+      #   target: /tmp/.X11-unix
+    # ports:
+    #   # remix
+    #   - "127.0.0.1:5173:5173"
+    #   # vitest
+    #   - "127.0.0.1:51204:51204"
+    #   # ladle
+    #   - "127.0.0.1:61000:61000"
+    #   # playwright
+    #   - 127.0.0.1:9323:9323
+    environment:
+      LANG: ja_JP.UTF-8
+      LC_CTYPE: ja_JP.UTF-8
     tty: true
 
-  # ladleのHMRが機能していないのでnet: host で対応する
-  # https://github.com/tajo/ladle/issues/557
-  front_dev_ladle:
+  vrt:
     build:
-      context: docker
-      dockerfile: Dockerfile.node
-      target: dev
-    working_dir: /app/packages/frontend/remix
-    volumes:
-      - type: bind
-        source: ./remix
-        target: /app/packages/frontend/remix
-      - type: bind
-        source: ../shared/
-        target: /app/packages/shared
-    network_mode: host
-    tty: true
-
-  playwright_vrt:
-    build:
-      context: docker
-      dockerfile: Dockerfile.node
-      target: e2e
-    working_dir: /app/packages/frontend/remix
-    volumes:
-      - type: bind
-        source: ./remix
-        target: /app/packages/frontend/remix
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: vrt
+    # working_dir: /stlatica/packages/frontend
     ports:
+      # playwright
       - 127.0.0.1:9323:9323
+    ipc: host
+    # volumes:
+    #   - type: bind
+    #     source: ./e2e/report
+    #     target: /stlatica/packages/frontend/e2e/report
+    tty: true
 
-  # prism-internal:
-  #   container_name: prism-internal
-  #   image: stoplight/prism:4
-  #   command: "mock -h 0.0.0.0 /tmp/api.oas3.yml"
-  #   volumes:
-  #     - ../shared/openapi/internalapi/openapi.yaml:/tmp/api.oas3.yml:ro
-  #   ports:
-  #     - "4010:4010"
+  # # prism-internal:
+  # #   container_name: prism-internal
+  # #   image: stoplight/prism:4
+  # #   command: "mock -h 0.0.0.0 /tmp/api.oas3.yml"
+  # #   volumes:
+  # #     - ../shared/openapi/internalapi/openapi.yaml:/tmp/api.oas3.yml:ro
+  # #   ports:
+  # #     - "4010:4010"

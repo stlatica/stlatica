@@ -116,17 +116,23 @@ var UserBaseWhere = struct {
 
 // UserBaseRels is where relationship names are stored.
 var UserBaseRels = struct {
-	Plats     string
-	Timelines string
+	Plats                     string
+	Timelines                 string
+	FollowUserUserRelations   string
+	FollowerUserUserRelations string
 }{
-	Plats:     "Plats",
-	Timelines: "Timelines",
+	Plats:                     "Plats",
+	Timelines:                 "Timelines",
+	FollowUserUserRelations:   "FollowUserUserRelations",
+	FollowerUserUserRelations: "FollowerUserUserRelations",
 }
 
 // userR is where relationships are stored.
 type userR struct {
-	Plats     PlatBaseSlice     `boil:"Plats" json:"Plats" toml:"Plats" yaml:"Plats"`
-	Timelines TimelineBaseSlice `boil:"Timelines" json:"Timelines" toml:"Timelines" yaml:"Timelines"`
+	Plats                     PlatBaseSlice         `boil:"Plats" json:"Plats" toml:"Plats" yaml:"Plats"`
+	Timelines                 TimelineBaseSlice     `boil:"Timelines" json:"Timelines" toml:"Timelines" yaml:"Timelines"`
+	FollowUserUserRelations   UserRelationBaseSlice `boil:"FollowUserUserRelations" json:"FollowUserUserRelations" toml:"FollowUserUserRelations" yaml:"FollowUserUserRelations"`
+	FollowerUserUserRelations UserRelationBaseSlice `boil:"FollowerUserUserRelations" json:"FollowerUserUserRelations" toml:"FollowerUserUserRelations" yaml:"FollowerUserUserRelations"`
 }
 
 // NewStruct creates a new relationship struct
@@ -146,6 +152,20 @@ func (r *userR) GetTimelines() TimelineBaseSlice {
 		return nil
 	}
 	return r.Timelines
+}
+
+func (r *userR) GetFollowUserUserRelations() UserRelationBaseSlice {
+	if r == nil {
+		return nil
+	}
+	return r.FollowUserUserRelations
+}
+
+func (r *userR) GetFollowerUserUserRelations() UserRelationBaseSlice {
+	if r == nil {
+		return nil
+	}
+	return r.FollowerUserUserRelations
 }
 
 // userL is where Load methods for each relationship are stored.
@@ -276,6 +296,34 @@ func (o *UserBase) Timelines(mods ...qm.QueryMod) timelineQuery {
 	)
 
 	return Timelines(queryMods...)
+}
+
+// FollowUserUserRelations retrieves all the user_relation's UserRelations with an executor via follow_user_id column.
+func (o *UserBase) FollowUserUserRelations(mods ...qm.QueryMod) userRelationQuery {
+	var queryMods []qm.QueryMod
+	if len(mods) != 0 {
+		queryMods = append(queryMods, mods...)
+	}
+
+	queryMods = append(queryMods,
+		qm.Where("`user_relations`.`follow_user_id`=?", o.UserID),
+	)
+
+	return UserRelations(queryMods...)
+}
+
+// FollowerUserUserRelations retrieves all the user_relation's UserRelations with an executor via follower_user_id column.
+func (o *UserBase) FollowerUserUserRelations(mods ...qm.QueryMod) userRelationQuery {
+	var queryMods []qm.QueryMod
+	if len(mods) != 0 {
+		queryMods = append(queryMods, mods...)
+	}
+
+	queryMods = append(queryMods,
+		qm.Where("`user_relations`.`follower_user_id`=?", o.UserID),
+	)
+
+	return UserRelations(queryMods...)
 }
 
 // LoadPlats allows an eager lookup of values, cached into the
@@ -492,6 +540,220 @@ func (userL) LoadTimelines(ctx context.Context, e boil.ContextExecutor, singular
 	return nil
 }
 
+// LoadFollowUserUserRelations allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for a 1-M or N-M relationship.
+func (userL) LoadFollowUserUserRelations(ctx context.Context, e boil.ContextExecutor, singular bool, maybeUserBase interface{}, mods queries.Applicator) error {
+	var slice []*UserBase
+	var object *UserBase
+
+	if singular {
+		var ok bool
+		object, ok = maybeUserBase.(*UserBase)
+		if !ok {
+			object = new(UserBase)
+			ok = queries.SetFromEmbeddedStruct(&object, &maybeUserBase)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", object, maybeUserBase))
+			}
+		}
+	} else {
+		s, ok := maybeUserBase.(*[]*UserBase)
+		if ok {
+			slice = *s
+		} else {
+			ok = queries.SetFromEmbeddedStruct(&slice, maybeUserBase)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", slice, maybeUserBase))
+			}
+		}
+	}
+
+	args := make([]interface{}, 0, 1)
+	if singular {
+		if object.R == nil {
+			object.R = &userR{}
+		}
+		args = append(args, object.UserID)
+	} else {
+	Outer:
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &userR{}
+			}
+
+			for _, a := range args {
+				if queries.Equal(a, obj.UserID) {
+					continue Outer
+				}
+			}
+
+			args = append(args, obj.UserID)
+		}
+	}
+
+	if len(args) == 0 {
+		return nil
+	}
+
+	query := NewQuery(
+		qm.From(`user_relations`),
+		qm.WhereIn(`user_relations.follow_user_id in ?`, args...),
+	)
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load user_relations")
+	}
+
+	var resultSlice []*UserRelationBase
+	if err = queries.Bind(results, &resultSlice); err != nil {
+		return errors.Wrap(err, "failed to bind eager loaded slice user_relations")
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results in eager load on user_relations")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for user_relations")
+	}
+
+	if singular {
+		object.R.FollowUserUserRelations = resultSlice
+		for _, foreign := range resultSlice {
+			if foreign.R == nil {
+				foreign.R = &userRelationR{}
+			}
+			foreign.R.FollowUser = object
+		}
+		return nil
+	}
+
+	for _, foreign := range resultSlice {
+		for _, local := range slice {
+			if queries.Equal(local.UserID, foreign.FollowUserID) {
+				local.R.FollowUserUserRelations = append(local.R.FollowUserUserRelations, foreign)
+				if foreign.R == nil {
+					foreign.R = &userRelationR{}
+				}
+				foreign.R.FollowUser = local
+				break
+			}
+		}
+	}
+
+	return nil
+}
+
+// LoadFollowerUserUserRelations allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for a 1-M or N-M relationship.
+func (userL) LoadFollowerUserUserRelations(ctx context.Context, e boil.ContextExecutor, singular bool, maybeUserBase interface{}, mods queries.Applicator) error {
+	var slice []*UserBase
+	var object *UserBase
+
+	if singular {
+		var ok bool
+		object, ok = maybeUserBase.(*UserBase)
+		if !ok {
+			object = new(UserBase)
+			ok = queries.SetFromEmbeddedStruct(&object, &maybeUserBase)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", object, maybeUserBase))
+			}
+		}
+	} else {
+		s, ok := maybeUserBase.(*[]*UserBase)
+		if ok {
+			slice = *s
+		} else {
+			ok = queries.SetFromEmbeddedStruct(&slice, maybeUserBase)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", slice, maybeUserBase))
+			}
+		}
+	}
+
+	args := make([]interface{}, 0, 1)
+	if singular {
+		if object.R == nil {
+			object.R = &userR{}
+		}
+		args = append(args, object.UserID)
+	} else {
+	Outer:
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &userR{}
+			}
+
+			for _, a := range args {
+				if queries.Equal(a, obj.UserID) {
+					continue Outer
+				}
+			}
+
+			args = append(args, obj.UserID)
+		}
+	}
+
+	if len(args) == 0 {
+		return nil
+	}
+
+	query := NewQuery(
+		qm.From(`user_relations`),
+		qm.WhereIn(`user_relations.follower_user_id in ?`, args...),
+	)
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load user_relations")
+	}
+
+	var resultSlice []*UserRelationBase
+	if err = queries.Bind(results, &resultSlice); err != nil {
+		return errors.Wrap(err, "failed to bind eager loaded slice user_relations")
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results in eager load on user_relations")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for user_relations")
+	}
+
+	if singular {
+		object.R.FollowerUserUserRelations = resultSlice
+		for _, foreign := range resultSlice {
+			if foreign.R == nil {
+				foreign.R = &userRelationR{}
+			}
+			foreign.R.FollowerUser = object
+		}
+		return nil
+	}
+
+	for _, foreign := range resultSlice {
+		for _, local := range slice {
+			if queries.Equal(local.UserID, foreign.FollowerUserID) {
+				local.R.FollowerUserUserRelations = append(local.R.FollowerUserUserRelations, foreign)
+				if foreign.R == nil {
+					foreign.R = &userRelationR{}
+				}
+				foreign.R.FollowerUser = local
+				break
+			}
+		}
+	}
+
+	return nil
+}
+
 // AddPlats adds the given related objects to the existing relationships
 // of the user, optionally inserting them as new records.
 // Appends related to o.R.Plats.
@@ -593,6 +855,112 @@ func (o *UserBase) AddTimelines(ctx context.Context, exec boil.ContextExecutor, 
 			}
 		} else {
 			rel.R.User = o
+		}
+	}
+	return nil
+}
+
+// AddFollowUserUserRelations adds the given related objects to the existing relationships
+// of the user, optionally inserting them as new records.
+// Appends related to o.R.FollowUserUserRelations.
+// Sets related.R.FollowUser appropriately.
+func (o *UserBase) AddFollowUserUserRelations(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*UserRelationBase) error {
+	var err error
+	for _, rel := range related {
+		if insert {
+			queries.Assign(&rel.FollowUserID, o.UserID)
+			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
+				return errors.Wrap(err, "failed to insert into foreign table")
+			}
+		} else {
+			updateQuery := fmt.Sprintf(
+				"UPDATE `user_relations` SET %s WHERE %s",
+				strmangle.SetParamNames("`", "`", 0, []string{"follow_user_id"}),
+				strmangle.WhereClause("`", "`", 0, userRelationPrimaryKeyColumns),
+			)
+			values := []interface{}{o.UserID, rel.FollowUserID, rel.FollowerUserID}
+
+			if boil.IsDebug(ctx) {
+				writer := boil.DebugWriterFrom(ctx)
+				fmt.Fprintln(writer, updateQuery)
+				fmt.Fprintln(writer, values)
+			}
+			if _, err = exec.ExecContext(ctx, updateQuery, values...); err != nil {
+				return errors.Wrap(err, "failed to update foreign table")
+			}
+
+			queries.Assign(&rel.FollowUserID, o.UserID)
+		}
+	}
+
+	if o.R == nil {
+		o.R = &userR{
+			FollowUserUserRelations: related,
+		}
+	} else {
+		o.R.FollowUserUserRelations = append(o.R.FollowUserUserRelations, related...)
+	}
+
+	for _, rel := range related {
+		if rel.R == nil {
+			rel.R = &userRelationR{
+				FollowUser: o,
+			}
+		} else {
+			rel.R.FollowUser = o
+		}
+	}
+	return nil
+}
+
+// AddFollowerUserUserRelations adds the given related objects to the existing relationships
+// of the user, optionally inserting them as new records.
+// Appends related to o.R.FollowerUserUserRelations.
+// Sets related.R.FollowerUser appropriately.
+func (o *UserBase) AddFollowerUserUserRelations(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*UserRelationBase) error {
+	var err error
+	for _, rel := range related {
+		if insert {
+			queries.Assign(&rel.FollowerUserID, o.UserID)
+			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
+				return errors.Wrap(err, "failed to insert into foreign table")
+			}
+		} else {
+			updateQuery := fmt.Sprintf(
+				"UPDATE `user_relations` SET %s WHERE %s",
+				strmangle.SetParamNames("`", "`", 0, []string{"follower_user_id"}),
+				strmangle.WhereClause("`", "`", 0, userRelationPrimaryKeyColumns),
+			)
+			values := []interface{}{o.UserID, rel.FollowUserID, rel.FollowerUserID}
+
+			if boil.IsDebug(ctx) {
+				writer := boil.DebugWriterFrom(ctx)
+				fmt.Fprintln(writer, updateQuery)
+				fmt.Fprintln(writer, values)
+			}
+			if _, err = exec.ExecContext(ctx, updateQuery, values...); err != nil {
+				return errors.Wrap(err, "failed to update foreign table")
+			}
+
+			queries.Assign(&rel.FollowerUserID, o.UserID)
+		}
+	}
+
+	if o.R == nil {
+		o.R = &userR{
+			FollowerUserUserRelations: related,
+		}
+	} else {
+		o.R.FollowerUserUserRelations = append(o.R.FollowerUserUserRelations, related...)
+	}
+
+	for _, rel := range related {
+		if rel.R == nil {
+			rel.R = &userRelationR{
+				FollowerUser: o,
+			}
+		} else {
+			rel.R.FollowerUser = o
 		}
 	}
 	return nil

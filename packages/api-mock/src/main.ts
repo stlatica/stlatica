@@ -8,13 +8,10 @@ import { fakerJA as faker } from "@faker-js/faker";
 const app = express();
 const port = 4010;
 
-const allowCrossDomain = function (req, res, next) {
+const allowCrossDomain = (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, access_token"
-  );
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, access_token");
 
   // intercept OPTIONS method
   if ("OPTIONS" === req.method) {
@@ -34,15 +31,13 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-type Plat =
-  MyTypes.paths["/internal/v1/plats/{plat_id}"]["get"]["responses"]["200"]["content"]["application/json"];
+type Plat = MyTypes.paths["/internal/v1/plats/{plat_id}"]["get"]["responses"]["200"]["content"]["application/json"];
 
 const history = new Map<string, Plat>();
 
 const GenerateTimeline = () => {
   // 型を取る
-  type Res =
-    MyTypes.paths["/internal/v1/timelines"]["get"]["responses"]["200"]["content"]["application/json"];
+  type Res = MyTypes.paths["/internal/v1/timelines"]["get"]["responses"]["200"]["content"]["application/json"];
 
   // ジェネレータ関数を作成
   const ResGen = (timeSub: number): Res[number] => {
@@ -52,18 +47,15 @@ const GenerateTimeline = () => {
       plat_id: randomUUID(),
       content: faker.lorem.sentence({ min: 1, max: 30 }),
       // ; `メッセージ ${time}`,
-      images: [],
-      created_at: faker.date
-        .between({ to: new Date(), from: D.subSeconds(new Date(), 2) })
-        .toISOString(),
+      image_urls: [],
+      created_at: faker.date.between({ to: new Date(), from: D.subSeconds(new Date(), 2) }).toISOString(),
     };
   };
 
   // 戻り値を生成
-  const r: Res = InitArray(Math.floor(Math.random() * 10)).map((_, i) =>
-    ResGen(i)
-  );
+  const r: Res = InitArray(1 + Math.floor(Math.random() * 10)).map((_, i) => ResGen(i));
 
+  // biome-ignore lint/complexity/noForEach: <explanation>
   r.forEach((x) => {
     history.set(x.plat_id, x);
   });
@@ -88,8 +80,7 @@ app.get("/internal/v1/timelines/*", (req, res) => {
 // URLを指定
 app.get("/internal/v1/plats/:plat_id", (req, res) => {
   // 型を取る
-  type Res =
-    MyTypes.paths["/internal/v1/plats/{plat_id}"]["get"]["responses"]["200"]["content"]["application/json"];
+  type Res = MyTypes.paths["/internal/v1/plats/{plat_id}"]["get"]["responses"]["200"]["content"]["application/json"];
 
   // 返却
   res.send(history.get(req.params.plat_id));

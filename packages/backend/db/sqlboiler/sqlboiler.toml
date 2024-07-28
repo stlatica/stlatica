@@ -16,7 +16,7 @@ port=4000
 user="root"
 pass=""
 sslmode="false"
-whitelist=["users","plats","timelines"]
+whitelist=["users","plats","timelines","user_relations"]
 
 [aliases.tables.users]
 up_singular     = "UserBase"
@@ -26,6 +26,9 @@ up_singular     = "PlatBase"
 
 [aliases.tables.timelines]
 up_singular    = "TimelineBase"
+
+[aliases.tables.user_relations]
+up_singular    = "UserRelationBase"
 
 [[types]]
 [types.match]
@@ -60,6 +63,26 @@ third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"'
 [[types]]
 [types.match]
 name="user_id"
+db_type="char"
+nullable=false
+[types.replace]
+type="types.UserID"
+[types.imports]
+third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
+
+[[types]]
+[types.match]
+name="follow_user_id"
+db_type="char"
+nullable=false
+[types.replace]
+type="types.UserID"
+[types.imports]
+third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
+
+[[types]]
+[types.match]
+name="follower_user_id"
 db_type="char"
 nullable=false
 [types.replace]

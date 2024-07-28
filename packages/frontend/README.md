@@ -1,14 +1,23 @@
 # Stlatica Frontend
 
-## env
+## setup
+
+### devcontainer
+
+1. open this directory from devcontainer.
+
+all done!
+
+### local
+
+#### env
 
 must install:
 
 - make
-- docker
 - git lfs
 
-## command reference
+#### command reference
 
 ```
 make

@@ -174,17 +174,17 @@ type UserId = string
 // UserPaginationId defines model for user_pagination_id.
 type UserPaginationId = string
 
-// N400 defines model for 400.
-type N400 = ErrorResponse
+// E400 defines model for E400.
+type E400 = ErrorResponse
 
-// N404 defines model for 404.
-type N404 = ErrorResponse
+// E404 defines model for E404.
+type E404 = ErrorResponse
 
-// N500 defines model for 500.
-type N500 = ErrorResponse
+// E500 defines model for E500.
+type E500 = ErrorResponse
 
-// N503 defines model for 503.
-type N503 = ErrorResponse
+// E503 defines model for E503.
+type E503 = ErrorResponse
 
 // UploadImageTextBody defines parameters for UploadImage.
 type UploadImageTextBody = string
@@ -228,8 +228,8 @@ type GetFollowersParams struct {
 	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
-// GetFollowUsersParams defines parameters for GetFollowUsers.
-type GetFollowUsersParams struct {
+// GetFollowsParams defines parameters for GetFollows.
+type GetFollowsParams struct {
 	// UserPaginationId userを識別するための一意のID。未指定の場合、先頭から取得
 	UserPaginationId *UserPaginationId `form:"user_pagination_id,omitempty" json:"user_pagination_id,omitempty"`
 

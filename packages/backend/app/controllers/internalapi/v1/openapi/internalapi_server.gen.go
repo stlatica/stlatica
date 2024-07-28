@@ -69,7 +69,7 @@ type ServerInterface interface {
 	GetFollowers(ctx echo.Context, userId UserId, params GetFollowersParams) error
 	// Get follow user list.
 	// (GET /internal/v1/users/{user_id}/follows)
-	GetFollowUsers(ctx echo.Context, userId UserId, params GetFollowUsersParams) error
+	GetFollows(ctx echo.Context, userId UserId, params GetFollowsParams) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -421,8 +421,8 @@ func (w *ServerInterfaceWrapper) GetFollowers(ctx echo.Context) error {
 	return err
 }
 
-// GetFollowUsers converts echo context to params.
-func (w *ServerInterfaceWrapper) GetFollowUsers(ctx echo.Context) error {
+// GetFollows converts echo context to params.
+func (w *ServerInterfaceWrapper) GetFollows(ctx echo.Context) error {
 	var err error
 	// ------------- Path parameter "user_id" -------------
 	var userId UserId
@@ -435,7 +435,7 @@ func (w *ServerInterfaceWrapper) GetFollowUsers(ctx echo.Context) error {
 	ctx.Set(BearerScopes, []string{})
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params GetFollowUsersParams
+	var params GetFollowsParams
 	// ------------- Optional query parameter "user_pagination_id" -------------
 
 	err = runtime.BindQueryParameter("form", true, false, "user_pagination_id", ctx.QueryParams(), &params.UserPaginationId)
@@ -451,7 +451,7 @@ func (w *ServerInterfaceWrapper) GetFollowUsers(ctx echo.Context) error {
 	}
 
 	// Invoke the callback with all the unmarshaled arguments
-	err = w.Handler.GetFollowUsers(ctx, userId, params)
+	err = w.Handler.GetFollows(ctx, userId, params)
 	return err
 }
 
@@ -501,6 +501,6 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	router.DELETE(baseURL+"/internal/v1/users/:user_id/follow", wrapper.DeleteFollow)
 	router.POST(baseURL+"/internal/v1/users/:user_id/follow", wrapper.PostFollow)
 	router.GET(baseURL+"/internal/v1/users/:user_id/followers", wrapper.GetFollowers)
-	router.GET(baseURL+"/internal/v1/users/:user_id/follows", wrapper.GetFollowUsers)
+	router.GET(baseURL+"/internal/v1/users/:user_id/follows", wrapper.GetFollows)
 
 }
