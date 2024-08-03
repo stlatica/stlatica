@@ -21,8 +21,18 @@ type GetUserResponse struct {
 	UpdatedAt    string `json:"updated_at"`
 }
 
+// GetFollowResponse is the response of GetFollow.
 type GetFollowResponse struct {
-	UserId   string `json:"user_id"`
+	UserID   string `json:"user_id"`
+	Username string `json:"username"`
+	Summary  string `json:"summary"`
+	Icon     string `json:"icon"`
+	IsPublic bool   `json:"is_public"`
+}
+
+// GetFollowerResponse is the response of GetFollower.
+type GetFollowerResponse struct {
+	UserID   string `json:"user_id"`
 	Username string `json:"username"`
 	Summary  string `json:"summary"`
 	Icon     string `json:"icon"`
@@ -73,7 +83,7 @@ func (c *userController) GetFollows(ectx echo.Context,
 	followResponses := make([]*GetFollowResponse, 0, len(follows))
 	for _, follow := range follows {
 		followResponses = append(followResponses, &GetFollowResponse{
-			UserId:   follow.GetPreferredUserID(),
+			UserID:   follow.GetPreferredUserID(),
 			Username: follow.GetPreferredUserName(),
 			Summary:  "", // TODO: Return actual value https://github.com/stlatica/stlatica/issues/524
 			Icon:     "", // TODO: Return actual value https://github.com/stlatica/stlatica/issues/524
@@ -81,4 +91,40 @@ func (c *userController) GetFollows(ectx echo.Context,
 		})
 	}
 	return followResponses, nil
+}
+
+func (c *userController) GetFollowers(ectx echo.Context,
+	userIDStr string, userPaginationID *string, limit *int) ([]*GetFollowerResponse, error) {
+	var limitValue uint64
+	var userPaginationIDStr string
+	if userPaginationID == nil {
+		userPaginationIDStr = ""
+	} else {
+		userPaginationIDStr = *userPaginationID
+	}
+	if limit != nil {
+		limitValue = uint64(*limit)
+	}
+
+	getParams := ports.FollowersGetParams{
+		PreferredUserID:           userIDStr,
+		PreferredUserPaginationID: userPaginationIDStr,
+		Limit:                     limitValue,
+	}
+	followers, err := c.userUseCase.GetFollowers(ectx.Request().Context(), getParams)
+	if err != nil {
+		return nil, err
+	}
+
+	followerResponse := make([]*GetFollowerResponse, 0, len(followers))
+	for _, follower := range followers {
+		followerResponse = append(followerResponse, &GetFollowerResponse{
+			UserID:   follower.GetPreferredUserID(),
+			Username: follower.GetPreferredUserName(),
+			Summary:  "", // TODO: Return actual value https://github.com/stlatica/stlatica/issues/526
+			Icon:     "", // TODO: Return actual value https://github.com/stlatica/stlatica/issues/526
+			IsPublic: follower.GetIsPublic(),
+		})
+	}
+	return followerResponse, nil
 }

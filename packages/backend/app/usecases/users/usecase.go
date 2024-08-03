@@ -20,6 +20,8 @@ type UserUseCase interface {
 	GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error)
 	// GetFollows returns follows of user.
 	GetFollows(ctx context.Context, params ports.FollowsGetParams) ([]*entities.User, error)
+	// GetFollowers returns followers of user.
+	GetFollowers(ctx context.Context, params ports.FollowersGetParams) ([]*entities.User, error)
 }
 
 // NewUserUseCase returns UserUseCase.
@@ -80,6 +82,32 @@ func (u *userUseCase) GetFollows(ctx context.Context, params ports.FollowsGetPar
 	return getter.GetFollows(ctx, domainParams, portImpl)
 }
 
+func (u *userUseCase) GetFollowers(ctx context.Context, params ports.FollowersGetParams) ([]*entities.User, error) {
+	getter := u.domainFactory.NewUserGetter()
+	portImpl := &userPortImpl{
+		userDAO: u.userDAO,
+	}
+	user, err := getter.GetUserByPreferredUserID(ctx, params.PreferredUserPaginationID, portImpl)
+	if err != nil {
+		return nil, err
+	}
+	var paginationUsers *entities.User
+	if params.PreferredUserPaginationID != "" {
+		paginationUsers, err = getter.GetUserByPreferredUserID(ctx, params.PreferredUserPaginationID, portImpl)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		paginationUsers = &entities.User{}
+	}
+	domainParams := domainports.FollowersGetParams{
+		UserID:           user.GetUserID(),
+		UserPaginationID: paginationUsers.GetUserID(),
+		Limit:            params.Limit,
+	}
+	return getter.GetFollowers(ctx, domainParams, portImpl)
+}
+
 type userPortImpl struct {
 	userDAO dao.UserDAO
 }
@@ -92,6 +120,12 @@ func (p *userPortImpl) GetUserByPreferredUserID(ctx context.Context, preferredUs
 	return p.userDAO.GetUserByPreferredUserID(ctx, preferredUserID)
 }
 
-func (p *userPortImpl) GetFollows(ctx context.Context, getParams domainports.FollowsGetParams) ([]*entities.User, error) {
+func (p *userPortImpl) GetFollows(ctx context.Context,
+	getParams domainports.FollowsGetParams) ([]*entities.User, error) {
 	return p.userDAO.GetFollows(ctx, getParams)
+}
+
+func (p *userPortImpl) GetFollowers(ctx context.Context,
+	getParams domainports.FollowersGetParams) ([]*entities.User, error) {
+	return p.userDAO.GetFollowers(ctx, getParams)
 }

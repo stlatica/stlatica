@@ -20,6 +20,8 @@ type UserDAO interface {
 	GetUserByPreferredUserID(ctx context.Context, preferredUserName string) (*domainentities.User, error)
 	// GetFollows returns follows of user.
 	GetFollows(ctx context.Context, params domainports.FollowsGetParams) ([]*domainentities.User, error)
+	// GetFollowers returns followers of user.
+	GetFollowers(ctx context.Context, params domainports.FollowersGetParams) ([]*domainentities.User, error)
 }
 
 // NewUserDAO returns UserDAO.
@@ -54,7 +56,8 @@ func (dao *userDAO) GetUserByPreferredUserID(ctx context.Context,
 	return convertUserEntityToDomainEntity(entity), nil
 }
 
-func (dao *userDAO) GetFollows(ctx context.Context, params domainports.FollowsGetParams) ([]*domainentities.User, error) {
+func (dao *userDAO) GetFollows(ctx context.Context,
+	params domainports.FollowsGetParams) ([]*domainentities.User, error) {
 	var userRelations entities.UserRelationBaseSlice
 	var err error
 	if !reflect.ValueOf(params.UserPaginationID).IsZero() {
@@ -93,6 +96,47 @@ func (dao *userDAO) GetFollows(ctx context.Context, params domainports.FollowsGe
 	}
 
 	return follows, nil
+}
+
+func (dao *userDAO) GetFollowers(ctx context.Context,
+	params domainports.FollowersGetParams) ([]*domainentities.User, error) {
+	var userRelations entities.UserRelationBaseSlice
+	var err error
+	if reflect.ValueOf(params.UserPaginationID).IsZero() {
+		userRelations, err = entities.UserRelations(
+			entities.UserRelationBaseWhere.FollowerUserID.EQ(params.UserID),
+			qm.Limit(int(params.Limit)),
+			qm.OrderBy("follower_user_id DESC"),
+		).All(ctx, dao.ctxExecutor)
+	} else {
+		userRelations, err = entities.UserRelations(
+			entities.UserRelationBaseWhere.FollowerUserID.EQ(params.UserID),
+			entities.UserRelationBaseWhere.FollowUserID.GT(params.UserPaginationID),
+			qm.Limit(int(params.Limit)),
+			qm.OrderBy("follower_user_id DESC"),
+		).All(ctx, dao.ctxExecutor)
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	followerUserIDs := make([]interface{}, 0, len(userRelations))
+	for _, relation := range userRelations {
+		followerUserIDs = append(followerUserIDs, relation.FollowUserID)
+	}
+	userQuery := entities.Users(
+		qm.WhereIn("user_id IN ?", followerUserIDs...),
+	)
+	users, err := userQuery.All(ctx, dao.ctxExecutor)
+	if err != nil {
+		return nil, err
+	}
+
+	followers := make([]*domainentities.User, 0, len(users))
+	for _, user := range users {
+		followers = append(followers, convertUserEntityToDomainEntity(user))
+	}
+	return followers, nil
 }
 
 func convertUserEntityToDomainEntity(entity *entities.UserBase) *domainentities.User {

@@ -148,8 +148,12 @@ func (h *handler) DeleteFollow(_ echo.Context, _ openapi.UserId) error {
 	panic("implement me")
 }
 
-func (h *handler) GetFollowers(_ echo.Context, _ openapi.UserId, _ openapi.GetFollowersParams) error {
-	panic("implement me")
+func (h *handler) GetFollowers(ctx echo.Context, userID openapi.UserId, params openapi.GetFollowersParams) error {
+	response, err := h.userController.GetFollowers(ctx, userID, params.UserPaginationId, params.Limit)
+	if err != nil {
+		return err
+	}
+	return ctx.JSON(http.StatusOK, response)
 }
 
 func (h *handler) Login(_ echo.Context) error {
