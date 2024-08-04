@@ -9,6 +9,8 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
 )
 
+const defaultUserLimit = 100
+
 // UserGetter is the interface for getting user.
 type UserGetter interface {
 	// GetUser returns user.
@@ -39,7 +41,7 @@ func (g *userGetter) GetFollows(ctx context.Context,
 	getParams ports.FollowsGetParams, inPort ports.UserGetInPort) ([]*entities.User, error) {
 	var limit uint64
 	if getParams.Limit == 0 {
-		limit = 100
+		limit = defaultUserLimit
 	} else {
 		limit = getParams.Limit
 	}
