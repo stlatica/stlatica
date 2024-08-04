@@ -58,8 +58,8 @@ type AccessToken[T SignType] struct {
 	token []byte
 }
 
-// NewUserCredentials 認証情報を格納
-func NewUserCredentials[T SignType](id string, pw string, alg jwa.SignatureAlgorithm, key *T) PWAuth[T] {
+// NewPWAuth 認証情報を格納
+func NewPWAuth[T SignType](id string, pw string, alg jwa.SignatureAlgorithm, key *T) PWAuth[T] {
 	return &UserCredential[T]{
 		actorID:   id,
 		pw:        pw,
