@@ -49,7 +49,6 @@ type accessTokenEvidence[T SignType] struct {
 	id        string
 	createdBy int64
 	sessionID string
-	podName   string
 	alg       jwa.SignatureAlgorithm
 }
 
@@ -88,7 +87,7 @@ func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client,
 	}
 	u.setCurrentTime()
 
-	ate := u.toTokenEvidence(podName)
+	ate := u.toTokenEvidence()
 	accessToken, err := ate.makeJWS(u.alg, u.key)
 	if err != nil {
 		return AccessToken[T]{[]byte("")}, err
@@ -123,9 +122,9 @@ func (u *UserCredential[T]) setCurrentTime() {
 }
 
 // toTokenEvidence accessTokenEvidenceの生成
-func (u *UserCredential[T]) toTokenEvidence(podName string) accessTokenEvidence[T] {
+func (u *UserCredential[T]) toTokenEvidence() accessTokenEvidence[T] {
 	return accessTokenEvidence[T]{id: u.actorID, createdBy: u.createdBy,
-		sessionID: uuid.New().String(), podName: podName, alg: u.alg}
+		sessionID: uuid.New().String(), alg: u.alg}
 }
 
 // serialize トークン生成に必要な情報をシリアライズ
@@ -135,13 +134,11 @@ func (a *accessTokenEvidence[T]) serialize() ([]byte, error) {
 			ID        string `json:"actorID,omitempty"`
 			CreatedBy int64  `json:"created_by,omitempty"`
 			SessionID string `json:"session_id,omitempty"`
-			PodName   string `json:"pod_name,omitempty"`
 			Alg       string `json:"alg,omitempty"`
 		}{
 			ID:        a.id,
 			CreatedBy: a.createdBy,
 			SessionID: a.sessionID,
-			PodName:   a.podName,
 			Alg:       a.alg.String(),
 		})
 	return jsonData, err
@@ -153,7 +150,6 @@ func (a *accessTokenEvidence[T]) DeserializeAccessToken(token []byte) error {
 		ID        string `json:"actorID,omitempty"`
 		CreatedBy int64  `json:"created_by,omitempty"`
 		SessionID string `json:"session_id,omitempty"`
-		PodName   string `json:"pod_name,omitempty"`
 		Alg       string `json:"alg,omitempty"`
 	}{}
 	err := json.Unmarshal(token, &tmp)
@@ -163,7 +159,6 @@ func (a *accessTokenEvidence[T]) DeserializeAccessToken(token []byte) error {
 	a.id = tmp.ID
 	a.createdBy = tmp.CreatedBy
 	a.sessionID = tmp.SessionID
-	a.podName = tmp.PodName
 	switch tmp.Alg {
 	case "EdDSA":
 		a.alg = jwa.EdDSA
@@ -207,7 +202,7 @@ func (a *AccessToken[T]) QuickVerify(ctx context.Context, client kvs.Client,
 	}
 
 	// デシリアライズ
-	ate := accessTokenEvidence[T]{id: "", createdBy: unseenEpoch, sessionID: "", podName: ""}
+	ate := accessTokenEvidence[T]{id: "", createdBy: unseenEpoch, sessionID: ""}
 	err = ate.DeserializeAccessToken(jwt)
 	if err != nil {
 		return false, err
@@ -234,7 +229,7 @@ func (a *AccessToken[T]) Verify(ctx context.Context, client kvs.Client,
 	}
 
 	// デシリアライズ
-	ate := accessTokenEvidence[T]{id: "", createdBy: unseenEpoch, sessionID: "", podName: ""}
+	ate := accessTokenEvidence[T]{id: "", createdBy: unseenEpoch, sessionID: ""}
 	err = ate.DeserializeAccessToken(jwt)
 	if err != nil {
 		return false, err
