@@ -34,6 +34,8 @@ type UserBase struct { // ulid
 	IsPublic bool `boil:"is_public" json:"is_public" toml:"is_public" yaml:"is_public"`
 	// mail address
 	MailAddress string `boil:"mail_address" json:"mail_address" toml:"mail_address" yaml:"mail_address"`
+	// icon image id
+	IconImageID types.ImageID `boil:"icon_image_id" json:"icon_image_id" toml:"icon_image_id" yaml:"icon_image_id"`
 	// Unix time
 	CreatedAt types.UnixTime `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
 	// Unix time
@@ -50,6 +52,7 @@ var UserBaseColumns = struct {
 	RegisteredAt      string
 	IsPublic          string
 	MailAddress       string
+	IconImageID       string
 	CreatedAt         string
 	UpdatedAt         string
 }{
@@ -59,6 +62,7 @@ var UserBaseColumns = struct {
 	RegisteredAt:      "registered_at",
 	IsPublic:          "is_public",
 	MailAddress:       "mail_address",
+	IconImageID:       "icon_image_id",
 	CreatedAt:         "created_at",
 	UpdatedAt:         "updated_at",
 }
@@ -70,6 +74,7 @@ var UserBaseTableColumns = struct {
 	RegisteredAt      string
 	IsPublic          string
 	MailAddress       string
+	IconImageID       string
 	CreatedAt         string
 	UpdatedAt         string
 }{
@@ -79,6 +84,7 @@ var UserBaseTableColumns = struct {
 	RegisteredAt:      "users.registered_at",
 	IsPublic:          "users.is_public",
 	MailAddress:       "users.mail_address",
+	IconImageID:       "users.icon_image_id",
 	CreatedAt:         "users.created_at",
 	UpdatedAt:         "users.updated_at",
 }
@@ -94,6 +100,27 @@ func (w whereHelperbool) LTE(x bool) qm.QueryMod { return qmhelper.Where(w.field
 func (w whereHelperbool) GT(x bool) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
 func (w whereHelperbool) GTE(x bool) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
 
+type whereHelpertypes_ImageID struct{ field string }
+
+func (w whereHelpertypes_ImageID) EQ(x types.ImageID) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.EQ, x)
+}
+func (w whereHelpertypes_ImageID) NEQ(x types.ImageID) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.NEQ, x)
+}
+func (w whereHelpertypes_ImageID) LT(x types.ImageID) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.LT, x)
+}
+func (w whereHelpertypes_ImageID) LTE(x types.ImageID) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.LTE, x)
+}
+func (w whereHelpertypes_ImageID) GT(x types.ImageID) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.GT, x)
+}
+func (w whereHelpertypes_ImageID) GTE(x types.ImageID) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.GTE, x)
+}
+
 var UserBaseWhere = struct {
 	UserID            whereHelpertypes_UserID
 	PreferredUserID   whereHelperstring
@@ -101,6 +128,7 @@ var UserBaseWhere = struct {
 	RegisteredAt      whereHelpertypes_UnixTime
 	IsPublic          whereHelperbool
 	MailAddress       whereHelperstring
+	IconImageID       whereHelpertypes_ImageID
 	CreatedAt         whereHelpertypes_UnixTime
 	UpdatedAt         whereHelpertypes_UnixTime
 }{
@@ -110,6 +138,7 @@ var UserBaseWhere = struct {
 	RegisteredAt:      whereHelpertypes_UnixTime{field: "`users`.`registered_at`"},
 	IsPublic:          whereHelperbool{field: "`users`.`is_public`"},
 	MailAddress:       whereHelperstring{field: "`users`.`mail_address`"},
+	IconImageID:       whereHelpertypes_ImageID{field: "`users`.`icon_image_id`"},
 	CreatedAt:         whereHelpertypes_UnixTime{field: "`users`.`created_at`"},
 	UpdatedAt:         whereHelpertypes_UnixTime{field: "`users`.`updated_at`"},
 }
@@ -172,8 +201,8 @@ func (r *userR) GetFollowerUserUserRelations() UserRelationBaseSlice {
 type userL struct{}
 
 var (
-	userAllColumns            = []string{"user_id", "preferred_user_id", "preferred_user_name", "registered_at", "is_public", "mail_address", "created_at", "updated_at"}
-	userColumnsWithoutDefault = []string{"user_id", "preferred_user_id", "preferred_user_name", "registered_at", "is_public", "mail_address", "created_at", "updated_at"}
+	userAllColumns            = []string{"user_id", "preferred_user_id", "preferred_user_name", "registered_at", "is_public", "mail_address", "icon_image_id", "created_at", "updated_at"}
+	userColumnsWithoutDefault = []string{"user_id", "preferred_user_id", "preferred_user_name", "registered_at", "is_public", "mail_address", "icon_image_id", "created_at", "updated_at"}
 	userColumnsWithDefault    = []string{}
 	userPrimaryKeyColumns     = []string{"user_id"}
 	userGeneratedColumns      = []string{}
