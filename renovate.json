@@ -1,7 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    "config:js-app",
+    "group:allNonMajor"
   ],
   "packageRules": [
     {
@@ -10,10 +12,6 @@
     },
     {
       "paths": ["packages/frontend/**", "packages/api-mock/**"],
-      "extends": [    
-        "config:js-app",
-        "group:allNonMajor"
-      ],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     },
