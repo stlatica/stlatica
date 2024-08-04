@@ -9,83 +9,83 @@ importers:
   .:
     dependencies:
       '@hookform/resolvers':
-        specifier: ^3.9.0
+        specifier: 3.9.0
         version: 3.9.0(react-hook-form@7.52.1(react@18.3.1))
       '@mantine/core':
-        specifier: ^7.11.2
+        specifier: 7.11.2
         version: 7.11.2(@mantine/hooks@7.11.2(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mantine/hooks':
-        specifier: ^7.11.2
+        specifier: 7.11.2
         version: 7.11.2(react@18.3.1)
       '@mantine/vanilla-extract':
-        specifier: ^7.11.2
+        specifier: 7.11.2
         version: 7.11.2(@mantine/core@7.11.2(@mantine/hooks@7.11.2(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@remix-run/node':
-        specifier: ^2.10.3
+        specifier: 2.10.3
         version: 2.10.3(typescript@5.5.4)
       '@remix-run/react':
-        specifier: ^2.10.3
+        specifier: 2.10.3
         version: 2.10.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4)
       '@remix-run/serve':
-        specifier: ^2.10.3
+        specifier: 2.10.3
         version: 2.10.3(typescript@5.5.4)
       '@tanstack/react-virtual':
-        specifier: ^3.8.3
+        specifier: 3.8.3
         version: 3.8.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@vanilla-extract/css':
-        specifier: ^1.15.3
+        specifier: 1.15.3
         version: 1.15.3
       autoprefixer:
-        specifier: ^10.4.19
+        specifier: 10.4.19
         version: 10.4.19(postcss@8.4.39)
       axios:
-        specifier: ^1.7.2
+        specifier: 1.7.2
         version: 1.7.2
       isbot:
-        specifier: ^4.4.0
+        specifier: 4.4.0
         version: 4.4.0
       react:
-        specifier: ^18.3.1
+        specifier: 18.3.1
         version: 18.3.1
       react-cropper:
-        specifier: ^2.3.3
+        specifier: 2.3.3
         version: 2.3.3(react@18.3.1)
       react-dom:
-        specifier: ^18.3.1
+        specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
       react-hook-form:
-        specifier: ^7.52.1
+        specifier: 7.52.1
         version: 7.52.1(react@18.3.1)
       react-icons:
-        specifier: ^5.2.1
+        specifier: 5.2.1
         version: 5.2.1(react@18.3.1)
       swr:
-        specifier: ^2.2.5
+        specifier: 2.2.5
         version: 2.2.5(react@18.3.1)
       tailwindcss:
-        specifier: ^3.4.6
+        specifier: 3.4.6
         version: 3.4.6
       zod:
-        specifier: ^3.23.8
+        specifier: 3.23.8
         version: 3.23.8
     devDependencies:
       '@ladle/react':
-        specifier: ^4.1.0
+        specifier: 4.1.0
         version: 4.1.0(@types/node@20.14.12)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sugarss@4.0.1(postcss@8.4.39))(typescript@5.5.4)
       '@playwright/test':
         specifier: 1.44.1
         version: 1.44.1
       '@remix-run/dev':
-        specifier: ^2.10.3
+        specifier: 2.10.3
         version: 2.10.3(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4))(@remix-run/serve@2.10.3(typescript@5.5.4))(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.39))(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.39)))
       '@stylistic/eslint-plugin':
-        specifier: ^1.8.1
+        specifier: 1.8.1
         version: 1.8.1(eslint@8.57.0)(typescript@5.5.4)
       '@testing-library/react':
-        specifier: ^14.3.1
+        specifier: 14.3.1
         version: 14.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/node':
-        specifier: ^20.14.11
+        specifier: 20.14.12
         version: 20.14.12
       '@types/react':
         specifier: ^18.3.3
@@ -94,97 +94,97 @@ importers:
         specifier: ^18.3.0
         version: 18.3.0
       '@types/sync-fetch':
-        specifier: ^0.4.3
+        specifier: 0.4.3
         version: 0.4.3
       '@typescript-eslint/eslint-plugin':
-        specifier: ^7.16.1
+        specifier: 7.16.1
         version: 7.16.1(@typescript-eslint/parser@7.16.1(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)
       '@typescript-eslint/parser':
-        specifier: ^7.16.1
+        specifier: 7.16.1
         version: 7.16.1(eslint@8.57.0)(typescript@5.5.4)
       '@vanilla-extract/vite-plugin':
-        specifier: ^3.9.5
+        specifier: 3.9.5
         version: 3.9.5(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.39))(vite@5.3.5(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.39)))
       '@vitejs/plugin-react':
-        specifier: ^4.3.1
+        specifier: 4.3.1
         version: 4.3.1(vite@5.3.5(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.39)))
       '@vitest/coverage-v8':
-        specifier: ^1.6.0
+        specifier: 1.6.0
         version: 1.6.0(vitest@1.6.0(@types/node@20.14.12)(@vitest/ui@1.6.0)(jsdom@24.1.1)(sugarss@4.0.1(postcss@8.4.39)))
       '@vitest/ui':
-        specifier: ^1.6.0
+        specifier: 1.6.0
         version: 1.6.0(vitest@1.6.0)
       eslint:
-        specifier: ^8.57.0
+        specifier: 8.57.0
         version: 8.57.0
       eslint-config-prettier:
-        specifier: ^9.1.0
+        specifier: 9.1.0
         version: 9.1.0(eslint@8.57.0)
       eslint-import-resolver-typescript:
-        specifier: ^3.6.1
+        specifier: 3.6.1
         version: 3.6.1(@typescript-eslint/parser@7.16.1(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.29.1)(eslint@8.57.0)
       eslint-plugin-html:
-        specifier: ^8.1.1
+        specifier: 8.1.1
         version: 8.1.1
       eslint-plugin-import:
-        specifier: ^2.29.1
+        specifier: 2.29.1
         version: 2.29.1(@typescript-eslint/parser@7.16.1(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-jsdoc:
-        specifier: ^48.8.3
+        specifier: 48.8.3
         version: 48.8.3(eslint@8.57.0)
       eslint-plugin-jsx-a11y:
-        specifier: ^6.9.0
+        specifier: 6.9.0
         version: 6.9.0(eslint@8.57.0)
       eslint-plugin-promise:
-        specifier: ^6.5.1
+        specifier: 6.6.0
         version: 6.6.0(eslint@8.57.0)
       eslint-plugin-react:
-        specifier: ^7.35.0
+        specifier: 7.35.0
         version: 7.35.0(eslint@8.57.0)
       eslint-plugin-react-hooks:
-        specifier: ^4.6.2
+        specifier: 4.6.2
         version: 4.6.2(eslint@8.57.0)
       eslint-plugin-tailwindcss:
-        specifier: ^3.17.4
+        specifier: 3.17.4
         version: 3.17.4(tailwindcss@3.4.6)
       eslint-plugin-unused-imports:
-        specifier: ^3.2.0
+        specifier: 3.2.0
         version: 3.2.0(@typescript-eslint/eslint-plugin@7.16.1(@typescript-eslint/parser@7.16.1(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)
       jsdom:
-        specifier: ^24.1.1
+        specifier: 24.1.1
         version: 24.1.1
       orval:
-        specifier: ^6.31.0
+        specifier: 6.31.0
         version: 6.31.0(openapi-types@12.1.3)(typescript@5.5.4)
       plop:
-        specifier: ^4.0.1
+        specifier: 4.0.1
         version: 4.0.1
       postcss:
-        specifier: ^8.4.39
+        specifier: 8.4.39
         version: 8.4.39
       postcss-preset-mantine:
-        specifier: ^1.16.0
+        specifier: 1.17.0
         version: 1.17.0(postcss@8.4.39)
       postcss-simple-vars:
-        specifier: ^7.0.1
+        specifier: 7.0.1
         version: 7.0.1(postcss@8.4.39)
       prettier:
-        specifier: ^3.3.3
+        specifier: 3.3.3
         version: 3.3.3
       sync-fetch:
-        specifier: ^0.5.2
+        specifier: 0.5.2
         version: 0.5.2
       typescript:
-        specifier: ^5.5.3
+        specifier: 5.5.4
         version: 5.5.4
       vite:
-        specifier: ^5.3.4
+        specifier: 5.3.5
         version: 5.3.5(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.39))
       vite-tsconfig-paths:
-        specifier: ^4.3.2
+        specifier: 4.3.2
         version: 4.3.2(typescript@5.5.4)(vite@5.3.5(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.39)))
       vitest:
-        specifier: ^1.6.0
+        specifier: 1.6.0
         version: 1.6.0(@types/node@20.14.12)(@vitest/ui@1.6.0)(jsdom@24.1.1)(sugarss@4.0.1(postcss@8.4.39))
 
 packages:
@@ -7261,7 +7261,7 @@ snapshots:
     dependencies:
       '@stoplight/json': 3.21.3
       '@stoplight/path': 1.3.2
-      '@stoplight/types': 13.6.0
+      '@stoplight/types': 13.20.0
       '@types/urijs': 1.19.25
       dependency-graph: 0.11.0
       fast-memoize: 2.5.2
@@ -7821,7 +7821,7 @@ snapshots:
       '@babel/plugin-syntax-typescript': 7.24.7(@babel/core@7.24.9)
       '@vanilla-extract/babel-plugin-debug-ids': 1.0.6
       '@vanilla-extract/css': 1.15.3
-      esbuild: 0.17.6
+      esbuild: 0.19.12
       eval: 0.1.8
       find-up: 5.0.0
       javascript-stringify: 2.1.0

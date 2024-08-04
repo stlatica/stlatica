@@ -9,35 +9,35 @@ importers:
   .:
     dependencies:
       '@faker-js/faker':
-        specifier: ^8.4.1
+        specifier: 8.4.1
         version: 8.4.1
       date-fns:
-        specifier: ^3.6.0
+        specifier: 3.6.0
         version: 3.6.0
       express:
-        specifier: ^4.19.2
+        specifier: 4.19.2
         version: 4.19.2
     devDependencies:
       '@biomejs/biome':
-        specifier: ^1.8.3
+        specifier: 1.8.3
         version: 1.8.3
       '@types/express':
-        specifier: ^4.17.21
+        specifier: 4.17.21
         version: 4.17.21
       '@types/node':
-        specifier: ^20.14.11
+        specifier: 20.14.12
         version: 20.14.12
       esbuild:
-        specifier: ^0.23.0
+        specifier: 0.23.0
         version: 0.23.0
       nodemon:
-        specifier: ^3.1.4
+        specifier: 3.1.4
         version: 3.1.4
       openapi-typescript:
-        specifier: ^6.7.6
+        specifier: 6.7.6
         version: 6.7.6
       typescript:
-        specifier: ^5.5.3
+        specifier: 5.5.4
         version: 5.5.4
 
 packages:
