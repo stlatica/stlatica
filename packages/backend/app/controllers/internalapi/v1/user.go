@@ -1,7 +1,10 @@
 package v1
 
 import (
+	"io"
+
 	"github.com/labstack/echo/v4"
+	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users/ports"
 )
@@ -82,4 +85,12 @@ func (c *userController) GetFollows(ectx echo.Context,
 		})
 	}
 	return followResponses, nil
+}
+
+func (c *userController) GetUserIcon(ectx echo.Context, userIDStr string) (io.ReadCloser, error) {
+	userID, err := types.NewUserIDFromString(userIDStr)
+	if err != nil {
+		return nil, err
+	}
+	return c.userUseCase.GetUserIcon(ectx.Request().Context(), userID)
 }

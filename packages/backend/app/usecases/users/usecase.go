@@ -2,6 +2,7 @@ package users
 
 import (
 	"context"
+	"io"
 
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
@@ -20,13 +21,17 @@ type UserUseCase interface {
 	GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error)
 	// GetFollows returns follows of user.
 	GetFollows(ctx context.Context, params ports.FollowsGetParams) ([]*entities.User, error)
+	// GetUserIcon returns user icon.
+	GetUserIcon(ctx context.Context, userID types.UserID) (io.ReadCloser, error)
 }
 
 // NewUserUseCase returns UserUseCase.
-func NewUserUseCase(appLogger *logger.AppLogger, domainFactory users.Factory, userDAO dao.UserDAO) UserUseCase {
+func NewUserUseCase(appLogger *logger.AppLogger,
+	domainFactory users.Factory, userDAO dao.UserDAO, imageAdapter ports.ImageAdapter) UserUseCase {
 	return &userUseCase{
 		appLogger:     appLogger,
 		userDAO:       userDAO,
+		imageAdapter:  imageAdapter,
 		domainFactory: domainFactory,
 	}
 }
@@ -34,6 +39,7 @@ func NewUserUseCase(appLogger *logger.AppLogger, domainFactory users.Factory, us
 type userUseCase struct {
 	appLogger     *logger.AppLogger
 	userDAO       dao.UserDAO
+	imageAdapter  ports.ImageAdapter
 	domainFactory users.Factory
 }
 
@@ -78,6 +84,15 @@ func (u *userUseCase) GetFollows(ctx context.Context, params ports.FollowsGetPar
 		Limit:            params.Limit,
 	}
 	return getter.GetFollows(ctx, domainParams, portImpl)
+}
+
+func (p *userUseCase) GetUserIcon(ctx context.Context, userID types.UserID) (io.ReadCloser, error) {
+	user, err := p.GetUser(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return p.imageAdapter.GetImage(ctx, user.GetIconImageID())
 }
 
 type userPortImpl struct {
