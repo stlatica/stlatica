@@ -16,6 +16,9 @@ type ServerInterface interface {
 	// upload image
 	// (POST /internal/v1/images)
 	UploadImage(ctx echo.Context) error
+	// delete image
+	// (DELETE /internal/v1/images/{image_id})
+	DeleteImage(ctx echo.Context, imageId string) error
 	// get image
 	// (GET /internal/v1/images/{image_id})
 	GetImage(ctx echo.Context, imageId string) error
@@ -82,6 +85,24 @@ func (w *ServerInterfaceWrapper) UploadImage(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.UploadImage(ctx)
+	return err
+}
+
+// DeleteImage converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteImage(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "image_id" -------------
+	var imageId string
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "image_id", runtime.ParamLocationPath, ctx.Param("image_id"), &imageId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter image_id: %s", err))
+	}
+
+	ctx.Set(BearerScopes, []string{})
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.DeleteImage(ctx, imageId)
 	return err
 }
 
@@ -463,6 +484,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	}
 
 	router.POST(baseURL+"/internal/v1/images", wrapper.UploadImage)
+	router.DELETE(baseURL+"/internal/v1/images/:image_id", wrapper.DeleteImage)
 	router.GET(baseURL+"/internal/v1/images/:image_id", wrapper.GetImage)
 	router.POST(baseURL+"/internal/v1/login", wrapper.Login)
 	router.POST(baseURL+"/internal/v1/plats", wrapper.PostPlat)

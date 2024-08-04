@@ -22,6 +22,11 @@ func RegisterHandlers(server *echo.Echo) {
 
 type handler struct{}
 
+// DeleteImage implements openapi.ServerInterface.
+func (h *handler) DeleteImage(_ echo.Context, _ string) error {
+	panic("unimplemented")
+}
+
 func (h *handler) Login(_ echo.Context) error {
 	panic("implement me")
 }

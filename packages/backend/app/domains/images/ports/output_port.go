@@ -18,3 +18,9 @@ type ImageUploadOutPort interface {
 	// UploadImage uploads image.
 	UploadImage(ctx context.Context, imageID types.ImageID, imageBinary []byte) error
 }
+
+// ImageDeleteOutPort is the interface for deleting image.
+type ImageDeleteOutPort interface {
+	// DeleteImage deletes image.
+	DeleteImage(ctx context.Context, imageID types.ImageID) error
+}
