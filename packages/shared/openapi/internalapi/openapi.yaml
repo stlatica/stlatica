@@ -12,6 +12,8 @@ servers:
 paths:
   /internal/v1/users/{user_id}:
     $ref: './paths/users.yaml#/users_{user_id}'
+  /internal/v1/users/{user_id}/icon:
+    $ref: './paths/users.yaml#/users_{user_id}_icon'
   /internal/v1/users:
     $ref: './paths/users.yaml#/users'
   /internal/v1/users/{user_id}/follows:
