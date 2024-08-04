@@ -20,6 +20,8 @@ type UserBase struct { // ulid
 	IsPublic bool `json:"is_public"`
 	// mail address
 	MailAddress string `json:"mail_address"`
+	// icon image id
+	IconImageID types.ImageID `json:"icon_image_id"`
 	// Unix time
 	CreatedAt types.UnixTime `json:"created_at"`
 	// Unix time
@@ -86,6 +88,14 @@ func (m *UserBase) GetMailAddress() string {
 		return ""
 	}
 	return m.MailAddress
+}
+
+// GetIconImageID is get icon_image_id value, if receiver is nil, returns the specified value.
+func (m *UserBase) GetIconImageID() types.ImageID {
+	if m == nil {
+		return types.ImageID{}
+	}
+	return m.IconImageID
 }
 
 // GetCreatedAt is get created_at value, if receiver is nil, returns the specified value.

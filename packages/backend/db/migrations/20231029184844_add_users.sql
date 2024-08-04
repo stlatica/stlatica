@@ -7,6 +7,7 @@ CREATE TABLE `users` (
   `registered_at`       bigint UNSIGNED NOT NULL COMMENT 'Unix time',
   `is_public`           boolean NOT NULL COMMENT 'user is public',
   `mail_address`        varchar(256) UNIQUE NOT NULL COMMENT 'mail address',
+  `icon_image_id`       char(26) NOT NULL COMMENT 'icon image id',
   `created_at`          bigint UNSIGNED NOT NULL COMMENT 'Unix time',
   `updated_at`          bigint UNSIGNED NOT NULL COMMENT 'Unix time',
   PRIMARY KEY (`user_id`),
