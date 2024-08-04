@@ -54,7 +54,8 @@ func (dao *userDAO) GetUserByPreferredUserID(ctx context.Context,
 	return convertUserEntityToDomainEntity(entity), nil
 }
 
-func (dao *userDAO) GetFollows(ctx context.Context, params domainports.FollowsGetParams) ([]*domainentities.User, error) {
+func (dao *userDAO) GetFollows(ctx context.Context,
+	params domainports.FollowsGetParams) ([]*domainentities.User, error) {
 	var userRelations entities.UserRelationBaseSlice
 	var err error
 	if !reflect.ValueOf(params.UserPaginationID).IsZero() {

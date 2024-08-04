@@ -21,8 +21,9 @@ type GetUserResponse struct {
 	UpdatedAt    string `json:"updated_at"`
 }
 
+// GetFollowResponse is the response of GetFollows.
 type GetFollowResponse struct {
-	UserId   string `json:"user_id"`
+	UserID   string `json:"user_id"`
 	Username string `json:"username"`
 	Summary  string `json:"summary"`
 	Icon     string `json:"icon"`
@@ -73,7 +74,7 @@ func (c *userController) GetFollows(ectx echo.Context,
 	followResponses := make([]*GetFollowResponse, 0, len(follows))
 	for _, follow := range follows {
 		followResponses = append(followResponses, &GetFollowResponse{
-			UserId:   follow.GetPreferredUserID(),
+			UserID:   follow.GetPreferredUserID(),
 			Username: follow.GetPreferredUserName(),
 			Summary:  "", // TODO: Return actual value https://github.com/stlatica/stlatica/issues/524
 			Icon:     "", // TODO: Return actual value https://github.com/stlatica/stlatica/issues/524

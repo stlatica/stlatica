@@ -92,6 +92,7 @@ func (p *userPortImpl) GetUserByPreferredUserID(ctx context.Context, preferredUs
 	return p.userDAO.GetUserByPreferredUserID(ctx, preferredUserID)
 }
 
-func (p *userPortImpl) GetFollows(ctx context.Context, getParams domainports.FollowsGetParams) ([]*entities.User, error) {
+func (p *userPortImpl) GetFollows(ctx context.Context,
+	getParams domainports.FollowsGetParams) ([]*entities.User, error) {
 	return p.userDAO.GetFollows(ctx, getParams)
 }
