@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    "config:js-app",
     "group:allNonMajor"
   ],
   "packageRules": [
