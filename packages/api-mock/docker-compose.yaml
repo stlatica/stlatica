@@ -16,3 +16,4 @@ services:
       - "127.0.0.1:4010:4010"
     working_dir: /app/express
     tty: true
+    init: true

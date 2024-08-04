@@ -99,8 +99,17 @@ func (h *handler) GetTimelineByQuery(ectx echo.Context, params openapi.GetTimeli
 	return ectx.JSON(http.StatusOK, response)
 }
 
-func (h *handler) GetImage(_ echo.Context, _ string) error {
-	panic("implement me")
+func (h *handler) GetImage(ectx echo.Context, imageIDStr string) error {
+	imageStream, err := h.imageController.GetImage(ectx, imageIDStr)
+	if err != nil {
+		return err
+	}
+	response := ectx.Response()
+	_, err = io.Copy(response, imageStream)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (h *handler) UploadImage(ectx echo.Context) error {
@@ -115,11 +124,39 @@ func (h *handler) UploadImage(ectx echo.Context) error {
 	return ectx.JSON(http.StatusCreated, response)
 }
 
+func (h *handler) DeleteImage(ectx echo.Context, imageIDStr string) error {
+	err := h.imageController.DeleteImage(ectx, imageIDStr)
+	if err != nil {
+		return err
+	}
+	return ectx.NoContent(http.StatusNoContent)
+}
+
 func (h *handler) PostFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }
 
 func (h *handler) DeleteFavorite(_ echo.Context, _ openapi.PlatId) error {
+	panic("implement me")
+}
+
+func (h *handler) GetFollows(ctx echo.Context, userID openapi.UserId, params openapi.GetFollowsParams) error {
+	response, err := h.userController.GetFollows(ctx, userID, params.UserPaginationId, params.Limit)
+	if err != nil {
+		return err
+	}
+	return ctx.JSON(http.StatusOK, response)
+}
+
+func (h *handler) PostFollow(_ echo.Context, _ openapi.UserId) error {
+	panic("implement me")
+}
+
+func (h *handler) DeleteFollow(_ echo.Context, _ openapi.UserId) error {
+	panic("implement me")
+}
+
+func (h *handler) GetFollowers(_ echo.Context, _ openapi.UserId, _ openapi.GetFollowersParams) error {
 	panic("implement me")
 }
 

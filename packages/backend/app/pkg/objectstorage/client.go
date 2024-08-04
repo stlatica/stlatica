@@ -25,6 +25,8 @@ type Client interface {
 	GetObject(ctx context.Context, bucketName string, objectName string) (io.ReadCloser, error)
 	// PutObject puts an object to object storage.
 	PutObject(ctx context.Context, bucketName string, objectName string, reader io.Reader, contentType string) error
+	// DeleteObject deletes an object from object storage.
+	DeleteObject(ctx context.Context, bucketName string, objectName string) error
 }
 
 type client struct {
@@ -34,7 +36,7 @@ type client struct {
 
 // NewClient creates a new object storage client.
 func NewClient(ctx context.Context, appLogger *logger.AppLogger, endpoint string,
-	accessKey string, secretKey string) Client {
+	region string, accessKey string, secretKey string) Client {
 	cred := credentials.NewStaticCredentialsProvider(accessKey, secretKey, "")
 
 	cfg, err := config.LoadDefaultConfig(ctx, config.WithCredentialsProvider(cred))
@@ -45,6 +47,7 @@ func NewClient(ctx context.Context, appLogger *logger.AppLogger, endpoint string
 	s3Client := s3.NewFromConfig(cfg, func(options *s3.Options) {
 		options.UsePathStyle = true
 		options.BaseEndpoint = aws.String(endpoint)
+		options.Region = region
 	})
 
 	return &client{
@@ -95,6 +98,14 @@ func (c *client) PutObject(ctx context.Context,
 		Key:         aws.String(objectName),
 		Body:        reader,
 		ContentType: aws.String(contentType),
+	})
+	return err
+}
+
+func (c *client) DeleteObject(ctx context.Context, bucketName string, objectName string) error {
+	_, err := c.orgClient.DeleteObject(ctx, &s3.DeleteObjectInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(objectName),
 	})
 	return err
 }

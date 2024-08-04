@@ -13,6 +13,7 @@ import (
 func NewObjectStorageClient(ctx context.Context, appLogger *logger.AppLogger) objectstorage.Client {
 	return objectstorage.NewClient(ctx, appLogger,
 		fmt.Sprintf("%s:%s", os.Getenv("STLATICA_OBJECT_STORAGE_HOST"), os.Getenv("STLATICA_OBJECT_STORAGE_PORT")),
+		os.Getenv("STLATICA_OBJECT_STORAGE_REGION"),
 		os.Getenv("STLATICA_OBJECT_STORAGE_ACCESS_KEY"),
 		os.Getenv("STLATICA_OBJECT_STORAGE_SECRET_KEY"),
 	)

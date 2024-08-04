@@ -4,7 +4,7 @@ users_{user_id}_follows:
       - Follows
     summary: Get follow user list.
     description: Get follow user list.
-    operationId: getFollowUsers
+    operationId: getFollows
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
       - $ref: '../parameters/user_pagination_id.yaml#/user_pagination_id'
@@ -20,15 +20,15 @@ users_{user_id}_follows:
               items:
                 $ref: '../schemas/UserLightweight.yaml#/UserLightweight'
       400:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/400'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E400'
       401:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/401'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E401'
       404:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/404'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E404'
       500:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/500'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E500'
       503:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/503'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E503'
 
 users_{user_id}_followers:
   get:
@@ -51,15 +51,15 @@ users_{user_id}_followers:
               items:
                 $ref: '../schemas/UserLightweight.yaml#/UserLightweight'
       400:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/400'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E400'
       401:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/401'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E401'
       404:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/404'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E404'
       500:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/500'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E500'
       503:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/503'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E503'
 
 users_{user_id}_follow:
   post:
@@ -74,15 +74,15 @@ users_{user_id}_follow:
       200:
         description: OK
       400:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/400'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E400'
       401:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/401'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E401'
       404:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/404'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E404'
       500:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/500'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E500'
       503:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/503'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E503'
   delete:
     tags:
       - Follows
@@ -95,12 +95,12 @@ users_{user_id}_follow:
       204:
         description: No content.
       400:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/400'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E400'
       401:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/401'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E401'
       404:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/404'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E404'
       500:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/500'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E500'
       503:
-        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/503'
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E503'

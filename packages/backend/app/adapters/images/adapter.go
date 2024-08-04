@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
@@ -33,6 +34,10 @@ func NewAdapter(client objectstorage.Client) ports.ImageAdapter {
 	}
 }
 
+func (a *imageAdapter) GetImage(ctx context.Context, imageID types.ImageID) (io.ReadCloser, error) {
+	return a.client.GetObject(ctx, BucketName, imageID.String())
+}
+
 func (a *imageAdapter) UploadImage(ctx context.Context, imageID types.ImageID, imageBinary []byte) error {
 	mine, err := validateMineType(imageBinary)
 	if err != nil {
@@ -41,6 +46,10 @@ func (a *imageAdapter) UploadImage(ctx context.Context, imageID types.ImageID, i
 
 	reader := bytes.NewReader(imageBinary)
 	return a.client.PutObject(ctx, BucketName, imageID.String(), reader, mine)
+}
+
+func (a *imageAdapter) DeleteImage(ctx context.Context, imageID types.ImageID) error {
+	return a.client.DeleteObject(ctx, BucketName, imageID.String())
 }
 
 func validateMineType(data []byte) (string, error) {

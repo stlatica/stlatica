@@ -3,6 +3,7 @@
  * Do not make direct changes to the file.
  */
 
+
 export interface paths {
   "/internal/v1/users/{user_id}": {
     /**
@@ -27,6 +28,32 @@ export interface paths {
      * @description Create new user.
      */
     post: operations["createUser"];
+  };
+  "/internal/v1/users/{user_id}/follows": {
+    /**
+     * Get follow user list.
+     * @description Get follow user list.
+     */
+    get: operations["getFollowUsers"];
+  };
+  "/internal/v1/users/{user_id}/followers": {
+    /**
+     * Get follower list.
+     * @description Get follower list.
+     */
+    get: operations["getFollowers"];
+  };
+  "/internal/v1/users/{user_id}/follow": {
+    /**
+     * Add new follow user.
+     * @description Add new follow user.
+     */
+    post: operations["postFollow"];
+    /**
+     * Delete follow user.
+     * @description Delete follow user.
+     */
+    delete: operations["deleteFollow"];
   };
   "/internal/v1/plats/{plat_id}": {
     /**
@@ -76,6 +103,21 @@ export interface paths {
      * base64形式で返される
      */
     get: operations["getImage"];
+  };
+  "/internal/v1/images": {
+    /**
+     * upload image
+     * @description upload image \
+     * base64形式で受け取る
+     */
+    post: operations["uploadImage"];
+  };
+  "/internal/v1/login": {
+    /**
+     * login
+     * @description login
+     */
+    post: operations["login"];
   };
 }
 
@@ -130,17 +172,35 @@ export interface components {
        * @example INTERNAL_SERVER_ERROR
        * @enum {string}
        */
-      code:
-        | "BAD_REQUEST"
-        | "MISSING_PARAMETER"
-        | "UNAUTHORIZED"
-        | "NOT_FOUND"
-        | "INTERNAL_SERVER_ERROR"
-        | "SERVICE_UNAVAILABLE"
-        | "CONFLICT"
-        | "UNPROCESSABLE_ENTITY";
+      code: "BAD_REQUEST" | "MISSING_PARAMETER" | "UNAUTHORIZED" | "NOT_FOUND" | "INTERNAL_SERVER_ERROR" | "SERVICE_UNAVAILABLE" | "CONFLICT" | "UNPROCESSABLE_ENTITY";
       /** @example error message */
       message: string;
+    };
+    /** @description user without follow counts */
+    UserLightweight: {
+      user_id: components["schemas"]["UserID"];
+      /**
+       * @description 画面上に表示されるユーザ名
+       * @example sample_user
+       */
+      username: string;
+      /**
+       * @description ユーザのプロフィール
+       * @example sample_user
+       */
+      summary: string;
+      /**
+       * @description ユーザのアイコン画像のURL
+       * @example https://xxx/external/v1/images/sample_user.png
+       */
+      icon: string;
+      /**
+       * @description 公開アカウントであるかどうか \
+       * external apiのmanuallyApprovesFollowersと同一の値となる
+       *
+       * @example true
+       */
+      is_public: boolean;
     };
     /**
      * @description platを識別するための一意のID
@@ -151,13 +211,29 @@ export interface components {
     /** @description plat */
     Plat: {
       plat_id: components["schemas"]["PlatID"];
+      user_id?: components["schemas"]["UserID"];
       /**
        * @description platの本文
        * @example これはサンプルのplatです。
        */
       content: string;
       /** @description platに添付された画像のURL */
-      images?: string[];
+      image_urls?: string[];
+      /**
+       * @description platに対するリプライの数
+       * @example 1
+       */
+      reply_count?: number;
+      /**
+       * @description platがリプラットされた数
+       * @example 1
+       */
+      replat_count?: number;
+      /**
+       * @description platがお気に入りされた数
+       * @example 1
+       */
+      favorite_count?: number;
       /**
        * Format: date-time
        * @description platが作成された日時(ISO8601)
@@ -175,7 +251,57 @@ export interface components {
       user_id: components["schemas"]["UserID"];
     };
   };
-  responses: never;
+  responses: {
+    /**
+     * @description bad request \
+     * error code:
+     * - 'BAD_REQUEST'
+     * - 'MISSING_PARAMETER'
+     */
+    E400: {
+      content: {
+        "application/json": components["schemas"]["ErrorResponse"];
+      };
+    };
+    /**
+     * @description unauthorized \
+     * error code:
+     * - 'UNAUTHORIZED'
+     */
+    E401: {
+      content: never;
+    };
+    /**
+     * @description not found \
+     * error code:
+     * - 'NOT_FOUND'
+     */
+    E404: {
+      content: {
+        "application/json": components["schemas"]["ErrorResponse"];
+      };
+    };
+    /**
+     * @description internal server error \
+     * error code:
+     * - 'INTERNAL_SERVER_ERROR'
+     */
+    E500: {
+      content: {
+        "application/json": components["schemas"]["ErrorResponse"];
+      };
+    };
+    /**
+     * @description service unavailable \
+     * error code:
+     * - 'SERVICE_UNAVAILABLE'
+     */
+    E503: {
+      content: {
+        "application/json": components["schemas"]["ErrorResponse"];
+      };
+    };
+  };
   parameters: {
     /**
      * @description userを識別するための一意のID
@@ -183,6 +309,18 @@ export interface components {
      * @example user_id
      */
     user_id: string;
+    /**
+     * @description userを識別するための一意のID。未指定の場合、先頭から取得
+     *
+     * @example user_pagination_id
+     */
+    user_pagination_id?: string;
+    /**
+     * @description 取得数。default = 100
+     *
+     * @example 100
+     */
+    limit?: number;
     /**
      * @description platを識別するための一意のID
      *
@@ -198,6 +336,7 @@ export interface components {
     timeline_user_id: string;
     timeline_type: "home" | "following" | "local";
     timeline_limit?: number;
+    timeline_from_date?: string;
     timeline_to_date?: string;
   };
   requestBodies: never;
@@ -210,6 +349,7 @@ export type $defs = Record<string, never>;
 export type external = Record<string, never>;
 
 export interface operations {
+
   /**
    * get user
    * @description get user
@@ -491,6 +631,106 @@ export interface operations {
           "application/json": components["schemas"]["ErrorResponse"];
         };
       };
+    };
+  };
+  /**
+   * Get follow user list.
+   * @description Get follow user list.
+   */
+  getFollowUsers: {
+    parameters: {
+      query?: {
+        user_pagination_id?: components["parameters"]["user_pagination_id"];
+        limit?: components["parameters"]["limit"];
+      };
+      path: {
+        user_id: components["parameters"]["user_id"];
+      };
+    };
+    responses: {
+      /** @description success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["UserLightweight"][];
+        };
+      };
+      400: components["responses"]["E400"];
+      401: components["responses"]["E401"];
+      404: components["responses"]["E404"];
+      500: components["responses"]["E500"];
+      503: components["responses"]["E503"];
+    };
+  };
+  /**
+   * Get follower list.
+   * @description Get follower list.
+   */
+  getFollowers: {
+    parameters: {
+      query?: {
+        user_pagination_id?: components["parameters"]["user_pagination_id"];
+        limit?: components["parameters"]["limit"];
+      };
+      path: {
+        user_id: components["parameters"]["user_id"];
+      };
+    };
+    responses: {
+      /** @description success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["UserLightweight"][];
+        };
+      };
+      400: components["responses"]["E400"];
+      401: components["responses"]["E401"];
+      404: components["responses"]["E404"];
+      500: components["responses"]["E500"];
+      503: components["responses"]["E503"];
+    };
+  };
+  /**
+   * Add new follow user.
+   * @description Add new follow user.
+   */
+  postFollow: {
+    parameters: {
+      path: {
+        user_id: components["parameters"]["user_id"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: never;
+      };
+      400: components["responses"]["E400"];
+      401: components["responses"]["E401"];
+      404: components["responses"]["E404"];
+      500: components["responses"]["E500"];
+      503: components["responses"]["E503"];
+    };
+  };
+  /**
+   * Delete follow user.
+   * @description Delete follow user.
+   */
+  deleteFollow: {
+    parameters: {
+      path: {
+        user_id: components["parameters"]["user_id"];
+      };
+    };
+    responses: {
+      /** @description No content. */
+      204: {
+        content: never;
+      };
+      400: components["responses"]["E400"];
+      401: components["responses"]["E401"];
+      404: components["responses"]["E404"];
+      500: components["responses"]["E500"];
+      503: components["responses"]["E503"];
     };
   };
   /**
@@ -892,6 +1132,7 @@ export interface operations {
         user_id: components["parameters"]["timeline_user_id"];
         type: components["parameters"]["timeline_type"];
         limit?: components["parameters"]["timeline_limit"];
+        from_date?: components["parameters"]["timeline_from_date"];
         to_date?: components["parameters"]["timeline_to_date"];
       };
     };
@@ -1004,6 +1245,147 @@ export interface operations {
        * - 'NOT_FOUND'
        */
       404: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /**
+   * upload image
+   * @description upload image \
+   * base64形式で受け取る
+   */
+  uploadImage: {
+    requestBody: {
+      content: {
+        "text/plain": string;
+      };
+    };
+    responses: {
+      /** @description created */
+      201: {
+        content: {
+          "application/json": {
+            /** @example image_id */
+            image_id?: string;
+          };
+        };
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description unauthorized \
+       * error code:
+       * - 'UNAUTHORIZED'
+       */
+      401: {
+        content: never;
+      };
+      /**
+       * @description internal server error \
+       * error code:
+       * - 'INTERNAL_SERVER_ERROR'
+       */
+      500: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description service unavailable \
+       * error code:
+       * - 'SERVICE_UNAVAILABLE'
+       */
+      503: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+    };
+  };
+  /**
+   * login
+   * @description login
+   */
+  login: {
+    requestBody: {
+      content: {
+        "application/json": {
+          /** @example sample_userId */
+          preferred_user_id?: string;
+          /** @example password */
+          password?: string;
+        };
+      };
+    };
+    responses: {
+      /** @description success */
+      200: {
+        headers: {
+          /**
+           * @description Set-Cookieヘッダ \
+           * ログイン情報を保持するためのCookie \
+           * 有効期限は1時間 \
+           * 保存する情報
+           * ・token
+           * 属性
+           * ・Max-Age
+           * ・Secure
+           * ・httponly
+           * ・HttpOnly
+           * ・SameSite=Strict
+           */
+          "Set-Cookie"?: string;
+        };
+        content: never;
+      };
+      /**
+       * @description bad request \
+       * error code:
+       * - 'BAD_REQUEST'
+       * - 'MISSING_PARAMETER'
+       */
+      400: {
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /**
+       * @description unauthorized \
+       * error code:
+       * - 'UNAUTHORIZED'
+       */
+      401: {
         content: {
           "application/json": components["schemas"]["ErrorResponse"];
         };
