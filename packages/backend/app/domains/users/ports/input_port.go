@@ -13,4 +13,6 @@ type UserGetInPort interface {
 	GetUser(ctx context.Context, userID types.UserID) (*entities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error)
+	// GetFollows returns follows of user.
+	GetFollows(ctx context.Context, params FollowsGetParams) ([]*entities.User, error)
 }

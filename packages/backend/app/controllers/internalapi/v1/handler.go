@@ -140,8 +140,12 @@ func (h *handler) DeleteFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }
 
-func (h *handler) GetFollows(_ echo.Context, _ openapi.UserId, _ openapi.GetFollowsParams) error {
-	panic("implement me")
+func (h *handler) GetFollows(ctx echo.Context, userID openapi.UserId, params openapi.GetFollowsParams) error {
+	response, err := h.userController.GetFollows(ctx, userID, params.UserPaginationId, params.Limit)
+	if err != nil {
+		return err
+	}
+	return ctx.JSON(http.StatusOK, response)
 }
 
 func (h *handler) PostFollow(_ echo.Context, _ openapi.UserId) error {
