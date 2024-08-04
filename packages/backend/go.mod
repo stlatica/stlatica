@@ -13,6 +13,7 @@ require (
 	github.com/golangci/golangci-lint v1.54.1
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.12.0
+	github.com/lestrrat-go/jwx v1.2.30
 	github.com/pressly/goose/v3 v3.21.1
 	github.com/volatiletech/sqlboiler/v4 v4.16.2
 	github.com/volatiletech/strmangle v0.0.6
@@ -41,6 +42,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.30.3 // indirect
 	github.com/aws/smithy-go v1.20.3 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
+	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.3.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/flosch/pongo2/v4 v4.0.2 // indirect
@@ -59,6 +61,11 @@ require (
 	github.com/kataras/pio v0.0.12 // indirect
 	github.com/kataras/sitemap v0.0.6 // indirect
 	github.com/kataras/tunnel v0.0.4 // indirect
+	github.com/lestrrat-go/backoff/v2 v2.0.8 // indirect
+	github.com/lestrrat-go/blackmagic v1.0.2 // indirect
+	github.com/lestrrat-go/httpcc v1.0.1 // indirect
+	github.com/lestrrat-go/iter v1.0.2 // indirect
+	github.com/lestrrat-go/option v1.0.1 // indirect
 	github.com/libsql/sqlite-antlr4-parser v0.0.0-20240327125255-dbf53b6cbf06 // indirect
 	github.com/mailgun/raymond/v2 v2.0.48 // indirect
 	github.com/mfridman/interpolate v0.0.2 // indirect
@@ -155,7 +162,7 @@ require (
 	github.com/go-toolsmith/typep v1.1.0 // indirect
 	github.com/go-xmlfmt/xmlfmt v1.1.2 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
-	github.com/goccy/go-json v0.10.2 // indirect
+	github.com/goccy/go-json v0.10.3 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
 	github.com/golang-sql/sqlexp v0.1.0 // indirect
@@ -170,7 +177,7 @@ require (
 	github.com/golangci/revgrep v0.0.0-20220804021717-745bb2f7c2e6 // indirect
 	github.com/golangci/unconvert v0.0.0-20180507085042-28b1c447d1f4 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/google/uuid v1.6.0 // indirect
+	github.com/google/uuid v1.6.0
 	github.com/gordonklaus/ineffassign v0.0.0-20230610083614-0e73809eb601 // indirect
 	github.com/gostaticanalysis/analysisutil v0.7.1 // indirect
 	github.com/gostaticanalysis/comment v1.4.2 // indirect
