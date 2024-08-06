@@ -1,6 +1,83 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    "group:allNonMajor",
+    "schedule:weekly"
+  ],
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
+  "packageRules": [
+    {
+      "managers": [
+        "npm"
+      ],
+      "commitMessage": "npm - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}"
+    },
+    {
+      "managers": [
+        "npm"
+      ],
+      "additionalBranchPrefix": "{{parentDir}}-",
+      "packagePatterns": [
+        ".*"
+      ],
+      "ignoreDeps": [
+        "playwright",
+        "@types/node"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "node",
+        "@types/node"
+      ],
+      "commitMessage": "node - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "additionalBranchPrefix": "{{parentDir}}-"
+    },
+    {
+      "matchPackageNames": [
+        "pnpm"
+      ],
+      "commitMessage": "pnpm - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "additionalBranchPrefix": "{{parentDir}}-"
+    },
+    {
+      "managers": [
+        "npm",
+        "dockerfile",
+        "devcontainer"
+      ],
+      "matchPackageNames": [
+        "@playwright/test",
+        "mcr.microsoft.com/playwright"
+      ],
+      "commitMessage": "playwright - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "additionalBranchPrefix": "playwright-"
+    },
+    {
+      "managers": [
+        "gomod"
+      ],
+      "commitMessage": "gomod - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "additionalBranchPrefix": "{{parentDir}}-",
+      "packagePatterns": [
+        ".*"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "golang"
+      ],
+      "commitMessage": "golang - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "additionalBranchPrefix": "golang-"
+    },
+    {
+      "matchPackageNames": [
+        "mysql"
+      ],
+      "commitMessage": "mysql - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "additionalBranchPrefix": "mysql-"
+    }
   ]
 }
