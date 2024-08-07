@@ -117,7 +117,7 @@ jobs:
           commit_message: "format code"
       # lint
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v6
         with:
           version: latest
           working-directory: packages/backend
