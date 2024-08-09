@@ -15,7 +15,7 @@ jobs:
       is_backend: ${{ steps.filter.outputs.is_backend }}
       is_openapi: ${{ steps.filter.outputs.is_openapi }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
       - uses: dorny/paths-filter@v3
@@ -38,7 +38,7 @@ jobs:
         working-directory: packages/frontend
     steps:
       # リポジトリをチェックアウト
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
       # pnpm 8をインストール
@@ -82,7 +82,7 @@ jobs:
         working-directory: packages/frontend
     steps:
       # リポジトリをチェックアウト
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # TODO: github action 内のdocker build でキャッシュしたい https://github.com/stlatica/stlatica/issues/286
       - name: pull lfs snapshots
         run: git lfs pull
@@ -99,7 +99,7 @@ jobs:
         working-directory: packages/backend
     steps:
       # リポジトリをチェックアウト
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
       # setup go install
@@ -135,7 +135,7 @@ jobs:
         working-directory: packages/shared/openapi
     steps:
       # リポジトリをチェックアウト
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # TODO: github action 内のdocker build でキャッシュしたい https://github.com/stlatica/stlatica/issues/286
       - name: build container image
         run: make docker-build
