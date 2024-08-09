@@ -6,3 +6,10 @@ type FollowsGetParams struct {
 	PreferredUserPaginationID string
 	Limit                     uint64
 }
+
+// FollowersGetParams is the parameters to get follows.
+type FollowersGetParams struct {
+	PreferredUserID           string
+	PreferredUserPaginationID string
+	Limit                     uint64
+}

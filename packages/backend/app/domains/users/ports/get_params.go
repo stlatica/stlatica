@@ -8,3 +8,10 @@ type FollowsGetParams struct {
 	UserPaginationID types.UserID
 	Limit            uint64
 }
+
+// FollowersGetParams is the parameters to get followers.
+type FollowersGetParams struct {
+	UserID           types.UserID
+	UserPaginationID types.UserID
+	Limit            uint64
+}

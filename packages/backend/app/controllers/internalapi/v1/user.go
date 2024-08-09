@@ -83,3 +83,39 @@ func (c *userController) GetFollows(ectx echo.Context,
 	}
 	return followResponses, nil
 }
+
+func (c *userController) GetFollowers(ectx echo.Context,
+	userIDStr string, userPaginationID *string, limit *int) ([]*GetFollowerResponse, error) {
+	var limitValue uint64
+	var userPaginationIDStr string
+	if userPaginationID == nil {
+		userPaginationIDStr = ""
+	} else {
+		userPaginationIDStr = *userPaginationID
+	}
+	if limit != nil {
+		limitValue = uint64(*limit)
+	}
+
+	getParams := ports.FollowersGetParams{
+		PreferredUserID:           userIDStr,
+		PreferredUserPaginationID: userPaginationIDStr,
+		Limit:                     limitValue,
+	}
+	followers, err := c.userUseCase.GetFollowers(ectx.Request().Context(), getParams)
+	if err != nil {
+		return nil, err
+	}
+
+	followerResponse := make([]*GetFollowerResponse, 0, len(followers))
+	for _, follower := range followers {
+		followerResponse = append(followerResponse, &GetFollowerResponse{
+			UserID:   follower.GetPreferredUserID(),
+			Username: follower.GetPreferredUserName(),
+			Summary:  "", // TODO: Return actual value https://github.com/stlatica/stlatica/issues/526
+			Icon:     "", // TODO: Return actual value https://github.com/stlatica/stlatica/issues/526
+			IsPublic: follower.GetIsPublic(),
+		})
+	}
+	return followerResponse, nil
+}
