@@ -70,6 +70,9 @@ type ServerInterface interface {
 	// Get follow user list.
 	// (GET /internal/v1/users/{user_id}/follows)
 	GetFollows(ctx echo.Context, userId UserId, params GetFollowsParams) error
+	// Get user icon.
+	// (GET /internal/v1/users/{user_id}/icon)
+	GetUserIcon(ctx echo.Context, userId UserId) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -455,6 +458,24 @@ func (w *ServerInterfaceWrapper) GetFollows(ctx echo.Context) error {
 	return err
 }
 
+// GetUserIcon converts echo context to params.
+func (w *ServerInterfaceWrapper) GetUserIcon(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "user_id" -------------
+	var userId UserId
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "user_id", runtime.ParamLocationPath, ctx.Param("user_id"), &userId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter user_id: %s", err))
+	}
+
+	ctx.Set(BearerScopes, []string{})
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetUserIcon(ctx, userId)
+	return err
+}
+
 // This is a simple interface which specifies echo.Route addition functions which
 // are present on both echo.Echo and echo.Group, since we want to allow using
 // either of them for path registration
@@ -502,5 +523,6 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	router.POST(baseURL+"/internal/v1/users/:user_id/follow", wrapper.PostFollow)
 	router.GET(baseURL+"/internal/v1/users/:user_id/followers", wrapper.GetFollowers)
 	router.GET(baseURL+"/internal/v1/users/:user_id/follows", wrapper.GetFollows)
+	router.GET(baseURL+"/internal/v1/users/:user_id/icon", wrapper.GetUserIcon)
 
 }

@@ -164,6 +164,10 @@ func (h *handler) Login(_ echo.Context) error {
 	panic("implement me")
 }
 
+func (h *handler) GetUserIcon(_ echo.Context, _ openapi.UserId) error {
+	panic("implement me")
+}
+
 // ControllerInitContents is the struct to hold the dependencies for the controller.
 type ControllerInitContents struct {
 	UserUseCase  users.UserUseCase
