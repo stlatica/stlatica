@@ -124,6 +124,14 @@ func (h *handler) UploadImage(ectx echo.Context) error {
 	return ectx.JSON(http.StatusCreated, response)
 }
 
+func (h *handler) DeleteImage(ectx echo.Context, imageIDStr string) error {
+	err := h.imageController.DeleteImage(ectx, imageIDStr)
+	if err != nil {
+		return err
+	}
+	return ectx.NoContent(http.StatusNoContent)
+}
+
 func (h *handler) PostFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }
@@ -157,6 +165,10 @@ func (h *handler) GetFollowers(ctx echo.Context, userID openapi.UserId, params o
 }
 
 func (h *handler) Login(_ echo.Context) error {
+	panic("implement me")
+}
+
+func (h *handler) GetUserIcon(_ echo.Context, _ openapi.UserId) error {
 	panic("implement me")
 }
 

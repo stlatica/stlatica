@@ -21,17 +21,8 @@ type GetUserResponse struct {
 	UpdatedAt    string `json:"updated_at"`
 }
 
-// GetFollowResponse is the response of GetFollow.
+// GetFollowResponse is the response of GetFollows.
 type GetFollowResponse struct {
-	UserID   string `json:"user_id"`
-	Username string `json:"username"`
-	Summary  string `json:"summary"`
-	Icon     string `json:"icon"`
-	IsPublic bool   `json:"is_public"`
-}
-
-// GetFollowerResponse is the response of GetFollower.
-type GetFollowerResponse struct {
 	UserID   string `json:"user_id"`
 	Username string `json:"username"`
 	Summary  string `json:"summary"`

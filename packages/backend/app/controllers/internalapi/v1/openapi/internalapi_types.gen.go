@@ -180,6 +180,12 @@ type E400 = ErrorResponse
 // E404 defines model for E404.
 type E404 = ErrorResponse
 
+// E409 defines model for E409.
+type E409 = ErrorResponse
+
+// E422 defines model for E422.
+type E422 = ErrorResponse
+
 // E500 defines model for E500.
 type E500 = ErrorResponse
 
