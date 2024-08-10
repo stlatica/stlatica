@@ -30,6 +30,15 @@ type GetFollowResponse struct {
 	IsPublic bool   `json:"is_public"`
 }
 
+// GetFollowerResponse is the response of GetFollowers.
+type GetFollowerResponse struct {
+	UserID   string `json:"user_id"`
+	Username string `json:"username"`
+	Summary  string `json:"summary"`
+	Icon     string `json:"icon"`
+	IsPublic bool   `json:"is_public"`
+}
+
 // GetUser converts request data and calls usecase to get actor.
 func (c *userController) GetUser(ectx echo.Context, userID string) (*GetUserResponse, error) {
 	user, err := c.userUseCase.GetUserByPreferredUserID(ectx.Request().Context(), userID)
