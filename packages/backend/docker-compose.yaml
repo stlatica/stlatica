@@ -19,7 +19,7 @@ services:
       - "8080:8080"
     volumes:
       - ./:/app
-    command: sh -c 'air -c .air.toml --build.cmd "go build -o ./tmp/main $SOURCE_DIR"'
+    command: sh -c 'air -c .air.toml --build.cmd "go build -o ./tmp/main ${SOURCE_DIR:-./app/cmd/internalapi}"'
   redocly:
     build:
       context: .
@@ -39,3 +39,9 @@ services:
       - "9001:9001"
     volumes:
       - ./data/minio:/data
+  goose:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_goose
+    volumes:
+      - ./:/app
