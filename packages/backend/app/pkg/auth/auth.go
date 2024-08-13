@@ -25,8 +25,7 @@ type SignType interface {
 
 // PWAuth パスワードを用いたユーザー認証
 type PWAuth[T SignType] interface {
-	Auth(ctx context.Context, client kvs.Client,
-		podName string) (AccessToken[T], error)
+	Auth(ctx context.Context, client kvs.Client) (AccessToken[T], error)
 }
 
 // TokenAuth トークンを用いたユーザー認証
@@ -74,8 +73,7 @@ func NewAccessToken[T SignType](token []byte) AccessToken[T] {
 }
 
 // Auth ID, PWで認証を行い、アクセストークンを返す
-func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client,
-	podName string) (AccessToken[T], error) {
+func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client) (AccessToken[T], error) {
 	// PWの取得
 	storedPw, err := u.requestStoredPW(ctx, client, u.actorID)
 	if err != nil {
