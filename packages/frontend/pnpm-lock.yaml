@@ -181,8 +181,8 @@ importers:
         specifier: ^5.3.4
         version: 5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41))
       vite-tsconfig-paths:
-        specifier: ^4.3.2
-        version: 4.3.2(typescript@5.5.4)(vite@5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41)))
+        specifier: ^5.0.0
+        version: 5.0.1(typescript@5.5.4)(vite@5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41)))
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.12)(@vitest/ui@1.6.0)(jsdom@24.1.1)(sugarss@4.0.1(postcss@8.4.41))
@@ -5893,6 +5893,14 @@ packages:
 
   vite-tsconfig-paths@4.3.2:
     resolution: {integrity: sha512-0Vd/a6po6Q+86rPlntHye7F31zA2URZMbH8M3saAZ/xR9QoGN/L21bxEGfXdWmFdNkqPpRdxFT7nmNe12e9/uA==}
+    peerDependencies:
+      vite: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+
+  vite-tsconfig-paths@5.0.1:
+    resolution: {integrity: sha512-yqwv+LstU7NwPeNqajZzLEBVpUFU6Dugtb2P84FXuvaoYA+/70l9MHE+GYfYAycVyPSDYZ7mjOFuYBRqlEpTig==}
     peerDependencies:
       vite: '*'
     peerDependenciesMeta:
@@ -13305,7 +13313,7 @@ snapshots:
   vite-node@1.6.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41)):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.5
+      debug: 4.3.6
       pathe: 1.1.2
       picocolors: 1.0.1
       vite: 5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41))
@@ -13323,6 +13331,17 @@ snapshots:
   vite-tsconfig-paths@4.3.2(typescript@5.5.4)(vite@5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41))):
     dependencies:
       debug: 4.3.5
+      globrex: 0.1.2
+      tsconfck: 3.1.1(typescript@5.5.4)
+    optionalDependencies:
+      vite: 5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41))
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  vite-tsconfig-paths@5.0.1(typescript@5.5.4)(vite@5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41))):
+    dependencies:
+      debug: 4.3.6
       globrex: 0.1.2
       tsconfck: 3.1.1(typescript@5.5.4)
     optionalDependencies:
