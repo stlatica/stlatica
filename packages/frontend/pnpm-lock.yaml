@@ -181,8 +181,8 @@ importers:
         specifier: ^5.3.4
         version: 5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41))
       vite-tsconfig-paths:
-        specifier: ^4.3.2
-        version: 4.3.2(typescript@5.5.4)(vite@5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41)))
+        specifier: ^5.0.0
+        version: 5.0.1(typescript@5.5.4)(vite@5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41)))
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.12)(@vitest/ui@1.6.0)(jsdom@24.1.1)(sugarss@4.0.1(postcss@8.4.41))
@@ -5906,6 +5906,14 @@ packages:
       vite:
         optional: true
 
+  vite-tsconfig-paths@5.0.1:
+    resolution: {integrity: sha512-yqwv+LstU7NwPeNqajZzLEBVpUFU6Dugtb2P84FXuvaoYA+/70l9MHE+GYfYAycVyPSDYZ7mjOFuYBRqlEpTig==}
+    peerDependencies:
+      vite: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+
   vite@5.4.0:
     resolution: {integrity: sha512-5xokfMX0PIiwCMCMb9ZJcMyh5wbBun0zUzKib+L65vAZ8GY9ePZMXxFrHbr/Kyll2+LSCY7xtERPpxkBDKngwg==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -7991,7 +7999,7 @@ snapshots:
       '@babel/plugin-syntax-typescript': 7.24.7(@babel/core@7.25.2)
       '@vanilla-extract/babel-plugin-debug-ids': 1.0.6
       '@vanilla-extract/css': 1.15.3
-      esbuild: 0.17.6
+      esbuild: 0.19.12
       eval: 0.1.8
       find-up: 5.0.0
       javascript-stringify: 2.1.0
@@ -11366,7 +11374,7 @@ snapshots:
   micromark@4.0.0:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.3.5
+      debug: 4.3.6
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.1
@@ -13320,7 +13328,7 @@ snapshots:
   vite-node@1.6.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41)):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.5
+      debug: 4.3.6
       pathe: 1.1.2
       picocolors: 1.0.1
       vite: 5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41))
@@ -13338,6 +13346,17 @@ snapshots:
   vite-tsconfig-paths@4.3.2(typescript@5.5.4)(vite@5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41))):
     dependencies:
       debug: 4.3.5
+      globrex: 0.1.2
+      tsconfck: 3.1.1(typescript@5.5.4)
+    optionalDependencies:
+      vite: 5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41))
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  vite-tsconfig-paths@5.0.1(typescript@5.5.4)(vite@5.4.0(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.41))):
+    dependencies:
+      debug: 4.3.6
       globrex: 0.1.2
       tsconfck: 3.1.1(typescript@5.5.4)
     optionalDependencies:
