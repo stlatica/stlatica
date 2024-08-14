@@ -5,15 +5,12 @@
     "group:allNonMajor",
     "schedule:weekly"
   ],
+  "labels": [
+    "dependencies"
+  ],
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
   "packageRules": [
-    {
-      "managers": [
-        "npm"
-      ],
-      "commitMessage": "npm - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}"
-    },
     {
       "managers": [
         "npm"
@@ -22,6 +19,10 @@
       "packagePatterns": [
         ".*"
       ],
+      "assignees": [
+        "para7"
+      ],
+      "commitMessagePrefix": "npm - ",
       "ignoreDeps": [
         "playwright",
         "@types/node"
@@ -32,14 +33,20 @@
         "node",
         "@types/node"
       ],
-      "commitMessage": "node - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "assignees": [
+        "para7"
+      ],
+      "commitMessagePrefix": "node - ",
       "additionalBranchPrefix": "{{parentDir}}-"
     },
     {
       "matchPackageNames": [
         "pnpm"
       ],
-      "commitMessage": "pnpm - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "assignees": [
+        "para7"
+      ],
+      "commitMessagePrefix": "pnpm - ",
       "additionalBranchPrefix": "{{parentDir}}-"
     },
     {
@@ -48,18 +55,24 @@
         "dockerfile",
         "devcontainer"
       ],
+      "assignees": [
+        "para7"
+      ],
       "matchPackageNames": [
         "@playwright/test",
         "mcr.microsoft.com/playwright"
       ],
-      "commitMessage": "playwright - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "commitMessagePrefix": "playwright - ",
       "additionalBranchPrefix": "playwright-"
     },
     {
       "managers": [
         "gomod"
       ],
-      "commitMessage": "gomod - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "assignees": [
+        "cotton-alta"
+      ],
+      "commitMessagePrefix": "gomod - ",
       "additionalBranchPrefix": "{{parentDir}}-",
       "packagePatterns": [
         ".*"
@@ -69,14 +82,20 @@
       "matchPackageNames": [
         "golang"
       ],
-      "commitMessage": "golang - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "assignees": [
+        "cotton-alta"
+      ],
+      "commitMessagePrefix": "golang - ",
       "additionalBranchPrefix": "golang-"
     },
     {
       "matchPackageNames": [
         "mysql"
       ],
-      "commitMessage": "mysql - {{{commitMessagePrefix}}} {{{commitMessageAction}}} {{{commitMessageTopic}}} {{{commitMessageExtra}}} {{{commitMessageSuffix}}}",
+      "assignees": [
+        "cotton-alta"
+      ],
+      "commitMessagePrefix": "mysql - ",
       "additionalBranchPrefix": "mysql-"
     }
   ]
