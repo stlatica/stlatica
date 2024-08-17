@@ -15,7 +15,7 @@ services:
       - GO_ENV=local.docker
     build:
       context: .
-      dockerfile: Docker/Dockerfile_air
+      dockerfile: ./docker/Dockerfile_air
     ports:
       - "8080:8080"
     volumes:
