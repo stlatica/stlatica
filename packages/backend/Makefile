@@ -45,7 +45,7 @@ local/start-internalapi: set-go-env ## start internalapi on local
 docker/start-internalapi: ## start internalapi on docker
 	SOURCE_DIR=./app/cmd/internalapi docker compose up -d stlatica_server
 
-docker/stop-internalapi: set-go-env ## stop internalapi on docker
+docker/stop-internalapi: ## stop internalapi on docker
 	SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server
 
 docker/start-object-storage: ## start object storage on docker
