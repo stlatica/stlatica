@@ -17,13 +17,13 @@ local/migration-up: set-go-env ## run migration on local
 	$(GOBIN)/goose -dir=./db/migrations mysql "root@tcp(localhost:4000)/stlatica" up;
 
 docker/migration-up: ## run migration on docker
-	docker compose run --rm goose bash -c "`goose -dir=./db/migrations mysql "root@tcp(127.0.0.1:4000)/stlatica" up`"
+	docker compose run --rm goose bash -c "goose -dir=./db/migrations mysql 'root@tcp(stlatica_db)/stlatica' up"
 
 local/migration-down: set-go-env ## run migration down on local
-	$(GOBIN)/goose -dir=./db/migrations mysql "root@tcp(localhost:4000)/stlatica" down	
+	$(GOBIN)/goose -dir=./db/migrations mysql "root@tcp(localhost:4000)/stlatica" down
 
 docker/migration-down: ## run migration down on docker
-	docker compose run --rm goose bash -c "`goose -dir=./db/migrations mysql "root@tcp(127.0.0.1:4000)/stlatica" down`"
+	docker compose run --rm goose bash -c "goose -dir=./db/migrations mysql 'root@tcp(stlatica_db)/stlatica' down"
 
 local/generate-code-from-db: set-go-env ## generate code from db on local
 	@./db/sqlboiler/generate_codes.sh
