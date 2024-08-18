@@ -3,7 +3,7 @@ version: "3.9"
 services:
   stlatica_db:
     container_name: stlatica_db
-    image: mysql:8.0.34
+    image: mysql:9.0.1
     env_file:
       ./.env.local.docker
     ports:
