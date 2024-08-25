@@ -87,7 +87,7 @@ func (u *userUseCase) GetFollowers(ctx context.Context, params ports.FollowersGe
 	portImpl := &userPortImpl{
 		userDAO: u.userDAO,
 	}
-	user, err := getter.GetUserByPreferredUserID(ctx, params.PreferredUserPaginationID, portImpl)
+	user, err := getter.GetUserByPreferredUserID(ctx, params.PreferredUserID, portImpl)
 	if err != nil {
 		return nil, err
 	}

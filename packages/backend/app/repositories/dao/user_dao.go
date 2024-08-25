@@ -106,14 +106,14 @@ func (dao *userDAO) GetFollowers(ctx context.Context,
 		userRelations, err = entities.UserRelations(
 			entities.UserRelationBaseWhere.FollowerUserID.EQ(params.UserID),
 			qm.Limit(int(params.Limit)),
-			qm.OrderBy("follower_user_id DESC"),
+			qm.OrderBy("follow_user_id DESC"),
 		).All(ctx, dao.ctxExecutor)
 	} else {
 		userRelations, err = entities.UserRelations(
 			entities.UserRelationBaseWhere.FollowerUserID.EQ(params.UserID),
 			entities.UserRelationBaseWhere.FollowUserID.GT(params.UserPaginationID),
 			qm.Limit(int(params.Limit)),
-			qm.OrderBy("follower_user_id DESC"),
+			qm.OrderBy("follow_user_id DESC"),
 		).All(ctx, dao.ctxExecutor)
 	}
 	if err != nil {
