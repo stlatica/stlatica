@@ -61,7 +61,7 @@ func (g *userGetter) GetFollowers(ctx context.Context,
 	getParams ports.FollowersGetParams, inPort ports.UserGetInPort) ([]*entities.User, error) {
 	var limit uint64
 	if getParams.Limit == 0 {
-		limit = 100
+		limit = defaultUserLimit
 	} else {
 		limit = getParams.Limit
 	}
