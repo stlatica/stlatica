@@ -7,5 +7,5 @@ type PlatsGetParams struct {
 	UserIDs  []*types.UserID
 	ToDate   types.UnixTime
 	FromDate types.UnixTime
-	Limit    uint64
+	Limit    int
 }
