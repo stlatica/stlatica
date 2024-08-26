@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@ladle/react": "^4.1.0",
-    "@playwright/test": "1.46.0",
+    "@playwright/test": "1.46.1",
     "@remix-run/dev": "^2.10.3",
     "@stylistic/eslint-plugin": "^2.0.0",
     "@testing-library/react": "^16.0.0",
