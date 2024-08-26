@@ -42,7 +42,7 @@ func (g *userGetter) GetUserByPreferredUserID(ctx context.Context,
 
 func (g *userGetter) GetFollows(ctx context.Context,
 	getParams ports.FollowsGetParams, inPort ports.UserGetInPort) ([]*entities.User, error) {
-	var limit uint64
+	var limit int
 	if getParams.Limit == 0 {
 		limit = defaultUserLimit
 	} else {
@@ -59,7 +59,7 @@ func (g *userGetter) GetFollows(ctx context.Context,
 
 func (g *userGetter) GetFollowers(ctx context.Context,
 	getParams ports.FollowersGetParams, inPort ports.UserGetInPort) ([]*entities.User, error) {
-	var limit uint64
+	var limit int
 	if getParams.Limit == 0 {
 		limit = defaultUserLimit
 	} else {

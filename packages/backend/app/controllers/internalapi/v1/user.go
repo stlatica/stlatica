@@ -59,10 +59,10 @@ func (c *userController) GetUser(ectx echo.Context, userID string) (*GetUserResp
 
 func (c *userController) GetFollows(ectx echo.Context,
 	userIDStr string, userPaginationID *string, limit *int) ([]*GetFollowResponse, error) {
-	var limitValue uint64
+	var limitValue int
 	var userPaginationIDStr string
 	if limit != nil {
-		limitValue = uint64(*limit)
+		limitValue = int(*limit)
 	}
 	if userPaginationID == nil {
 		userPaginationIDStr = ""
@@ -95,7 +95,7 @@ func (c *userController) GetFollows(ectx echo.Context,
 
 func (c *userController) GetFollowers(ectx echo.Context,
 	userIDStr string, userPaginationID *string, limit *int) ([]*GetFollowerResponse, error) {
-	var limitValue uint64
+	var limitValue int
 	var userPaginationIDStr string
 	if userPaginationID == nil {
 		userPaginationIDStr = ""
@@ -103,7 +103,7 @@ func (c *userController) GetFollowers(ectx echo.Context,
 		userPaginationIDStr = *userPaginationID
 	}
 	if limit != nil {
-		limitValue = uint64(*limit)
+		limitValue = int(*limit)
 	}
 
 	getParams := ports.FollowersGetParams{
