@@ -62,7 +62,7 @@ func (c *userController) GetFollows(ectx echo.Context,
 	var limitValue int
 	var userPaginationIDStr string
 	if limit != nil {
-		limitValue = int(*limit)
+		limitValue = *limit
 	}
 	if userPaginationID == nil {
 		userPaginationIDStr = ""
@@ -103,7 +103,7 @@ func (c *userController) GetFollowers(ectx echo.Context,
 		userPaginationIDStr = *userPaginationID
 	}
 	if limit != nil {
-		limitValue = int(*limit)
+		limitValue = *limit
 	}
 
 	getParams := ports.FollowersGetParams{

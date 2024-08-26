@@ -64,13 +64,13 @@ func (dao *userDAO) GetFollows(ctx context.Context,
 		userRelations, err = entities.UserRelations(
 			entities.UserRelationBaseWhere.FollowUserID.EQ(params.UserID),
 			entities.UserRelationBaseWhere.FollowerUserID.GT(params.UserPaginationID),
-			qm.Limit(int(params.Limit)),
+			qm.Limit(params.Limit),
 			qm.OrderBy("follower_user_id DESC"),
 		).All(ctx, dao.ctxExecutor)
 	} else {
 		userRelations, err = entities.UserRelations(
 			entities.UserRelationBaseWhere.FollowUserID.EQ(params.UserID),
-			qm.Limit(int(params.Limit)),
+			qm.Limit(params.Limit),
 			qm.OrderBy("follower_user_id DESC"),
 		).All(ctx, dao.ctxExecutor)
 	}
@@ -105,14 +105,14 @@ func (dao *userDAO) GetFollowers(ctx context.Context,
 	if reflect.ValueOf(params.UserPaginationID).IsZero() {
 		userRelations, err = entities.UserRelations(
 			entities.UserRelationBaseWhere.FollowerUserID.EQ(params.UserID),
-			qm.Limit(int(params.Limit)),
+			qm.Limit(params.Limit),
 			qm.OrderBy("follow_user_id DESC"),
 		).All(ctx, dao.ctxExecutor)
 	} else {
 		userRelations, err = entities.UserRelations(
 			entities.UserRelationBaseWhere.FollowerUserID.EQ(params.UserID),
 			entities.UserRelationBaseWhere.FollowUserID.GT(params.UserPaginationID),
-			qm.Limit(int(params.Limit)),
+			qm.Limit(params.Limit),
 			qm.OrderBy("follow_user_id DESC"),
 		).All(ctx, dao.ctxExecutor)
 	}

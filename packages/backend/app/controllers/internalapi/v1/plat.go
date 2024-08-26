@@ -72,7 +72,7 @@ func (c *platController) GetPlatsByQuery(ectx echo.Context,
 		fromDateUnixTime = types.NewUnixTimeFromTime(*fromDate)
 	}
 	if limit != nil {
-		limitValue = int(*limit)
+		limitValue = *limit
 	}
 
 	userID := types.UserID{} // TODO: Get user id from context https://github.com/stlatica/stlatica/issues/460
