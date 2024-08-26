@@ -1,6 +1,102 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    "group:allNonMajor",
+    "schedule:weekly"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
+  "packageRules": [
+    {
+      "managers": [
+        "npm"
+      ],
+      "additionalBranchPrefix": "{{parentDir}}-",
+      "packagePatterns": [
+        ".*"
+      ],
+      "assignees": [
+        "para7"
+      ],
+      "commitMessagePrefix": "npm - ",
+      "ignoreDeps": [
+        "playwright",
+        "@types/node"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "node",
+        "@types/node"
+      ],
+      "assignees": [
+        "para7"
+      ],
+      "commitMessagePrefix": "node - ",
+      "additionalBranchPrefix": "{{parentDir}}-"
+    },
+    {
+      "matchPackageNames": [
+        "pnpm"
+      ],
+      "assignees": [
+        "para7"
+      ],
+      "commitMessagePrefix": "pnpm - ",
+      "additionalBranchPrefix": "{{parentDir}}-"
+    },
+    {
+      "managers": [
+        "npm",
+        "dockerfile",
+        "devcontainer"
+      ],
+      "assignees": [
+        "para7"
+      ],
+      "matchPackageNames": [
+        "@playwright/test",
+        "mcr.microsoft.com/playwright"
+      ],
+      "commitMessagePrefix": "playwright - ",
+      "additionalBranchPrefix": "playwright-"
+    },
+    {
+      "managers": [
+        "gomod"
+      ],
+      "assignees": [
+        "cotton-alta"
+      ],
+      "commitMessagePrefix": "gomod - ",
+      "additionalBranchPrefix": "{{parentDir}}-",
+      "packagePatterns": [
+        ".*"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "golang"
+      ],
+      "assignees": [
+        "cotton-alta"
+      ],
+      "commitMessagePrefix": "golang - ",
+      "additionalBranchPrefix": "golang-"
+    },
+    {
+      "matchPackageNames": [
+        "mysql"
+      ],
+      "assignees": [
+        "cotton-alta"
+      ],
+      "commitMessagePrefix": "mysql - ",
+      "additionalBranchPrefix": "mysql-"
+    }
   ]
 }

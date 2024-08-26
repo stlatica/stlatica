@@ -1,11 +1,12 @@
-import { Stack } from "@mantine/core";
+import { Button } from "@mantine/core";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import React, { useEffect } from "react";
 
 import { PlatCellWithFetch } from "@/components/common/PlatCell/PlatCellWithFetch";
 import { useTimeline } from "@/features/globalStore/TimelineStore";
 import { useGetTimelineByQuery } from "@/openapi/stlaticaInternalApi";
 
-import { container } from "./Timeline.css";
+import * as styles from "./Timeline.css";
 
 type TimelineProps = {
   /**
@@ -41,11 +42,63 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
     mutate(tl.data);
   }, [mutate, tl]);
 
+  const parentRef = React.useRef<HTMLDivElement>(null);
+
+  const count = data.length;
+  const virtualizer = useVirtualizer({
+    count,
+    getScrollElement: () => {
+      return parentRef.current;
+    },
+    estimateSize: () => {
+      return 45;
+    },
+  });
+
+  const items = virtualizer.getVirtualItems();
+
   return (
-    <Stack className={container}>
-      {data.map(({ plat_id }, i) => {
-        return <PlatCellWithFetch key={i} id={plat_id} />;
-      })}
-    </Stack>
+    <>
+      <Button
+        fullWidth
+        variant="outline"
+        onClick={() => {
+          virtualizer.scrollToIndex(0);
+        }}
+      >
+        scroll to the top
+      </Button>
+      <div ref={parentRef} className={styles.container}>
+        <div
+          className={styles.scrollArea}
+          // eslint-disable-next-line react/forbid-dom-props
+          style={{
+            height: virtualizer.getTotalSize(),
+          }}
+        >
+          <div
+            className={styles.positionHelper}
+            // eslint-disable-next-line react/forbid-dom-props
+            style={{
+              transform: `translateY(${String(items[0]?.start ?? 0)}px)`,
+            }}
+          >
+            {items.map((virtualRow) => {
+              const { plat_id } = data[virtualRow.index];
+              return (
+                <div
+                  key={virtualRow.key}
+                  data-index={virtualRow.index}
+                  ref={virtualizer.measureElement}
+                  className={styles.item}
+                >
+                  <PlatCellWithFetch key={plat_id} id={plat_id} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };

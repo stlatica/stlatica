@@ -9,7 +9,7 @@
     "lint": "biome check --apply ./src",
     "start": "node --enable-source-maps build/express.js",
     "ts": "tsc --project tsconfig.json --noEmit",
-    "gen": "openapi-typescript ../openapi/internalapi/openapi-bundled.yaml -o ./src/schema.d.ts"
+    "gen": "openapi-typescript ../openapi/build/openapi-bundled-internal.yaml -o ./src/schema.d.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,9 +23,9 @@
     "@biomejs/biome": "^1.8.3",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.11",
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.23.0",
     "nodemon": "^3.1.4",
-    "openapi-typescript": "^6.7.6",
+    "openapi-typescript": "^7.0.0",
     "typescript": "^5.5.3"
   }
 }

@@ -25,6 +25,8 @@ type Client interface {
 	GetObject(ctx context.Context, bucketName string, objectName string) (io.ReadCloser, error)
 	// PutObject puts an object to object storage.
 	PutObject(ctx context.Context, bucketName string, objectName string, reader io.Reader, contentType string) error
+	// DeleteObject deletes an object from object storage.
+	DeleteObject(ctx context.Context, bucketName string, objectName string) error
 }
 
 type client struct {
@@ -96,6 +98,14 @@ func (c *client) PutObject(ctx context.Context,
 		Key:         aws.String(objectName),
 		Body:        reader,
 		ContentType: aws.String(contentType),
+	})
+	return err
+}
+
+func (c *client) DeleteObject(ctx context.Context, bucketName string, objectName string) error {
+	_, err := c.orgClient.DeleteObject(ctx, &s3.DeleteObjectInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(objectName),
 	})
 	return err
 }

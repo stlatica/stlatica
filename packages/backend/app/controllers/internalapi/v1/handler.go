@@ -124,6 +124,14 @@ func (h *handler) UploadImage(ectx echo.Context) error {
 	return ectx.JSON(http.StatusCreated, response)
 }
 
+func (h *handler) DeleteImage(ectx echo.Context, imageIDStr string) error {
+	err := h.imageController.DeleteImage(ectx, imageIDStr)
+	if err != nil {
+		return err
+	}
+	return ectx.NoContent(http.StatusNoContent)
+}
+
 func (h *handler) PostFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }
@@ -132,7 +140,31 @@ func (h *handler) DeleteFavorite(_ echo.Context, _ openapi.PlatId) error {
 	panic("implement me")
 }
 
+func (h *handler) GetFollows(ctx echo.Context, userID openapi.UserId, params openapi.GetFollowsParams) error {
+	response, err := h.userController.GetFollows(ctx, userID, params.UserPaginationId, params.Limit)
+	if err != nil {
+		return err
+	}
+	return ctx.JSON(http.StatusOK, response)
+}
+
+func (h *handler) PostFollow(_ echo.Context, _ openapi.UserId) error {
+	panic("implement me")
+}
+
+func (h *handler) DeleteFollow(_ echo.Context, _ openapi.UserId) error {
+	panic("implement me")
+}
+
+func (h *handler) GetFollowers(_ echo.Context, _ openapi.UserId, _ openapi.GetFollowersParams) error {
+	panic("implement me")
+}
+
 func (h *handler) Login(_ echo.Context) error {
+	panic("implement me")
+}
+
+func (h *handler) GetUserIcon(_ echo.Context, _ openapi.UserId) error {
 	panic("implement me")
 }
 
