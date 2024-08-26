@@ -68,7 +68,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-tailwindcss": "^3.17.4",
     "eslint-plugin-unused-imports": "^4.0.0",
-    "jsdom": "^24.1.1",
+    "jsdom": "^25.0.0",
     "orval": "^7.0.0",
     "plop": "^4.0.1",
     "postcss": "^8.4.39",
