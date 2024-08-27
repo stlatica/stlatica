@@ -1,7 +1,8 @@
 .DEFAULT_GOAL := help
 
+export GOBIN := $(PWD)/bin
+
 set-go-env:
-	$(eval GOBIN=$(PWD)/bin)
 	$(eval PATH=$(GOBIN):$(shell go env GOPATH):$(PATH))
 
 local/install-tools: set-go-env ## install tools on local
