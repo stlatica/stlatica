@@ -1,5 +1,5 @@
-FROM node:20.16.0-slim as node
-FROM mcr.microsoft.com/playwright:v1.44.1-jammy as playwright
+FROM node:20.17.0-slim as node
+FROM mcr.microsoft.com/playwright:v1.46.1-jammy as playwright
 FROM ubuntu:22.04 as ubuntu
 
 # ***** playwright を搭載した nodejs 環境を開発のベースとして使う *****
