@@ -3,7 +3,7 @@
   "extends": [
     "config:recommended",
     "group:allNonMajor",
-    "schedule:weekly"
+    "schedule:monthly"
   ],
   "labels": [
     "dependencies"
