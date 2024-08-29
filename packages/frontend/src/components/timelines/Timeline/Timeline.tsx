@@ -25,7 +25,7 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
   const [date] = React.useState(new Date().toISOString());
 
   const { data: tl } = useGetTimelineByQuery(
-    { user_id, type: "home", from_date: date },
+    { user_id, type: "home", to_date: date },
     {
       // 認証ヘッダー仮置き
       axios: {

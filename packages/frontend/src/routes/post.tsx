@@ -26,7 +26,7 @@ export default function LoginScene() {
   const onSubmit = handleSubmit(async (val) => {
     await trigger({
       content: val.content,
-      user_id: "asdf",
+      user_id: val.user_id,
     });
   });
 
