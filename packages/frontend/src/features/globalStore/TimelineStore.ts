@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { mutate } from "swr";
 
 import { SimpleSortObject } from "@/utilities/utilities";
@@ -7,7 +8,7 @@ import useStaticSWR from "./useStaticSWR";
 import type { Plat } from "@/openapi/stlaticaInternalApi.schemas";
 
 const PlatURLKey = (plat_id: string) => {
-  return `http://localhost:4010/internal/v1/plats/${plat_id}`;
+  return `http://localhost:8080/internal/v1/plats/${plat_id}`;
 };
 
 /**
@@ -34,35 +35,38 @@ type TimelineType = { plat_id: string; created_at: Date };
 export const useTimeline = (url: string) => {
   const { data, mutate: _mutate } = useStaticSWR(`timeline-${url}`, new Array<TimelineType>());
 
-  const mutate = (plats: Plat[]) => {
-    SetPlatCache(plats);
+  const mutate = useCallback(
+    (plats: Plat[]) => {
+      SetPlatCache(plats);
 
-    // データ整形
-    const r: TimelineType[] = plats.map((x) => {
-      return { plat_id: x.plat_id, created_at: new Date(x.created_at) };
-    });
+      // データ整形
+      const r: TimelineType[] = plats.map((x) => {
+        return { plat_id: x.plat_id, created_at: new Date(x.created_at) };
+      });
 
-    // 新しいデータを合体
-    const merged = r.concat(data);
+      // 新しいデータを合体
+      const merged = r.concat(data);
 
-    // 重複排除
-    const filtered = Array.from(
-      new Map(
-        merged.map((user) => {
-          return [user.plat_id, user];
-        })
-      ).values()
-    );
+      // 重複排除
+      const filtered = Array.from(
+        new Map(
+          merged.map((user) => {
+            return [user.plat_id, user];
+          })
+        ).values()
+      );
 
-    // ソート
-    const sorted = filtered.sort(SimpleSortObject("created_at", "reverse"));
+      // ソート
+      const sorted = filtered.sort(SimpleSortObject("created_at", "reverse"));
 
-    _mutate(sorted).catch((e: unknown) => {
-      // TODO: #437 フロント用共通エラー処理関数を作る
-      // eslint-disable-next-line no-console
-      console.error(e);
-    });
-  };
+      _mutate(sorted).catch((e: unknown) => {
+        // TODO: #437 フロント用共通エラー処理関数を作る
+        // eslint-disable-next-line no-console
+        console.error(e);
+      });
+    },
+    [_mutate, data]
+  );
 
   return {
     data,

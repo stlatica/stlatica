@@ -9,7 +9,7 @@ export default defineConfig({
       client: "swr",
       mock: true,
       // useTypeOverInterfaces: true,
-      baseUrl: "http://localhost:4010",
+      baseUrl: "http://localhost:8080",
     },
     input: {
       target: "../shared/openapi/build/openapi-bundled-internal.yaml",
