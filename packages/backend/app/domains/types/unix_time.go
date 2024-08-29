@@ -7,7 +7,7 @@ import (
 )
 
 // UnixTime is the type for unix time.
-type UnixTime int64
+type UnixTime uint64
 
 // NewUnixTimeFromTime returns a new unix time from time.Time.
 func NewUnixTimeFromTime(time time.Time) UnixTime {
