@@ -1,10 +1,10 @@
 import React from "react";
 
-type UserIconProps = {
-  // children: React.ReactNode;
+import { userIcon } from "./user-icon.css";
 
+type UserIconProps = {
   /**
-   * bese64
+   * base64
    */
   readonly iconImage: string;
 
@@ -15,5 +15,5 @@ type UserIconProps = {
  * user icon
  */
 export const UserIcon: React.FC<UserIconProps> = ({ iconImage, alt = "user icon" }) => {
-  return <img alt={alt} className="aspect-square size-full rounded-full" src={iconImage} />;
+  return <img alt={alt} className={userIcon} src={iconImage} />;
 };
