@@ -7,7 +7,7 @@ import (
 )
 
 // UnixTime is the type for unix time.
-type UnixTime uint64
+type UnixTime int64
 
 // NewUnixTimeFromTime returns a new unix time from time.Time.
 func NewUnixTimeFromTime(time time.Time) UnixTime {
@@ -26,7 +26,7 @@ func NewUnixTimeFromCurrentTime() UnixTime {
 
 // Value implements driver.Valuer interface.
 func (ut UnixTime) Value() (driver.Value, error) {
-	return uint64(ut), nil
+	return int64(ut), nil
 }
 
 // Scan implements of sql.Scanner interface.
@@ -36,7 +36,7 @@ func (ut *UnixTime) Scan(src interface{}) error {
 		return nil
 	}
 
-	if u, ok := src.(uint64); ok {
+	if u, ok := src.(int64); ok {
 		*ut = UnixTime(u)
 		return nil
 	}
