@@ -26,6 +26,12 @@ services:
       LC_CTYPE: ja_JP.UTF-8
     tty: true
 
+  prod:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: prod
+
   vrt:
     build:
       context: .
@@ -42,11 +48,3 @@ services:
     #     target: /stlatica/packages/frontend/e2e/report
     tty: true
 
-  # # prism-internal:
-  # #   container_name: prism-internal
-  # #   image: stoplight/prism:4
-  # #   command: "mock -h 0.0.0.0 /tmp/api.oas3.yml"
-  # #   volumes:
-  # #     - ../shared/openapi/internalapi/openapi.yaml:/tmp/api.oas3.yml:ro
-  # #   ports:
-  # #     - "4010:4010"

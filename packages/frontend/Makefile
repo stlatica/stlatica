@@ -2,6 +2,9 @@
 
 # << main commands >>
 
+start-prod: ## start production server
+	docker compose run --build -p 127.0.0.1:3000:3000 prod
+
 dev: node_modules ## run remix server
 	pnpm run dev
 

@@ -76,6 +76,8 @@ func (c *platController) GetPlatsByQuery(ectx echo.Context,
 	}
 
 	userID := types.UserID{} // TODO: Get user id from context https://github.com/stlatica/stlatica/issues/460
+	// userID, _ := types.NewUserIDFromString("01FVSHW3S537KKHBRMSA418ATB")
+
 	getParams := ports.PlatsGetParams{
 		TimelineType: types.TimelineType(timelineTypeStr),
 		ToDate:       toDateUnixTime,
