@@ -45,6 +45,24 @@ ErrorCodes:
       application/json:
         schema:
           $ref: "#/ErrorResponse"
+  E409:
+    description: |
+      conflict \
+      error code:
+      - 'CONFLICT'
+    content:
+      application/json:
+        schema:
+          $ref: "#/ErrorResponse"
+  E422:
+    description: |
+      unprocessable entity \
+      error code:
+      - 'UNPROCESSABLE_ENTITY'
+    content:
+      application/json:
+        schema:
+          $ref: "#/ErrorResponse"
   E500:
     description: |
       internal server error \

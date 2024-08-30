@@ -46,3 +46,11 @@ func (c *imageController) UploadImage(ectx echo.Context, imageBase64 string) (*P
 		ImageID: imageID.String(),
 	}, nil
 }
+
+func (c *imageController) DeleteImage(ectx echo.Context, imageIDStr string) error {
+	imageID, err := ulid.Parse(imageIDStr)
+	if err != nil {
+		return err
+	}
+	return c.imageUseCase.DeleteImage(ectx.Request().Context(), types.ImageID(imageID))
+}

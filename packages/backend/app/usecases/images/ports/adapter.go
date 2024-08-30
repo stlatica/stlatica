@@ -13,4 +13,6 @@ type ImageAdapter interface {
 	GetImage(ctx context.Context, imageID types.ImageID) (io.ReadCloser, error)
 	// UploadImage uploads image.
 	UploadImage(ctx context.Context, imageID types.ImageID, imageBinary []byte) error
+	// DeleteImage deletes image.
+	DeleteImage(ctx context.Context, imageID types.ImageID) error
 }
