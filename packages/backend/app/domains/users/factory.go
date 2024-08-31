@@ -24,3 +24,9 @@ func (f *factory) NewUserGetter() UserGetter {
 		appLogger: f.appLogger,
 	}
 }
+
+func (f *factory) NewUserCreator() UserCreator {
+	return &userCreator{
+		appLogger: f.appLogger,
+	}
+}

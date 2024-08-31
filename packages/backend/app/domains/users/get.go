@@ -15,6 +15,8 @@ const defaultUserLimit = 100
 type UserGetter interface {
 	// GetUser returns user.
 	GetUser(ctx context.Context, userID types.UserID, inPort ports.UserGetInPort) (*entities.User, error)
+	// CreateUser creates a new user.
+	CreateUser(ctx context.Context, userName string, inPort ports.UserCreateInPort) (*entities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context,
 		preferredUserID string, inPort ports.UserGetInPort) (*entities.User, error)
@@ -27,9 +29,19 @@ type userGetter struct {
 	appLogger *logger.AppLogger
 }
 
+type userCreator struct {
+	appLogger *logger.AppLogger
+}
+
 func (g *userGetter) GetUser(ctx context.Context,
 	userID types.UserID, inPort ports.UserGetInPort) (*entities.User, error) {
 	return inPort.GetUser(ctx, userID)
+}
+
+func (g *userCreator) CreateUser(ctx context.Context,
+	userName string, inport ports.UserCreateInPort) (*entities.User, error) { {
+		return inPort.CreateUser(ctx, userName, inport)
+	}
 }
 
 func (g *userGetter) GetUserByPreferredUserID(ctx context.Context,

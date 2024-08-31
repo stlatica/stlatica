@@ -48,6 +48,23 @@ func (c *userController) GetUser(ectx echo.Context, userID string) (*GetUserResp
 	}, nil
 }
 
+// CreateUser creates a new user.
+func (c * userController) CreateUser(ectx echo.Context, userName string) (*GetUserResponse, error) {
+	user, err := c.userUseCase.CreateUser(ectx.Request().Context(), userName)
+	if err != nil {
+		return nil, err
+	}
+	return &GetUserResponse{
+		UserID:       user.GetPreferredUserID(),
+		Username:     user.GetPreferredUserName(),
+		RegisteredAt: user.GetRegisteredAt().ConvertToTime().String(),
+		IsPublic:     user.GetIsPublic(),
+		MailAddress:  user.GetMailAddress(),
+		CreatedAt:    user.GetCreatedAt().ConvertToTime().String(),
+		UpdatedAt:    user.GetUpdatedAt().ConvertToTime().String(),
+	}, nil
+}
+
 func (c *userController) GetFollows(ectx echo.Context,
 	userIDStr string, userPaginationID *string, limit *int) ([]*GetFollowResponse, error) {
 	var limitValue uint64

@@ -53,8 +53,17 @@ func (h *handler) GetUsers(_ echo.Context, _ openapi.GetUsersParams) error {
 	panic("implement me")
 }
 
-func (h *handler) CreateUser(_ echo.Context) error {
-	panic("implement me")
+func (h *handler) CreateUser(ectx echo.Context) error {
+	var user openapi.User
+	err := ectx.Bind(&user)
+	if err != nil {
+		return err
+	}
+	response, err := h.userController.CreateUser(ectx, user.Username)
+	if err != nil {
+		return err
+	}
+	return ectx.JSON(http.StatusCreated, response)
 }
 
 func (h *handler) DeleteUser(_ echo.Context, _ openapi.UserId) error {
