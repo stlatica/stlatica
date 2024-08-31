@@ -21,6 +21,9 @@ type UserGetter interface {
 	// GetFollows returns follows of user.
 	GetFollows(ctx context.Context,
 		getParams ports.FollowsGetParams, inPort ports.UserGetInPort) ([]*entities.User, error)
+	// GetFollowers returns followers of user.
+	GetFollowers(ctx context.Context,
+		getParams ports.FollowersGetParams, inPort ports.UserGetInPort) ([]*entities.User, error)
 }
 
 type userGetter struct {
@@ -39,7 +42,7 @@ func (g *userGetter) GetUserByPreferredUserID(ctx context.Context,
 
 func (g *userGetter) GetFollows(ctx context.Context,
 	getParams ports.FollowsGetParams, inPort ports.UserGetInPort) ([]*entities.User, error) {
-	var limit uint64
+	var limit int
 	if getParams.Limit == 0 {
 		limit = defaultUserLimit
 	} else {
@@ -52,4 +55,21 @@ func (g *userGetter) GetFollows(ctx context.Context,
 		Limit:            limit,
 	}
 	return inPort.GetFollows(ctx, params)
+}
+
+func (g *userGetter) GetFollowers(ctx context.Context,
+	getParams ports.FollowersGetParams, inPort ports.UserGetInPort) ([]*entities.User, error) {
+	var limit int
+	if getParams.Limit == 0 {
+		limit = defaultUserLimit
+	} else {
+		limit = getParams.Limit
+	}
+
+	params := ports.FollowersGetParams{
+		UserID:           getParams.UserID,
+		UserPaginationID: getParams.UserPaginationID,
+		Limit:            limit,
+	}
+	return inPort.GetFollowers(ctx, params)
 }
