@@ -18,3 +18,9 @@ services:
       context: .
       dockerfile: ./Dockerfile.node
       target: prod
+
+# バックエンドリポジトリのDBに接続
+networks:
+  default:
+    name: backend_default
+    external: true
