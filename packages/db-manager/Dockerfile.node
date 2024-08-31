@@ -1,0 +1,30 @@
+FROM node:20.17.0-slim as node
+RUN corepack enable npm pnpm \
+  && corepack use pnpm@9 \
+  && pnpm config set store-dir /home/node/.pnpm-store
+
+FROM node as dev 
+
+
+# ***** apt *****
+# 開発に必要な依存関係類のインストール
+RUN apt update -y \
+  && apt install -y \
+  git \
+  git-lfs \
+  make \
+  bash-completion \
+  less \
+  # vim \
+  # x11-apps \
+  # language-pack-ja \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/* \
+  && git lfs install \
+
+
+USER node
+
+FROM node as prod
+
+# ENTRYPOINT [ "pnpm", "start"]
