@@ -24,6 +24,7 @@ RUN apt update -y \
 
 
 USER node
+RUN echo `alias pn=pnpm` >> ~/.bashrc 
 
 FROM node as prod
 

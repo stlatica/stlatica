@@ -1,0 +1,11 @@
+/* flex horizontal */
+.ut-flex-h {
+	display: flex;
+	flex-direction: row;
+}
+
+/* flex vertical */
+.ut-flex-v {
+	display: flex;
+	flex-direction: column;
+}

@@ -19,8 +19,9 @@ build: node_modules ## run build
 start: ## start builded server
 	pnpm run start
 
-prisma-pull: ## pull prisma schema
+prisma-sync: ## sync prisma schema
 	pnpm prisma db pull
+	pnpm prisma generate
 
 # << utility commands >>
 
