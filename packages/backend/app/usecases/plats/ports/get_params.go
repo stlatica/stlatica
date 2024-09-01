@@ -7,5 +7,5 @@ type PlatsGetParams struct {
 	TimelineType types.TimelineType
 	ToDate       types.UnixTime
 	FromDate     types.UnixTime
-	Limit        uint64
+	Limit        int
 }

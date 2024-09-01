@@ -4,14 +4,14 @@ import React from "react";
 
 import { useNavigateSafe } from "@/features/acl/useNavigate";
 
-type ProfileTabProps = {
-  // children: React.ReactNode;
-};
+// type ProfileTabProps = {
+//   // children: React.ReactNode;
+// };
 
 /**
  * Profile 表示用のタブ
  */
-export const ProfileTab: React.FC<ProfileTabProps> = () => {
+export const ProfileTab: React.FC<void> = () => {
   const navigate = useNavigateSafe();
   const { tabValue } = useParams();
 

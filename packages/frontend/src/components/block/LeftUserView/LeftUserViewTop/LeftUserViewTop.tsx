@@ -3,14 +3,14 @@ import React from "react";
 import { BackButton } from "@/components/button/BackButton";
 import { FollowButton } from "@/components/button/FollowButton";
 
-type LeftUserViewTopProps = {
-  // children: React.ReactNode;
-};
+// type LeftUserViewTopProps = {
+//   // children: React.ReactNode;
+// };
 
 /**
  *
  */
-export const LeftUserViewTop: React.FC<LeftUserViewTopProps> = () => {
+export const LeftUserViewTop: React.FC<void> = () => {
   return (
     <div className="flex flex-col">
       <div className="grid h-[170px] grid-cols-10 ">

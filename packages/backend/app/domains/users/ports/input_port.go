@@ -15,6 +15,8 @@ type UserGetInPort interface {
 	GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error)
 	// GetFollows returns follows of user.
 	GetFollows(ctx context.Context, params FollowsGetParams) ([]*entities.User, error)
+	// GetFollowers returns followers of user
+	GetFollowers(ctx context.Context, params FollowersGetParams) ([]*entities.User, error)
 }
 
 // UserCreateInPort is the interface for creating user.

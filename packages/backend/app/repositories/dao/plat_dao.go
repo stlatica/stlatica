@@ -85,7 +85,7 @@ func (dao *platDAO) GetPlats(ctx context.Context, params domainports.PlatsGetPar
 	query := entities.Plats(
 		dateCondition,
 		qm.WhereIn("user_id IN ?", userIDs...),
-		qm.Limit(int(params.Limit)),
+		qm.Limit(params.Limit),
 		qm.OrderBy("created_at DESC"),
 	)
 
