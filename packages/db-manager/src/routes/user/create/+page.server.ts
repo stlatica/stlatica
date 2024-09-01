@@ -1,22 +1,22 @@
 import type { PageServerLoad, Actions } from './$types';
 import { honoClient } from '$lib/hono/honoClient';
-import { FormdataToObject } from '$lib/utilities/FormdataToObject';
 import { prisma } from '$lib/prisma.server';
 
 export const actions: Actions = {
 	default: async (x) => {
 		const form = await x.request.formData();
-		// formをオブジェクトに変換する
-		const formObject = FormdataToObject(form);
-		// console.log(formObject);
 
-		console.log(formObject.is_public);
+		console.log(form.get('is_public'));
 
 		try {
 			const r = await prisma.users.create({
 				data: {
-					...formObject,
-					is_public: formObject.is_public === 'on',
+					// ...formObject,
+					user_id: String(form.get('user_id')),
+					preferred_user_id: String(form.get('preferred_user_id')),
+					preferred_user_name: String(form.get('preferred_user_name')),
+					mail_address: String(form.get('mail_address')),
+					is_public: form.get('is_public') === 'on',
 					registered_at: new Date().valueOf(),
 					created_at: new Date().valueOf(),
 					updated_at: new Date().valueOf()

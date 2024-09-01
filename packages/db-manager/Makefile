@@ -6,9 +6,9 @@ dev: node_modules ## run remix server
 	pnpm run dev
 
 lint: node_modules ## lint & format
+	pnpm run format
 	pnpm run lint
 	pnpm run check
-	pnpm run format
 
 test: node_modules ## run vitest ui
 	pnpm run test
