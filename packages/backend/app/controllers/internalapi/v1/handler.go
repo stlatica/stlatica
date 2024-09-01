@@ -54,12 +54,12 @@ func (h *handler) GetUsers(_ echo.Context, _ openapi.GetUsersParams) error {
 }
 
 func (h *handler) CreateUser(ectx echo.Context) error {
-	var user openapi.User
+	var user openapi.CreateUserJSONBody
 	err := ectx.Bind(&user)
 	if err != nil {
 		return err
 	}
-	response, err := h.userController.CreateUser(ectx, user.Username)
+	response, err := h.userController.CreateUser(ectx, *user.Name, *user.Email)
 	if err != nil {
 		return err
 	}

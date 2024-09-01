@@ -6,6 +6,8 @@ import "github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
 type Factory interface {
 	// NewUserGetter returns a new user getter.
 	NewUserGetter() UserGetter
+	// NewUserCreator returns a new user creator.
+	NewUserCreator() UserCreator
 }
 
 // NewFactory returns a new factory of users package.

@@ -11,10 +11,14 @@ import (
 type UserGetInPort interface {
 	// GetUser returns user.
 	GetUser(ctx context.Context, userID types.UserID) (*entities.User, error)
-	// CreateUSer creates a new user.
-	CreateUser(ctx context.Context, userName string) (*entities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error)
 	// GetFollows returns follows of user.
 	GetFollows(ctx context.Context, params FollowsGetParams) ([]*entities.User, error)
+}
+
+// UserCreateInPort is the interface for creating user.
+type UserCreateInPort interface {
+	// CreateUSer creates a new user.
+	CreateUser(ctx context.Context, userName string, mailAddress string) (*entities.User, error)
 }
