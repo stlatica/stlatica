@@ -32,9 +32,15 @@
 		font-size: var(--font-size-sm);
 	}
 
-	table,
+	table {
+		text-align: center;
+		border-collapse: collapse;
+	}
+
 	table th,
 	table td {
-		border: 1px solid var(--gray-10);
+		border-bottom: 2px solid var(--gray-10);
+		padding: var(--size-3);
+		padding-left: var(--size-5);
 	}
 </style>
