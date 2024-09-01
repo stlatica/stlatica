@@ -30,6 +30,7 @@
 	main {
 		display: flex;
 		height: 100%;
+		/* min-width: 800px; */
 	}
 
 	a {
@@ -38,10 +39,12 @@
 
 	.menu {
 		background-color: var(--gray-3);
-		height: 100%;
+		/* height: 100%; */
 		padding: 0.5rem;
-		padding-right: 2rem;
-		width: 12rem;
+		padding-right: 0.5rem;
+		width: 10rem;
+		/* display: flex;
+		flex-direction: column; */
 	}
 
 	.container {
@@ -49,11 +52,12 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		overflow: auto;
 	}
 
 	.content {
 		min-width: 600px;
-		max-width: 1440px;
+		/* max-width: 1440px; */
 		padding: 1rem;
 		display: flex;
 		flex-direction: column;

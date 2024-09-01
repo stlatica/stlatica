@@ -10,11 +10,13 @@ export const actions: Actions = {
 		const formObject = FormdataToObject(form);
 		// console.log(formObject);
 
+		console.log(formObject.is_public);
+
 		try {
 			const r = await prisma.users.create({
 				data: {
 					...formObject,
-					is_public: formObject.is_public === 'true',
+					is_public: formObject.is_public === 'on',
 					registered_at: new Date().valueOf(),
 					created_at: new Date().valueOf(),
 					updated_at: new Date().valueOf()
