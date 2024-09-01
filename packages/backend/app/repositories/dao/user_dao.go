@@ -2,9 +2,12 @@ package dao
 
 import (
 	"context"
+	"database/sql"
 	"reflect"
 
+	"github.com/friendsofgo/errors"
 	domainentities "github.com/stlatica/stlatica/packages/backend/app/domains/entities"
+	domainerrors "github.com/stlatica/stlatica/packages/backend/app/domains/errors"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	domainports "github.com/stlatica/stlatica/packages/backend/app/domains/users/ports"
 	"github.com/stlatica/stlatica/packages/backend/app/repositories/entities"
@@ -39,6 +42,10 @@ type userDAO struct {
 func (dao *userDAO) GetUser(ctx context.Context, userID types.UserID) (*domainentities.User, error) {
 	entity, err := entities.FindUserBase(ctx, dao.ctxExecutor, userID)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, domainerrors.NewDomainError(err,
+				domainerrors.DomainErrorTypeNotFound, "user not found")
+		}
 		return nil, err
 	}
 
@@ -50,6 +57,10 @@ func (dao *userDAO) GetUserByPreferredUserID(ctx context.Context,
 	query := entities.UserBaseWhere.PreferredUserID.EQ(preferredUserID)
 	entity, err := entities.Users(query).One(ctx, dao.ctxExecutor)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, domainerrors.NewDomainError(err,
+				domainerrors.DomainErrorTypeNotFound, "user not found")
+		}
 		return nil, err
 	}
 
