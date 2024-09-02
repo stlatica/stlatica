@@ -10,6 +10,18 @@
 
 devcontainer使わず直接編集したい場合は環境変数を調整してください。
 
+## favicon memo
+
+https://favicon.io/favicon-generator/
+
+```
+#5AF
+
+pacifico
+
+110
+```
+
 ## create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
