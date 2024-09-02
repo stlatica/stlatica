@@ -20,7 +20,7 @@ RUN apt update -y \
   # language-pack-ja \
   && apt clean \
   && rm -rf /var/lib/apt/lists/* \
-  && git lfs install \
+  && git lfs install
 
 
 USER node
@@ -28,4 +28,19 @@ RUN echo `alias pn=pnpm` >> ~/.bashrc
 
 FROM node as prod
 
-# ENTRYPOINT [ "pnpm", "start"]
+# ***** apt *****
+# 開発に必要な依存関係類のインストール
+RUN apt update -y \
+  && apt install -y openssl \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/* 
+
+COPY pnpm-lock.yaml .
+RUN pnpm fetch
+
+COPY . .
+RUN pnpm install --frozen-lockfile
+RUN pnpm prisma generate
+RUN pnpm build
+
+ENTRYPOINT [ "pnpm", "preview" ]

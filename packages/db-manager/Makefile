@@ -1,5 +1,16 @@
 .DEFAULT_GOAL := help
 
+# << production command >>
+
+docker/start: ## start docker container
+	docker compose up -d --build --remove-orphans prod
+
+docker/logs: ## show docker logs
+	docker compose logs -f
+
+docker/stop: ## stop docker container
+	docker compose down
+
 # << main commands >>
 
 dev: node_modules ## run remix server

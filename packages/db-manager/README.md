@@ -1,4 +1,16 @@
-# create-svelte
+# Stlatica DB Mangement Tool (SDMT)
+
+## 起動
+
+> make docker/start
+
+## 開発方法
+
+ネットワークの都合上 devcontainer 前提です。
+
+devcontainer使わず直接編集したい場合は環境変数を調整してください。
+
+## create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
