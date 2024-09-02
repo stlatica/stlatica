@@ -1,20 +1,19 @@
 <script>
 	import Button from '$lib/material/button/button.svelte';
 	import MyInput from '$lib/material/input/text-input.svelte';
-	import { ulid } from 'ulidx';
+	// import { ulid } from 'ulidx';
+	import { superForm } from 'sveltekit-superforms';
 
-	// let user_id = ulid();
-	// let preferred_user_id = fakerJA.string.alphanumeric({ length: { min: 8, max: 16 } });
-	// let preferred_user_name = fakerJA.person.fullName();
-	// let is_public = true;
-	// let mail_address = 'test@example.com';
 	export let form;
 	export let data;
 
-	let { user_id, preferred_user_id, preferred_user_name, is_public, mail_address } = data.props;
+	// let { user_id, preferred_user_id, preferred_user_name, is_public, mail_address } = data.props;
+
+	const { form: schema } = superForm(data.form);
 
 	const regenerate_id = () => {
-		user_id = ulid();
+		// schema.set({ ...schema, user_id: ulid() });
+		// user_id = ulid();
 	};
 </script>
 
@@ -23,28 +22,28 @@
 <form method="post">
 	<div class="label">
 		<div class="labelname">user_id</div>
-		<MyInput type="text" name="user_id" readonly bind:value={user_id} />
-		<Button type="button" onclick={regenerate_id}>generate id</Button>
+		<MyInput type="text" name="user_id" readonly bind:value={$schema.user_id} />
+		<!-- <Button type="button" onclick={regenerate_id}>generate id</Button> -->
 	</div>
 
 	<label>
-		<div class="labelname">preferred_user_name</div>
-		<MyInput type="text" name="preferred_user_id" bind:value={preferred_user_id} />
+		<div class="labelname">preferred_user_id</div>
+		<MyInput type="text" name="preferred_user_id" bind:value={$schema.preferred_user_id} />
 	</label>
 
 	<label>
-		<div class="labelname">preferred_user_id</div>
-		<MyInput type="text" name="preferred_user_name" bind:value={preferred_user_name} />
+		<div class="labelname">preferred_user_name</div>
+		<MyInput type="text" name="preferred_user_name" bind:value={$schema.preferred_user_name} />
 	</label>
 
 	<label>
 		<div class="labelname">is_public</div>
-		<input type="checkbox" name="is_public" bind:checked={is_public} />
+		<input type="checkbox" name="is_public" bind:checked={$schema.is_public} />
 	</label>
 
 	<label>
 		<div class="labelname">mail_address</div>
-		<MyInput type="email" name="mail_address" bind:value={mail_address} />
+		<MyInput type="email" name="mail_address" bind:value={$schema.mail_address} />
 	</label>
 
 	<Button type="submit">保存</Button>

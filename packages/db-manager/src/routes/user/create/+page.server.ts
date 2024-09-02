@@ -1,29 +1,40 @@
 import type { PageServerLoad, Actions } from './$types';
-import { honoClient } from '$lib/hono/honoClient';
 import { prisma } from '$lib/prisma.server';
+import { superValidate } from 'sveltekit-superforms';
+import { valibot } from 'sveltekit-superforms/adapters';
+import { fail } from '@sveltejs/kit';
+import { FakeUser } from '$lib/faker/user';
+
+import * as v from 'valibot';
+
+const userSchema = v.object({
+	user_id: v.pipe(v.string(), v.ulid()),
+	preferred_user_id: v.string(),
+	preferred_user_name: v.string(),
+	is_public: v.boolean(),
+	mail_address: v.string()
+});
 
 export const actions: Actions = {
 	default: async (x) => {
-		const form = await x.request.formData();
+		const form = await superValidate(x.request, valibot(userSchema));
 
-		console.log(form.get('is_public'));
+		console.log(form);
+
+		if (!form.valid) {
+			return fail(400);
+		}
 
 		try {
 			const r = await prisma.users.create({
 				data: {
-					// ...formObject,
-					user_id: String(form.get('user_id')),
-					preferred_user_id: String(form.get('preferred_user_id')),
-					preferred_user_name: String(form.get('preferred_user_name')),
-					mail_address: String(form.get('mail_address')),
-					is_public: form.get('is_public') === 'on',
+					...form.data,
 					registered_at: new Date().valueOf(),
 					created_at: new Date().valueOf(),
 					updated_at: new Date().valueOf()
 				}
 			});
 
-			// TODO log the user in
 			return { success: true, data: r };
 		} catch (e) {
 			console.error(e);
@@ -34,9 +45,9 @@ export const actions: Actions = {
 
 export const load: PageServerLoad = async () => {
 	// 初期データ返却(.svelte側でやるとFOUC発生する)
-	const user = await (await honoClient.api.faker.user.$get()).json();
+	const user = FakeUser();
 
-	return {
-		props: { ...user }
-	};
+	const form = await superValidate(user, valibot(userSchema));
+
+	return { form };
 };

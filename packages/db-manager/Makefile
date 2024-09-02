@@ -9,7 +9,7 @@ docker/logs: ## show docker logs
 	docker compose logs -f
 
 docker/stop: ## stop docker container
-	docker compose down
+	docker compose down prod
 
 # << main commands >>
 
