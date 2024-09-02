@@ -1,7 +1,7 @@
 <script>
 	import Button from '$lib/material/button/button.svelte';
 	import MyInput from '$lib/material/input/text-input.svelte';
-	// import { ulid } from 'ulidx';
+	import { ulid } from 'ulidx';
 	import { superForm } from 'sveltekit-superforms';
 
 	export let form;
@@ -13,6 +13,8 @@
 
 	const regenerate_id = () => {
 		// schema.set({ ...schema, user_id: ulid() });
+
+		schema.set({ ...$schema, user_id: ulid() });
 		// user_id = ulid();
 	};
 </script>
@@ -22,8 +24,8 @@
 <form method="post">
 	<div class="label">
 		<div class="labelname">user_id</div>
-		<MyInput type="text" name="user_id" readonly bind:value={$schema.user_id} />
-		<!-- <Button type="button" onclick={regenerate_id}>generate id</Button> -->
+		<MyInput type="text" name="user_id" bind:value={$schema.user_id} />
+		<Button type="button" onclick={regenerate_id}>generate id</Button>
 	</div>
 
 	<label>
@@ -49,18 +51,18 @@
 	<Button type="submit">保存</Button>
 </form>
 
-<div class="result">
-	<p>api result</p>
-	{#if form}
-		<p>success: {form.success}</p>
+{#if form}
+	<div class="result">
+		<p>api result</p>
+		<!-- <p>success: {form.success}</p>
 		<p>data:</p>
-		<pre>{JSON.stringify(form?.data, null, 2)}</pre>
+		<pre>{JSON.stringify(form?.data, null, 2)}</pre> -->
 
-		<p>message: {form.message}</p>
-	{/if}
+		<pre>{form.message}</pre>
 
-	<!-- <pre>{JSON.stringify(form, null, 2)}</pre> -->
-</div>
+		<!-- <pre>{JSON.stringify(form, null, 2)}</pre> -->
+	</div>
+{/if}
 
 <style>
 	h2 {

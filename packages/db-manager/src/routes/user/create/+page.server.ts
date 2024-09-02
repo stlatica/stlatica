@@ -22,7 +22,7 @@ export const actions: Actions = {
 		console.log(form);
 
 		if (!form.valid) {
-			return fail(400);
+			return fail(400, { message: 'invalid form' + JSON.stringify(form.errors, null, 2) });
 		}
 
 		try {
@@ -35,10 +35,10 @@ export const actions: Actions = {
 				}
 			});
 
-			return { success: true, data: r };
+			return { message: `insert data: ${JSON.stringify(r, null, 2)}` };
 		} catch (e) {
 			console.error(e);
-			return { success: false, message: String(e) };
+			return { message: String(e) };
 		}
 	}
 };
