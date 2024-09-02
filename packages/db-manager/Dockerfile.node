@@ -39,8 +39,9 @@ COPY pnpm-lock.yaml .
 RUN pnpm fetch
 
 COPY . .
-RUN pnpm install --frozen-lockfile
-RUN pnpm prisma generate
-RUN pnpm build
+RUN pnpm install --frozen-lockfile\
+  && pnpm prisma generate\
+  && pnpm build\
+  && pnpm store prune -a
 
 ENTRYPOINT [ "pnpm", "preview" ]

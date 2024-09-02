@@ -4,6 +4,7 @@
 
 docker/start: ## start docker container
 	docker compose up -d --build --remove-orphans prod
+	# open -> http://localhost:5100
 
 docker/logs: ## show docker logs
 	docker compose logs -f
