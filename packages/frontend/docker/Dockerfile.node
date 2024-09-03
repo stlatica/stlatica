@@ -4,7 +4,7 @@ RUN corepack enable npm pnpm
 FROM mcr.microsoft.com/playwright:v1.46.1-jammy as playwright
 FROM ubuntu:24.04 as ubuntu
 
-RUN useradd -m -s /bin/bash ubuntu
+# RUN useradd -m -s /bin/bash ubuntu
 
 
 # ***** playwright を搭載した nodejs 環境を開発のベースとして使う *****
