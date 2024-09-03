@@ -44,4 +44,6 @@ RUN pnpm install --frozen-lockfile\
   && pnpm build\
   && pnpm store prune -a
 
+ENV DATABASE_URL "mysql://root:@stlatica_db:3306/stlatica?schema=public"
+
 ENTRYPOINT [ "pnpm", "preview" ]
