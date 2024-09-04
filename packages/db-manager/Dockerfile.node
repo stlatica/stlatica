@@ -1,0 +1,49 @@
+FROM node:20.17.0-slim as node
+RUN corepack enable npm pnpm \
+  && corepack use pnpm@9 \
+  && pnpm config set store-dir /home/node/.pnpm-store
+
+FROM node as dev 
+
+
+# ***** apt *****
+# 開発に必要な依存関係類のインストール
+RUN apt update -y \
+  && apt install -y \
+  git \
+  git-lfs \
+  make \
+  bash-completion \
+  less \
+  # vim \
+  # x11-apps \
+  # language-pack-ja \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/* \
+  && git lfs install
+
+
+USER node
+RUN echo `alias pn=pnpm` >> ~/.bashrc 
+
+FROM node as prod
+
+# ***** apt *****
+# 開発に必要な依存関係類のインストール
+RUN apt update -y \
+  && apt install -y openssl \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/* 
+
+COPY pnpm-lock.yaml .
+RUN pnpm fetch
+
+COPY . .
+RUN pnpm install --frozen-lockfile\
+  && pnpm prisma generate\
+  && pnpm build\
+  && pnpm store prune -a
+
+ENV DATABASE_URL "mysql://root:@stlatica_db:3306/stlatica?schema=public"
+
+ENTRYPOINT [ "pnpm", "preview" ]
