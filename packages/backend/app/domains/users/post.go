@@ -21,5 +21,6 @@ type userCreator struct {
 
 func (g *userCreator) CreateUser(ctx context.Context, userName string,
 	mailAddress string, inPort ports.UserCreateInPort) (*entities.User, error) {
+	// TODO: mail addressのvalidationを実装する https://github.com/stlatica/stlatica/issues/604
 	return inPort.CreateUser(ctx, userName, mailAddress)
 }
