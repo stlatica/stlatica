@@ -63,9 +63,9 @@ func (c *userController) GetUser(ectx echo.Context, userID string) (*GetUserResp
 }
 
 // CreateUser creates a new user.
-func (c *userController) CreateUser(ectx echo.Context, userName string, mailAddress string) (
+func (c *userController) CreateUser(ectx echo.Context, userName string, preferredUserID string, mailAddress string) (
 	*CreateUserResponse, error) {
-	user, err := c.userUseCase.CreateUser(ectx.Request().Context(), userName, mailAddress)
+	user, err := c.userUseCase.CreateUser(ectx.Request().Context(), userName, preferredUserID, mailAddress)
 	if err != nil {
 		return nil, err
 	}

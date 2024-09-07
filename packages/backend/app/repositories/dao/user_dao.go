@@ -17,7 +17,7 @@ type UserDAO interface {
 	// GetUser returns user.
 	GetUser(ctx context.Context, userID types.UserID) (*domainentities.User, error)
 	// CreateUser creates user.
-	CreateUser(ctx context.Context, userName string, mailAddress string) (*domainentities.User, error)
+	CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string) (*domainentities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context, preferredUserName string) (*domainentities.User, error)
 	// GetFollows returns follows of user.
@@ -47,12 +47,12 @@ func (dao *userDAO) GetUser(ctx context.Context, userID types.UserID) (*domainen
 	return convertUserEntityToDomainEntity(entity), nil
 }
 
-func (dao *userDAO) CreateUser(ctx context.Context, userName string, mailAddress string) (
+func (dao *userDAO) CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string) (
 	*domainentities.User, error) {
 	newUserID := types.NewUserID()
 	user := entities.UserBase{
 		UserID:            newUserID,
-		PreferredUserID:   newUserID.String(),
+		PreferredUserID:   preferredUserID,
 		PreferredUserName: userName,
 		RegisteredAt:      types.NewUnixTimeFromCurrentTime(),
 		IsPublic:          true,

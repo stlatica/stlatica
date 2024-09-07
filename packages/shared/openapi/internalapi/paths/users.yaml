@@ -51,7 +51,7 @@ users:
     description: Create new user.
     operationId: createUser
     requestBody:
-      description: 新規ユーザーのユーザ名とメールアドレス
+      description: 新規ユーザーのユーザ名とUserIDとメールアドレス
       content:
         application/json:
           schema:
@@ -60,6 +60,8 @@ users:
               name:
                 type: string
                 example: 'stlatica taro'
+              user_id:
+                $ref: '../schemas/UserID.yaml#/UserID'
               email:
                 type: string
                 example: 'stlatica.taro@example.com'
