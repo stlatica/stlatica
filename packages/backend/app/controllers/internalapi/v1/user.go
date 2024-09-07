@@ -21,6 +21,11 @@ type GetUserResponse struct {
 	UpdatedAt    string `json:"updated_at"`
 }
 
+// CreateUserResponse is the response of CreateUser.
+type CreateUserResponse struct {
+	UserID string `json:"user_id"`
+}
+
 // GetFollowResponse is the response of GetFollows.
 type GetFollowResponse struct {
 	UserID   string `json:"user_id"`
@@ -59,12 +64,12 @@ func (c *userController) GetUser(ectx echo.Context, userID string) (*GetUserResp
 
 // CreateUser creates a new user.
 func (c *userController) CreateUser(ectx echo.Context, userName string, mailAddress string) (
-	*GetUserResponse, error) {
+	*CreateUserResponse, error) {
 	user, err := c.userUseCase.CreateUser(ectx.Request().Context(), userName, mailAddress)
 	if err != nil {
 		return nil, err
 	}
-	return &GetUserResponse{
+	return &CreateUserResponse{
 		UserID: user.GetPreferredUserID(),
 	}, nil
 }
