@@ -17,7 +17,7 @@ type UserDAO interface {
 	// GetUser returns user.
 	GetUser(ctx context.Context, userID types.UserID) (*domainentities.User, error)
 	// CreateUser creates user.
-	CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string) (*domainentities.User, error)
+	CreateUser(ctx context.Context, user domainentities.UserBase) (*domainentities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context, preferredUserName string) (*domainentities.User, error)
 	// GetFollows returns follows of user.
@@ -47,19 +47,28 @@ func (dao *userDAO) GetUser(ctx context.Context, userID types.UserID) (*domainen
 	return convertUserEntityToDomainEntity(entity), nil
 }
 
-func (dao *userDAO) CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string) (
+func (dao *userDAO) CreateUser(ctx context.Context, user domainentities.UserBase) (
 	*domainentities.User, error) {
-	newUserID := types.NewUserID()
-	user := entities.UserBase{
-		UserID:            newUserID,
+	/*user := entities.UserBase{
 		PreferredUserID:   preferredUserID,
 		PreferredUserName: userName,
 		RegisteredAt:      types.NewUnixTimeFromCurrentTime(),
 		IsPublic:          true,
 		MailAddress:       mailAddress,
-	}
+	}*/
 	ctx = boil.SkipTimestamps(ctx)
-	err := user.Insert(ctx, dao.ctxExecutor, boil.Infer())
+	// err := entities.UserBase
+	repositoriesUser := entities.UserBase{
+		UserID:            user.UserID,
+		PreferredUserID:   user.PreferredUserID,
+		PreferredUserName: user.PreferredUserName,
+		RegisteredAt:      user.RegisteredAt,
+		IsPublic:          user.IsPublic,
+		MailAddress:       user.MailAddress,
+		CreatedAt:         user.CreatedAt,
+		UpdatedAt:         user.UpdatedAt,
+	}
+	err := repositoriesUser.Insert(ctx, dao.ctxExecutor, boil.Infer())
 	return &domainentities.User{
 		UserBase: domainentities.UserBase{
 			UserID:            user.UserID,

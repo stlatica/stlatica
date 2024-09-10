@@ -128,9 +128,9 @@ func (p *userPortImpl) GetUser(ctx context.Context, userID types.UserID) (*entit
 }
 
 // CreateUser implements ports.UserCreateInPort.
-func (p *userPortImpl) CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string) (
+func (p *userPortImpl) CreateUser(ctx context.Context, user entities.UserBase) (
 	*entities.User, error) {
-	return p.userDAO.CreateUser(ctx, userName, preferredUserID, mailAddress)
+	return p.userDAO.CreateUser(ctx, user)
 }
 
 func (p *userPortImpl) GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error) {

@@ -21,6 +21,6 @@ type UserGetInPort interface {
 
 // UserCreateInPort is the interface for creating user.
 type UserCreateInPort interface {
-	// CreateUSer creates a new user.
-	CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string) (*entities.User, error)
+	// CreateUser creates a new user.
+	CreateUser(ctx context.Context, user entities.UserBase) (*entities.User, error)
 }
