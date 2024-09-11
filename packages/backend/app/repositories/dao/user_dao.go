@@ -156,6 +156,7 @@ func convertUserEntityToDomainEntity(entity *entities.UserBase) *domainentities.
 			UserID:            entity.UserID,
 			PreferredUserID:   entity.PreferredUserID,
 			PreferredUserName: entity.PreferredUserName,
+			IconImageID:       entity.IconImageID,
 			RegisteredAt:      entity.RegisteredAt,
 			IsPublic:          entity.IsPublic,
 			MailAddress:       entity.MailAddress,

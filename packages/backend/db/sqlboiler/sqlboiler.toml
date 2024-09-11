@@ -109,3 +109,13 @@ nullable=false
 type="types.TimelineID"
 [types.imports]
 third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
+
+[[types]]
+[types.match]
+name="icon_image_id"
+db_type="char"
+nullable=false
+[types.replace]
+type="types.ImageID"
+[types.imports]
+third_party=['"github.com/stlatica/stlatica/packages/backend/app/domains/types"']
