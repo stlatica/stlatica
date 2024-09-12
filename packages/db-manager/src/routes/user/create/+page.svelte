@@ -17,20 +17,60 @@
 		schema.set({ ...$schema, user_id: ulid() });
 		// user_id = ulid();
 	};
+
+	$: console.log($schema);
 </script>
 
 <h2>ユーザー追加</h2>
 
 <form method="post">
-	<div class="label">
+	<div class="line">
+		<div class="field border label" style="flex: 1">
+			<input type="text" name="user_id" bind:value={$schema.user_id} />
+			<label for="">UserID</label>
+		</div>
+		<button class="small-round" type="button" onclick={regenerate_id}>generate id</button>
+	</div>
+
+	<div class="line">
+		<div class="field border label" style="flex: 1">
+			<input type="text" name="preferred_user_id" bind:value={$schema.preferred_user_id} />
+			<label for="">Preferred UserID</label>
+		</div>
+	</div>
+
+	<div class="line">
+		<div class="field border label" style="flex: 1">
+			<input type="text" name="preferred_user_name" bind:value={$schema.preferred_user_name} />
+			<label for="">Preferred UserName</label>
+		</div>
+	</div>
+
+	<div class="line">
+		<div class="field border label" style="flex: 1">
+			<input type="email" name="mail_address" bind:value={$schema.mail_address} />
+			<label for="">Mail Address</label>
+		</div>
+	</div>
+
+	<div>
+		<label class="checkbox">
+			<input type="checkbox" name="is_public" bind:checked={$schema.is_public} />
+			<span>is_public</span>
+		</label>
+	</div>
+
+	<button class="outline" type="submit">保存</button>
+
+	<!-- <div class="label_">
 		<div class="labelname">user_id</div>
 		<MyInput type="text" name="user_id" bind:value={$schema.user_id} />
-		<Button type="button" onclick={regenerate_id}>generate id</Button>
+		<button class="outline" type="button" onclick={regenerate_id}>generate id</button>
 	</div>
 
 	<label>
 		<div class="labelname">preferred_user_id</div>
-		<MyInput type="text" name="preferred_user_id" bind:value={$schema.preferred_user_id} />
+		<input type="text" name="preferred_user_id" bind:value={$schema.preferred_user_id} />
 	</label>
 
 	<label>
@@ -48,7 +88,7 @@
 		<MyInput type="email" name="mail_address" bind:value={$schema.mail_address} />
 	</label>
 
-	<Button type="submit">保存</Button>
+	<button class="outline" type="submit">保存</button> -->
 </form>
 
 {#if form}
@@ -70,16 +110,9 @@
 		padding-bottom: 2rem;
 	}
 
-	label,
-	.label {
+	.line {
 		display: flex;
-		align-items: center;
-		gap: var(--font-size-lg);
-	}
-
-	.labelname {
-		width: 8rem;
-		font-size: var(--font-size-sm);
+		/* background-color: red; */
 	}
 
 	.result {

@@ -1,3 +1,43 @@
+body.dark {
+	--primary: #bac3ff;
+	--on-primary: #08218a;
+	--primary-container: #293ca0;
+	--on-primary-container: #dee0ff;
+	--secondary: #c3c5dd;
+	--on-secondary: #2d2f42;
+	--secondary-container: #434659;
+	--on-secondary-container: #e0e1f9;
+	--tertiary: #e6bad7;
+	--on-tertiary: #44263d;
+	--tertiary-container: #5d3c55;
+	--on-tertiary-container: #ffd7f1;
+	--error: #ffb4ab;
+	--on-error: #690005;
+	--error-container: #93000a;
+	--on-error-container: #ffb4ab;
+	/* --background: #1b1b1f; */
+	--background: var(--gray-4);
+	--on-background: #e4e1e6;
+	--surface: #131316;
+	--on-surface: #e4e1e6;
+	--surface-variant: #46464f;
+	--on-surface-variant: #c7c5d0;
+	--outline: #90909a;
+	--outline-variant: #46464f;
+	--shadow: #000000;
+	--scrim: #000000;
+	--inverse-surface: #e4e1e6;
+	--inverse-on-surface: #303034;
+	--inverse-primary: #4355b9;
+	--surface-dim: #131316;
+	--surface-bright: #39393c;
+	--surface-container-lowest: #0e0e11;
+	--surface-container-low: #1b1b1f;
+	--surface-container: #1f1f23;
+	--surface-container-high: #2a2a2d;
+	--surface-container-highest: #353438;
+}
+
 :root {
 	background-color: var(--st-color-bg);
 	color: var(--st-color-text);
@@ -21,12 +61,6 @@ a {
 html,
 body {
 	height: 100%;
-}
-
-form {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
 }
 
 pre {
