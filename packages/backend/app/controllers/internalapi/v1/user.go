@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"io"
+
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users/ports"
@@ -144,4 +146,8 @@ func (c *userController) GetFollowers(ectx echo.Context,
 		})
 	}
 	return followerResponse, nil
+}
+
+func (c *userController) GetUserIcon(ectx echo.Context, preferredUserIDStr string) (io.ReadCloser, error) {
+	return c.userUseCase.GetUserIcon(ectx.Request().Context(), preferredUserIDStr)
 }

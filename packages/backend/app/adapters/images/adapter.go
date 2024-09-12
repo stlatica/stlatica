@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 
+	domainerrors "github.com/stlatica/stlatica/packages/backend/app/domains/errors"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	"github.com/stlatica/stlatica/packages/backend/app/pkg/objectstorage"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/images/ports"
@@ -63,6 +64,7 @@ func validateMineType(data []byte) (string, error) {
 	case mine == GifMineType:
 		return mine, nil
 	default:
-		return "", fmt.Errorf("invalid file type, mine type: %s", mine)
+		return "", domainerrors.NewDomainError(fmt.Errorf("invalid file type, mine type: %s", mine),
+			domainerrors.DomainErrorTypeInvalidData, "invalid file type")
 	}
 }

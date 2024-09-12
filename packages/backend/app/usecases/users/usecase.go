@@ -2,8 +2,10 @@ package users
 
 import (
 	"context"
+	"io"
 
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
+	"github.com/stlatica/stlatica/packages/backend/app/domains/images"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/users"
 	domainports "github.com/stlatica/stlatica/packages/backend/app/domains/users/ports"
@@ -24,25 +26,33 @@ type UserUseCase interface {
 	GetFollows(ctx context.Context, params ports.FollowsGetParams) ([]*entities.User, error)
 	// GetFollowers returns followers of user.
 	GetFollowers(ctx context.Context, params ports.FollowersGetParams) ([]*entities.User, error)
+	// GetUserIcon returns user icon.
+	GetUserIcon(ctx context.Context, preferredUserID string) (io.ReadCloser, error)
 }
 
 // NewUserUseCase returns UserUseCase.
-func NewUserUseCase(appLogger *logger.AppLogger, domainFactory users.Factory, userDAO dao.UserDAO) UserUseCase {
+func NewUserUseCase(appLogger *logger.AppLogger,
+	userDomainFactory users.Factory, imageDomainFactory images.Factory,
+	userDAO dao.UserDAO, imageAdapter ports.ImageAdapter) UserUseCase {
 	return &userUseCase{
-		appLogger:     appLogger,
-		userDAO:       userDAO,
-		domainFactory: domainFactory,
+		appLogger:          appLogger,
+		userDAO:            userDAO,
+		imageAdapter:       imageAdapter,
+		userDomainFactory:  userDomainFactory,
+		imageDomainFactory: imageDomainFactory,
 	}
 }
 
 type userUseCase struct {
-	appLogger     *logger.AppLogger
-	userDAO       dao.UserDAO
-	domainFactory users.Factory
+	appLogger          *logger.AppLogger
+	userDAO            dao.UserDAO
+	imageAdapter       ports.ImageAdapter
+	userDomainFactory  users.Factory
+	imageDomainFactory images.Factory
 }
 
 func (u *userUseCase) GetUser(ctx context.Context, userID types.UserID) (*entities.User, error) {
-	getter := u.domainFactory.NewUserGetter()
+	getter := u.userDomainFactory.NewUserGetter()
 	portImpl := &userPortImpl{
 		userDAO: u.userDAO,
 	}
@@ -59,7 +69,7 @@ func (u *userUseCase) CreateUser(ctx context.Context, userName string, preferred
 }
 
 func (u *userUseCase) GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error) {
-	getter := u.domainFactory.NewUserGetter()
+	getter := u.userDomainFactory.NewUserGetter()
 	portImpl := &userPortImpl{
 		userDAO: u.userDAO,
 	}
@@ -67,7 +77,7 @@ func (u *userUseCase) GetUserByPreferredUserID(ctx context.Context, preferredUse
 }
 
 func (u *userUseCase) GetFollows(ctx context.Context, params ports.FollowsGetParams) ([]*entities.User, error) {
-	getter := u.domainFactory.NewUserGetter()
+	getter := u.userDomainFactory.NewUserGetter()
 	portImpl := &userPortImpl{
 		userDAO: u.userDAO,
 	}
@@ -94,7 +104,7 @@ func (u *userUseCase) GetFollows(ctx context.Context, params ports.FollowsGetPar
 }
 
 func (u *userUseCase) GetFollowers(ctx context.Context, params ports.FollowersGetParams) ([]*entities.User, error) {
-	getter := u.domainFactory.NewUserGetter()
+	getter := u.userDomainFactory.NewUserGetter()
 	portImpl := &userPortImpl{
 		userDAO: u.userDAO,
 	}
@@ -117,6 +127,23 @@ func (u *userUseCase) GetFollowers(ctx context.Context, params ports.FollowersGe
 		Limit:            params.Limit,
 	}
 	return getter.GetFollowers(ctx, domainParams, portImpl)
+}
+
+func (u *userUseCase) GetUserIcon(ctx context.Context, preferredUserID string) (io.ReadCloser, error) {
+	userGetter := u.userDomainFactory.NewUserGetter()
+	userPortImpl := &userPortImpl{
+		userDAO: u.userDAO,
+	}
+	user, err := userGetter.GetUserByPreferredUserID(ctx, preferredUserID, userPortImpl)
+	if err != nil {
+		return nil, err
+	}
+
+	imageGetter := u.imageDomainFactory.NewImageGetter()
+	imagePortImpl := &imagePortImpl{
+		imageAdapter: u.imageAdapter,
+	}
+	return imageGetter.GetImage(ctx, user.GetIconImageID(), imagePortImpl)
 }
 
 type userPortImpl struct {
@@ -145,4 +172,12 @@ func (p *userPortImpl) GetFollows(ctx context.Context,
 func (p *userPortImpl) GetFollowers(ctx context.Context,
 	getParams domainports.FollowersGetParams) ([]*entities.User, error) {
 	return p.userDAO.GetFollowers(ctx, getParams)
+}
+
+type imagePortImpl struct {
+	imageAdapter ports.ImageAdapter
+}
+
+func (i *imagePortImpl) GetImage(ctx context.Context, imageID types.ImageID) (io.ReadCloser, error) {
+	return i.imageAdapter.GetImage(ctx, imageID)
 }

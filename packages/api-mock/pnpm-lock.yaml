@@ -35,7 +35,7 @@ importers:
         version: 3.1.4
       openapi-typescript:
         specifier: ^7.0.0
-        version: 7.3.0(typescript@5.5.4)
+        version: 7.3.3(typescript@5.5.4)
       typescript:
         specifier: ^5.5.3
         version: 5.5.4
@@ -258,11 +258,11 @@ packages:
   '@redocly/ajv@8.11.0':
     resolution: {integrity: sha512-9GWx27t7xWhDIR02PA18nzBdLcKQRgc46xNQvjFkrYk4UOmvKhJ/dawwiX0cCOeetN5LcaaiqQbVOWYK62SGHw==}
 
-  '@redocly/config@0.7.0':
-    resolution: {integrity: sha512-6GKxTo/9df0654Mtivvr4lQnMOp+pRj9neVywmI5+BwfZLTtkJnj2qB3D6d8FHTr4apsNOf6zTa5FojX0Evh4g==}
+  '@redocly/config@0.10.1':
+    resolution: {integrity: sha512-H3LnKVGzOaxskwJu8pmJYwBOWjP61qOK7TuTrbafqArDVckE06fhA6l0nO4KvBbjLPjy1Al7UnlxOu23V4Nl0w==}
 
-  '@redocly/openapi-core@1.19.0':
-    resolution: {integrity: sha512-ezK6qr80sXvjDgHNrk/zmRs9vwpIAeHa0T/qmo96S+ib4ThQ5a8f3qjwEqxMeVxkxCTbkaY9sYSJKOxv4ejg5w==}
+  '@redocly/openapi-core@1.22.1':
+    resolution: {integrity: sha512-pjr456gJzrbwPvBjFKlWOd9nZEcr/dp6XSH0c8ijWGWv5K+V0vpUUy2zaTAVsFAoCydx1miEoOcbLhWQ9WC2nw==}
     engines: {node: '>=14.19.0', npm: '>=7.0.0'}
 
   '@types/body-parser@1.19.5':
@@ -401,6 +401,15 @@ packages:
 
   debug@4.3.5:
     resolution: {integrity: sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+
+  debug@4.3.6:
+    resolution: {integrity: sha512-O/09Bd4Z1fBrU4VzkhFqVgpPzaGbw6Sm9FEkBT1A/YBXQFGuuSxa1dN2nxgxS34JmKXqYx8CZAwEVoJFImUXIg==}
     engines: {node: '>=6.0'}
     peerDependencies:
       supports-color: '*'
@@ -641,8 +650,8 @@ packages:
     resolution: {integrity: sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==}
     engines: {node: '>= 0.8'}
 
-  openapi-typescript@7.3.0:
-    resolution: {integrity: sha512-EkljRjYWOPwGXiK++uI9MkGv2Y7uhbkZbi9V1z3r3EpmWVO6aFTHXSLNvxIWo6UT6LCTYgEYkUB3BWQjwwXthg==}
+  openapi-typescript@7.3.3:
+    resolution: {integrity: sha512-NkUBI8fr5mg/3s001UPfUiBpKmHtSjkvFQO/IipCrQal5d5nGFoev1OXdxr7J9PHTswrAqU2hKdpoCL6OnammA==}
     hasBin: true
     peerDependencies:
       typescript: ^5.x
@@ -761,8 +770,8 @@ packages:
   tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
 
-  type-fest@4.23.0:
-    resolution: {integrity: sha512-ZiBujro2ohr5+Z/hZWHESLz3g08BBdrdLMieYFULJO+tWc437sn8kQsWLJoZErY8alNhxre9K4p3GURAG11n+w==}
+  type-fest@4.26.0:
+    resolution: {integrity: sha512-OduNjVJsFbifKb57UqZ2EMP1i4u64Xwow3NYXUtBbD4vIwJdQd4+xl8YDou1dlm4DVrtwT/7Ky8z8WyCULVfxw==}
     engines: {node: '>=16'}
 
   type-is@1.6.18:
@@ -940,12 +949,12 @@ snapshots:
       require-from-string: 2.0.2
       uri-js: 4.4.1
 
-  '@redocly/config@0.7.0': {}
+  '@redocly/config@0.10.1': {}
 
-  '@redocly/openapi-core@1.19.0(supports-color@9.4.0)':
+  '@redocly/openapi-core@1.22.1(supports-color@9.4.0)':
     dependencies:
       '@redocly/ajv': 8.11.0
-      '@redocly/config': 0.7.0
+      '@redocly/config': 0.10.1
       colorette: 1.4.0
       https-proxy-agent: 7.0.5(supports-color@9.4.0)
       js-levenshtein: 1.1.6
@@ -1012,7 +1021,7 @@ snapshots:
 
   agent-base@7.1.1(supports-color@9.4.0):
     dependencies:
-      debug: 4.3.5(supports-color@9.4.0)
+      debug: 4.3.6(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -1125,7 +1134,7 @@ snapshots:
     optionalDependencies:
       supports-color: 5.5.0
 
-  debug@4.3.5(supports-color@9.4.0):
+  debug@4.3.6(supports-color@9.4.0):
     dependencies:
       ms: 2.1.2
     optionalDependencies:
@@ -1288,7 +1297,7 @@ snapshots:
   https-proxy-agent@7.0.5(supports-color@9.4.0):
     dependencies:
       agent-base: 7.1.1(supports-color@9.4.0)
-      debug: 4.3.5(supports-color@9.4.0)
+      debug: 4.3.6(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -1383,9 +1392,9 @@ snapshots:
     dependencies:
       ee-first: 1.1.1
 
-  openapi-typescript@7.3.0(typescript@5.5.4):
+  openapi-typescript@7.3.3(typescript@5.5.4):
     dependencies:
-      '@redocly/openapi-core': 1.19.0(supports-color@9.4.0)
+      '@redocly/openapi-core': 1.22.1(supports-color@9.4.0)
       ansi-colors: 4.1.3
       parse-json: 8.1.0
       supports-color: 9.4.0
@@ -1398,7 +1407,7 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.24.7
       index-to-position: 0.1.2
-      type-fest: 4.23.0
+      type-fest: 4.26.0
 
   parseurl@1.3.3: {}
 
@@ -1511,7 +1520,7 @@ snapshots:
 
   tr46@0.0.3: {}
 
-  type-fest@4.23.0: {}
+  type-fest@4.26.0: {}
 
   type-is@1.6.18:
     dependencies:
