@@ -72,6 +72,7 @@ func (dao *userDAO) CreateUser(ctx context.Context, user domainentities.UserBase
 		RegisteredAt:      user.RegisteredAt,
 		IsPublic:          user.IsPublic,
 		MailAddress:       user.MailAddress,
+		IconImageID:       user.IconImageID,
 		CreatedAt:         user.CreatedAt,
 		UpdatedAt:         user.UpdatedAt,
 	}
@@ -84,6 +85,7 @@ func (dao *userDAO) CreateUser(ctx context.Context, user domainentities.UserBase
 			RegisteredAt:      user.RegisteredAt,
 			IsPublic:          user.IsPublic,
 			MailAddress:       user.MailAddress,
+			IconImageID:       user.IconImageID,
 			CreatedAt:         user.RegisteredAt,
 			UpdatedAt:         user.RegisteredAt,
 		},

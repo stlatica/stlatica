@@ -19,7 +19,7 @@ type UserUseCase interface {
 	// GetUser returns user.
 	GetUser(ctx context.Context, userID types.UserID) (*entities.User, error)
 	// CreateUser creates a new user.
-	CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string) (*entities.User, error)
+	CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string, iconImageID types.ImageID) (*entities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error)
 	// GetFollows returns follows of user.
@@ -59,13 +59,13 @@ func (u *userUseCase) GetUser(ctx context.Context, userID types.UserID) (*entiti
 	return getter.GetUser(ctx, userID, portImpl)
 }
 
-func (u *userUseCase) CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string) (
+func (u *userUseCase) CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string, iconImageID types.ImageID) (
 	*entities.User, error) {
-	creator := u.domainFactory.NewUserCreator()
+	creator := u.userDomainFactory.NewUserCreator()
 	portImpl := &userPortImpl{
 		userDAO: u.userDAO,
 	}
-	return creator.CreateUser(ctx, userName, preferredUserID, mailAddress, portImpl)
+	return creator.CreateUser(ctx, userName, preferredUserID, mailAddress, iconImageID, portImpl)
 }
 
 func (u *userUseCase) GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error) {

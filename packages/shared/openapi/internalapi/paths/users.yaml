@@ -65,6 +65,9 @@ users:
               email:
                 type: string
                 example: 'stlatica.taro@example.com'
+              icon_image_id:
+                type: string
+                example: '01J6YVDDN1RB68E2Z5SXZGHNXF'
     responses:
       201:
         description: Created.
