@@ -67,13 +67,14 @@ func (c *userController) GetUser(ectx echo.Context, userID string) (*GetUserResp
 }
 
 // CreateUser creates a new user.
-func (c *userController) CreateUser(ectx echo.Context, userName string, preferredUserID string, mailAddress string, iconImageIDStr string) (
-	*CreateUserResponse, error) {
+func (c *userController) CreateUser(ectx echo.Context, userName string, preferredUserID string, mailAddress string,
+	iconImageIDStr string) (*CreateUserResponse, error) {
 	iconImageID, err := ulid.Parse(iconImageIDStr)
 	if err != nil {
 		return nil, err
 	}
-	user, err := c.userUseCase.CreateUser(ectx.Request().Context(), userName, preferredUserID, mailAddress, types.ImageID(iconImageID))
+	user, err := c.userUseCase.CreateUser(
+		ectx.Request().Context(), userName, preferredUserID, mailAddress, types.ImageID(iconImageID))
 	if err != nil {
 		return nil, err
 	}
