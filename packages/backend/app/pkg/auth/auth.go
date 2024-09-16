@@ -9,11 +9,11 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/friendsofgo/errors"
 	"github.com/google/uuid"
 	"github.com/lestrrat-go/jwx/jwa"
 	"github.com/lestrrat-go/jwx/jws"
 	"github.com/stlatica/stlatica/packages/backend/app/pkg/kvs"
+	"golang.org/x/crypto/bcrypt"
 )
 
 const unseenEpoch = 9e18
@@ -30,17 +30,20 @@ type PWAuth[T SignType] interface {
 
 // TokenAuth トークンを用いたユーザー認証
 type TokenAuth[T SignType] interface {
-	Verify(ctx context.Context, client kvs.Client, alg jwa.SignatureAlgorithm, key *T, lifetime int64) (bool, error)
-	QuickVerify(ctx context.Context, client kvs.Client, alg jwa.SignatureAlgorithm, key *T, lifetime int64) (bool, error)
+	Verify(ctx context.Context, client kvs.Client,
+		alg jwa.SignatureAlgorithm, key *T, lifetime int64) (isVerified bool, userID string, err error)
+	QuickVerify(ctx context.Context, client kvs.Client,
+		alg jwa.SignatureAlgorithm, key *T, lifetime int64) (isVerified bool, userID string, err error)
 }
 
-// UserCredential 認証に必要な情報を格納
-type UserCredential[T SignType] struct {
-	actorID   string
-	pw        string
-	createdBy int64
-	alg       jwa.SignatureAlgorithm
-	key       *T
+// userCredential 認証に必要な情報を格納
+type userCredential[T SignType] struct {
+	userID      string
+	pw          []byte
+	encryptedPW []byte
+	createdBy   int64
+	alg         jwa.SignatureAlgorithm
+	key         *T
 }
 
 // accessTokenEvidence トークン生成に必要な情報を格納
@@ -57,13 +60,14 @@ type AccessToken[T SignType] struct {
 }
 
 // NewPWAuth 認証情報を格納
-func NewPWAuth[T SignType](id string, pw string, alg jwa.SignatureAlgorithm, key *T) PWAuth[T] {
-	return &UserCredential[T]{
-		actorID:   id,
-		pw:        pw,
-		createdBy: unseenEpoch,
-		alg:       alg,
-		key:       key,
+func NewPWAuth[T SignType](id string, pw string, encryptedPW string, alg jwa.SignatureAlgorithm, key *T) PWAuth[T] {
+	return &userCredential[T]{
+		userID:      id,
+		pw:          []byte(pw),
+		encryptedPW: []byte(encryptedPW),
+		createdBy:   unseenEpoch,
+		alg:         alg,
+		key:         key,
 	}
 }
 
@@ -73,15 +77,11 @@ func NewAccessToken[T SignType](token []byte) AccessToken[T] {
 }
 
 // Auth ID, PWで認証を行い、アクセストークンを返す
-func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client) (AccessToken[T], error) {
-	// PWの取得
-	storedPw, err := u.requestStoredPW(ctx, client, u.actorID)
+func (u *userCredential[T]) Auth(ctx context.Context, client kvs.Client) (AccessToken[T], error) {
+	// PW check
+	err := bcrypt.CompareHashAndPassword(u.encryptedPW, u.pw)
 	if err != nil {
 		return AccessToken[T]{[]byte("")}, err
-	}
-	// PW check
-	if !u.verifyPW(storedPw) {
-		return AccessToken[T]{[]byte("")}, errors.New("invalid actorID or pw")
 	}
 	u.setCurrentTime()
 
@@ -100,28 +100,14 @@ func (u *UserCredential[T]) Auth(ctx context.Context, client kvs.Client) (Access
 	return accessToken, nil
 }
 
-// requestStoredPW ユーザーIDをキーにして保存されたPWを取得
-func (u *UserCredential[T]) requestStoredPW(ctx context.Context, client kvs.Client, key string) (string, error) {
-	storedPW, err := client.GetValue(ctx, key)
-	if err != nil {
-		return "", errors.New(`invalid ID`)
-	}
-	return storedPW, nil
-}
-
-// verifyPW パスワードの検証
-func (u *UserCredential[T]) verifyPW(storedPw string) bool {
-	return u.pw == storedPw
-}
-
 // setCurrentTime トークン生成時刻の設定
-func (u *UserCredential[T]) setCurrentTime() {
+func (u *userCredential[T]) setCurrentTime() {
 	u.createdBy = time.Now().Unix()
 }
 
 // toTokenEvidence accessTokenEvidenceの生成
-func (u *UserCredential[T]) toTokenEvidence() accessTokenEvidence[T] {
-	return accessTokenEvidence[T]{id: u.actorID, createdBy: u.createdBy,
+func (u *userCredential[T]) toTokenEvidence() accessTokenEvidence[T] {
+	return accessTokenEvidence[T]{id: u.userID, createdBy: u.createdBy,
 		sessionID: uuid.New().String(), alg: u.alg}
 }
 
@@ -129,7 +115,7 @@ func (u *UserCredential[T]) toTokenEvidence() accessTokenEvidence[T] {
 func (a *accessTokenEvidence[T]) serialize() ([]byte, error) {
 	jsonData, err := json.Marshal(
 		&struct {
-			ID        string `json:"actorID,omitempty"`
+			ID        string `json:"userID,omitempty"`
 			CreatedBy int64  `json:"created_by,omitempty"`
 			SessionID string `json:"session_id,omitempty"`
 			Alg       string `json:"alg,omitempty"`
@@ -145,7 +131,7 @@ func (a *accessTokenEvidence[T]) serialize() ([]byte, error) {
 // DeserializeAccessToken トークン生成に必要な情報をデシリアライズ
 func (a *accessTokenEvidence[T]) DeserializeAccessToken(token []byte) error {
 	tmp := &struct {
-		ID        string `json:"actorID,omitempty"`
+		ID        string `json:"userID,omitempty"`
 		CreatedBy int64  `json:"created_by,omitempty"`
 		SessionID string `json:"session_id,omitempty"`
 		Alg       string `json:"alg,omitempty"`
@@ -219,22 +205,22 @@ func (a *AccessToken[T]) QuickVerify(ctx context.Context, client kvs.Client,
 
 // Verify 保存されたトークンとの比較を含めたトークンの検証
 func (a *AccessToken[T]) Verify(ctx context.Context, client kvs.Client,
-	alg jwa.SignatureAlgorithm, key *T, lifetime int64) (bool, error) {
+	alg jwa.SignatureAlgorithm, key *T, lifetime int64) (isVerified bool, userID string, err error) {
 	// 署名の検証
 	jwt, err := jws.Verify(a.token, alg, key)
 	if err != nil {
-		return false, err
+		return false, "", err
 	}
 
 	// デシリアライズ
 	ate := accessTokenEvidence[T]{id: "", createdBy: unseenEpoch, sessionID: ""}
 	err = ate.DeserializeAccessToken(jwt)
 	if err != nil {
-		return false, err
+		return false, "", err
 	}
 	// 有効期限の確認
 	if !ate.verifyExpirationDate(lifetime) {
-		return false, nil
+		return false, "", nil
 	}
 
 	// 有効期限の確認, 保存されたトークンの比較とトークンの再発行を試行
@@ -242,17 +228,17 @@ func (a *AccessToken[T]) Verify(ctx context.Context, client kvs.Client,
 		var storedToken []byte
 		storedToken, err = ate.requestStoredToken(ctx, client)
 		if err != nil {
-			return false, err
+			return false, "", err
 		}
-		return string(storedToken) == string(a.token), nil
+		return string(storedToken) == string(a.token), ate.id, nil
 	}
 	// トークンの再発行を試行
 	var res bool
 	res, err = a.refresh(ctx, client, ate, key)
 	if err != nil {
-		return false, err
+		return false, "", err
 	}
-	return res, nil
+	return res, ate.id, nil
 }
 
 // refresh トークンの再発行
