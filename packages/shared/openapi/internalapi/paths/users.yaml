@@ -52,11 +52,15 @@ users:
     operationId: createUser
     requestBody:
       description: 新規ユーザーのユーザ名とUserIDとメールアドレス
-      required: true
       content:
         application/json:
           schema:
             type: object
+            required:
+              - name
+              - user_id
+              - email
+              - icon_image_id
             properties:
               name:
                 type: string
