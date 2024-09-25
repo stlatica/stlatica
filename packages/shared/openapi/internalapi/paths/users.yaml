@@ -52,6 +52,7 @@ users:
     operationId: createUser
     requestBody:
       description: 新規ユーザーのユーザ名とUserIDとメールアドレス
+      required: true
       content:
         application/json:
           schema:

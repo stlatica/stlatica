@@ -4,7 +4,6 @@ import (
 	"io"
 
 	"github.com/labstack/echo/v4"
-	"github.com/oklog/ulid/v2"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users/ports"
@@ -69,12 +68,12 @@ func (c *userController) GetUser(ectx echo.Context, userID string) (*GetUserResp
 // CreateUser creates a new user.
 func (c *userController) CreateUser(ectx echo.Context, userName string, preferredUserID string, mailAddress string,
 	iconImageIDStr string) (*CreateUserResponse, error) {
-	iconImageID, err := ulid.Parse(iconImageIDStr)
+	iconImageID, err := types.NewImageIDFromString(iconImageIDStr)
 	if err != nil {
 		return nil, err
 	}
 	user, err := c.userUseCase.CreateUser(
-		ectx.Request().Context(), userName, preferredUserID, mailAddress, types.ImageID(iconImageID))
+		ectx.Request().Context(), userName, preferredUserID, mailAddress, iconImageID)
 	if err != nil {
 		return nil, err
 	}

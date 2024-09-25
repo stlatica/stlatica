@@ -18,9 +18,3 @@ type UserGetInPort interface {
 	// GetFollowers returns followers of user
 	GetFollowers(ctx context.Context, params FollowersGetParams) ([]*entities.User, error)
 }
-
-// UserCreateInPort is the interface for creating user.
-type UserCreateInPort interface {
-	// CreateUser creates a new user.
-	CreateUser(ctx context.Context, user entities.UserBase) (*entities.User, error)
-}
