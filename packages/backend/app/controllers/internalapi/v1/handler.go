@@ -59,7 +59,7 @@ func (h *handler) CreateUser(ectx echo.Context) error {
 	if err != nil {
 		return err
 	}
-	response, err := h.userController.CreateUser(ectx, *user.Name, *user.UserId, *user.Email, *user.IconImageId)
+	response, err := h.userController.CreateUser(ectx, user.Name, user.UserId, user.Email, user.IconImageId)
 	if err != nil {
 		return err
 	}
