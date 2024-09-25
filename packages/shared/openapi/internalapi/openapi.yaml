@@ -7,6 +7,8 @@ info:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
+  - url: http://localhost:8080
+    description: go production server
   - url: http://localhost:4010
     description: prism mock server
 paths:

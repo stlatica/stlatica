@@ -92,7 +92,7 @@ func (h *handler) GetTimeline(_ echo.Context, _ string) error {
 
 func (h *handler) GetTimelineByQuery(ectx echo.Context, params openapi.GetTimelineByQueryParams) error {
 	response, err := h.platController.GetPlatsByQuery(ectx,
-		string(params.Type), params.ToDate, params.FromDate, params.Limit)
+		params.UserId, string(params.Type), params.ToDate, params.FromDate, params.Limit)
 	if err != nil {
 		return err
 	}
@@ -168,8 +168,17 @@ func (h *handler) Login(_ echo.Context) error {
 	panic("implement me")
 }
 
-func (h *handler) GetUserIcon(_ echo.Context, _ openapi.UserId) error {
-	panic("implement me")
+func (h *handler) GetUserIcon(ectx echo.Context, userID openapi.UserId) error {
+	imageStream, err := h.userController.GetUserIcon(ectx, userID)
+	if err != nil {
+		return err
+	}
+	response := ectx.Response()
+	_, err = io.Copy(response, imageStream)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // ControllerInitContents is the struct to hold the dependencies for the controller.

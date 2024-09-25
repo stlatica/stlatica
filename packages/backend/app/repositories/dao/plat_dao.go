@@ -2,8 +2,11 @@ package dao
 
 import (
 	"context"
+	"database/sql"
 
+	"github.com/friendsofgo/errors"
 	domainentities "github.com/stlatica/stlatica/packages/backend/app/domains/entities"
+	domainerrors "github.com/stlatica/stlatica/packages/backend/app/domains/errors"
 	domainports "github.com/stlatica/stlatica/packages/backend/app/domains/plats/ports"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	"github.com/stlatica/stlatica/packages/backend/app/repositories/entities"
@@ -36,6 +39,10 @@ type platDAO struct {
 func (dao *platDAO) GetPlat(ctx context.Context, platID types.PlatID) (*domainentities.Plat, error) {
 	entity, err := entities.FindPlatBase(ctx, dao.ctxExecutor, platID)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, domainerrors.NewDomainError(err,
+				domainerrors.DomainErrorTypeNotFound, "user not found")
+		}
 		return nil, err
 	}
 

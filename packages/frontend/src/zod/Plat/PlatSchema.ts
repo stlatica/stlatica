@@ -1,7 +1,7 @@
-import z from "zod";
+import * as v from "valibot";
 
-export const PlatSchema = z.object({
-  plat: z.string().min(1).max(140),
+export const PlatSchema = v.object({
+  plat: v.pipe(v.string(), v.minLength(1), v.maxLength(140)),
 });
 
-export type PlatSchemaType = z.infer<typeof PlatSchema>;
+export type PlatSchemaType = v.InferOutput<typeof PlatSchema>;
