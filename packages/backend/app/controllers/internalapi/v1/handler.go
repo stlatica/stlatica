@@ -92,7 +92,7 @@ func (h *handler) GetTimeline(_ echo.Context, _ string) error {
 
 func (h *handler) GetTimelineByQuery(ectx echo.Context, params openapi.GetTimelineByQueryParams) error {
 	response, err := h.platController.GetPlatsByQuery(ectx,
-		string(params.Type), params.ToDate, params.FromDate, params.Limit)
+		params.UserId, string(params.Type), params.ToDate, params.FromDate, params.Limit)
 	if err != nil {
 		return err
 	}
