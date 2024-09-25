@@ -15,7 +15,7 @@ import { useNavigate } from "@remix-run/react";
 export const useNavigateSafe = () => {
   try {
     return useNavigate();
-  } catch (err) {
+  } catch {
     return () => {};
   }
 };

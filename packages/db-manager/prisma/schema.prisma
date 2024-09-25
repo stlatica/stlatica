@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model goose_db_version {
+  id         BigInt    @id @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
+  version_id BigInt
+  is_applied Boolean
+  tstamp     DateTime? @default(now()) @db.Timestamp(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model plats {
+  plat_id    String @id @db.Char(26)
+  user_id    String @db.Char(26)
+  content    String @db.VarChar(255)
+  created_at BigInt @db.UnsignedBigInt
+  updated_at BigInt @db.UnsignedBigInt
+  users      users  @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_plats_users")
+
+  @@index([user_id], map: "fk_plats_users")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model timeline_users {
+  timeline_id String    @db.Char(26)
+  user_id     String    @db.Char(26)
+  created_at  BigInt    @db.UnsignedBigInt
+  updated_at  BigInt    @db.UnsignedBigInt
+  timelines   timelines @relation(fields: [timeline_id], references: [timeline_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_timeline_users_timelines")
+  users       users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_timeline_users_users")
+
+  @@id([timeline_id, user_id])
+  @@index([user_id], map: "fk_timeline_users_users")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model timelines {
+  timeline_id    String           @id @db.Char(26)
+  user_id        String           @db.Char(26)
+  name           String           @db.VarChar(64)
+  description    String           @db.VarChar(255)
+  created_at     BigInt           @db.UnsignedBigInt
+  updated_at     BigInt           @db.UnsignedBigInt
+  timeline_users timeline_users[]
+  users          users            @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_timelines_users")
+
+  @@index([user_id], map: "fk_timelines_users")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model user_auth_credentials {
+  user_id       String @id @db.Char(26)
+  user_password String @db.VarChar(64)
+  users         users  @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_auth_credentials_users")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model user_relations {
+  follow_user_id                               String @db.Char(26)
+  follower_user_id                             String @db.Char(26)
+  created_at                                   BigInt @db.UnsignedBigInt
+  updated_at                                   BigInt @db.UnsignedBigInt
+  users_user_relations_follow_user_idTousers   users  @relation("user_relations_follow_user_idTousers", fields: [follow_user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_relations_follow_user_id")
+  users_user_relations_follower_user_idTousers users  @relation("user_relations_follower_user_idTousers", fields: [follower_user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_relations_follower_user_id")
+
+  @@id([follow_user_id, follower_user_id])
+  @@index([follower_user_id], map: "fk_user_relations_follower_user_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model users {
+  user_id                                               String                 @id @db.Char(26)
+  preferred_user_id                                     String                 @unique(map: "idx_users_preferred_user_id") @db.VarChar(64)
+  preferred_user_name                                   String                 @db.VarChar(64)
+  registered_at                                         BigInt                 @db.UnsignedBigInt
+  is_public                                             Boolean
+  mail_address                                          String                 @unique(map: "idx_users_mail_address") @db.VarChar(256)
+  created_at                                            BigInt                 @db.UnsignedBigInt
+  updated_at                                            BigInt                 @db.UnsignedBigInt
+  plats                                                 plats[]
+  timeline_users                                        timeline_users[]
+  timelines                                             timelines[]
+  user_auth_credentials                                 user_auth_credentials?
+  user_relations_user_relations_follow_user_idTousers   user_relations[]       @relation("user_relations_follow_user_idTousers")
+  user_relations_user_relations_follower_user_idTousers user_relations[]       @relation("user_relations_follower_user_idTousers")
+}

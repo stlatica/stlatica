@@ -64,7 +64,7 @@ func (c *platController) GetPlat(ectx echo.Context, platIDStr string) (*GetPlatR
 func (c *platController) GetPlatsByQuery(ectx echo.Context,
 	timelineTypeStr string, toDate *time.Time, fromDate *time.Time, limit *int) ([]*GetPlatResponse, error) {
 	var toDateUnixTime, fromDateUnixTime types.UnixTime
-	var limitValue uint64
+	var limitValue int
 	if toDate != nil {
 		toDateUnixTime = types.NewUnixTimeFromTime(*toDate)
 	}
@@ -72,7 +72,7 @@ func (c *platController) GetPlatsByQuery(ectx echo.Context,
 		fromDateUnixTime = types.NewUnixTimeFromTime(*fromDate)
 	}
 	if limit != nil {
-		limitValue = uint64(*limit)
+		limitValue = *limit
 	}
 
 	userID := types.UserID{} // TODO: Get user id from context https://github.com/stlatica/stlatica/issues/460

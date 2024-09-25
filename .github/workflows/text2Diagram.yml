@@ -33,7 +33,7 @@ jobs:
       # 変更が合ったファイルを集める
       - name: Collect changed or added files
         id: changed-files
-        uses: tj-actions/changed-files@v41
+        uses: tj-actions/changed-files@v45
 
       # d2ファイルをビルド
       - name: safe dirctory

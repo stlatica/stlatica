@@ -58,7 +58,7 @@ func main() {
 	platFactory := platdomain.NewFactory(appLogger)
 	imageFactory := imagedomain.NewFactory(appLogger)
 	initContent := &v1controllers.ControllerInitContents{
-		UserUseCase:  userusecase.NewUserUseCase(appLogger, userFactory, userDAO),
+		UserUseCase:  userusecase.NewUserUseCase(appLogger, userFactory, imageFactory, userDAO, imageAdapter),
 		PlatUseCase:  platusecase.NewPlatUseCase(appLogger, platFactory, platDAO),
 		ImageUseCase: imageusecase.NewImageUseCase(appLogger, imageAdapter, imageFactory),
 	}

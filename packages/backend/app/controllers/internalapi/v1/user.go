@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"io"
+
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users/ports"
@@ -30,6 +32,15 @@ type GetFollowResponse struct {
 	IsPublic bool   `json:"is_public"`
 }
 
+// GetFollowerResponse is the response of GetFollowers.
+type GetFollowerResponse struct {
+	UserID   string `json:"user_id"`
+	Username string `json:"username"`
+	Summary  string `json:"summary"`
+	Icon     string `json:"icon"`
+	IsPublic bool   `json:"is_public"`
+}
+
 // GetUser converts request data and calls usecase to get actor.
 func (c *userController) GetUser(ectx echo.Context, userID string) (*GetUserResponse, error) {
 	user, err := c.userUseCase.GetUserByPreferredUserID(ectx.Request().Context(), userID)
@@ -50,10 +61,10 @@ func (c *userController) GetUser(ectx echo.Context, userID string) (*GetUserResp
 
 func (c *userController) GetFollows(ectx echo.Context,
 	userIDStr string, userPaginationID *string, limit *int) ([]*GetFollowResponse, error) {
-	var limitValue uint64
+	var limitValue int
 	var userPaginationIDStr string
 	if limit != nil {
-		limitValue = uint64(*limit)
+		limitValue = *limit
 	}
 	if userPaginationID == nil {
 		userPaginationIDStr = ""
@@ -82,4 +93,44 @@ func (c *userController) GetFollows(ectx echo.Context,
 		})
 	}
 	return followResponses, nil
+}
+
+func (c *userController) GetFollowers(ectx echo.Context,
+	userIDStr string, userPaginationID *string, limit *int) ([]*GetFollowerResponse, error) {
+	var limitValue int
+	var userPaginationIDStr string
+	if userPaginationID == nil {
+		userPaginationIDStr = ""
+	} else {
+		userPaginationIDStr = *userPaginationID
+	}
+	if limit != nil {
+		limitValue = *limit
+	}
+
+	getParams := ports.FollowersGetParams{
+		PreferredUserID:           userIDStr,
+		PreferredUserPaginationID: userPaginationIDStr,
+		Limit:                     limitValue,
+	}
+	followers, err := c.userUseCase.GetFollowers(ectx.Request().Context(), getParams)
+	if err != nil {
+		return nil, err
+	}
+
+	followerResponse := make([]*GetFollowerResponse, 0, len(followers))
+	for _, follower := range followers {
+		followerResponse = append(followerResponse, &GetFollowerResponse{
+			UserID:   follower.GetPreferredUserID(),
+			Username: follower.GetPreferredUserName(),
+			Summary:  "", // TODO: Return actual value https://github.com/stlatica/stlatica/issues/526
+			Icon:     "", // TODO: Return actual value https://github.com/stlatica/stlatica/issues/526
+			IsPublic: follower.GetIsPublic(),
+		})
+	}
+	return followerResponse, nil
+}
+
+func (c *userController) GetUserIcon(ectx echo.Context, preferredUserIDStr string) (io.ReadCloser, error) {
+	return c.userUseCase.GetUserIcon(ectx.Request().Context(), preferredUserIDStr)
 }

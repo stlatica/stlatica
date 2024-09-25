@@ -1,21 +1,32 @@
 version: "3.9"
+x-common: &common-settings
+  build:
+    context: ./
+    dockerfile: docker/Dockerfile
+  volumes:
+    - type: bind
+      source: ./
+      target: /openapi
+  working_dir: /openapi
+  init: true
+
 services:
-  redocly:
-    build:
-      context: ./
-      dockerfile: docker/Dockerfile
-    container_name: stlatica_redocly
-    volumes:
-      - type: bind
-        source: ./
-        target: /openapi
+  redocly-cli:
+    <<: *common-settings
+  internal-preview:
+    <<: *common-settings
+    container_name: stlatica-openapi-preview-internal
+    restart: always
     ports:
-      - "127.0.0.1:8080:8080"
-      - "127.0.0.1:8081:8081"
-      - "127.0.0.1:8090:8090"
-      - "127.0.0.1:8091:8091"
-      # バックエンドのdockerと競合する可能性があるため4020に変更する仮措置
-      # prismは別のファイルとして分離したい
-      - "127.0.0.1:4020:4010"
-    working_dir: /openapi
-    init: true
+      - "127.0.0.1:2940:2940"
+      - "127.0.0.1:32201:32201"
+    command: redocly preview-docs --host 0.0.0.0 internalapi/openapi.yaml -p 2940
+  external-preview:
+    <<: *common-settings
+    container_name: stlatica-openapi-preview-external
+    restart: always
+    ports:
+      - "127.0.0.1:2941:2941"
+      # redoclyのオプション見た感じホットリロードのポートが変更できないっぽいので、external previewのホットリロードを利用する際はコメントアウトで制御してください
+      # - "127.0.0.1:32201:32201"
+    command: redocly preview-docs --host 0.0.0.0 externalapi/openapi.yaml -p 2941

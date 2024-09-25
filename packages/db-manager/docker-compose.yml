@@ -1,0 +1,28 @@
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.node
+      target: dev
+    working_dir: /stlatica/packages/db-manager
+    volumes:
+      - type: bind
+        source: ../../
+        target: /stlatica
+    # ports:
+    #   - "127.0.0.1:3000:3000"
+    tty: true
+
+  prod:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.node
+      target: prod
+    ports:
+      - '127.0.0.1:5100:5100'
+
+# バックエンドリポジトリのDBに接続
+networks:
+  default:
+    name: backend_default
+    external: true

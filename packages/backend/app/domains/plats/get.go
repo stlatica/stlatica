@@ -36,7 +36,7 @@ func (g *platGetter) GetPlats(ctx context.Context,
 	if getParams.ToDate != 0 && getParams.FromDate != 0 {
 		return nil, errors.New("cannot specify both to_date and from_date")
 	}
-	var limit uint64
+	var limit int
 	if getParams.Limit == 0 {
 		limit = 100
 	}

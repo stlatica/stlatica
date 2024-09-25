@@ -156,16 +156,29 @@ func (h *handler) DeleteFollow(_ echo.Context, _ openapi.UserId) error {
 	panic("implement me")
 }
 
-func (h *handler) GetFollowers(_ echo.Context, _ openapi.UserId, _ openapi.GetFollowersParams) error {
-	panic("implement me")
+func (h *handler) GetFollowers(ctx echo.Context, userID openapi.UserId, params openapi.GetFollowersParams) error {
+	response, err := h.userController.GetFollowers(ctx, userID, params.UserPaginationId, params.Limit)
+	if err != nil {
+		return err
+	}
+	return ctx.JSON(http.StatusOK, response)
 }
 
 func (h *handler) Login(_ echo.Context) error {
 	panic("implement me")
 }
 
-func (h *handler) GetUserIcon(_ echo.Context, _ openapi.UserId) error {
-	panic("implement me")
+func (h *handler) GetUserIcon(ectx echo.Context, userID openapi.UserId) error {
+	imageStream, err := h.userController.GetUserIcon(ectx, userID)
+	if err != nil {
+		return err
+	}
+	response := ectx.Response()
+	_, err = io.Copy(response, imageStream)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // ControllerInitContents is the struct to hold the dependencies for the controller.
