@@ -8,7 +8,7 @@ datasource db {
 }
 
 model goose_db_version {
-  id         BigInt    @id @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
+  id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
   version_id BigInt
   is_applied Boolean
   tstamp     DateTime? @default(now()) @db.Timestamp(0)
@@ -81,6 +81,7 @@ model users {
   registered_at                                         BigInt                 @db.UnsignedBigInt
   is_public                                             Boolean
   mail_address                                          String                 @unique(map: "idx_users_mail_address") @db.VarChar(256)
+  icon_image_id                                         String                 @db.Char(26)
   created_at                                            BigInt                 @db.UnsignedBigInt
   updated_at                                            BigInt                 @db.UnsignedBigInt
   plats                                                 plats[]
