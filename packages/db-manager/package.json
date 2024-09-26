@@ -15,7 +15,7 @@
 	"devDependencies": {
 		"@faker-js/faker": "^8.4.1",
 		"@hono/valibot-validator": "^0.3.0",
-		"@radix-ui/colors": "^3.0.0",
+		"@mojojoejo/vite-plugin-purgecss": "^1.1.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
@@ -41,6 +41,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@prisma/client": "^5.19.0"
-	}
+		"@prisma/client": "^5.19.0",
+		"bulma": "^1.0.2"
+	},
+	"packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
 }
