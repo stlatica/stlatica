@@ -1,21 +1,10 @@
 :root {
-	background-color: var(--st-color-bg);
-	color: var(--st-color-text);
-
 	font-family: 'Noto Sans JP', sans-serif;
 	font-weight: 400;
 	font-style: normal;
 
 	word-wrap: break-word;
 	overflow-wrap: break-word;
-}
-
-.dark {
-	--st-color-bg: var(--gray-4);
-}
-
-a {
-	color: var(--blue-11);
 }
 
 html,
@@ -31,4 +20,14 @@ form {
 
 pre {
 	font-family: 'Noto Sans JP', sans-serif;
+}
+
+h2 {
+	text-align: center;
+	padding-bottom: 2rem;
+}
+
+a {
+	color: var(--bulma-link-80);
+	text-decoration: underline;
 }
