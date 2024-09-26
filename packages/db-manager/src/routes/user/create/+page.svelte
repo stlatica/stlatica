@@ -1,6 +1,6 @@
 <script>
-	import { ulid } from 'ulidx';
 	import { superForm } from 'sveltekit-superforms';
+	import { generateUlid } from '$lib/faker/ulid';
 
 	export let form;
 	export let data;
@@ -12,7 +12,7 @@
 	const regenerate_id = () => {
 		// schema.set({ ...schema, user_id: ulid() });
 
-		schema.set({ ...$schema, user_id: ulid() });
+		schema.set({ ...$schema, user_id: generateUlid() });
 		// user_id = ulid();
 	};
 </script>

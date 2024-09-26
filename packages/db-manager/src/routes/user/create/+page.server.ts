@@ -6,6 +6,7 @@ import { fail } from '@sveltejs/kit';
 import { FakeUser } from '$lib/faker/user';
 
 import * as v from 'valibot';
+import { generateUlid } from '$lib/faker/ulid';
 
 const userSchema = v.object({
 	user_id: v.pipe(v.string(), v.ulid()),
@@ -31,7 +32,8 @@ export const actions: Actions = {
 					...form.data,
 					registered_at: new Date().valueOf(),
 					created_at: new Date().valueOf(),
-					updated_at: new Date().valueOf()
+					updated_at: new Date().valueOf(),
+					icon_image_id: generateUlid()
 				}
 			});
 

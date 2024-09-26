@@ -12,11 +12,13 @@
 		<hr />
 
 		<p>DB Viewer</p>
+		<a href="/view/plats"> Plat 一覧 </a>
 		<a href="/view/users"> ユーザー一覧 </a>
 		<hr />
 
 		<p>API経由操作</p>
-		<div>TODO...</div>
+		<!-- <div>TODO...</div> -->
+		<a href="/api/plat/random-create">api</a>
 	</div>
 
 	<div class="container">
