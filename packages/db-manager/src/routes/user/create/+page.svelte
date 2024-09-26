@@ -1,6 +1,4 @@
 <script>
-	import Button from '$lib/material/button/button.svelte';
-	import MyInput from '$lib/material/input/text-input.svelte';
 	import { superForm } from 'sveltekit-superforms';
 	import { generateUlid } from '$lib/faker/ulid';
 
@@ -22,33 +20,43 @@
 <h2>ユーザー追加</h2>
 
 <form method="post">
-	<div class="label">
+	<div class="line">
 		<div class="labelname">user_id</div>
-		<MyInput type="text" name="user_id" bind:value={$schema.user_id} />
-		<Button type="button" onclick={regenerate_id}>generate id</Button>
+		<input class="input" type="text" name="user_id" bind:value={$schema.user_id} />
+		<button class="button is-info" type="button" onclick={regenerate_id}>generate id</button>
 	</div>
 
 	<label>
 		<div class="labelname">preferred_user_id</div>
-		<MyInput type="text" name="preferred_user_id" bind:value={$schema.preferred_user_id} />
+		<input
+			class="input"
+			type="text"
+			name="preferred_user_id"
+			bind:value={$schema.preferred_user_id}
+		/>
 	</label>
 
 	<label>
 		<div class="labelname">preferred_user_name</div>
-		<MyInput type="text" name="preferred_user_name" bind:value={$schema.preferred_user_name} />
+		<input
+			class="input"
+			type="text"
+			name="preferred_user_name"
+			bind:value={$schema.preferred_user_name}
+		/>
 	</label>
 
-	<label>
+	<label class="checkbox">
 		<div class="labelname">is_public</div>
 		<input type="checkbox" name="is_public" bind:checked={$schema.is_public} />
 	</label>
 
 	<label>
 		<div class="labelname">mail_address</div>
-		<MyInput type="email" name="mail_address" bind:value={$schema.mail_address} />
+		<input class="input" type="email" name="mail_address" bind:value={$schema.mail_address} />
 	</label>
 
-	<Button type="submit">保存</Button>
+	<button class="button is-primary" type="submit">追加</button>
 </form>
 
 {#if form}
@@ -65,13 +73,8 @@
 {/if}
 
 <style>
-	h2 {
-		text-align: center;
-		padding-bottom: 2rem;
-	}
-
 	label,
-	.label {
+	.line {
 		display: flex;
 		align-items: center;
 		gap: var(--font-size-lg);
@@ -85,6 +88,16 @@
 	.result {
 		margin-top: var(--size-15);
 		padding: var(--font-size-sm);
-		background-color: var(--gray-7);
+		background-color: var(--bulma-text-30);
+		color: var(--bulma-text-30-invert);
+	}
+
+	input[type='text'],
+	input[type='email'] {
+		flex: 1;
+	}
+
+	input[type='checkbox'] {
+		margin-left: 0.5em;
 	}
 </style>

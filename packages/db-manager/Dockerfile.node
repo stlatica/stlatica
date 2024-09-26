@@ -31,7 +31,7 @@ FROM node as prod
 # ***** apt *****
 # 開発に必要な依存関係類のインストール
 RUN apt update -y \
-  && apt install -y openssl \
+  && apt install -y openssl vim\
   && apt clean \
   && rm -rf /var/lib/apt/lists/* 
 

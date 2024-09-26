@@ -2,7 +2,7 @@
 
 ## 起動
 
-packages/backend のDBを先に起動してください。```make docker/start-db docker/migration-up```
+packages/backend のDBを先に起動してください。`make docker/start-db docker/migration-up`
 
 > make docker/start
 

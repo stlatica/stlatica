@@ -1,22 +1,22 @@
 <script>
 	import '$lib/styles/tw-variables/_index.css';
-	import '$lib/styles/theme.css';
 	import '$lib/styles/global.css';
 	import '$lib/styles/utilities.css';
+	import 'bulma/css/bulma.min.css';
 </script>
 
 <main>
 	<div class="menu">
-		<div>DB直操作</div>
+		<p>DB直操作</p>
 		<a href="/user/create"> ユーザー追加 </a>
 		<hr />
 
-		<div>DB Viewer</div>
+		<p>DB Viewer</p>
 		<a href="/view/plats"> Plat 一覧 </a>
 		<a href="/view/users"> ユーザー一覧 </a>
 		<hr />
 
-		<div>API経由操作</div>
+		<p>API経由操作</p>
 		<!-- <div>TODO...</div> -->
 		<a href="/api/plat/random-create">api</a>
 	</div>
@@ -40,7 +40,9 @@
 	}
 
 	.menu {
-		background-color: var(--gray-3);
+		/* background-color: var(--bulma-text-20-invert); */
+		color: var(--bulma-text-bold);
+		background-color: var(--bulma-text-bold-invert);
 		/* height: 100%; */
 		padding: 0.5rem;
 		padding-right: 0.5rem;
@@ -68,6 +70,8 @@
 	}
 
 	hr {
-		border-color: var(--gray-8);
+		--hrcolor: var(--bulma-text-base);
+		border-color: var(--hrcolor);
+		background-color: var(--hrcolor);
 	}
 </style>

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { getTimelineByQuery } from '$lib/orval/stlaticaInternalApi';
-
 	// let result = getTimelineByQuery({
 	// 	user_id: '01J6YSX5HRSEDS46XGTD57P3D6',
 	// 	type: 'home',

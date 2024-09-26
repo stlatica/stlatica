@@ -2,8 +2,10 @@
 	export let data;
 </script>
 
-<main>
-	<table>
+<h2>ユーザー一覧</h2>
+
+<div class="table-container main">
+	<table class="table">
 		<thead>
 			<tr>
 				<th>user_id</th>
@@ -25,8 +27,9 @@
 			{/each}
 		</tbody>
 	</table>
-</main>
+</div>
 
+<!-- 
 <style>
 	thead {
 		font-size: var(--font-size-sm);
@@ -39,8 +42,15 @@
 
 	table th,
 	table td {
-		border-bottom: 2px solid var(--gray-10);
+		border-bottom: 2px solid var(--bulma-text-base);
+		color: var(--bulma-text-bold);
 		padding: var(--size-3);
 		padding-left: var(--size-5);
+	}
+</!-->
+
+<style>
+	.main {
+		width: 100%;
 	}
 </style>
