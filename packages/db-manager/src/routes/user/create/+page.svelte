@@ -23,9 +23,7 @@
 	<div class="line">
 		<div class="labelname">user_id</div>
 		<input class="input" type="text" name="user_id" bind:value={$schema.user_id} />
-		<button class="button is-info is-outlined" type="button" onclick={regenerate_id}
-			>generate id</button
-		>
+		<button class="button is-info" type="button" onclick={regenerate_id}>generate id</button>
 	</div>
 
 	<label>
@@ -58,7 +56,7 @@
 		<input class="input" type="email" name="mail_address" bind:value={$schema.mail_address} />
 	</label>
 
-	<button class="button is-primary is-outlined" type="submit">追加</button>
+	<button class="button is-primary" type="submit">追加</button>
 </form>
 
 {#if form}
