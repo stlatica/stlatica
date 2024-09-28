@@ -19,6 +19,8 @@ import (
 type UserDAO interface {
 	// GetUser returns user.
 	GetUser(ctx context.Context, userID types.UserID) (*domainentities.User, error)
+	// CreateUser creates user.
+	CreateUser(ctx context.Context, user domainentities.UserBase) (*domainentities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context, preferredUserName string) (*domainentities.User, error)
 	// GetFollows returns follows of user.
@@ -50,6 +52,44 @@ func (dao *userDAO) GetUser(ctx context.Context, userID types.UserID) (*domainen
 	}
 
 	return convertUserEntityToDomainEntity(entity), nil
+}
+
+func (dao *userDAO) CreateUser(ctx context.Context, user domainentities.UserBase) (
+	*domainentities.User, error) {
+	/*user := entities.UserBase{
+		PreferredUserID:   preferredUserID,
+		PreferredUserName: userName,
+		RegisteredAt:      types.NewUnixTimeFromCurrentTime(),
+		IsPublic:          true,
+		MailAddress:       mailAddress,
+	}*/
+	ctx = boil.SkipTimestamps(ctx)
+	// err := entities.UserBase
+	repositoriesUser := entities.UserBase{
+		UserID:            user.UserID,
+		PreferredUserID:   user.PreferredUserID,
+		PreferredUserName: user.PreferredUserName,
+		RegisteredAt:      user.RegisteredAt,
+		IsPublic:          user.IsPublic,
+		MailAddress:       user.MailAddress,
+		IconImageID:       user.IconImageID,
+		CreatedAt:         user.CreatedAt,
+		UpdatedAt:         user.UpdatedAt,
+	}
+	err := repositoriesUser.Insert(ctx, dao.ctxExecutor, boil.Infer())
+	return &domainentities.User{
+		UserBase: domainentities.UserBase{
+			UserID:            user.UserID,
+			PreferredUserID:   user.PreferredUserID,
+			PreferredUserName: user.PreferredUserName,
+			RegisteredAt:      user.RegisteredAt,
+			IsPublic:          user.IsPublic,
+			MailAddress:       user.MailAddress,
+			IconImageID:       user.IconImageID,
+			CreatedAt:         user.RegisteredAt,
+			UpdatedAt:         user.RegisteredAt,
+		},
+	}, err
 }
 
 func (dao *userDAO) GetUserByPreferredUserID(ctx context.Context,

@@ -4,6 +4,7 @@ import (
 	"io"
 
 	"github.com/labstack/echo/v4"
+	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users/ports"
 )
@@ -21,6 +22,11 @@ type GetUserResponse struct {
 	MailAddress  string `json:"mail_address"`
 	CreatedAt    string `json:"created_at"`
 	UpdatedAt    string `json:"updated_at"`
+}
+
+// CreateUserResponse is the response of CreateUser.
+type CreateUserResponse struct {
+	UserID string `json:"user_id"`
 }
 
 // GetFollowResponse is the response of GetFollows.
@@ -56,6 +62,23 @@ func (c *userController) GetUser(ectx echo.Context, userID string) (*GetUserResp
 		MailAddress:  user.GetMailAddress(),
 		CreatedAt:    user.GetCreatedAt().ConvertToTime().String(),
 		UpdatedAt:    user.GetUpdatedAt().ConvertToTime().String(),
+	}, nil
+}
+
+// CreateUser creates a new user.
+func (c *userController) CreateUser(ectx echo.Context, userName string, preferredUserID string, mailAddress string,
+	iconImageIDStr string) (*CreateUserResponse, error) {
+	iconImageID, err := types.NewImageIDFromString(iconImageIDStr)
+	if err != nil {
+		return nil, err
+	}
+	user, err := c.userUseCase.CreateUser(
+		ectx.Request().Context(), userName, preferredUserID, mailAddress, iconImageID)
+	if err != nil {
+		return nil, err
+	}
+	return &CreateUserResponse{
+		UserID: user.GetPreferredUserID(),
 	}, nil
 }
 

@@ -18,6 +18,9 @@ import (
 type UserUseCase interface {
 	// GetUser returns user.
 	GetUser(ctx context.Context, userID types.UserID) (*entities.User, error)
+	// CreateUser creates a new user.
+	CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string,
+		iconImageID types.ImageID) (*entities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error)
 	// GetFollows returns follows of user.
@@ -55,6 +58,16 @@ func (u *userUseCase) GetUser(ctx context.Context, userID types.UserID) (*entiti
 		userDAO: u.userDAO,
 	}
 	return getter.GetUser(ctx, userID, portImpl)
+}
+
+func (u *userUseCase) CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string,
+	iconImageID types.ImageID) (
+	*entities.User, error) {
+	creator := u.userDomainFactory.NewUserCreator()
+	portImpl := &userPortImpl{
+		userDAO: u.userDAO,
+	}
+	return creator.CreateUser(ctx, userName, preferredUserID, mailAddress, iconImageID, portImpl)
 }
 
 func (u *userUseCase) GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error) {
@@ -141,6 +154,12 @@ type userPortImpl struct {
 
 func (p *userPortImpl) GetUser(ctx context.Context, userID types.UserID) (*entities.User, error) {
 	return p.userDAO.GetUser(ctx, userID)
+}
+
+// CreateUser implements ports.UserCreateInPort.
+func (p *userPortImpl) CreateUser(ctx context.Context, user entities.UserBase) (
+	*entities.User, error) {
+	return p.userDAO.CreateUser(ctx, user)
 }
 
 func (p *userPortImpl) GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error) {

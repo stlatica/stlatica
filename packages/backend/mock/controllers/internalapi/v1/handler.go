@@ -75,8 +75,8 @@ func (h *handler) GetTimeline(ectx echo.Context, _ string) error {
 	}
 	for i := int(platNum.Int64()); i >= 0; i-- {
 		plats = append(plats, openapi.Plat{
-			PlatId: ulid.MustNew(
-				uint64(types.NewUnixTimeFromTime(now.Add(time.Duration(i)*time.Minute))),
+			PlatId: ulid.MustNew(ulid.Timestamp(
+				types.NewUnixTimeFromTime(now.Add(time.Duration(i)*time.Minute)).ConvertToTime()),
 				rand.Reader,
 			).String(),
 			Content: fmt.Sprintf("plat %d", i),

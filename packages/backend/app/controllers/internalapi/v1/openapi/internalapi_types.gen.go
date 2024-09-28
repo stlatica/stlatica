@@ -221,8 +221,12 @@ type GetUsersParams struct {
 
 // CreateUserJSONBody defines parameters for CreateUser.
 type CreateUserJSONBody struct {
-	Email *string `json:"email,omitempty"`
-	Name  *string `json:"name,omitempty"`
+	Email       string `json:"email"`
+	IconImageId string `json:"icon_image_id"`
+	Name        string `json:"name"`
+
+	// UserId userを識別するための一意のID
+	UserId UserID `json:"user_id"`
 }
 
 // GetFollowersParams defines parameters for GetFollowers.
