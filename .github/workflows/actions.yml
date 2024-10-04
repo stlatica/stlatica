@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-22.04
     outputs:
       is_frontend: ${{ steps.filter.outputs.is_frontend }}
+      is_sdmt: ${{ steps.filter.outputs.is_sdmt }}
       is_backend: ${{ steps.filter.outputs.is_backend }}
       is_openapi: ${{ steps.filter.outputs.is_openapi }}
     steps:
@@ -24,6 +25,8 @@ jobs:
           filters: |
             is_frontend: 
               - 'packages/frontend/**'
+            is_sdmt:
+              - 'packages/db-manager/**'
             is_backend:
               - 'packages/backend/**'
             is_openapi:
@@ -89,6 +92,51 @@ jobs:
       - name: Run vrt tests in container
         run: make docker/vrt
         timeout-minutes: 2
+
+  build_sdmt:
+    needs: changes
+    if: ${{ needs.changes.outputs.is_sdmt == 'true' }}
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: packages/db-manager
+    steps:
+      # リポジトリをチェックアウト
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      # pnpm 8をインストール
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      # node.jsをインストール
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: packages/db-manager/
+
+      # 依存関係先をインストール
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      #  単体テスト
+      # - name: vitest
+      #   run: pnpm test
+
+      - name: prisma generate
+        run: pnpm prisma generate
+
+      - name: lint
+        run: pnpm lint
+
+      - name: svelte check
+        run: pnpm check
+
+      - name: build check
+        run: pnpm build
 
   build_backend:
     needs: changes
