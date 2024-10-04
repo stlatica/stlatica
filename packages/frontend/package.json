@@ -26,8 +26,8 @@
     "@remix-run/node": "^2.10.3",
     "@remix-run/react": "^2.10.3",
     "@remix-run/serve": "^2.10.3",
-    "@tanstack/react-virtual": "^3.8.3",
-    "@vanilla-extract/css": "^1.15.3",
+    "@tanstack/react-virtual": "^3.10.6",
+    "@vanilla-extract/css": "^1.16.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
     "isbot": "^5.0.0",
@@ -37,8 +37,8 @@
     "react-hook-form": "^7.52.1",
     "react-icons": "^5.2.1",
     "swr": "^2.2.5",
-    "tailwindcss": "^3.4.6",
-    "valibot": "^0.41.0"
+    "tailwindcss": "^3.4.10",
+    "valibot": "^0.42.0"
   },
   "devDependencies": {
     "@ladle/react": "^4.1.1",
@@ -52,7 +52,7 @@
     "@types/sync-fetch": "^0.4.3",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
-    "@vanilla-extract/vite-plugin": "^4.0.0",
+    "@vanilla-extract/vite-plugin": "^4.0.15",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/coverage-v8": "^2.0.0",
     "@vitest/ui": "^2.0.0",
@@ -60,29 +60,29 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-html": "^8.1.1",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jsdoc": "^50.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsdoc": "^50.3.1",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-promise": "^7.0.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-tailwindcss": "^3.17.4",
-    "eslint-plugin-unused-imports": "^4.0.0",
+    "eslint-plugin-unused-imports": "^4.1.3",
     "jsdom": "^25.0.0",
-    "orval": "^7.0.0",
+    "orval": "^7.0.1",
     "plop": "^4.0.1",
-    "postcss": "^8.4.39",
+    "postcss": "^8.4.43",
     "postcss-preset-mantine": "^1.16.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.3.3",
     "sync-fetch": "^0.5.2",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.4",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.6",
     "vite-tsconfig-paths": "^5.0.0",
     "vitest": "^2.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "pnpm@9.9.0+sha512.60c18acd138bff695d339be6ad13f7e936eea6745660d4cc4a776d5247c540d0edee1a563695c183a66eb917ef88f2b4feb1fc25f32a7adcadc7aaf3438e99c1"
+  "packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca"
 }
