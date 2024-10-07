@@ -15,6 +15,7 @@ jobs:
       is_sdmt: ${{ steps.filter.outputs.is_sdmt }}
       is_backend: ${{ steps.filter.outputs.is_backend }}
       is_openapi: ${{ steps.filter.outputs.is_openapi }}
+      is_main: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,7 +39,7 @@ jobs:
 
   build_frontend:
     needs: changes
-    if: ${{ needs.changes.outputs.is_frontend == 'true' }}
+    if: needs.changes.outputs.is_frontend == 'true' || needs.changes.outputs.is_main == 'true'
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -82,7 +83,7 @@ jobs:
 
   visual-regression-testing:
     needs: changes
-    if: ${{ needs.changes.outputs.is_frontend == 'true' }}
+    if: needs.changes.outputs.is_frontend == 'true' || needs.changes.outputs.is_main == 'true'
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -99,7 +100,7 @@ jobs:
 
   build_sdmt:
     needs: changes
-    if: ${{ needs.changes.outputs.is_sdmt == 'true' }}
+    if: needs.changes.outputs.is_sdmt == 'true' || needs.changes.outputs.is_main == 'true'
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -144,7 +145,7 @@ jobs:
 
   build_backend:
     needs: changes
-    if: ${{ needs.changes.outputs.is_backend == 'true' }}
+    if: needs.changes.outputs.is_backend == 'true' || needs.changes.outputs.is_main == 'true'
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -180,7 +181,7 @@ jobs:
 
   lint_openapi:
     needs: changes
-    if: ${{ needs.changes.outputs.is_openapi == 'true' }}
+    if: needs.changes.outputs.is_openapi == 'true' || needs.changes.outputs.is_main == 'true'
     runs-on: ubuntu-24.04
     defaults:
       run:
