@@ -25,12 +25,16 @@ jobs:
           filters: |
             is_frontend: 
               - 'packages/frontend/**'
+              - '.github/**'
             is_sdmt:
               - 'packages/db-manager/**'
+              - '.github/**'
             is_backend:
               - 'packages/backend/**'
+              - '.github/**'
             is_openapi:
               - 'packages/shared/openapi/**'
+              - '.github/**'
 
   build_frontend:
     needs: changes
