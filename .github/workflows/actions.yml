@@ -9,7 +9,7 @@ on:
 
 jobs:
   changes:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       is_frontend: ${{ steps.filter.outputs.is_frontend }}
       is_sdmt: ${{ steps.filter.outputs.is_sdmt }}
@@ -39,7 +39,7 @@ jobs:
   build_frontend:
     needs: changes
     if: ${{ needs.changes.outputs.is_frontend == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: packages/frontend
@@ -83,7 +83,7 @@ jobs:
   visual-regression-testing:
     needs: changes
     if: ${{ needs.changes.outputs.is_frontend == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: packages/frontend
@@ -100,7 +100,7 @@ jobs:
   build_sdmt:
     needs: changes
     if: ${{ needs.changes.outputs.is_sdmt == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: packages/db-manager
@@ -145,7 +145,7 @@ jobs:
   build_backend:
     needs: changes
     if: ${{ needs.changes.outputs.is_backend == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: packages/backend
@@ -181,7 +181,7 @@ jobs:
   lint_openapi:
     needs: changes
     if: ${{ needs.changes.outputs.is_openapi == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: packages/shared/openapi
