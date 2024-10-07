@@ -10,6 +10,7 @@ on:
 jobs:
   changes:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     outputs:
       is_frontend: ${{ steps.filter.outputs.is_frontend }}
       is_sdmt: ${{ steps.filter.outputs.is_sdmt }}
@@ -41,6 +42,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.is_frontend == 'true' || needs.changes.outputs.is_main == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: packages/frontend
@@ -85,6 +87,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.is_frontend == 'true' || needs.changes.outputs.is_main == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: packages/frontend
@@ -101,6 +104,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.is_sdmt == 'true' || needs.changes.outputs.is_main == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: packages/db-manager
@@ -146,6 +150,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.is_backend == 'true' || needs.changes.outputs.is_main == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: packages/backend
@@ -182,6 +187,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.is_openapi == 'true' || needs.changes.outputs.is_main == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: packages/shared/openapi
