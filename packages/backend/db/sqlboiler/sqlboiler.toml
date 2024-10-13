@@ -16,7 +16,7 @@ port=4000
 user="root"
 pass=""
 sslmode="false"
-whitelist=["users","plats","timelines","user_relations"]
+whitelist=["users","plats","timelines","user_relations", "user_auth_credentials"]
 
 [aliases.tables.users]
 up_singular     = "UserBase"
@@ -29,6 +29,9 @@ up_singular    = "TimelineBase"
 
 [aliases.tables.user_relations]
 up_singular    = "UserRelationBase"
+
+[aliases.tables.user_auth_credentials]
+up_singular    = "UserAuthCredentialBase"
 
 [[types]]
 [types.match]
