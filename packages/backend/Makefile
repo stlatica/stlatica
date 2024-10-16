@@ -55,6 +55,12 @@ docker/start-object-storage: ## start object storage on docker
 docker/stop-object-storage: ## stop object storage on docker
 	docker compose down minio
 
+docker/start-valkey: ## start valkey server on docker
+	docker compose up -d valkey
+
+docker/stop-valkey: ## stop valkey server on docker
+	docker compose down valkey
+
 docker/start-mock-internalapi: ## start mock internalapi on docker
 	docker run --rm -p 127.0.0.1:8080:8080 --mount type=bind,source="./",target="/go/src" -w /go/src -it golang:1.20.6 /bin/sh -c "go run mock/cmd/internalapi/main.go"
 
