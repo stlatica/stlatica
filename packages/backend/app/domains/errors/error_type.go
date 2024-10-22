@@ -9,4 +9,8 @@ const (
 	DomainErrorTypeNotFound
 	// DomainErrorTypeInvalidData is a domain error type for invalid data error
 	DomainErrorTypeInvalidData
+	// DomainErrorTypeUnauthorized is a domain error type for unauthorized
+	DomainErrorTypeUnauthorized
+	// DomainErrorTypeInternalServerError is a domain error type for internal server error
+	DomainErrorTypeInternalServerError
 )
