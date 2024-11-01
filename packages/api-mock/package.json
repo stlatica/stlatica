@@ -15,17 +15,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@faker-js/faker": "9.0.3",
+    "@faker-js/faker": "9.1.0",
     "date-fns": "4.1.0",
-    "express": "4.21.0"
+    "express": "4.21.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.3",
+    "@biomejs/biome": "1.9.4",
     "@types/express": "5.0.0",
     "@types/node": "^20.14.11",
     "esbuild": "0.24.0",
     "nodemon": "3.1.7",
-    "openapi-typescript": "7.4.1",
-    "typescript": "5.6.2"
+    "openapi-typescript": "7.4.2",
+    "typescript": "5.6.3"
   }
 }
