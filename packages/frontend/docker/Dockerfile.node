@@ -1,4 +1,4 @@
-FROM node:20.18.0-slim as node
+FROM node:22.11.0-slim as node
 RUN corepack enable npm pnpm 
 
 FROM mcr.microsoft.com/playwright:v1.47.2-jammy as playwright
