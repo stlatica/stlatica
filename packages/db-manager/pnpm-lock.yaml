@@ -12,8 +12,8 @@ importers:
         specifier: 5.19.0
         version: 5.19.0(prisma@5.19.0)
       '@tanstack/svelte-query':
-        specifier: 5.59.0
-        version: 5.59.0(svelte@5.0.0-next.262)
+        specifier: 5.59.16
+        version: 5.59.16(svelte@5.0.0-next.262)
       axios:
         specifier: 1.7.7
         version: 1.7.7
@@ -966,11 +966,11 @@ packages:
       svelte: ^5.0.0-next.96 || ^5.0.0
       vite: ^5.0.0
 
-  '@tanstack/query-core@5.59.0':
-    resolution: {integrity: sha512-WGD8uIhX6/deH/tkZqPNcRyAhDUqs729bWKoByYHSogcshXfFbppOdTER5+qY7mFvu8KEFJwT0nxr8RfPTVh0Q==}
+  '@tanstack/query-core@5.59.16':
+    resolution: {integrity: sha512-crHn+G3ltqb5JG0oUv6q+PMz1m1YkjpASrXTU+sYWW9pLk0t2GybUHNRqYPZWhxgjPaVGC4yp92gSFEJgYEsPw==}
 
-  '@tanstack/svelte-query@5.59.0':
-    resolution: {integrity: sha512-KjRQg6me2LSNvENUJalvLjTfFG2kmWRd7K+hFyPd2CysfqFAoyKvXnzLaUfJgtDSS4cobLlqMECZQ7kD37VGhw==}
+  '@tanstack/svelte-query@5.59.16':
+    resolution: {integrity: sha512-s0CRtjUK0Lo+uvRU+XFxWjmTRV1hr0fe+Z/R+wDGnTzbMKSyaSKYeC0aZSQKZdAO6R/DvEVrD9tgjof1ojufnQ==}
     peerDependencies:
       svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
 
@@ -3613,11 +3613,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@tanstack/query-core@5.59.0': {}
+  '@tanstack/query-core@5.59.16': {}
 
-  '@tanstack/svelte-query@5.59.0(svelte@5.0.0-next.262)':
+  '@tanstack/svelte-query@5.59.16(svelte@5.0.0-next.262)':
     dependencies:
-      '@tanstack/query-core': 5.59.0
+      '@tanstack/query-core': 5.59.16
       svelte: 5.0.0-next.262
 
   '@types/cookie@0.6.0': {}
