@@ -22,7 +22,6 @@ module.exports = {
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:promise/recommended",
-    "plugin:tailwindcss/recommended",
 
     // prettierと競合するeslintの設定を除外する 末尾に入れておくこと
     "prettier",

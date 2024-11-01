@@ -8,7 +8,7 @@
     "dev": "remix vite:dev",
     "ladle": "ladle",
     "ladle:ci": "ladle build",
-    "lint": "eslint --fix --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "lint": "biome lint",
     "lint:ci": "eslint --ignore-path .gitignore --max-warnings 0 .",
     "plop": "plop --plopfile plop/plopfile.js",
     "start": "remix-serve ./build/server/index.js",
@@ -41,6 +41,7 @@
     "valibot": "0.42.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@ladle/react": "4.1.1",
     "@playwright/test": "1.47.2",
     "@remix-run/dev": "2.13.1",
