@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useSWR from "swr";
+import useSwr from "swr";
 
 import { IsNull } from "@/utilities/utilities";
 
@@ -7,7 +7,7 @@ import { IsNull } from "@/utilities/utilities";
  *
  */
 const useStaticSWR = <T>(key: string, initialData: T) => {
-  const { data = initialData, mutate } = useSWR<T>(key, null, {
+  const { data = initialData, mutate } = useSwr<T>(key, null, {
     fallbackData: initialData,
     revalidateOnFocus: false,
     revalidateOnMount: false,

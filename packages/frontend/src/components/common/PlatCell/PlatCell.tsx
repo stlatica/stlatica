@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
 
 import { PlatMenuButton } from "@/components/button/PlatMenuButton";
@@ -37,50 +37,50 @@ export const PlatCell: React.FC<PlatCellProps> = ({
   userName,
 }) => {
   return (
-    <div className={styles.container}>
+    <div class={styles.container}>
       {/* ユーザプロファイル */}
-      <div className={styles.userProfile}>
+      <div class={styles.userProfile}>
         {/* アイコン */}
-        <div className={styles.userIcon}>
+        <div class={styles.userIcon}>
           <UserIcon iconImage={userIcon} />
         </div>
         {/* ユーザ名 と ユーザID */}
-        <div className={styles.userDetails}>
+        <div class={styles.userDetails}>
           {/* ユーザ名 */}
-          <div className={styles.userName}>{userName}</div>
+          <div class={styles.userName}>{userName}</div>
           {/* ユーザID */}
-          <div className={styles.userId}>{userId}</div>
+          <div class={styles.userId}>{userId}</div>
         </div>
         {/* プルダウンメニュー */}
-        <div className={styles.menuButton}>
+        <div class={styles.menuButton}>
           <PlatMenuButton />
         </div>
       </div>
       {/* platの内容 */}
-      <div className={styles.contentStyle}>{content}</div>
+      <div class={styles.contentStyle}>{content}</div>
       {/* 投稿日時 */}
       <div>
         <div>{formatter.format(new Date(date))}</div>
       </div>
       {/* 下部のアイコン */}
-      <div className={styles.bottomIcons}>
+      <div class={styles.bottomIcons}>
         {/* 返信数 */}
-        <div className={styles.iconContainer}>
-          <div className={styles.iconPadding}>
+        <div class={styles.iconContainer}>
+          <div class={styles.iconPadding}>
             <MdComment size="2em" />
           </div>
           <div>{replyCount}</div>
         </div>
         {/* シェア数 */}
-        <div className={styles.iconContainer}>
-          <div className={styles.iconPadding}>
+        <div class={styles.iconContainer}>
+          <div class={styles.iconPadding}>
             <MdAutorenew size="2em" />
           </div>
           <div>{shareCount}</div>
         </div>
         {/* いいね数 */}
-        <div className={styles.iconContainer}>
-          <div className={styles.iconPadding}>
+        <div class={styles.iconContainer}>
+          <div class={styles.iconPadding}>
             <MdStarBorder size="2em" />
           </div>
           <div>{favoriteCount}</div>

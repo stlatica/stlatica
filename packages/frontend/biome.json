@@ -26,14 +26,18 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "all": true
+      "recommended": true,
+      "complexity": {
+        "noForEach": "off"
+      }
     },
     "ignore": ["src/openapi/**/*", "plop/**/*", "build/**"]
   },
   "javascript": {
     "formatter": {
       "quoteStyle": "double"
-    }
+    },
+    "jsxRuntime": "reactClassic"
   },
   "overrides": [
     {

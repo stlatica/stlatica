@@ -1,11 +1,12 @@
 import "../src/routes/global.css";
 import "@mantine/core/styles.css";
 
-import React, { useEffect } from "react";
+import React from "react";
+import { useEffect } from "react";
 
 import { useLadleContext, ActionType, ThemeState } from "@ladle/react";
 import type { GlobalProvider } from "@ladle/react";
-import { MantineProvider, useMantineColorScheme } from "@mantine/core";
+import { useMantineColorScheme } from "@mantine/core";
 
 import { Providers } from "../src/Providers";
 
@@ -19,7 +20,7 @@ const MantineWrap: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     setColorScheme(globalState.theme);
-  }, [globalState.theme]);
+  }, [globalState.theme, setColorScheme]);
   return <>{children}</>;
 };
 
@@ -32,7 +33,7 @@ export const Provider: GlobalProvider = ({ children, globalState }) => {
       type: ActionType.UpdateTheme,
       value: ThemeState.Dark,
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

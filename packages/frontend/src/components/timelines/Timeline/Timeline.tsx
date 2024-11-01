@@ -63,7 +63,7 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
   return (
     <>
       <Button
-        fullWidth
+        fullWidth={true}
         variant="outline"
         onClick={() => {
           virtualizer.scrollToIndex(0);
@@ -71,16 +71,16 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
       >
         scroll to the top
       </Button>
-      <div ref={parentRef} className={styles.container}>
+      <div ref={parentRef} class={styles.container}>
         <div
-          className={styles.scrollArea}
+          class={styles.scrollArea}
           // eslint-disable-next-line react/forbid-dom-props
           style={{
             height: virtualizer.getTotalSize(),
           }}
         >
           <div
-            className={styles.positionHelper}
+            class={styles.positionHelper}
             // eslint-disable-next-line react/forbid-dom-props
             style={{
               transform: `translateY(${String(items[0]?.start ?? 0)}px)`,
@@ -93,7 +93,7 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
                   key={virtualRow.key}
                   data-index={virtualRow.index}
                   ref={virtualizer.measureElement}
-                  className={styles.item}
+                  class={styles.item}
                 >
                   <PlatCellWithFetch key={plat_id} id={plat_id} />
                 </div>

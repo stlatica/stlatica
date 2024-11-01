@@ -1,6 +1,6 @@
 import { Tabs } from "@mantine/core";
 import { useParams } from "@remix-run/react";
-import React from "react";
+import type React from "react";
 
 import { useNavigateSafe } from "@/features/acl/useNavigate";
 

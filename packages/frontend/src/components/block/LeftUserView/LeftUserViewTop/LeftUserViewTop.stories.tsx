@@ -8,7 +8,7 @@ export default {
 
 export const Story1: Story = () => {
   return (
-    <div className="w-[300px]">
+    <div class="w-[300px]">
       <LeftUserViewTop />
     </div>
   );

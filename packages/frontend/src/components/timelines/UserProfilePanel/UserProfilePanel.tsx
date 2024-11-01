@@ -1,5 +1,5 @@
 import { Title, Text, Paper, ActionIcon } from "@mantine/core";
-import React from "react";
+import type React from "react";
 import { TbDots } from "react-icons/tb";
 
 import { FollowButton } from "@/components/button/FollowButton";
@@ -29,26 +29,26 @@ export const UserProfilePanel: React.FC<LeftUserViewProps> = ({ userID }) => {
   // ストアからユーザーデータを引っ張ってくる
 
   return (
-    <Paper className={container}>
-      <img className={header} alt="header" src={SampleImageGreen400} />
+    <Paper class={container}>
+      <img class={header} alt="header" src={SampleImageGreen400} />
 
-      <div className={parent}>
-        <div className={icon}>
+      <div class={parent}>
+        <div class={icon}>
           <UserIcon iconImage={SampleImageBrown400} />
         </div>
       </div>
 
-      <div className={toolPalette}>
+      <div class={toolPalette}>
         <ActionIcon variant="outline" color="gray" radius="xl">
           <TbDots />
         </ActionIcon>
         <FollowButton isFollow={false} />
       </div>
 
-      <Paper className={texts}>
+      <Paper class={texts}>
         <Title>User Name Hereeeeeeeee</Title>
         <Text>@{userID}</Text>
-        <Paper className={FollowsLine}>
+        <Paper class={FollowsLine}>
           <Text>100 follower</Text>
           <Text>100 follow</Text>
           <Text>100 post</Text>

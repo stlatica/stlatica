@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { type LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 
 import { flexColumn, flexContainer, sidebar } from "@/styles/routes/settings.css";
@@ -16,8 +16,8 @@ export const loader = ({ request }: LoaderFunctionArgs) => {
 
 export default function Page() {
   return (
-    <div className={flexContainer}>
-      <div className={`${flexColumn} ${sidebar}`}>
+    <div class={flexContainer}>
+      <div class={`${flexColumn} ${sidebar}`}>
         <a href="/settings/account">アカウント</a>
         <a href="/settings/display">表示</a>
         <a href="/about">Stlaticaについて</a>

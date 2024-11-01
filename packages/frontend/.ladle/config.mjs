@@ -4,5 +4,5 @@ export default {
   // base: "/stlatica/",
   outDir: "ladle-build",
   host: "0.0.0.0",
-  viteConfig: process.cwd() + "/.ladle/vite.ladle.config.ts",
+  viteConfig: `${process.cwd()}/.ladle/vite.ladle.config.ts`,
 };

@@ -1,4 +1,4 @@
-import { MetaFunction, Outlet } from "@remix-run/react";
+import { type MetaFunction, Outlet } from "@remix-run/react";
 
 import { flexContainer, sidebar } from "@/styles/routes/test.css";
 
@@ -9,8 +9,8 @@ export const meta: MetaFunction = () => {
 export default function Home() {
   return (
     <>
-      <div className={flexContainer}>
-        <div className={sidebar}>
+      <div class={flexContainer}>
+        <div class={sidebar}>
           <div>
             <a href="/test/orval">orval</a>
           </div>

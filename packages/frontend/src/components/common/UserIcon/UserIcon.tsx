@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 import { userIcon } from "./user-icon.css";
 
@@ -15,5 +15,5 @@ type UserIconProps = {
  * user icon
  */
 export const UserIcon: React.FC<UserIconProps> = ({ iconImage, alt = "user icon" }) => {
-  return <img alt={alt} className={userIcon} src={iconImage} />;
+  return <img alt={alt} class={userIcon} src={iconImage} />;
 };

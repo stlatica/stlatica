@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 import { container, textSmall } from "./ProfileView.css";
 
@@ -12,13 +12,13 @@ type LeftUserViewProps = {
  */
 export const LeftUserView: React.FC<LeftUserViewProps> = ({ userID }) => {
   return (
-    <div className={container}>
+    <div class={container}>
       <div>User Name Hereeeeeeeee</div>
       <div>@{userID}</div>
       <div>
         <hr />
       </div>
-      <div className={textSmall}>
+      <div class={textSmall}>
         ここに自己紹介をかきまああああああああああああああああああああああああああああああああああああす文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数
       </div>
     </div>

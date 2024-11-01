@@ -1,5 +1,5 @@
 import { Stack } from "@mantine/core";
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { type LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 
 import { LeftUserView } from "@/components/block/LeftUserView";
@@ -26,12 +26,12 @@ export default function Page() {
   const { id } = useLoaderData<typeof loader>();
 
   return (
-    <main className={mainContainer}>
-      <div className={flexContainer}>
-        <div className={leftPanel}>
+    <main class={mainContainer}>
+      <div class={flexContainer}>
+        <div class={leftPanel}>
           <LeftUserView userID={id} />
         </div>
-        <div className={rightPadding} />
+        <div class={rightPadding} />
         <Stack>
           <ProfileTab />
           <Outlet />

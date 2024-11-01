@@ -1,4 +1,4 @@
-import { useForm, UseFormProps, UseFormReturn } from "react-hook-form";
+import { useForm, type UseFormProps, type UseFormReturn } from "react-hook-form";
 
 /**
  * デフォルト値が型安全な useForm

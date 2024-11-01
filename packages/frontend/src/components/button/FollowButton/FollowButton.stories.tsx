@@ -1,4 +1,4 @@
-import { Story, StoryDefault } from "@ladle/react";
+import type { Story, StoryDefault } from "@ladle/react";
 import { useState } from "react";
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -23,7 +23,7 @@ Story1.storyName = "未フォロー";
 export const Story2: Story = () => {
   return (
     <FollowButton
-      isFollow
+      isFollow={true}
       onClick={() => {
         console.log("push Story2");
       }}
