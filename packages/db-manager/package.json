@@ -38,7 +38,7 @@
 		"valibot": "0.42.1",
 		"vite": "5.4.8",
 		"vite-plugin-kit-routes": "0.6.11",
-		"vitest": "2.1.2"
+		"vitest": "2.1.4"
 	},
 	"type": "module",
 	"dependencies": {
