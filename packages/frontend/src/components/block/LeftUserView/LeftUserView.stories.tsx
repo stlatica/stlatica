@@ -8,7 +8,7 @@ export default {
 
 export const Story1: Story = () => {
   return (
-    <div class="h-[70vh] w-[300px]">
+    <div className="h-[70vh] w-[300px]">
       <LeftUserView userID="userid" />
     </div>
   );

@@ -29,26 +29,26 @@ export const UserProfilePanel: React.FC<LeftUserViewProps> = ({ userID }) => {
   // ストアからユーザーデータを引っ張ってくる
 
   return (
-    <Paper class={container}>
-      <img class={header} alt="header" src={SampleImageGreen400} />
+    <Paper className={container}>
+      <img className={header} alt="header" src={SampleImageGreen400} />
 
-      <div class={parent}>
-        <div class={icon}>
+      <div className={parent}>
+        <div className={icon}>
           <UserIcon iconImage={SampleImageBrown400} />
         </div>
       </div>
 
-      <div class={toolPalette}>
+      <div className={toolPalette}>
         <ActionIcon variant="outline" color="gray" radius="xl">
           <TbDots />
         </ActionIcon>
         <FollowButton isFollow={false} />
       </div>
 
-      <Paper class={texts}>
+      <Paper className={texts}>
         <Title>User Name Hereeeeeeeee</Title>
         <Text>@{userID}</Text>
-        <Paper class={FollowsLine}>
+        <Paper className={FollowsLine}>
           <Text>100 follower</Text>
           <Text>100 follow</Text>
           <Text>100 post</Text>

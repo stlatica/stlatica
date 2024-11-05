@@ -11,7 +11,7 @@ import { useNavigateSafe } from "@/features/acl/useNavigate";
 /**
  * Profile 表示用のタブ
  */
-export const ProfileTab: React.FC<void> = () => {
+export const ProfileTab: React.FC = () => {
   const navigate = useNavigateSafe();
   const { tabValue } = useParams();
 

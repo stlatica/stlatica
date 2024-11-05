@@ -3,8 +3,8 @@ import { flexColumn, flexContainer } from "@/styles/routes/about.css";
 export default function Page() {
   return (
     <>
-      <div class={flexContainer}>
-        <div class={flexColumn}>
+      <div className={flexContainer}>
+        <div className={flexColumn}>
           <a href="/">リリースノート</a>
           <a href="/">Cookieのポリシー</a>
           <a href="/">プライバシー</a>

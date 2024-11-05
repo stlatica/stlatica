@@ -12,13 +12,13 @@ type LeftUserViewProps = {
  */
 export const LeftUserView: React.FC<LeftUserViewProps> = ({ userID }) => {
   return (
-    <div class={container}>
+    <div className={container}>
       <div>User Name Hereeeeeeeee</div>
       <div>@{userID}</div>
       <div>
         <hr />
       </div>
-      <div class={textSmall}>
+      <div className={textSmall}>
         ここに自己紹介をかきまああああああああああああああああああああああああああああああああああああす文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数
       </div>
     </div>

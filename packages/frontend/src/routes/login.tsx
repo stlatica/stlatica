@@ -10,16 +10,16 @@ import {
 
 export default function LoginScene() {
   return (
-    <main class={mainContainer}>
-      <div class={innerContainer}>
-        <div class={title}>Stlatica</div>
-        <div class={textEditorContainer}>
+    <main className={mainContainer}>
+      <div className={innerContainer}>
+        <div className={title}>Stlatica</div>
+        <div className={textEditorContainer}>
           <TextEditor defaultValue="" maxLength={32} title="mail address" />
         </div>
-        <div class={textEditorContainer}>
+        <div className={textEditorContainer}>
           <TextEditor defaultValue="" maxLength={32} title="password" />
         </div>
-        <div class={buttonContainer}>
+        <div className={buttonContainer}>
           <SubmitButton>Login</SubmitButton>
         </div>
       </div>

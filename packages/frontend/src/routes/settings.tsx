@@ -16,8 +16,8 @@ export const loader = ({ request }: LoaderFunctionArgs) => {
 
 export default function Page() {
   return (
-    <div class={flexContainer}>
-      <div class={`${flexColumn} ${sidebar}`}>
+    <div className={flexContainer}>
+      <div className={`${flexColumn} ${sidebar}`}>
         <a href="/settings/account">アカウント</a>
         <a href="/settings/display">表示</a>
         <a href="/about">Stlaticaについて</a>

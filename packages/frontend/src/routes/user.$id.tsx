@@ -26,12 +26,12 @@ export default function Page() {
   const { id } = useLoaderData<typeof loader>();
 
   return (
-    <main class={mainContainer}>
-      <div class={flexContainer}>
-        <div class={leftPanel}>
+    <main className={mainContainer}>
+      <div className={flexContainer}>
+        <div className={leftPanel}>
           <LeftUserView userID={id} />
         </div>
-        <div class={rightPadding} />
+        <div className={rightPadding} />
         <Stack>
           <ProfileTab />
           <Outlet />

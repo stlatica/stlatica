@@ -9,8 +9,8 @@ export const meta: MetaFunction = () => {
 export default function Home() {
   return (
     <>
-      <div class={flexContainer}>
-        <div class={sidebar}>
+      <div className={flexContainer}>
+        <div className={sidebar}>
           <div>
             <a href="/test/orval">orval</a>
           </div>

@@ -8,6 +8,7 @@
     "**/.client/**/*.tsx",
     ".ladle/vite.ladle.config.ts"
   ],
+  "exclude": ["src/openapi/stlaticaInternalApi.msw.ts"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["@remix-run/node", "vite/client"],

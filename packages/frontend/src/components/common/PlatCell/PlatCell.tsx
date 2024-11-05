@@ -37,50 +37,50 @@ export const PlatCell: React.FC<PlatCellProps> = ({
   userName,
 }) => {
   return (
-    <div class={styles.container}>
+    <div className={styles.container}>
       {/* ユーザプロファイル */}
-      <div class={styles.userProfile}>
+      <div className={styles.userProfile}>
         {/* アイコン */}
-        <div class={styles.userIcon}>
+        <div className={styles.userIcon}>
           <UserIcon iconImage={userIcon} />
         </div>
         {/* ユーザ名 と ユーザID */}
-        <div class={styles.userDetails}>
+        <div className={styles.userDetails}>
           {/* ユーザ名 */}
-          <div class={styles.userName}>{userName}</div>
+          <div className={styles.userName}>{userName}</div>
           {/* ユーザID */}
-          <div class={styles.userId}>{userId}</div>
+          <div className={styles.userId}>{userId}</div>
         </div>
         {/* プルダウンメニュー */}
-        <div class={styles.menuButton}>
+        <div className={styles.menuButton}>
           <PlatMenuButton />
         </div>
       </div>
       {/* platの内容 */}
-      <div class={styles.contentStyle}>{content}</div>
+      <div className={styles.contentStyle}>{content}</div>
       {/* 投稿日時 */}
       <div>
         <div>{formatter.format(new Date(date))}</div>
       </div>
       {/* 下部のアイコン */}
-      <div class={styles.bottomIcons}>
+      <div className={styles.bottomIcons}>
         {/* 返信数 */}
-        <div class={styles.iconContainer}>
-          <div class={styles.iconPadding}>
+        <div className={styles.iconContainer}>
+          <div className={styles.iconPadding}>
             <MdComment size="2em" />
           </div>
           <div>{replyCount}</div>
         </div>
         {/* シェア数 */}
-        <div class={styles.iconContainer}>
-          <div class={styles.iconPadding}>
+        <div className={styles.iconContainer}>
+          <div className={styles.iconPadding}>
             <MdAutorenew size="2em" />
           </div>
           <div>{shareCount}</div>
         </div>
         {/* いいね数 */}
-        <div class={styles.iconContainer}>
-          <div class={styles.iconPadding}>
+        <div className={styles.iconContainer}>
+          <div className={styles.iconPadding}>
             <MdStarBorder size="2em" />
           </div>
           <div>{favoriteCount}</div>

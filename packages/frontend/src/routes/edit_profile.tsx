@@ -14,9 +14,9 @@ import {
 
 export const IconEditor: React.FC = () => {
   return (
-    <div class={iconEditorContainer}>
-      <div class={iconEditorLabel}>Icon</div>
-      <div class={iconEditorContent}>tmp</div>
+    <div className={iconEditorContainer}>
+      <div className={iconEditorLabel}>Icon</div>
+      <div className={iconEditorContent}>tmp</div>
       <div>zoom bar</div>
       <div>file path</div>
     </div>
@@ -26,18 +26,18 @@ export const IconEditor: React.FC = () => {
 export default function Home() {
   return (
     <main>
-      <div class={mainContainer}>
-        <div class={halfWidth}>
+      <div className={mainContainer}>
+        <div className={halfWidth}>
           <IconEditor />
         </div>
-        <div class={`${halfWidth} ${marginLeft}`}>
+        <div className={`${halfWidth} ${marginLeft}`}>
           <div>
             <TextEditor defaultValue="" label="Name" maxLength={16} />
           </div>
-          <div class={marginTop}>
+          <div className={marginTop}>
             <TextEditor defaultValue="" label="Self-Intorduction" maxLength={512} />
           </div>
-          <div class={`${marginTop} ${flexContainer}`}>
+          <div className={`${marginTop} ${flexContainer}`}>
             <SubmitButton>Save</SubmitButton>
             <CancelButton>Cancel</CancelButton>
           </div>
