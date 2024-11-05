@@ -1,5 +1,5 @@
-import { Title, Text, Paper, ActionIcon } from "@mantine/core";
-import React from "react";
+import { ActionIcon, Paper, Text, Title } from "@mantine/core";
+import type React from "react";
 import { TbDots } from "react-icons/tb";
 
 import { FollowButton } from "@/components/button/FollowButton";

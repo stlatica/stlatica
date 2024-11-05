@@ -1,4 +1,4 @@
-import { flexContainer, flexColumn } from "@/styles/routes/about.css";
+import { flexColumn, flexContainer } from "@/styles/routes/about.css";
 
 export default function Page() {
   return (

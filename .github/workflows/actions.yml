@@ -75,6 +75,10 @@ jobs:
       - name: lint
         run: pnpm lint:ci
 
+      # tsc
+      - name: run tsc
+        run: pnpm typecheck
+
       # ビルドチェック
       - name: build check
         run: pnpm build

@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 import { container } from "./LeftUserView.css";
 import { LeftUserViewTop } from "./LeftUserViewTop";

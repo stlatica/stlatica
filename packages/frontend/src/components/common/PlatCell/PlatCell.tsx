@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { MdAutorenew, MdComment, MdStarBorder } from "react-icons/md";
 
 import { PlatMenuButton } from "@/components/button/PlatMenuButton";

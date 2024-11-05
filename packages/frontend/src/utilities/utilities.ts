@@ -124,7 +124,7 @@ export const nonNullableFilter = <T>(value: T): value is NonNullable<T> => {
  */
 export const ArrayFlex: <T>(array: T[], maxLength: number) => T[][] = <T>(
   array: T[],
-  maxLength: number
+  maxLength: number,
 ) => {
   if (maxLength === 0) {
     console.warn("error ArrayFlex: maxLength=0. スライスせずに返します");
@@ -149,7 +149,7 @@ export const ArrayFlex: <T>(array: T[], maxLength: number) => T[][] = <T>(
  */
 export const ArrayCreateRepeat: <T>(dataArray: readonly T[], length: number) => T[] = (
   dataArray,
-  length
+  length,
 ) => {
   if (dataArray.length === 0) {
     throw new Error("ArrayCreateRepeat: dataArray length is 0");
@@ -185,7 +185,7 @@ export const RemoveWhiteSpace = (str: string) => {
  * オブジェクトのUndefinedプロパティのみ除外する
  */
 export const RemoveUndefinedAttributes: <T>(
-  x: Record<string, T>
+  x: Record<string, T>,
 ) => Record<string, NonNullable<T>> = (object) => {
   return Object.entries(object).reduce((prev, x) => {
     const key = x[0];
@@ -196,10 +196,8 @@ export const RemoveUndefinedAttributes: <T>(
       return prev;
     }
 
-    const current = { [key]: value };
-
     // 存在してたら追加して返す
-    const ret = { ...prev, ...current };
+    const ret = Object.assign(prev, { [key]: value });
     return ret;
   }, {});
 };
@@ -235,7 +233,7 @@ type KeysType<T extends Record<string, unknown>> = keyof T;
  */
 export const SimpleSortObject = <T extends Record<string, unknown>>(
   key: KeysType<T>,
-  reverse?: undefined | "reverse"
+  reverse?: undefined | "reverse",
 ) => {
   return (a: T, b: T) => {
     return SimpleSort(a[key], b[key], reverse);

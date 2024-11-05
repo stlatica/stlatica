@@ -19,7 +19,7 @@ const handleBotRequest = (
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext
+  remixContext: EntryContext,
 ) => {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
@@ -37,7 +37,7 @@ const handleBotRequest = (
             new Response(stream, {
               headers: responseHeaders,
               status: responseStatusCode,
-            })
+            }),
           );
 
           pipe(body);
@@ -47,6 +47,7 @@ const handleBotRequest = (
           reject(error);
         },
         onError(error: unknown) {
+          // biome-ignore lint/style/noParameterAssign:
           responseStatusCode = 500;
           // Log streaming rendering errors from inside the shell.  Don't log
           // errors encountered during initial shell rendering since they'll
@@ -55,7 +56,7 @@ const handleBotRequest = (
             console.error(error);
           }
         },
-      }
+      },
     );
 
     setTimeout(abort, ABORT_DELAY);
@@ -66,7 +67,7 @@ const handleBrowserRequest = (
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext
+  remixContext: EntryContext,
 ) => {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
@@ -84,7 +85,7 @@ const handleBrowserRequest = (
             new Response(stream, {
               headers: responseHeaders,
               status: responseStatusCode,
-            })
+            }),
           );
 
           pipe(body);
@@ -94,6 +95,7 @@ const handleBrowserRequest = (
           reject(error);
         },
         onError(error: unknown) {
+          // biome-ignore lint/style/noParameterAssign:
           responseStatusCode = 500;
           // Log streaming rendering errors from inside the shell.  Don't log
           // errors encountered during initial shell rendering since they'll
@@ -102,7 +104,7 @@ const handleBrowserRequest = (
             console.error(error);
           }
         },
-      }
+      },
     );
 
     setTimeout(abort, ABORT_DELAY);
@@ -117,7 +119,7 @@ export default function handleRequest(
   // This is ignored so we can keep it in the template for visibility.  Feel
   // free to delete this parameter in your app if you're not using it!
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
-  loadContext: AppLoadContext
+  loadContext: AppLoadContext,
 ) {
   return isbot(request.headers.get("user-agent") || "")
     ? handleBotRequest(request, responseStatusCode, responseHeaders, remixContext)

@@ -7,8 +7,8 @@ import { useEffect } from "react";
  * @param func unmountは処理しません
  */
 export const useComponentDidMount = (func: () => void) => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     func();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
