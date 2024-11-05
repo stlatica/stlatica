@@ -74,14 +74,12 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
       <div ref={parentRef} className={styles.container}>
         <div
           className={styles.scrollArea}
-          // eslint-disable-next-line react/forbid-dom-props
           style={{
             height: virtualizer.getTotalSize(),
           }}
         >
           <div
             className={styles.positionHelper}
-            // eslint-disable-next-line react/forbid-dom-props
             style={{
               transform: `translateY(${String(items[0]?.start ?? 0)}px)`,
             }}

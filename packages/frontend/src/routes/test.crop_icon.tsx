@@ -43,7 +43,6 @@ const MyCropper: React.FC<{
     <div>
       <Cropper
         src={src}
-        // eslint-disable-next-line react/forbid-component-props
         style={{ height: 400, width: "100%" }}
         // Cropper.js options
         initialAspectRatio={16 / 9}

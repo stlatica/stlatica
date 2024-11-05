@@ -27,7 +27,6 @@ const useStaticSWR = <T>(key: string, initialData: T) => {
       return data ?? initialData;
     }, false).catch((e: unknown) => {
       // TODO: #437 フロント用共通エラー処理関数を作る
-      // eslint-disable-next-line no-console
       console.error(e);
     });
   }, [data, initialData, mutate]);

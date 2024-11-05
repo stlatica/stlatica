@@ -21,7 +21,6 @@ export const SetPlatCache = (plats: Plat[]) => {
     // plat-{uuid} の形式で SWR に保存する
     mutate([platUrlKey(plat.plat_id)], { data: plat }).catch((e: unknown) => {
       // TODO: #437 フロント用共通エラー処理関数を作る
-      // eslint-disable-next-line no-console
       console.error(e);
     });
   });
@@ -61,7 +60,6 @@ export const useTimeline = (url: string) => {
 
       _mutate(sorted).catch((e: unknown) => {
         // TODO: #437 フロント用共通エラー処理関数を作る
-        // eslint-disable-next-line no-console
         console.error(e);
       });
     },
