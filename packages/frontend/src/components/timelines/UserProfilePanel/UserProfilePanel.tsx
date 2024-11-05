@@ -1,4 +1,4 @@
-import { Title, Text, Paper, ActionIcon } from "@mantine/core";
+import { ActionIcon, Paper, Text, Title } from "@mantine/core";
 import type React from "react";
 import { TbDots } from "react-icons/tb";
 

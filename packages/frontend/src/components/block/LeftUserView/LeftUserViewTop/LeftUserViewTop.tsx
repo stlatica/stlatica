@@ -10,7 +10,7 @@ import { FollowButton } from "@/components/button/FollowButton";
 /**
  *
  */
-export const LeftUserViewTop: React.FC<void> = () => {
+export const LeftUserViewTop: React.FC = () => {
   return (
     <div class="flex flex-col">
       <div class="grid h-[170px] grid-cols-10 ">

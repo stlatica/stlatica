@@ -49,23 +49,23 @@ describe("配列操作系", () => {
       JSON.stringify([
         [1, 2, 3],
         [4, 5],
-      ])
+      ]),
     );
     // 一致する時
     expect(JSON.stringify(Utils.ArrayDevide([1, 2, 3, 4, 5], 5))).toEqual(
-      JSON.stringify([[1, 2, 3, 4, 5], []])
+      JSON.stringify([[1, 2, 3, 4, 5], []]),
     );
     // 配列より長いとき
     expect(JSON.stringify(Utils.ArrayDevide([1, 2, 3, 4, 5], 7))).toEqual(
-      JSON.stringify([[1, 2, 3, 4, 5], []])
+      JSON.stringify([[1, 2, 3, 4, 5], []]),
     );
     // 0
     expect(JSON.stringify(Utils.ArrayDevide([1, 2, 3, 4, 5], 0))).toEqual(
-      JSON.stringify([[], [1, 2, 3, 4, 5]])
+      JSON.stringify([[], [1, 2, 3, 4, 5]]),
     );
     // 空配列
     expect(JSON.stringify(Utils.ArrayDevide([1, 2, 3, 4, 5], 0))).toEqual(
-      JSON.stringify([[], [1, 2, 3, 4, 5]])
+      JSON.stringify([[], [1, 2, 3, 4, 5]]),
     );
   });
 
@@ -76,7 +76,7 @@ describe("配列操作系", () => {
         [1, 2, 3],
         [4, 5, 6],
         [7, 8],
-      ])
+      ]),
     );
     // ぴったり分割できるとき
     expect(JSON.stringify(Utils.ArrayFlex([1, 2, 3, 4, 5, 6, 7, 8], 2))).toEqual(
@@ -85,7 +85,7 @@ describe("配列操作系", () => {
         [3, 4],
         [5, 6],
         [7, 8],
-      ])
+      ]),
     );
     // 一致する時
     expect(JSON.stringify(Utils.ArrayFlex([1, 2, 3], 3))).toEqual(JSON.stringify([[1, 2, 3]]));
@@ -98,10 +98,10 @@ describe("配列操作系", () => {
   test("ArrayCreateRepeat", () => {
     // 普通に
     expect(JSON.stringify(Utils.ArrayCreateRepeat(["val1", "val2"], 5))).toEqual(
-      JSON.stringify(["val1", "val2", "val1", "val2", "val1"])
+      JSON.stringify(["val1", "val2", "val1", "val2", "val1"]),
     );
     expect(JSON.stringify(Utils.ArrayCreateRepeat(["val1"], 3))).toEqual(
-      JSON.stringify(["val1", "val1", "val1"])
+      JSON.stringify(["val1", "val1", "val1"]),
     );
     // 配列が0(例外発生)
     expect(() => {
@@ -109,7 +109,7 @@ describe("配列操作系", () => {
     }).toThrow("ArrayCreateRepeat: dataArray length is 0");
     // 0
     expect(JSON.stringify(Utils.ArrayCreateRepeat(["val1", "val2"], 0))).toEqual(
-      JSON.stringify([])
+      JSON.stringify([]),
     );
   });
 });

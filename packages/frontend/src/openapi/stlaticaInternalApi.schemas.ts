@@ -15,36 +15,36 @@ export type UploadImage201 = {
 };
 
 export type GetFollowersParams = {
-/**
+  /**
  * userを識別するための一意のID。未指定の場合、先頭から取得
 
  */
-user_pagination_id?: UserPaginationIdParameter;
-/**
+  user_pagination_id?: UserPaginationIdParameter;
+  /**
  * 取得数。default = 100
 
  */
-limit?: LimitParameter;
+  limit?: LimitParameter;
 };
 
 export type GetFollowUsersParams = {
-/**
+  /**
  * userを識別するための一意のID。未指定の場合、先頭から取得
 
  */
-user_pagination_id?: UserPaginationIdParameter;
-/**
+  user_pagination_id?: UserPaginationIdParameter;
+  /**
  * 取得数。default = 100
 
  */
-limit?: LimitParameter;
+  limit?: LimitParameter;
 };
 
 export type GetUsersParams = {
-/**
- * ユーザ名
- */
-user_name?: string;
+  /**
+   * ユーザ名
+   */
+  user_name?: string;
 };
 
 export type CreateUserBody = {
@@ -65,24 +65,24 @@ export type TimelineLimitParameter = number;
 - local: インスタンス内の全てのplatの配列
 
  */
-export type TimelineTypeParameter = typeof TimelineTypeParameter[keyof typeof TimelineTypeParameter];
-
+export type TimelineTypeParameter =
+  (typeof TimelineTypeParameter)[keyof typeof TimelineTypeParameter];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TimelineTypeParameter = {
-  home: 'home',
-  following: 'following',
-  local: 'local',
+  home: "home",
+  following: "following",
+  local: "local",
 } as const;
 
 export type TimelineUserIdParameter = string;
 
 export type GetTimelineByQueryParams = {
-user_id: TimelineUserIdParameter;
-type: TimelineTypeParameter;
-limit?: TimelineLimitParameter;
-from_date?: TimelineFromDateParameter;
-to_date?: TimelineToDateParameter;
+  user_id: TimelineUserIdParameter;
+  type: TimelineTypeParameter;
+  limit?: TimelineLimitParameter;
+  from_date?: TimelineFromDateParameter;
+  to_date?: TimelineToDateParameter;
 };
 
 /**
@@ -135,19 +135,18 @@ export type E401Response = void;
  */
 export type PlatID = string;
 
-export type ErrorResponseCode = typeof ErrorResponseCode[keyof typeof ErrorResponseCode];
-
+export type ErrorResponseCode = (typeof ErrorResponseCode)[keyof typeof ErrorResponseCode];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ErrorResponseCode = {
-  BAD_REQUEST: 'BAD_REQUEST',
-  MISSING_PARAMETER: 'MISSING_PARAMETER',
-  UNAUTHORIZED: 'UNAUTHORIZED',
-  NOT_FOUND: 'NOT_FOUND',
-  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
-  SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
-  CONFLICT: 'CONFLICT',
-  UNPROCESSABLE_ENTITY: 'UNPROCESSABLE_ENTITY',
+  BAD_REQUEST: "BAD_REQUEST",
+  MISSING_PARAMETER: "MISSING_PARAMETER",
+  UNAUTHORIZED: "UNAUTHORIZED",
+  NOT_FOUND: "NOT_FOUND",
+  INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
+  SERVICE_UNAVAILABLE: "SERVICE_UNAVAILABLE",
+  CONFLICT: "CONFLICT",
+  UNPROCESSABLE_ENTITY: "UNPROCESSABLE_ENTITY",
 } as const;
 
 export interface ErrorResponse {
@@ -236,4 +235,3 @@ external apiのmanuallyApprovesFollowersと同一の値となる
   /** 画面上に表示されるユーザ名 */
   username: string;
 }
-

@@ -4,7 +4,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 
 import { LeftUserView } from "@/components/block/LeftUserView";
 import { ProfileTab } from "@/components/timelines/ProfileTab";
-import { mainContainer, flexContainer, leftPanel, rightPadding } from "@/styles/routes/user.id.css";
+import { flexContainer, leftPanel, mainContainer, rightPadding } from "@/styles/routes/user.id.css";
 
 export const loader = ({ params, request }: LoaderFunctionArgs) => {
   const { id } = params;

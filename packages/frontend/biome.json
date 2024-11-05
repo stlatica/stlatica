@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": []
+    "ignore": ["src/openapi/", "plop/", "build/", "e2e/**/output/**"]
   },
   "formatter": {
     "enabled": true,
@@ -30,9 +30,9 @@
       "complexity": {
         "noForEach": "off"
       }
-    },
-    "ignore": ["src/openapi/**/*", "plop/**/*", "build/**"]
+    }
   },
+
   "javascript": {
     "formatter": {
       "quoteStyle": "double"

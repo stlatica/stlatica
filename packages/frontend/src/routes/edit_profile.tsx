@@ -2,14 +2,14 @@ import { CancelButton } from "@/components/button/CancelButton";
 import { SubmitButton } from "@/components/button/SubmitButton";
 import { TextEditor } from "@/components/common/TextEditor";
 import {
-  mainContainer,
+  flexContainer,
   halfWidth,
+  iconEditorContainer,
+  iconEditorContent,
+  iconEditorLabel,
+  mainContainer,
   marginLeft,
   marginTop,
-  flexContainer,
-  iconEditorContainer,
-  iconEditorLabel,
-  iconEditorContent,
 } from "@/styles/routes/edit_profile.css";
 
 export const IconEditor: React.FC = () => {

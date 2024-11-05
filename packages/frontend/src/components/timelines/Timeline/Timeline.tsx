@@ -35,7 +35,7 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
       },
       // これだと時刻を変更して再取得が出来ないので要修正
       swr: { refreshInterval: 1000 },
-    }
+    },
   );
 
   useEffect(() => {

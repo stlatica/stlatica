@@ -4,7 +4,7 @@ import "@mantine/core/styles.css";
 import React from "react";
 import { useEffect } from "react";
 
-import { useLadleContext, ActionType, ThemeState } from "@ladle/react";
+import { ActionType, ThemeState, useLadleContext } from "@ladle/react";
 import type { GlobalProvider } from "@ladle/react";
 import { useMantineColorScheme } from "@mantine/core";
 

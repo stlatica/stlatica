@@ -13,14 +13,14 @@ type LeftUserViewProps = {
  */
 export const LeftUserView: React.FC<LeftUserViewProps> = ({ userID }) => {
   return (
-    <div class={container}>
+    <div className={container}>
       <LeftUserViewTop />
-      <div class="text-xl">User Name Hereeeeeeeee</div>
-      <div class="text-gray-400">@{userID}</div>
-      <div class="flex justify-center ">
-        <hr class="m-3 w-4/5 border-black" />
+      <div className="text-xl">User Name Hereeeeeeeee</div>
+      <div className="text-gray-400">@{userID}</div>
+      <div className="flex justify-center ">
+        <hr className="m-3 w-4/5 border-black" />
       </div>
-      <div class="text-sm">
+      <div className="text-sm">
         ここに自己紹介をかきまああああああああああああああああああああああああああああああああああああす文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数文字数
       </div>
     </div>

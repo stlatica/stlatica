@@ -1,4 +1,4 @@
-import { useForm, type UseFormProps, type UseFormReturn } from "react-hook-form";
+import { type UseFormProps, type UseFormReturn, useForm } from "react-hook-form";
 
 /**
  * デフォルト値が型安全な useForm
@@ -6,7 +6,7 @@ import { useForm, type UseFormProps, type UseFormReturn } from "react-hook-form"
 const useSafeForm = <FORM_TYPE extends Record<string, unknown>>(
   props: UseFormProps<FORM_TYPE> & {
     defaultValues: FORM_TYPE;
-  }
+  },
 ): UseFormReturn<FORM_TYPE> => {
   return useForm(props);
 };

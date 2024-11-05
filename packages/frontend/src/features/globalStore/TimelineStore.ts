@@ -52,8 +52,8 @@ export const useTimeline = (url: string) => {
         new Map(
           merged.map((user) => {
             return [user.plat_id, user];
-          })
-        ).values()
+          }),
+        ).values(),
       );
 
       // ソート
@@ -65,7 +65,7 @@ export const useTimeline = (url: string) => {
         console.error(e);
       });
     },
-    [_mutate, data]
+    [_mutate, data],
   );
 
   return {

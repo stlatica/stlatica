@@ -8,10 +8,7 @@ export type CancelButtonProps = {
 /**
  *
  */
-export const CancelButton: React.FC<CancelButtonProps> = ({
-  children,
-  ...others
-}) => {
+export const CancelButton: React.FC<CancelButtonProps> = ({ children, ...others }) => {
   return (
     <Button type="button" variant="outline" {...others}>
       {children}
