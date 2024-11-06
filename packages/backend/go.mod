@@ -1,6 +1,8 @@
 module github.com/stlatica/stlatica/packages/backend
 
-go 1.22.6
+go 1.22.1
+
+toolchain go1.22.6
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.30.4
