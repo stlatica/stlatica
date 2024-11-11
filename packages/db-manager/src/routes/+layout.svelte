@@ -18,7 +18,7 @@
 
 		<p>API経由操作</p>
 		<!-- <div>TODO...</div> -->
-		<a href="/api/plat/random-create">api</a>
+		<a href="/api/plat/random-create">ランダムplat作成</a>
 	</div>
 
 	<div class="container">
@@ -44,27 +44,28 @@
 		color: var(--bulma-text-bold);
 		background-color: var(--bulma-text-bold-invert);
 		/* height: 100%; */
-		padding: 0.5rem;
-		padding-right: 0.5rem;
-		width: 10rem;
+		padding: 10px;
+		padding-right: 20px;
+		width: 150px;
+		word-break: keep-all;
 		/* display: flex;
 		flex-direction: column; */
 	}
 
 	.container {
 		flex: auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+		/* display: flex; */
+		/* flex-direction: column; */
+		/* align-items: center; */
 		overflow: auto;
 	}
 
 	.content {
-		min-width: 600px;
+		min-width: 440px;
 		/* max-width: 1440px; */
 		padding: 1rem;
-		display: flex;
-		flex-direction: column;
+		/* display: flex; */
+		/* flex-direction: column; */
 		/* min-width: 15rem; */
 		/* background-color: red; */
 	}

@@ -1,30 +1,32 @@
 <script lang="ts">
-	// let result = getTimelineByQuery({
-	// 	user_id: '01J6YSX5HRSEDS46XGTD57P3D6',
-	// 	type: 'home',
-	// 	to_date: new Date().toISOString()
-	// });
-
+	import { superForm } from 'sveltekit-superforms';
 	export let data;
 
-	// $: console.log(data);
-
-	// $: console.log(result);
+	const { form: schema } = superForm(data.form);
 </script>
 
-<p>デバッグ用: plat取得</p>
+<h2>plat投稿</h2>
+
+<form method="post">
+	<div class="field">
+		<label class="label">
+			<div>ユーザーID</div>
+			<div class="control">
+				<input class="input" type="text" name="user_id" bind:value={$schema.user_id} />
+			</div>
+		</label>
+	</div>
+	<div class="field">
+		<label class="label">
+			<div>コンテンツ</div>
+			<div class="control">
+				<textarea class="textarea" name="content" rows="5" bind:value={$schema.content}></textarea>
+			</div>
+		</label>
+	</div>
+	<button class="button is-primary" type="submit">送信</button>
+</form>
 
 <pre>
-{JSON.stringify(data.timeline, null, 2)}
+{JSON.stringify(data.pickupUser, null, 2)}
 </pre>
-
-<!-- 
-{#await result}
-	<p>Loading...</p>
-{:then users}
-	<pre>
-  {JSON.stringify(users.data, null, 2)}
-</pre>
-{:catch error}
-	<p>{error.message}</p>
-{/await} -->

@@ -2,8 +2,10 @@
 	export let data;
 </script>
 
-<main>
-	<table>
+<h2>plat一覧</h2>
+
+<div class="table-container container">
+	<table class="table">
 		<thead>
 			<tr>
 				<th>user_id</th>
@@ -23,7 +25,7 @@
 			{/each}
 		</tbody>
 	</table>
-</main>
+</div>
 
 <style>
 	thead {

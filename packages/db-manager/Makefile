@@ -31,6 +31,9 @@ build: node_modules ## run build
 start: ## start builded server
 	pnpm run start
 
+orval-sync: ## sync orval client
+	pnpm orval
+
 prisma-sync: ## sync prisma schema
 	pnpm prisma db pull
 	pnpm prisma generate
