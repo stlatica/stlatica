@@ -1,5 +1,5 @@
 import { UnstyledButton } from "@mantine/core";
-import React from "react";
+import type React from "react";
 import { MdArrowBack } from "react-icons/md";
 
 type BackButtonProps = {

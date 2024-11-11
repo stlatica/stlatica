@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 import { BackButton } from "@/components/button/BackButton";
 import { FollowButton } from "@/components/button/FollowButton";
@@ -10,7 +10,7 @@ import { FollowButton } from "@/components/button/FollowButton";
 /**
  *
  */
-export const LeftUserViewTop: React.FC<void> = () => {
+export const LeftUserViewTop: React.FC = () => {
   return (
     <div className="flex flex-col">
       <div className="grid h-[170px] grid-cols-10 ">
@@ -27,7 +27,7 @@ export const LeftUserViewTop: React.FC<void> = () => {
         <div className="col-span-4 m-2 flex w-full flex-col">
           <div className="flex w-full justify-center pb-3">
             <div>
-              <FollowButton isFollow />
+              <FollowButton isFollow={true} />
             </div>
           </div>
           <div className="pb-2" />

@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { type LoaderFunctionArgs, redirect } from "@remix-run/node";
 
 export const loader = ({ params }: LoaderFunctionArgs) => {
   const { id } = params;

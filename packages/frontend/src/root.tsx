@@ -1,5 +1,5 @@
 import { ColorSchemeScript } from "@mantine/core";
-import { LinksFunction, LoaderFunction, redirect } from "@remix-run/node";
+import { type LinksFunction, type LoaderFunction, redirect } from "@remix-run/node";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
 import "@mantine/core/styles.css";

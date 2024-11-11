@@ -23,6 +23,8 @@ type UserDAO interface {
 	CreateUser(ctx context.Context, user domainentities.UserBase) (*domainentities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context, preferredUserName string) (*domainentities.User, error)
+	// GetUserByMailAddress returns user by mail address.
+	GetUserByMailAddress(ctx context.Context, mailAddress string) (*domainentities.User, error)
 	// GetFollows returns follows of user.
 	GetFollows(ctx context.Context, params domainports.FollowsGetParams) ([]*domainentities.User, error)
 	// GetFollowers returns followers of user.
@@ -95,6 +97,21 @@ func (dao *userDAO) CreateUser(ctx context.Context, user domainentities.UserBase
 func (dao *userDAO) GetUserByPreferredUserID(ctx context.Context,
 	preferredUserID string) (*domainentities.User, error) {
 	query := entities.UserBaseWhere.PreferredUserID.EQ(preferredUserID)
+	entity, err := entities.Users(query).One(ctx, dao.ctxExecutor)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, domainerrors.NewDomainError(err,
+				domainerrors.DomainErrorTypeNotFound, "user not found")
+		}
+		return nil, err
+	}
+
+	return convertUserEntityToDomainEntity(entity), nil
+}
+
+func (dao *userDAO) GetUserByMailAddress(ctx context.Context,
+	mailAddress string) (*domainentities.User, error) {
+	query := entities.UserBaseWhere.MailAddress.EQ(mailAddress)
 	entity, err := entities.Users(query).One(ctx, dao.ctxExecutor)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {

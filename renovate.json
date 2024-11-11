@@ -3,8 +3,7 @@
   "extends": [
     "config:recommended",
     "group:allNonMajor",
-    "schedule:monthly",
-    "config:js-app"
+    "schedule:monthly"
   ],
   "labels": [
     "dependencies"
@@ -13,13 +12,10 @@
   "prConcurrentLimit": 0,
   "packageRules": [
     {
-      "managers": [
+      "matchManagers": [
         "npm"
       ],
       "additionalBranchPrefix": "{{parentDir}}-",
-      "packagePatterns": [
-        ".*"
-      ],
       "assignees": [
         "para7"
       ],
@@ -27,6 +23,9 @@
       "ignoreDeps": [
         "playwright",
         "@types/node"
+      ],
+      "matchPackageNames": [
+        "/.*/"
       ]
     },
     {
@@ -51,7 +50,7 @@
       "additionalBranchPrefix": "{{parentDir}}-"
     },
     {
-      "managers": [
+      "matchManagers": [
         "npm",
         "dockerfile",
         "devcontainer"
@@ -67,7 +66,7 @@
       "additionalBranchPrefix": "playwright-"
     },
     {
-      "managers": [
+      "matchManagers": [
         "gomod"
       ],
       "assignees": [
@@ -75,8 +74,8 @@
       ],
       "commitMessagePrefix": "gomod - ",
       "additionalBranchPrefix": "{{parentDir}}-",
-      "packagePatterns": [
-        ".*"
+      "matchPackageNames": [
+        "/.*/"
       ]
     },
     {

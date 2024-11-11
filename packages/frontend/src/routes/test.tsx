@@ -1,4 +1,4 @@
-import { MetaFunction, Outlet } from "@remix-run/react";
+import { type MetaFunction, Outlet } from "@remix-run/react";
 
 import { flexContainer, sidebar } from "@/styles/routes/test.css";
 

@@ -1,5 +1,5 @@
-import { TextInput, TextInputProps } from "@mantine/core";
-import React from "react";
+import { TextInput, type TextInputProps } from "@mantine/core";
+import type React from "react";
 
 type TextEditorProps = TextInputProps;
 

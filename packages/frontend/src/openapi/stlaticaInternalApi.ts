@@ -5,22 +5,12 @@
  * stlatica internal api
  * OpenAPI spec version: 0.1.0
  */
-import axios from 'axios'
-import type {
-  AxiosError,
-  AxiosRequestConfig,
-  AxiosResponse
-} from 'axios'
-import useSwr from 'swr'
-import type {
-  Arguments,
-  Key,
-  SWRConfiguration
-} from 'swr'
-import useSWRMutation from 'swr/mutation'
-import type {
-  SWRMutationConfiguration
-} from 'swr/mutation'
+import axios from "axios";
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import useSwr from "swr";
+import type { Arguments, Key, SWRConfiguration } from "swr";
+import useSWRMutation from "swr/mutation";
+import type { SWRMutationConfiguration } from "swr/mutation";
 import type {
   CreateUserBody,
   E400Response,
@@ -39,569 +29,667 @@ import type {
   UploadImage201,
   User,
   UserID,
-  UserLightweight
-} from './stlaticaInternalApi.schemas'
+  UserLightweight,
+} from "./stlaticaInternalApi.schemas";
 
-
-  
-  /**
+/**
  * get user
  * @summary get user
  */
 export const getUser = (
-    userId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<User>> => {
-    return axios.get(
-      `http://localhost:8080/internal/v1/users/${userId}`,options
-    );
-  }
+  userId: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<User>> => {
+  return axios.get(`http://localhost:8080/internal/v1/users/${userId}`, options);
+};
 
+export const getGetUserKey = (userId: string) =>
+  [`http://localhost:8080/internal/v1/users/${userId}`] as const;
 
-
-export const getGetUserKey = (userId: string,) => [`http://localhost:8080/internal/v1/users/${userId}`] as const;
-
-export type GetUserQueryResult = NonNullable<Awaited<ReturnType<typeof getUser>>>
-export type GetUserQueryError = AxiosError<ErrorResponse>
+export type GetUserQueryResult = NonNullable<Awaited<ReturnType<typeof getUser>>>;
+export type GetUserQueryError = AxiosError<ErrorResponse>;
 
 /**
  * @summary get user
  */
 export const useGetUser = <TError = AxiosError<ErrorResponse>>(
-  userId: string, options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof getUser>>, TError> & { swrKey?: Key, enabled?: boolean }, axios?: AxiosRequestConfig }
+  userId: string,
+  options?: {
+    swr?: SWRConfiguration<Awaited<ReturnType<typeof getUser>>, TError> & {
+      swrKey?: Key;
+      enabled?: boolean;
+    };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
-  const isEnabled = swrOptions?.enabled !== false && !!(userId)
-  const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getGetUserKey(userId) : null);
-  const swrFn = () => getUser(userId, axiosOptions)
+  const isEnabled = swrOptions?.enabled !== false && !!userId;
+  const swrKey = swrOptions?.swrKey ?? (() => (isEnabled ? getGetUserKey(userId) : null));
+  const swrFn = () => getUser(userId, axiosOptions);
 
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Delete User
  * @summary Delete User by ID.
  */
 export const deleteUser = (
-    userId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    return axios.delete(
-      `http://localhost:8080/internal/v1/users/${userId}`,options
-    );
-  }
-
-
+  userId: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<void>> => {
+  return axios.delete(`http://localhost:8080/internal/v1/users/${userId}`, options);
+};
 
 export const getDeleteUserMutationFetcher = (userId: string, options?: AxiosRequestConfig) => {
   return (_: Key, __: { arg: Arguments }): Promise<AxiosResponse<void>> => {
     return deleteUser(userId, options);
-  }
-}
-export const getDeleteUserMutationKey = (userId: string,) => [`http://localhost:8080/internal/v1/users/${userId}`] as const;
+  };
+};
+export const getDeleteUserMutationKey = (userId: string) =>
+  [`http://localhost:8080/internal/v1/users/${userId}`] as const;
 
-export type DeleteUserMutationResult = NonNullable<Awaited<ReturnType<typeof deleteUser>>>
-export type DeleteUserMutationError = AxiosError<ErrorResponse>
+export type DeleteUserMutationResult = NonNullable<Awaited<ReturnType<typeof deleteUser>>>;
+export type DeleteUserMutationError = AxiosError<ErrorResponse>;
 
 /**
  * @summary Delete User by ID.
  */
 export const useDeleteUser = <TError = AxiosError<ErrorResponse>>(
-  userId: string, options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof deleteUser>>, TError, Key, Arguments, Awaited<ReturnType<typeof deleteUser>>> & { swrKey?: string }, axios?: AxiosRequestConfig}
+  userId: string,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof deleteUser>>,
+      TError,
+      Key,
+      Arguments,
+      Awaited<ReturnType<typeof deleteUser>>
+    > & { swrKey?: string };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
   const swrKey = swrOptions?.swrKey ?? getDeleteUserMutationKey(userId);
   const swrFn = getDeleteUserMutationFetcher(userId, axiosOptions);
 
-  const query = useSWRMutation(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Create new user.
  * @summary Create new user.
  */
 export const createUser = (
-    createUserBody: CreateUserBody, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<UserID>> => {
-    return axios.post(
-      `http://localhost:8080/internal/v1/users`,
-      createUserBody,options
-    );
-  }
+  createUserBody: CreateUserBody,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<UserID>> => {
+  return axios.post(`http://localhost:8080/internal/v1/users`, createUserBody, options);
+};
 
-
-
-export const getCreateUserMutationFetcher = ( options?: AxiosRequestConfig) => {
+export const getCreateUserMutationFetcher = (options?: AxiosRequestConfig) => {
   return (_: Key, { arg }: { arg: CreateUserBody }): Promise<AxiosResponse<UserID>> => {
     return createUser(arg, options);
-  }
-}
+  };
+};
 export const getCreateUserMutationKey = () => [`http://localhost:8080/internal/v1/users`] as const;
 
-export type CreateUserMutationResult = NonNullable<Awaited<ReturnType<typeof createUser>>>
-export type CreateUserMutationError = AxiosError<ErrorResponse>
+export type CreateUserMutationResult = NonNullable<Awaited<ReturnType<typeof createUser>>>;
+export type CreateUserMutationError = AxiosError<ErrorResponse>;
 
 /**
  * @summary Create new user.
  */
-export const useCreateUser = <TError = AxiosError<ErrorResponse>>(
-   options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof createUser>>, TError, Key, CreateUserBody, Awaited<ReturnType<typeof createUser>>> & { swrKey?: string }, axios?: AxiosRequestConfig}
-) => {
-
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+export const useCreateUser = <TError = AxiosError<ErrorResponse>>(options?: {
+  swr?: SWRMutationConfiguration<
+    Awaited<ReturnType<typeof createUser>>,
+    TError,
+    Key,
+    CreateUserBody,
+    Awaited<ReturnType<typeof createUser>>
+  > & { swrKey?: string };
+  axios?: AxiosRequestConfig;
+}) => {
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
   const swrKey = swrOptions?.swrKey ?? getCreateUserMutationKey();
   const swrFn = getCreateUserMutationFetcher(axiosOptions);
 
-  const query = useSWRMutation(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Get users.
  * @summary Get users.
  */
 export const getUsers = (
-    params?: GetUsersParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<User[]>> => {
-    return axios.get(
-      `http://localhost:8080/internal/v1/users`,{
+  params?: GetUsersParams,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<User[]>> => {
+  return axios.get(`http://localhost:8080/internal/v1/users`, {
     ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
+    params: { ...params, ...options?.params },
+  });
+};
 
+export const getGetUsersKey = (params?: GetUsersParams) =>
+  [`http://localhost:8080/internal/v1/users`, ...(params ? [params] : [])] as const;
 
-
-export const getGetUsersKey = (params?: GetUsersParams,) => [`http://localhost:8080/internal/v1/users`, ...(params ? [params]: [])] as const;
-
-export type GetUsersQueryResult = NonNullable<Awaited<ReturnType<typeof getUsers>>>
-export type GetUsersQueryError = AxiosError<ErrorResponse | void>
+export type GetUsersQueryResult = NonNullable<Awaited<ReturnType<typeof getUsers>>>;
+export type GetUsersQueryError = AxiosError<ErrorResponse | void>;
 
 /**
  * @summary Get users.
  */
 export const useGetUsers = <TError = AxiosError<ErrorResponse | void>>(
-  params?: GetUsersParams, options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof getUsers>>, TError> & { swrKey?: Key, enabled?: boolean }, axios?: AxiosRequestConfig }
+  params?: GetUsersParams,
+  options?: {
+    swr?: SWRConfiguration<Awaited<ReturnType<typeof getUsers>>, TError> & {
+      swrKey?: Key;
+      enabled?: boolean;
+    };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
-  const isEnabled = swrOptions?.enabled !== false
-  const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getGetUsersKey(params) : null);
-  const swrFn = () => getUsers(params, axiosOptions)
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey = swrOptions?.swrKey ?? (() => (isEnabled ? getGetUsersKey(params) : null));
+  const swrFn = () => getUsers(params, axiosOptions);
 
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Get follow user list.
  * @summary Get follow user list.
  */
 export const getFollowUsers = (
-    userId: string,
-    params?: GetFollowUsersParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<UserLightweight[]>> => {
-    return axios.get(
-      `http://localhost:8080/internal/v1/users/${userId}/follows`,{
+  userId: string,
+  params?: GetFollowUsersParams,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<UserLightweight[]>> => {
+  return axios.get(`http://localhost:8080/internal/v1/users/${userId}/follows`, {
     ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
+    params: { ...params, ...options?.params },
+  });
+};
 
+export const getGetFollowUsersKey = (userId: string, params?: GetFollowUsersParams) =>
+  [
+    `http://localhost:8080/internal/v1/users/${userId}/follows`,
+    ...(params ? [params] : []),
+  ] as const;
 
-
-export const getGetFollowUsersKey = (userId: string,
-    params?: GetFollowUsersParams,) => [`http://localhost:8080/internal/v1/users/${userId}/follows`, ...(params ? [params]: [])] as const;
-
-export type GetFollowUsersQueryResult = NonNullable<Awaited<ReturnType<typeof getFollowUsers>>>
-export type GetFollowUsersQueryError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>
+export type GetFollowUsersQueryResult = NonNullable<Awaited<ReturnType<typeof getFollowUsers>>>;
+export type GetFollowUsersQueryError = AxiosError<
+  E400Response | E401Response | E404Response | E500Response | E503Response
+>;
 
 /**
  * @summary Get follow user list.
  */
-export const useGetFollowUsers = <TError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>>(
+export const useGetFollowUsers = <
+  TError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>,
+>(
   userId: string,
-    params?: GetFollowUsersParams, options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof getFollowUsers>>, TError> & { swrKey?: Key, enabled?: boolean }, axios?: AxiosRequestConfig }
+  params?: GetFollowUsersParams,
+  options?: {
+    swr?: SWRConfiguration<Awaited<ReturnType<typeof getFollowUsers>>, TError> & {
+      swrKey?: Key;
+      enabled?: boolean;
+    };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
-  const isEnabled = swrOptions?.enabled !== false && !!(userId)
-  const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getGetFollowUsersKey(userId,params) : null);
-  const swrFn = () => getFollowUsers(userId,params, axiosOptions)
+  const isEnabled = swrOptions?.enabled !== false && !!userId;
+  const swrKey =
+    swrOptions?.swrKey ?? (() => (isEnabled ? getGetFollowUsersKey(userId, params) : null));
+  const swrFn = () => getFollowUsers(userId, params, axiosOptions);
 
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Get follower list.
  * @summary Get follower list.
  */
 export const getFollowers = (
-    userId: string,
-    params?: GetFollowersParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<UserLightweight[]>> => {
-    return axios.get(
-      `http://localhost:8080/internal/v1/users/${userId}/followers`,{
+  userId: string,
+  params?: GetFollowersParams,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<UserLightweight[]>> => {
+  return axios.get(`http://localhost:8080/internal/v1/users/${userId}/followers`, {
     ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
+    params: { ...params, ...options?.params },
+  });
+};
 
+export const getGetFollowersKey = (userId: string, params?: GetFollowersParams) =>
+  [
+    `http://localhost:8080/internal/v1/users/${userId}/followers`,
+    ...(params ? [params] : []),
+  ] as const;
 
-
-export const getGetFollowersKey = (userId: string,
-    params?: GetFollowersParams,) => [`http://localhost:8080/internal/v1/users/${userId}/followers`, ...(params ? [params]: [])] as const;
-
-export type GetFollowersQueryResult = NonNullable<Awaited<ReturnType<typeof getFollowers>>>
-export type GetFollowersQueryError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>
+export type GetFollowersQueryResult = NonNullable<Awaited<ReturnType<typeof getFollowers>>>;
+export type GetFollowersQueryError = AxiosError<
+  E400Response | E401Response | E404Response | E500Response | E503Response
+>;
 
 /**
  * @summary Get follower list.
  */
-export const useGetFollowers = <TError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>>(
+export const useGetFollowers = <
+  TError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>,
+>(
   userId: string,
-    params?: GetFollowersParams, options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof getFollowers>>, TError> & { swrKey?: Key, enabled?: boolean }, axios?: AxiosRequestConfig }
+  params?: GetFollowersParams,
+  options?: {
+    swr?: SWRConfiguration<Awaited<ReturnType<typeof getFollowers>>, TError> & {
+      swrKey?: Key;
+      enabled?: boolean;
+    };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
-  const isEnabled = swrOptions?.enabled !== false && !!(userId)
-  const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getGetFollowersKey(userId,params) : null);
-  const swrFn = () => getFollowers(userId,params, axiosOptions)
+  const isEnabled = swrOptions?.enabled !== false && !!userId;
+  const swrKey =
+    swrOptions?.swrKey ?? (() => (isEnabled ? getGetFollowersKey(userId, params) : null));
+  const swrFn = () => getFollowers(userId, params, axiosOptions);
 
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Add new follow user.
  * @summary Add new follow user.
  */
 export const postFollow = (
-    userId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    return axios.post(
-      `http://localhost:8080/internal/v1/users/${userId}/follow`,undefined,options
-    );
-  }
-
-
+  userId: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<void>> => {
+  return axios.post(`http://localhost:8080/internal/v1/users/${userId}/follow`, undefined, options);
+};
 
 export const getPostFollowMutationFetcher = (userId: string, options?: AxiosRequestConfig) => {
   return (_: Key, __: { arg: Arguments }): Promise<AxiosResponse<void>> => {
     return postFollow(userId, options);
-  }
-}
-export const getPostFollowMutationKey = (userId: string,) => [`http://localhost:8080/internal/v1/users/${userId}/follow`] as const;
+  };
+};
+export const getPostFollowMutationKey = (userId: string) =>
+  [`http://localhost:8080/internal/v1/users/${userId}/follow`] as const;
 
-export type PostFollowMutationResult = NonNullable<Awaited<ReturnType<typeof postFollow>>>
-export type PostFollowMutationError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>
+export type PostFollowMutationResult = NonNullable<Awaited<ReturnType<typeof postFollow>>>;
+export type PostFollowMutationError = AxiosError<
+  E400Response | E401Response | E404Response | E500Response | E503Response
+>;
 
 /**
  * @summary Add new follow user.
  */
-export const usePostFollow = <TError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>>(
-  userId: string, options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof postFollow>>, TError, Key, Arguments, Awaited<ReturnType<typeof postFollow>>> & { swrKey?: string }, axios?: AxiosRequestConfig}
+export const usePostFollow = <
+  TError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>,
+>(
+  userId: string,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof postFollow>>,
+      TError,
+      Key,
+      Arguments,
+      Awaited<ReturnType<typeof postFollow>>
+    > & { swrKey?: string };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
   const swrKey = swrOptions?.swrKey ?? getPostFollowMutationKey(userId);
   const swrFn = getPostFollowMutationFetcher(userId, axiosOptions);
 
-  const query = useSWRMutation(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Delete follow user.
  * @summary Delete follow user.
  */
 export const deleteFollow = (
-    userId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    return axios.delete(
-      `http://localhost:8080/internal/v1/users/${userId}/follow`,options
-    );
-  }
-
-
+  userId: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<void>> => {
+  return axios.delete(`http://localhost:8080/internal/v1/users/${userId}/follow`, options);
+};
 
 export const getDeleteFollowMutationFetcher = (userId: string, options?: AxiosRequestConfig) => {
   return (_: Key, __: { arg: Arguments }): Promise<AxiosResponse<void>> => {
     return deleteFollow(userId, options);
-  }
-}
-export const getDeleteFollowMutationKey = (userId: string,) => [`http://localhost:8080/internal/v1/users/${userId}/follow`] as const;
+  };
+};
+export const getDeleteFollowMutationKey = (userId: string) =>
+  [`http://localhost:8080/internal/v1/users/${userId}/follow`] as const;
 
-export type DeleteFollowMutationResult = NonNullable<Awaited<ReturnType<typeof deleteFollow>>>
-export type DeleteFollowMutationError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>
+export type DeleteFollowMutationResult = NonNullable<Awaited<ReturnType<typeof deleteFollow>>>;
+export type DeleteFollowMutationError = AxiosError<
+  E400Response | E401Response | E404Response | E500Response | E503Response
+>;
 
 /**
  * @summary Delete follow user.
  */
-export const useDeleteFollow = <TError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>>(
-  userId: string, options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof deleteFollow>>, TError, Key, Arguments, Awaited<ReturnType<typeof deleteFollow>>> & { swrKey?: string }, axios?: AxiosRequestConfig}
+export const useDeleteFollow = <
+  TError = AxiosError<E400Response | E401Response | E404Response | E500Response | E503Response>,
+>(
+  userId: string,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof deleteFollow>>,
+      TError,
+      Key,
+      Arguments,
+      Awaited<ReturnType<typeof deleteFollow>>
+    > & { swrKey?: string };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
   const swrKey = swrOptions?.swrKey ?? getDeleteFollowMutationKey(userId);
   const swrFn = getDeleteFollowMutationFetcher(userId, axiosOptions);
 
-  const query = useSWRMutation(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Returns plat.
  * @summary Get plat by ID.
  */
 export const getPlat = (
-    platId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Plat>> => {
-    return axios.get(
-      `http://localhost:8080/internal/v1/plats/${platId}`,options
-    );
-  }
+  platId: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<Plat>> => {
+  return axios.get(`http://localhost:8080/internal/v1/plats/${platId}`, options);
+};
 
+export const getGetPlatKey = (platId: string) =>
+  [`http://localhost:8080/internal/v1/plats/${platId}`] as const;
 
-
-export const getGetPlatKey = (platId: string,) => [`http://localhost:8080/internal/v1/plats/${platId}`] as const;
-
-export type GetPlatQueryResult = NonNullable<Awaited<ReturnType<typeof getPlat>>>
-export type GetPlatQueryError = AxiosError<ErrorResponse | void>
+export type GetPlatQueryResult = NonNullable<Awaited<ReturnType<typeof getPlat>>>;
+export type GetPlatQueryError = AxiosError<ErrorResponse | void>;
 
 /**
  * @summary Get plat by ID.
  */
 export const useGetPlat = <TError = AxiosError<ErrorResponse | void>>(
-  platId: string, options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof getPlat>>, TError> & { swrKey?: Key, enabled?: boolean }, axios?: AxiosRequestConfig }
+  platId: string,
+  options?: {
+    swr?: SWRConfiguration<Awaited<ReturnType<typeof getPlat>>, TError> & {
+      swrKey?: Key;
+      enabled?: boolean;
+    };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
-  const isEnabled = swrOptions?.enabled !== false && !!(platId)
-  const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getGetPlatKey(platId) : null);
-  const swrFn = () => getPlat(platId, axiosOptions)
+  const isEnabled = swrOptions?.enabled !== false && !!platId;
+  const swrKey = swrOptions?.swrKey ?? (() => (isEnabled ? getGetPlatKey(platId) : null));
+  const swrFn = () => getPlat(platId, axiosOptions);
 
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Delete plat.
  * @summary Delete plat by ID.
  */
 export const deletePlat = (
-    platId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    return axios.delete(
-      `http://localhost:8080/internal/v1/plats/${platId}`,options
-    );
-  }
-
-
+  platId: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<void>> => {
+  return axios.delete(`http://localhost:8080/internal/v1/plats/${platId}`, options);
+};
 
 export const getDeletePlatMutationFetcher = (platId: string, options?: AxiosRequestConfig) => {
   return (_: Key, __: { arg: Arguments }): Promise<AxiosResponse<void>> => {
     return deletePlat(platId, options);
-  }
-}
-export const getDeletePlatMutationKey = (platId: string,) => [`http://localhost:8080/internal/v1/plats/${platId}`] as const;
+  };
+};
+export const getDeletePlatMutationKey = (platId: string) =>
+  [`http://localhost:8080/internal/v1/plats/${platId}`] as const;
 
-export type DeletePlatMutationResult = NonNullable<Awaited<ReturnType<typeof deletePlat>>>
-export type DeletePlatMutationError = AxiosError<ErrorResponse | void>
+export type DeletePlatMutationResult = NonNullable<Awaited<ReturnType<typeof deletePlat>>>;
+export type DeletePlatMutationError = AxiosError<ErrorResponse | void>;
 
 /**
  * @summary Delete plat by ID.
  */
 export const useDeletePlat = <TError = AxiosError<ErrorResponse | void>>(
-  platId: string, options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof deletePlat>>, TError, Key, Arguments, Awaited<ReturnType<typeof deletePlat>>> & { swrKey?: string }, axios?: AxiosRequestConfig}
+  platId: string,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof deletePlat>>,
+      TError,
+      Key,
+      Arguments,
+      Awaited<ReturnType<typeof deletePlat>>
+    > & { swrKey?: string };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
   const swrKey = swrOptions?.swrKey ?? getDeletePlatMutationKey(platId);
   const swrFn = getDeletePlatMutationFetcher(platId, axiosOptions);
 
-  const query = useSWRMutation(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * @summary Add "favorite" to a specific plat by ID.
  */
 export const postFavorite = (
-    platId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    return axios.post(
-      `http://localhost:8080/internal/v1/plats/${platId}/favorites`,undefined,options
-    );
-  }
-
-
+  platId: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<void>> => {
+  return axios.post(
+    `http://localhost:8080/internal/v1/plats/${platId}/favorites`,
+    undefined,
+    options,
+  );
+};
 
 export const getPostFavoriteMutationFetcher = (platId: string, options?: AxiosRequestConfig) => {
   return (_: Key, __: { arg: Arguments }): Promise<AxiosResponse<void>> => {
     return postFavorite(platId, options);
-  }
-}
-export const getPostFavoriteMutationKey = (platId: string,) => [`http://localhost:8080/internal/v1/plats/${platId}/favorites`] as const;
+  };
+};
+export const getPostFavoriteMutationKey = (platId: string) =>
+  [`http://localhost:8080/internal/v1/plats/${platId}/favorites`] as const;
 
-export type PostFavoriteMutationResult = NonNullable<Awaited<ReturnType<typeof postFavorite>>>
-export type PostFavoriteMutationError = AxiosError<ErrorResponse | void>
+export type PostFavoriteMutationResult = NonNullable<Awaited<ReturnType<typeof postFavorite>>>;
+export type PostFavoriteMutationError = AxiosError<ErrorResponse | void>;
 
 /**
  * @summary Add "favorite" to a specific plat by ID.
  */
 export const usePostFavorite = <TError = AxiosError<ErrorResponse | void>>(
-  platId: string, options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof postFavorite>>, TError, Key, Arguments, Awaited<ReturnType<typeof postFavorite>>> & { swrKey?: string }, axios?: AxiosRequestConfig}
+  platId: string,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof postFavorite>>,
+      TError,
+      Key,
+      Arguments,
+      Awaited<ReturnType<typeof postFavorite>>
+    > & { swrKey?: string };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
   const swrKey = swrOptions?.swrKey ?? getPostFavoriteMutationKey(platId);
   const swrFn = getPostFavoriteMutationFetcher(platId, axiosOptions);
 
-  const query = useSWRMutation(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * @summary Delete "favorite" to a specific plat by ID.
  */
 export const deleteFavorite = (
-    platId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    return axios.delete(
-      `http://localhost:8080/internal/v1/plats/${platId}/favorites`,options
-    );
-  }
-
-
+  platId: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<void>> => {
+  return axios.delete(`http://localhost:8080/internal/v1/plats/${platId}/favorites`, options);
+};
 
 export const getDeleteFavoriteMutationFetcher = (platId: string, options?: AxiosRequestConfig) => {
   return (_: Key, __: { arg: Arguments }): Promise<AxiosResponse<void>> => {
     return deleteFavorite(platId, options);
-  }
-}
-export const getDeleteFavoriteMutationKey = (platId: string,) => [`http://localhost:8080/internal/v1/plats/${platId}/favorites`] as const;
+  };
+};
+export const getDeleteFavoriteMutationKey = (platId: string) =>
+  [`http://localhost:8080/internal/v1/plats/${platId}/favorites`] as const;
 
-export type DeleteFavoriteMutationResult = NonNullable<Awaited<ReturnType<typeof deleteFavorite>>>
-export type DeleteFavoriteMutationError = AxiosError<ErrorResponse | void>
+export type DeleteFavoriteMutationResult = NonNullable<Awaited<ReturnType<typeof deleteFavorite>>>;
+export type DeleteFavoriteMutationError = AxiosError<ErrorResponse | void>;
 
 /**
  * @summary Delete "favorite" to a specific plat by ID.
  */
 export const useDeleteFavorite = <TError = AxiosError<ErrorResponse | void>>(
-  platId: string, options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof deleteFavorite>>, TError, Key, Arguments, Awaited<ReturnType<typeof deleteFavorite>>> & { swrKey?: string }, axios?: AxiosRequestConfig}
+  platId: string,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof deleteFavorite>>,
+      TError,
+      Key,
+      Arguments,
+      Awaited<ReturnType<typeof deleteFavorite>>
+    > & { swrKey?: string };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
   const swrKey = swrOptions?.swrKey ?? getDeleteFavoriteMutationKey(platId);
   const swrFn = getDeleteFavoriteMutationFetcher(platId, axiosOptions);
 
-  const query = useSWRMutation(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * Post plat.
  * @summary Post plat.
  */
 export const postPlat = (
-    platPost: PlatPost, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    return axios.post(
-      `http://localhost:8080/internal/v1/plats`,
-      platPost,options
-    );
-  }
+  platPost: PlatPost,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<void>> => {
+  return axios.post(`http://localhost:8080/internal/v1/plats`, platPost, options);
+};
 
-
-
-export const getPostPlatMutationFetcher = ( options?: AxiosRequestConfig) => {
+export const getPostPlatMutationFetcher = (options?: AxiosRequestConfig) => {
   return (_: Key, { arg }: { arg: PlatPost }): Promise<AxiosResponse<void>> => {
     return postPlat(arg, options);
-  }
-}
+  };
+};
 export const getPostPlatMutationKey = () => [`http://localhost:8080/internal/v1/plats`] as const;
 
-export type PostPlatMutationResult = NonNullable<Awaited<ReturnType<typeof postPlat>>>
-export type PostPlatMutationError = AxiosError<ErrorResponse | void>
+export type PostPlatMutationResult = NonNullable<Awaited<ReturnType<typeof postPlat>>>;
+export type PostPlatMutationError = AxiosError<ErrorResponse | void>;
 
 /**
  * @summary Post plat.
  */
-export const usePostPlat = <TError = AxiosError<ErrorResponse | void>>(
-   options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof postPlat>>, TError, Key, PlatPost, Awaited<ReturnType<typeof postPlat>>> & { swrKey?: string }, axios?: AxiosRequestConfig}
-) => {
-
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+export const usePostPlat = <TError = AxiosError<ErrorResponse | void>>(options?: {
+  swr?: SWRMutationConfiguration<
+    Awaited<ReturnType<typeof postPlat>>,
+    TError,
+    Key,
+    PlatPost,
+    Awaited<ReturnType<typeof postPlat>>
+  > & { swrKey?: string };
+  axios?: AxiosRequestConfig;
+}) => {
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
   const swrKey = swrOptions?.swrKey ?? getPostPlatMutationKey();
   const swrFn = getPostPlatMutationFetcher(axiosOptions);
 
-  const query = useSWRMutation(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * get timeline \
@@ -610,39 +698,44 @@ plat idの降順でplatの配列を取得する
  * @summary get timeline
  */
 export const getTimeline = (
-    timelineId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Plat[]>> => {
-    return axios.get(
-      `http://localhost:8080/internal/v1/timelines/${timelineId}`,options
-    );
-  }
+  timelineId: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<Plat[]>> => {
+  return axios.get(`http://localhost:8080/internal/v1/timelines/${timelineId}`, options);
+};
 
+export const getGetTimelineKey = (timelineId: string) =>
+  [`http://localhost:8080/internal/v1/timelines/${timelineId}`] as const;
 
-
-export const getGetTimelineKey = (timelineId: string,) => [`http://localhost:8080/internal/v1/timelines/${timelineId}`] as const;
-
-export type GetTimelineQueryResult = NonNullable<Awaited<ReturnType<typeof getTimeline>>>
-export type GetTimelineQueryError = AxiosError<ErrorResponse>
+export type GetTimelineQueryResult = NonNullable<Awaited<ReturnType<typeof getTimeline>>>;
+export type GetTimelineQueryError = AxiosError<ErrorResponse>;
 
 /**
  * @summary get timeline
  */
 export const useGetTimeline = <TError = AxiosError<ErrorResponse>>(
-  timelineId: string, options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof getTimeline>>, TError> & { swrKey?: Key, enabled?: boolean }, axios?: AxiosRequestConfig }
+  timelineId: string,
+  options?: {
+    swr?: SWRConfiguration<Awaited<ReturnType<typeof getTimeline>>, TError> & {
+      swrKey?: Key;
+      enabled?: boolean;
+    };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
-  const isEnabled = swrOptions?.enabled !== false && !!(timelineId)
-  const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getGetTimelineKey(timelineId) : null);
-  const swrFn = () => getTimeline(timelineId, axiosOptions)
+  const isEnabled = swrOptions?.enabled !== false && !!timelineId;
+  const swrKey = swrOptions?.swrKey ?? (() => (isEnabled ? getGetTimelineKey(timelineId) : null));
+  const swrFn = () => getTimeline(timelineId, axiosOptions);
 
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * get timeline by query params \
@@ -651,41 +744,50 @@ export const useGetTimeline = <TError = AxiosError<ErrorResponse>>(
  * @summary get timeline by query params
  */
 export const getTimelineByQuery = (
-    params: GetTimelineByQueryParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Plat[]>> => {
-    return axios.get(
-      `http://localhost:8080/internal/v1/timelines`,{
+  params: GetTimelineByQueryParams,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<Plat[]>> => {
+  return axios.get(`http://localhost:8080/internal/v1/timelines`, {
     ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
+    params: { ...params, ...options?.params },
+  });
+};
 
+export const getGetTimelineByQueryKey = (params: GetTimelineByQueryParams) =>
+  [`http://localhost:8080/internal/v1/timelines`, ...(params ? [params] : [])] as const;
 
-
-export const getGetTimelineByQueryKey = (params: GetTimelineByQueryParams,) => [`http://localhost:8080/internal/v1/timelines`, ...(params ? [params]: [])] as const;
-
-export type GetTimelineByQueryQueryResult = NonNullable<Awaited<ReturnType<typeof getTimelineByQuery>>>
-export type GetTimelineByQueryQueryError = AxiosError<ErrorResponse>
+export type GetTimelineByQueryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTimelineByQuery>>
+>;
+export type GetTimelineByQueryQueryError = AxiosError<ErrorResponse>;
 
 /**
  * @summary get timeline by query params
  */
 export const useGetTimelineByQuery = <TError = AxiosError<ErrorResponse>>(
-  params: GetTimelineByQueryParams, options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof getTimelineByQuery>>, TError> & { swrKey?: Key, enabled?: boolean }, axios?: AxiosRequestConfig }
+  params: GetTimelineByQueryParams,
+  options?: {
+    swr?: SWRConfiguration<Awaited<ReturnType<typeof getTimelineByQuery>>, TError> & {
+      swrKey?: Key;
+      enabled?: boolean;
+    };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
-  const isEnabled = swrOptions?.enabled !== false
-  const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getGetTimelineByQueryKey(params) : null);
-  const swrFn = () => getTimelineByQuery(params, axiosOptions)
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ?? (() => (isEnabled ? getGetTimelineByQueryKey(params) : null));
+  const swrFn = () => getTimelineByQuery(params, axiosOptions);
 
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * get image \
@@ -694,39 +796,44 @@ base64形式で返される
  * @summary get image
  */
 export const getImage = (
-    imageId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<string>> => {
-    return axios.get(
-      `http://localhost:8080/internal/v1/images/${imageId}`,options
-    );
-  }
+  imageId: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<string>> => {
+  return axios.get(`http://localhost:8080/internal/v1/images/${imageId}`, options);
+};
 
+export const getGetImageKey = (imageId: string) =>
+  [`http://localhost:8080/internal/v1/images/${imageId}`] as const;
 
-
-export const getGetImageKey = (imageId: string,) => [`http://localhost:8080/internal/v1/images/${imageId}`] as const;
-
-export type GetImageQueryResult = NonNullable<Awaited<ReturnType<typeof getImage>>>
-export type GetImageQueryError = AxiosError<ErrorResponse | void>
+export type GetImageQueryResult = NonNullable<Awaited<ReturnType<typeof getImage>>>;
+export type GetImageQueryError = AxiosError<ErrorResponse | void>;
 
 /**
  * @summary get image
  */
 export const useGetImage = <TError = AxiosError<ErrorResponse | void>>(
-  imageId: string, options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof getImage>>, TError> & { swrKey?: Key, enabled?: boolean }, axios?: AxiosRequestConfig }
+  imageId: string,
+  options?: {
+    swr?: SWRConfiguration<Awaited<ReturnType<typeof getImage>>, TError> & {
+      swrKey?: Key;
+      enabled?: boolean;
+    };
+    axios?: AxiosRequestConfig;
+  },
 ) => {
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
-  const isEnabled = swrOptions?.enabled !== false && !!(imageId)
-  const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getGetImageKey(imageId) : null);
-  const swrFn = () => getImage(imageId, axiosOptions)
+  const isEnabled = swrOptions?.enabled !== false && !!imageId;
+  const swrKey = swrOptions?.swrKey ?? (() => (isEnabled ? getGetImageKey(imageId) : null));
+  const swrFn = () => getImage(imageId, axiosOptions);
 
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * upload image \
@@ -735,88 +842,92 @@ base64形式で受け取る
  * @summary upload image
  */
 export const uploadImage = (
-    uploadImageBody: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<UploadImage201>> => {
-    return axios.post(
-      `http://localhost:8080/internal/v1/images`,
-      uploadImageBody,options
-    );
-  }
+  uploadImageBody: string,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<UploadImage201>> => {
+  return axios.post(`http://localhost:8080/internal/v1/images`, uploadImageBody, options);
+};
 
-
-
-export const getUploadImageMutationFetcher = ( options?: AxiosRequestConfig) => {
+export const getUploadImageMutationFetcher = (options?: AxiosRequestConfig) => {
   return (_: Key, { arg }: { arg: string }): Promise<AxiosResponse<UploadImage201>> => {
     return uploadImage(arg, options);
-  }
-}
-export const getUploadImageMutationKey = () => [`http://localhost:8080/internal/v1/images`] as const;
+  };
+};
+export const getUploadImageMutationKey = () =>
+  [`http://localhost:8080/internal/v1/images`] as const;
 
-export type UploadImageMutationResult = NonNullable<Awaited<ReturnType<typeof uploadImage>>>
-export type UploadImageMutationError = AxiosError<ErrorResponse | void>
+export type UploadImageMutationResult = NonNullable<Awaited<ReturnType<typeof uploadImage>>>;
+export type UploadImageMutationError = AxiosError<ErrorResponse | void>;
 
 /**
  * @summary upload image
  */
-export const useUploadImage = <TError = AxiosError<ErrorResponse | void>>(
-   options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof uploadImage>>, TError, Key, string, Awaited<ReturnType<typeof uploadImage>>> & { swrKey?: string }, axios?: AxiosRequestConfig}
-) => {
-
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+export const useUploadImage = <TError = AxiosError<ErrorResponse | void>>(options?: {
+  swr?: SWRMutationConfiguration<
+    Awaited<ReturnType<typeof uploadImage>>,
+    TError,
+    Key,
+    string,
+    Awaited<ReturnType<typeof uploadImage>>
+  > & { swrKey?: string };
+  axios?: AxiosRequestConfig;
+}) => {
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
   const swrKey = swrOptions?.swrKey ?? getUploadImageMutationKey();
   const swrFn = getUploadImageMutationFetcher(axiosOptions);
 
-  const query = useSWRMutation(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
+    ...query,
+  };
+};
 
 /**
  * login
  * @summary login
  */
 export const login = (
-    loginBody: LoginBody, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    return axios.post(
-      `http://localhost:8080/internal/v1/login`,
-      loginBody,options
-    );
-  }
+  loginBody: LoginBody,
+  options?: AxiosRequestConfig,
+): Promise<AxiosResponse<void>> => {
+  return axios.post(`http://localhost:8080/internal/v1/login`, loginBody, options);
+};
 
-
-
-export const getLoginMutationFetcher = ( options?: AxiosRequestConfig) => {
+export const getLoginMutationFetcher = (options?: AxiosRequestConfig) => {
   return (_: Key, { arg }: { arg: LoginBody }): Promise<AxiosResponse<void>> => {
     return login(arg, options);
-  }
-}
+  };
+};
 export const getLoginMutationKey = () => [`http://localhost:8080/internal/v1/login`] as const;
 
-export type LoginMutationResult = NonNullable<Awaited<ReturnType<typeof login>>>
-export type LoginMutationError = AxiosError<ErrorResponse>
+export type LoginMutationResult = NonNullable<Awaited<ReturnType<typeof login>>>;
+export type LoginMutationError = AxiosError<ErrorResponse>;
 
 /**
  * @summary login
  */
-export const useLogin = <TError = AxiosError<ErrorResponse>>(
-   options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof login>>, TError, Key, LoginBody, Awaited<ReturnType<typeof login>>> & { swrKey?: string }, axios?: AxiosRequestConfig}
-) => {
-
-  const {swr: swrOptions, axios: axiosOptions} = options ?? {}
+export const useLogin = <TError = AxiosError<ErrorResponse>>(options?: {
+  swr?: SWRMutationConfiguration<
+    Awaited<ReturnType<typeof login>>,
+    TError,
+    Key,
+    LoginBody,
+    Awaited<ReturnType<typeof login>>
+  > & { swrKey?: string };
+  axios?: AxiosRequestConfig;
+}) => {
+  const { swr: swrOptions, axios: axiosOptions } = options ?? {};
 
   const swrKey = swrOptions?.swrKey ?? getLoginMutationKey();
   const swrFn = getLoginMutationFetcher(axiosOptions);
 
-  const query = useSWRMutation(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,
-    ...query
-  }
-}
-
+    ...query,
+  };
+};
