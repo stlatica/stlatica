@@ -26,9 +26,9 @@ func UserIDValue(ctx context.Context) (userID types.UserID, isExists bool) {
 		return types.UserID{}, false
 	}
 
-	var emptyUserID types.UserID
-	if ctx.Value(userIDKey) != emptyUserID {
-		return ctx.Value(userIDKey).(types.UserID), true
+	ctxUserID, isExist := ctx.Value(userIDKey).(types.UserID)
+	if isExist {
+		return ctxUserID, true
 	}
 
 	return types.UserID{}, false
