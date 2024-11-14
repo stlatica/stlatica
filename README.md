@@ -41,12 +41,14 @@ SNS to support community activities
 
 ## Directory structure
 
-- packages 
-  - api-mock
-    - Mock Server
-  - backend
-    - package of backend server
-  - frontend 
-    - package of frontend client
-  - shared/openapi 
-    - definition of APIs
+```text
+/
+├─ docks
+└─ package
+      ├─ api-mock       Mock Server
+      ├─ backend        Package of backend server
+      ├─ db-manager     Stlatica DB Mangement Tool (SDMT)
+      ├─ frontend       Package of frontend client
+      └─ shared
+            └─ openapi  Definition of APIs
+```
