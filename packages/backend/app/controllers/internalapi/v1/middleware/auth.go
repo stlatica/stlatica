@@ -14,7 +14,7 @@ import (
 // NewAuthMiddleware creates a new Auth middleware
 func NewAuthMiddleware[T auth.SignType](logger logger.AppLogger, client kvs.Client,
 	alg jwa.SignatureAlgorithm, key *T, lifetime int64) echo.MiddlewareFunc {
-	return func(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(_ echo.HandlerFunc) echo.HandlerFunc {
 		return func(ctx echo.Context) error {
 			header := ctx.Request().Header.Get("Authorization")
 			token := auth.NewAccessToken[T]([]byte(header))
