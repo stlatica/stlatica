@@ -27,3 +27,28 @@ SNS to support community activities
 ## features
 
 - Activity Pub
+
+## Set Up
+
+- [Frontend](https://github.com/stlatica/stlatica/blob/main/packages/frontend/README.md)
+- [Backend](https://github.com/stlatica/stlatica/blob/main/packages/backend/README.md)
+
+## Others
+
+- [OpenAPI](https://github.com/stlatica/stlatica/blob/main/packages/shared/openapi/README.md)
+- [Stlatica DB Management Tool(SDMT)](https://github.com/stlatica/stlatica/blob/main/packages/db-manager/README.md)
+- [Frontend Mock Server](https://github.com/stlatica/stlatica/blob/main/packages/api-mock/README.md)
+
+## Directory structure
+
+```text
+/
+├─ docs
+└─ packages
+      ├─ api-mock       Mock Server
+      ├─ backend        Package of backend server
+      ├─ db-manager     Stlatica DB Mangement Tool (SDMT)
+      ├─ frontend       Package of frontend client
+      └─ shared
+            └─ openapi  Definition of APIs
+```
