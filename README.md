@@ -44,7 +44,7 @@ SNS to support community activities
 ```text
 /
 ├─ docs
-└─ package
+└─ packages
       ├─ api-mock       Mock Server
       ├─ backend        Package of backend server
       ├─ db-manager     Stlatica DB Mangement Tool (SDMT)
