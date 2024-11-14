@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { PlaywrightTestConfig } from "@playwright/test";
+import type { PlaywrightTestConfig } from "@playwright/test";
 
 export default {
   webServer: [
@@ -8,7 +8,7 @@ export default {
       // process.env.E2E_ENV === "dev"
       //   ? "pnpm ladle serve"
       //   : "pnpm ladle build && pnpm ladle preview -p 61000",
-      url: `http://localhost:61000`,
+      url: "http://localhost:61000",
       reuseExistingServer: true,
     },
   ],

@@ -18,6 +18,7 @@ test: node_modules ## run vitest ui
 	pnpm run test
 
 build: node_modules ## run build
+	pnpm typecheck
 	pnpm run build
 
 start: ## start builded server

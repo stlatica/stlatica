@@ -3,12 +3,12 @@ import { mutate } from "swr";
 
 import { SimpleSortObject } from "@/utilities/utilities";
 
-import useStaticSWR from "./useStaticSWR";
+import useStaticSwr from "./useStaticSWR";
 
 import type { Plat } from "@/openapi/stlaticaInternalApi.schemas";
 
-const PlatURLKey = (plat_id: string) => {
-  return `http://localhost:8080/internal/v1/plats/${plat_id}`;
+const platUrlKey = (platId: string) => {
+  return `http://localhost:8080/internal/v1/plats/${platId}`;
 };
 
 /**
@@ -19,9 +19,8 @@ export const SetPlatCache = (plats: Plat[]) => {
     // console.log("set cache: ", PlatURLKey(plat.plat_id));
 
     // plat-{uuid} の形式で SWR に保存する
-    mutate([PlatURLKey(plat.plat_id)], { data: plat }).catch((e: unknown) => {
+    mutate([platUrlKey(plat.plat_id)], { data: plat }).catch((e: unknown) => {
       // TODO: #437 フロント用共通エラー処理関数を作る
-      // eslint-disable-next-line no-console
       console.error(e);
     });
   });
@@ -33,7 +32,7 @@ type TimelineType = { plat_id: string; created_at: Date };
  * 各タイムラインで利用するフック
  */
 export const useTimeline = (url: string) => {
-  const { data, mutate: _mutate } = useStaticSWR(`timeline-${url}`, new Array<TimelineType>());
+  const { data, mutate: _mutate } = useStaticSwr(`timeline-${url}`, new Array<TimelineType>());
 
   const mutate = useCallback(
     (plats: Plat[]) => {
@@ -52,8 +51,8 @@ export const useTimeline = (url: string) => {
         new Map(
           merged.map((user) => {
             return [user.plat_id, user];
-          })
-        ).values()
+          }),
+        ).values(),
       );
 
       // ソート
@@ -61,11 +60,10 @@ export const useTimeline = (url: string) => {
 
       _mutate(sorted).catch((e: unknown) => {
         // TODO: #437 フロント用共通エラー処理関数を作る
-        // eslint-disable-next-line no-console
         console.error(e);
       });
     },
-    [_mutate, data]
+    [_mutate, data],
   );
 
   return {

@@ -1,5 +1,5 @@
-import { Button, ButtonProps } from "@mantine/core";
-import { MouseEventHandler } from "react";
+import { Button, type ButtonProps } from "@mantine/core";
+import type { MouseEventHandler } from "react";
 
 export type CancelButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
@@ -8,10 +8,7 @@ export type CancelButtonProps = {
 /**
  *
  */
-export const CancelButton: React.FC<CancelButtonProps> = ({
-  children,
-  ...others
-}) => {
+export const CancelButton: React.FC<CancelButtonProps> = ({ children, ...others }) => {
   return (
     <Button type="button" variant="outline" {...others}>
       {children}

@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 import { CancelButton } from "@/components/button/CancelButton";
 import { SubmitButton } from "@/components/button/SubmitButton";

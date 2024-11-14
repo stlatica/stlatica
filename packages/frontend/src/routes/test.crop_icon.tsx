@@ -1,7 +1,8 @@
 // import { LinksFunction } from "@remix-run/node";
 
-import React, { useRef, useState } from "react";
-import { Cropper, ReactCropperElement } from "react-cropper";
+import type React from "react";
+import { useRef, useState } from "react";
+import { Cropper, type ReactCropperElement } from "react-cropper";
 // import "cropperjs/dist/cropper.css";
 
 // export const clientLoader = () => {
@@ -42,7 +43,6 @@ const MyCropper: React.FC<{
     <div>
       <Cropper
         src={src}
-        // eslint-disable-next-line react/forbid-component-props
         style={{ height: 400, width: "100%" }}
         // Cropper.js options
         initialAspectRatio={16 / 9}
@@ -74,7 +74,7 @@ const LoadImageFromInput = (e: React.ChangeEvent<HTMLInputElement>): string | un
 
 const Demo: React.FC = () => {
   // 読み込んだファイルパス
-  const [src, SetSRC] = useState<string>();
+  const [src, setSrc] = useState<string>();
   // 切り取り結果
   const [resultBase64, SetResultBase64] = useState<string>();
 
@@ -83,7 +83,7 @@ const Demo: React.FC = () => {
       <input
         accept="image/jpeg, image/png"
         onChange={(e) => {
-          SetSRC(LoadImageFromInput(e));
+          setSrc(LoadImageFromInput(e));
         }}
         type="file"
       />

@@ -10,12 +10,12 @@ const schema = v.object({
   user_id: v.string(),
 });
 
-type schemaType = v.InferOutput<typeof schema>;
+type SchemaType = v.InferOutput<typeof schema>;
 
 export default function LoginScene() {
   const { trigger } = usePostPlat({});
 
-  const { register, handleSubmit } = useSafeForm<schemaType>({
+  const { register, handleSubmit } = useSafeForm<SchemaType>({
     resolver: valibotResolver(schema),
     defaultValues: {
       content: "",

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 // we can't create tests asynchronously, thus using the sync-fetch lib
 import fetch from "sync-fetch";
 

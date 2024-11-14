@@ -14,9 +14,3 @@ type PlatGetInPort interface {
 	// GetPlats returns Plats.
 	GetPlats(ctx context.Context, params PlatsGetParams) ([]*entities.Plat, error)
 }
-
-// PlatCreateInPort is the interface for posting plat.
-type PlatCreateInPort interface {
-	// CreatePlat returns Plat.
-	CreatePlat(ctx context.Context, UserID types.UserID, content string) (*entities.Plat, error)
-}

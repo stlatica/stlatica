@@ -7,7 +7,7 @@ export const PlatDateFormatter = (args: { platTimestamp: Date; currentTime: Date
   const diff = args.currentTime.getTime() - args.platTimestamp.getTime();
 
   if (diff <= 0.0) {
-    return `現在`;
+    return "現在";
   }
 
   const seconds = MathFloor(diff / 1000);

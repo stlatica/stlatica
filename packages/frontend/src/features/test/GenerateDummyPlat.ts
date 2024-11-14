@@ -10,6 +10,6 @@ export const GenerateDummyPlat = (): Plat => {
     content: "test content",
     created_at: new Date().toISOString(),
     plat_id: CreateID(),
-    images: [],
+    image_urls: [],
   } satisfies Plat;
 };

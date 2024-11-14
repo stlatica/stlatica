@@ -1,11 +1,10 @@
 {
-    "recommendations": [
-        "formulahendry.auto-rename-tag",
-        "usernamehw.errorlens",
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "natqe.reload",
-        "gruntfuggly.todo-tree",
-        "ms-playwright.playwright"
-    ]
+  "recommendations": [
+    "formulahendry.auto-rename-tag",
+    "usernamehw.errorlens",
+    "natqe.reload",
+    "gruntfuggly.todo-tree",
+    "ms-playwright.playwright",
+    "biomejs.biome"
+  ]
 }

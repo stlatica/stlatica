@@ -7,56 +7,46 @@ import (
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 )
 
-// PlatBase is PlatBase entity object.
-type PlatBase struct { // ulid
-	PlatID types.PlatID `json:"plat_id"`
-	// user_id
+// UserAuthCredentialBase is UserAuthCredentialBase entity object.
+type UserAuthCredentialBase struct { // UserID
 	UserID types.UserID `json:"user_id"`
-	// body text
-	Content string `json:"content"`
+	// Encrypted password
+	EncryptedPassword string `json:"encrypted_password"`
 	// Unix time
 	CreatedAt types.UnixTime `json:"created_at"`
 	// Unix time
 	UpdatedAt types.UnixTime `json:"updated_at"`
 
-	R *PlatBaseR `json:"-"`
+	R *UserAuthCredentialBaseR `json:"-"`
 }
 
-// PlatBaseR is where relationships are stored.
-type PlatBaseR struct {
+// UserAuthCredentialBaseR is where relationships are stored.
+type UserAuthCredentialBaseR struct {
 	User *UserBase `json:"User"`
 }
 
-// PlatBaseSlice is an alias for a slice of pointers to PlatBase.
-// This should almost always be used instead of []PlatBase.
-type PlatBaseSlice []*PlatBase
-
-// GetPlatID is get plat_id value, if receiver is nil, returns the specified value.
-func (m *PlatBase) GetPlatID() types.PlatID {
-	if m == nil {
-		return types.PlatID{}
-	}
-	return m.PlatID
-}
+// UserAuthCredentialBaseSlice is an alias for a slice of pointers to UserAuthCredentialBase.
+// This should almost always be used instead of []UserAuthCredentialBase.
+type UserAuthCredentialBaseSlice []*UserAuthCredentialBase
 
 // GetUserID is get user_id value, if receiver is nil, returns the specified value.
-func (m *PlatBase) GetUserID() types.UserID {
+func (m *UserAuthCredentialBase) GetUserID() types.UserID {
 	if m == nil {
 		return types.UserID{}
 	}
 	return m.UserID
 }
 
-// GetContent is get content value, if receiver is nil, returns the specified value.
-func (m *PlatBase) GetContent() string {
+// GetEncryptedPassword is get encrypted_password value, if receiver is nil, returns the specified value.
+func (m *UserAuthCredentialBase) GetEncryptedPassword() string {
 	if m == nil {
 		return ""
 	}
-	return m.Content
+	return m.EncryptedPassword
 }
 
 // GetCreatedAt is get created_at value, if receiver is nil, returns the specified value.
-func (m *PlatBase) GetCreatedAt() types.UnixTime {
+func (m *UserAuthCredentialBase) GetCreatedAt() types.UnixTime {
 	if m == nil {
 		return types.UnixTime(0)
 	}
@@ -64,7 +54,7 @@ func (m *PlatBase) GetCreatedAt() types.UnixTime {
 }
 
 // GetUpdatedAt is get updated_at value, if receiver is nil, returns the specified value.
-func (m *PlatBase) GetUpdatedAt() types.UnixTime {
+func (m *UserAuthCredentialBase) GetUpdatedAt() types.UnixTime {
 	if m == nil {
 		return types.UnixTime(0)
 	}

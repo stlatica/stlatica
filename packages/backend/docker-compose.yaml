@@ -29,6 +29,13 @@ services:
       - ../shared/openapi/externalapi:/openapi/externalapi
       - ../shared/openapi/internalapi:/openapi/internalapi
       - ../shared/openapi/tmp:/openapi/tmp
+  valkey:
+    image: valkey/valkey:latest
+    command: valkey-server --port 6380
+    ports:
+      - "6380:6380"
+    volumes:
+      - ./data/valkey:/data
   minio:
     build:
       context: .

@@ -35,7 +35,7 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
       },
       // これだと時刻を変更して再取得が出来ないので要修正
       swr: { refreshInterval: 1000 },
-    }
+    },
   );
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
   return (
     <>
       <Button
-        fullWidth
+        fullWidth={true}
         variant="outline"
         onClick={() => {
           virtualizer.scrollToIndex(0);
@@ -74,14 +74,12 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
       <div ref={parentRef} className={styles.container}>
         <div
           className={styles.scrollArea}
-          // eslint-disable-next-line react/forbid-dom-props
           style={{
             height: virtualizer.getTotalSize(),
           }}
         >
           <div
             className={styles.positionHelper}
-            // eslint-disable-next-line react/forbid-dom-props
             style={{
               transform: `translateY(${String(items[0]?.start ?? 0)}px)`,
             }}
