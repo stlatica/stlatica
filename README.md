@@ -33,7 +33,7 @@ SNS to support community activities
 - [Frontend](https://github.com/stlatica/stlatica/blob/main/packages/frontend/README.md)
 - [Backend](https://github.com/stlatica/stlatica/blob/main/packages/backend/README.md)
 
-## Contribution
+## Others
 
 - [OpenAPI](https://github.com/stlatica/stlatica/blob/main/packages/shared/openapi/README.md)
 - [Stlatica DB Management Tool(SDMT)](https://github.com/stlatica/stlatica/blob/main/packages/db-manager/README.md)
@@ -43,7 +43,7 @@ SNS to support community activities
 
 ```text
 /
-├─ docks
+├─ docs
 └─ package
       ├─ api-mock       Mock Server
       ├─ backend        Package of backend server
