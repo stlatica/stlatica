@@ -37,6 +37,9 @@ local/codegen-from-oapi: set-go-env ## generate code from openapi on local
 	$(GOBIN)/oapi-codegen -generate spec -package openapi ../shared/openapi/tmp/internalapi/openapi.yaml > app/controllers/internalapi/v1/openapi/internalapi_spec.gen.go
 	rm -r ../shared/openapi/tmp
 
+local/generate-db-docs: ## generate DB documentation from db schema on local
+	docker compose up tbls
+
 local/lint: set-go-env ## lint on local
 	$(GOBIN)/golangci-lint run ./...
 

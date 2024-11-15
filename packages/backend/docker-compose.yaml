@@ -53,3 +53,11 @@ services:
       dockerfile: ./docker/Dockerfile_goose
     volumes:
       - ./:/app
+  tbls:
+    image: ghcr.io/k1low/tbls 
+    user: 1000:1000
+    working_dir: /tbls
+    volumes:
+      - ./db/tbls/:/tbls
+    entrypoint: >
+      tbls doc --force
