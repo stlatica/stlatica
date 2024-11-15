@@ -28,6 +28,6 @@ export default [
 		}
 	},
 	{
-		ignores: ['build/', '.svelte-kit/', 'dist/', '.devcontainer/']
+		ignores: ['build/', '.svelte-kit/', 'dist/', '.devcontainer/', 'src/lib/orval']
 	}
 ];

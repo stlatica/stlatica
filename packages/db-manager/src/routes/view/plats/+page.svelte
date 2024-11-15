@@ -2,8 +2,13 @@
 	export let data;
 </script>
 
-<main>
-	<table>
+<h2>plat一覧</h2>
+
+<div>総数: {data.count}件</div>
+<div>表示数: {data.plats.length}件</div>
+
+<div class="table-container container">
+	<table class="table">
 		<thead>
 			<tr>
 				<th>user_id</th>
@@ -23,7 +28,7 @@
 			{/each}
 		</tbody>
 	</table>
-</main>
+</div>
 
 <style>
 	thead {

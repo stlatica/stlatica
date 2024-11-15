@@ -1,30 +1,62 @@
 <script lang="ts">
-	// let result = getTimelineByQuery({
-	// 	user_id: '01J6YSX5HRSEDS46XGTD57P3D6',
-	// 	type: 'home',
-	// 	to_date: new Date().toISOString()
-	// });
+	import { AsyncQueue } from '$lib/AsyncQueue';
+	import { postPlat } from '$lib/orval/client/stlaticaInternalApi';
+	import { fakerJA } from '@faker-js/faker';
 
 	export let data;
+	let isFaker = true;
 
-	// $: console.log(data);
+	let progress: string = '待機中';
 
-	// $: console.log(result);
+	async function PostMany(num: number) {
+		progress = '初期化中';
+
+		const array = new Array(num).fill(0).map((_, i) => {
+			const content = isFaker ? fakerJA.lorem.sentence() : `test plat ${i + 1}`;
+
+			return {
+				user_id: data.users[Math.floor(Math.random() * data.users.length)].user_id,
+				content
+			};
+		});
+
+		let cnt = 0;
+		await AsyncQueue(
+			array,
+			async (x) => {
+				await postPlat(x);
+				progress = `${cnt++} / ${num}`;
+			},
+			1000
+		);
+
+		progress = '完了';
+	}
 </script>
 
-<p>デバッグ用: plat取得</p>
+<h1>plat大量投稿</h1>
 
-<pre>
-{JSON.stringify(data.timeline, null, 2)}
-</pre>
+<div class="container">
+	<button class="button" on:click={() => PostMany(10)}>10回実行</button>
+	<button class="button" on:click={() => PostMany(100)}>100回実行</button>
+	<button class="button" on:click={() => PostMany(1000)}>1000回実行</button>
+	<button class="button" on:click={() => PostMany(10000)}>10000回実行</button>
+	<button class="button" on:click={() => PostMany(100000)}>100000回実行</button>
 
-<!-- 
-{#await result}
-	<p>Loading...</p>
-{:then users}
-	<pre>
-  {JSON.stringify(users.data, null, 2)}
-</pre>
-{:catch error}
-	<p>{error.message}</p>
-{/await} -->
+	<div class="field">
+		<label class="checkbox">
+			<input type="checkbox" bind:checked={isFaker} />
+			Faker.jsを使う
+		</label>
+	</div>
+
+	progress: {progress}
+</div>
+
+<style>
+	.container {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+</style>

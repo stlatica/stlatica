@@ -1128,7 +1128,7 @@ export const getTimelineByQuery = (
 	params: GetTimelineByQueryParams,
 	options?: AxiosRequestConfig
 ): Promise<AxiosResponse<Plat[]>> => {
-	return axios.get(`http://stlatica_server:8080/internal/v1/timelines`, {
+	return axios.get(`http://localhost:8080/internal/v1/timelines`, {
 		...options,
 		params: { ...params, ...options?.params }
 	});

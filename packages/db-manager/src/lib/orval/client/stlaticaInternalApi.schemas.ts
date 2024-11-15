@@ -68,6 +68,7 @@ export type TimelineLimitParameter = number;
 export type TimelineTypeParameter =
 	(typeof TimelineTypeParameter)[keyof typeof TimelineTypeParameter];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TimelineTypeParameter = {
 	home: 'home',
 	following: 'following',
@@ -112,6 +113,7 @@ export type PlatID = string;
 
 export type ErrorResponseCode = (typeof ErrorResponseCode)[keyof typeof ErrorResponseCode];
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ErrorResponseCode = {
 	BAD_REQUEST: 'BAD_REQUEST',
 	MISSING_PARAMETER: 'MISSING_PARAMETER',
