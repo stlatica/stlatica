@@ -20,7 +20,7 @@
 		<!-- <div>TODO...</div> -->
 		<a href="/api/plat/create">plat投稿</a>
 		<a href="/api/plat/random-create">plat大量作成</a>
-		<a href="/api/plat/cron-post">plat定期投稿</a>
+		<a href="/api/plat/interval-create">plat定期投稿</a>
 	</div>
 
 	<div class="container">

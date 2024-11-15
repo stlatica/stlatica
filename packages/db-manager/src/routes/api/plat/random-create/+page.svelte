@@ -42,10 +42,13 @@
 	<button class="button" on:click={() => PostMany(1000)}>1000回実行</button>
 	<button class="button" on:click={() => PostMany(10000)}>10000回実行</button>
 	<button class="button" on:click={() => PostMany(100000)}>100000回実行</button>
-	<label>
-		Faker.jsを使う
-		<input type="checkbox" bind:checked={isFaker} />
-	</label>
+
+	<div class="field">
+		<label class="checkbox">
+			<input type="checkbox" bind:checked={isFaker} />
+			Faker.jsを使う
+		</label>
+	</div>
 
 	progress: {progress}
 </div>
