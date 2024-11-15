@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
-	import { AsyncQueue } from '$lib/AsyncQueue';
 	import { postPlat } from '$lib/orval/client/stlaticaInternalApi';
 	import { fakerJA } from '@faker-js/faker';
-
-	export let data;
 
 	let isFaker = true;
 

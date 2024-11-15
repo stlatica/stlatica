@@ -23,7 +23,7 @@
 		let cnt = 0;
 		await AsyncQueue(
 			array,
-			async (x, i) => {
+			async (x) => {
 				await postPlat(x);
 				progress = `${cnt++} / ${num}`;
 			},
