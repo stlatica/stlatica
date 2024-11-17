@@ -1,4 +1,3 @@
-import "../src/routes/global.css";
 import "@mantine/core/styles.css";
 
 import React from "react";
