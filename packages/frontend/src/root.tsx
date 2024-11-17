@@ -4,15 +4,10 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/reac
 
 import "@mantine/core/styles.css";
 
-// for tailwind
-
 import { Providers } from "./Providers";
-import stylesheet from "./routes/global.css?url";
 
 export const links: LinksFunction = () => {
   return [
-    // for tailwind
-    { rel: "stylesheet", href: stylesheet },
     // cropperjs css from cdn
     {
       rel: "stylesheet",
