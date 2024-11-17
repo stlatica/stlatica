@@ -10,4 +10,5 @@ import (
 type UserCreateInPort interface {
 	// CreateUser creates a new user.
 	CreateUser(ctx context.Context, user entities.UserBase) (*entities.User, error)
+	FollowUser(ctx context.Context, user entities.User) error
 }

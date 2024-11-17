@@ -25,6 +25,8 @@ type UserUseCase interface {
 	GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error)
 	// GetFollows returns follows of user.
 	GetFollows(ctx context.Context, params ports.FollowsGetParams) ([]*entities.User, error)
+	// FollowUser follows user.
+	FollowUser(ctx context.Context, userID types.UserID, followUserID types.UserID) error
 	// GetFollowers returns followers of user.
 	GetFollowers(ctx context.Context, params ports.FollowersGetParams) ([]*entities.User, error)
 	// GetUserIcon returns user icon.
@@ -103,6 +105,14 @@ func (u *userUseCase) GetFollows(ctx context.Context, params ports.FollowsGetPar
 		Limit:            params.Limit,
 	}
 	return getter.GetFollows(ctx, domainParams, portImpl)
+}
+
+func (u *userUseCase) FollowUser(ctx context.Context, userID types.UserID, followUserID types.UserID) error {
+	creator := u.userDomainFactory.NewUserCreator()
+	portImpl := &userPortImpl{
+		userDAO: u.userDAO,
+	}
+	return creator.FollowUser(ctx, userID, followUserID, portImpl)
 }
 
 func (u *userUseCase) GetFollowers(ctx context.Context, params ports.FollowersGetParams) ([]*entities.User, error) {

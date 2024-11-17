@@ -14,6 +14,7 @@ type UserCreator interface {
 	// CreateUser creates a new user.
 	CreateUser(ctx context.Context, userName string, preferredUserID string,
 		mailAddress string, iconImageID types.ImageID, inPort ports.UserCreateInPort) (*entities.User, error)
+	FollowUser(ctx context.Context, followUserID types.UserID, inPort ports.UserCreateInPort) error
 }
 
 type userCreator struct {
@@ -32,4 +33,8 @@ func (g *userCreator) CreateUser(ctx context.Context, userName string, preferred
 		IconImageID:       iconImageID,
 	}
 	return inPort.CreateUser(ctx, user)
+}
+
+func (g *userCreator) FollowUser(ctx context.Context, followUserID types.UserID, inPort ports.UserCreateInPort) {
+
 }

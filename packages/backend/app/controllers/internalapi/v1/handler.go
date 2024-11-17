@@ -157,8 +157,12 @@ func (h *handler) GetFollows(ctx echo.Context, userID openapi.UserId, params ope
 	return ctx.JSON(http.StatusOK, response)
 }
 
-func (h *handler) PostFollow(_ echo.Context, _ openapi.UserId) error {
-	panic("implement me")
+func (h *handler) PostFollow(ctx echo.Context, userID openapi.UserId) error {
+	err := h.userController.PostFollow(ctx, userID)
+	if err != nil {
+		return err
+	}
+	return ctx.JSON(http.StatusOK, nil)
 }
 
 func (h *handler) DeleteFollow(_ echo.Context, _ openapi.UserId) error {
