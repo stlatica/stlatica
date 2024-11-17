@@ -2,7 +2,7 @@ import type React from "react";
 
 import { container, textSmall } from "./ProfileView.css";
 
-type LeftUserViewProps = {
+type ProfileViewProps = {
   readonly userID: string;
   // children: React.ReactNode;
 };
@@ -10,7 +10,7 @@ type LeftUserViewProps = {
 /**
  *
  */
-export const LeftUserView: React.FC<LeftUserViewProps> = ({ userID }) => {
+export const ProfileView: React.FC<ProfileViewProps> = ({ userID }) => {
   return (
     <div className={container}>
       <div>User Name Hereeeeeeeee</div>

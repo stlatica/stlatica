@@ -3,7 +3,7 @@ import { UserProfilePanel } from "./UserProfilePanel";
 import type { Story, StoryDefault } from "@ladle/react";
 
 export default {
-  title: "timelines/User-Profile-Header",
+  title: "timelines/UserProfilePanel",
 } satisfies StoryDefault;
 
 export const Story1: Story = () => {

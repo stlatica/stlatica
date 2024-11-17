@@ -1,10 +1,9 @@
-import { Stack } from "@mantine/core";
 import { type LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 
-import { LeftUserView } from "@/components/block/LeftUserView";
 import { ProfileTab } from "@/components/timelines/ProfileTab";
-import { flexContainer, leftPanel, mainContainer, rightPadding } from "@/styles/routes/user.id.css";
+import { UserProfilePanel } from "@/components/timelines/UserProfilePanel/UserProfilePanel";
+import { flexContainer, mainContainer } from "@/styles/routes/user.id.css";
 
 export const loader = ({ params, request }: LoaderFunctionArgs) => {
   const { id } = params;
@@ -28,14 +27,12 @@ export default function Page() {
   return (
     <main className={mainContainer}>
       <div className={flexContainer}>
-        <div className={leftPanel}>
-          <LeftUserView userID={id} />
-        </div>
-        <div className={rightPadding} />
-        <Stack>
-          <ProfileTab />
+        <UserProfilePanel userID={id} />
+        <ProfileTab />
+        {/* eslint-disable-next-line react/forbid-dom-props */}
+        <div style={{ height: "100vh" }}>
           <Outlet />
-        </Stack>
+        </div>
       </div>
     </main>
   );
