@@ -1,0 +1,7 @@
+# .tbls.yml
+
+# Database Source Name(DSN) to connect database
+dsn: mysql://root:@stlatica_db:3306/stlatica
+
+# Path to generate document
+docPath: .
