@@ -118,7 +118,7 @@ func (c *userController) GetFollows(ectx echo.Context,
 	return followResponses, nil
 }
 
-func (c *userController) PostFollow(ectx echo.Context, userIDStr string, followUserIDStr string) (error) {
+func (c *userController) PostFollow(ectx echo.Context, userIDStr string, followUserIDStr string) error {
 	user, err := c.userUseCase.GetUserByPreferredUserID(ectx.Request().Context(), userIDStr)
 	if err != nil {
 		return err
@@ -129,7 +129,6 @@ func (c *userController) PostFollow(ectx echo.Context, userIDStr string, followU
 	}
 	return c.userUseCase.FollowUser(user, followUser)
 }
-
 
 func (c *userController) GetFollowers(ectx echo.Context,
 	userIDStr string, userPaginationID *string, limit *int) ([]*GetFollowerResponse, error) {
