@@ -182,6 +182,9 @@ jobs:
         with:
           version: latest
           working-directory: packages/backend
+      # docker check
+      - name: docker build check
+        run: docker compose build stlatica_server
       # TODO:Build
       # - name: Go build check
       #   run: |
