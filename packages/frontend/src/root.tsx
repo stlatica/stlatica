@@ -3,6 +3,7 @@ import { type LinksFunction, type LoaderFunction, redirect } from "@remix-run/no
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
 import "@mantine/core/styles.css";
+import "@/styles/global.css";
 
 import { Providers } from "./Providers";
 

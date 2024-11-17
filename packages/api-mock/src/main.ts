@@ -6,7 +6,7 @@ import { InitArray } from "./utils";
 import { fakerJA as faker } from "@faker-js/faker";
 
 const app = express();
-const port = 4010;
+const port = 8080;
 
 const allowCrossDomain = (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
