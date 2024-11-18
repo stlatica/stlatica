@@ -9,6 +9,7 @@ installGlobals();
 export default defineConfig({
   plugins: [
     remix({
+      ssr: false,
       appDirectory: "./src",
       ignoredRouteFiles: ["**/."],
     }),
