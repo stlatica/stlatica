@@ -4,6 +4,7 @@ services:
   stlatica_db:
     container_name: stlatica_db
     image: mysql:8.4.2
+    restart: always
     env_file:
       ./.env.local.docker
     ports:
@@ -16,6 +17,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile_air
+    restart: always
     ports:
       - "8080:8080"
     volumes:
