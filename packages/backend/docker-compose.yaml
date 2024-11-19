@@ -33,6 +33,7 @@ services:
       - ../shared/openapi/tmp:/openapi/tmp
   valkey:
     image: valkey/valkey:latest
+    restart: always
     command: valkey-server --port 6380
     ports:
       - "6380:6380"
@@ -42,6 +43,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile_Minio
+    restart: always
     env_file:
       ./.env.local.docker
     ports:
