@@ -4,7 +4,10 @@
   "name": "Existing Docker Compose (Extend)",
   // Update the 'dockerComposeFile' list if you have more compose files or use different names.
   // The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
-  "dockerComposeFile": ["../docker-compose.yaml", "docker-compose.yml"],
+  "dockerComposeFile": [
+    "../docker-compose.yaml",
+    "docker-compose.yml"
+  ],
   // The 'service' property is the name of the service for the container that VS Code should
   // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
   "service": "dev",
@@ -17,10 +20,10 @@
         "formulahendry.auto-rename-tag",
         "usernamehw.errorlens",
         "natqe.reload",
-        "gruntfuggly.todo-tree",
         "ms-playwright.playwright",
-        "ms-azuretools.vscode-docker",
-        "biomejs.biome"
+        "svelte.svelte-vscode",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
       ]
     }
   },
@@ -29,7 +32,9 @@
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
   // Uncomment the next line if you want start specific services in your Docker Compose config.
-  "runServices": ["dev"],
+  "runServices": [
+    "dev"
+  ],
   // Uncomment the next line if you want to keep your containers running after VS Code shuts down.
   // "shutdownAction": "none",
   // Uncomment the next line to run commands after the container is created.

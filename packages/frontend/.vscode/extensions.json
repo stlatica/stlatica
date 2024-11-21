@@ -3,8 +3,9 @@
     "formulahendry.auto-rename-tag",
     "usernamehw.errorlens",
     "natqe.reload",
-    "gruntfuggly.todo-tree",
     "ms-playwright.playwright",
-    "biomejs.biome"
+    "svelte.svelte-vscode",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint"
   ]
 }
