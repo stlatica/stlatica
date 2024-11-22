@@ -1,57 +1,38 @@
 <script lang="ts">
-	import Header from './Header.svelte';
-	import '../app.css';
-
-	let { children } = $props();
+	import '$lib/styles/tw-variables/_index.css';
+	import '$lib/styles/theme.css';
+	import '$lib/styles/global.css';
+	import '$lib/styles/utilities.css';
+	import { PAGES } from '$lib/routes/ROUTES';
 </script>
 
-<div class="app">
-	<Header />
-
-	<main>
-		{@render children()}
-	</main>
-
-	<footer>
-		<p>
-			visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to learn about SvelteKit
-		</p>
-	</footer>
+<div class="base">
+	<div class="slot">
+		<slot></slot>
+	</div>
 </div>
+<footer>
+	<a href={PAGES['/']}> debug用: top画面へ </a>
+</footer>
 
 <style>
-	.app {
+	.base {
 		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
+
+		height: 100%;
+		/* background-color: blue; */
+		flex-direction: row;
 	}
 
-	main {
+	.slot {
 		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
+		overflow: auto;
 	}
 
 	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
+		/* 画面下部に固定する */
+		position: fixed;
+		bottom: 0;
+		width: 100%;
 	}
 </style>

@@ -1,0 +1,20 @@
+:root {
+	background-color: var(--st-color-bg);
+	color: var(--st-color-text);
+
+	font-family: 'Noto Sans JP', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+a {
+	color: var(--blue-11);
+}
+
+html,
+body {
+	height: 100%;
+}
