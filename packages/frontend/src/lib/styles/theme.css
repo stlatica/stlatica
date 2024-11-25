@@ -7,7 +7,7 @@
 
 :root {
 	/* colors */
-	--st-color-bg: var(--gray-1);
+	--st-color-bg: var(--gray-3);
 
 	--st-color-text: var(--gray-12);
 	--st-color-text-red: var(--red-11);

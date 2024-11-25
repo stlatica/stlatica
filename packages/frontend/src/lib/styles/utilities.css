@@ -1,11 +1,9 @@
-/* flex horizontal */
-.ut-flex-h {
-	display: flex;
-	flex-direction: row;
-}
-
-/* flex vertical */
-.ut-flex-v {
+.flex-col {
 	display: flex;
 	flex-direction: column;
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
 }

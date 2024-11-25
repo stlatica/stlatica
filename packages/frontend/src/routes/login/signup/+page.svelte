@@ -54,11 +54,6 @@
 	<div class="red">
 		{message}
 	</div>
-
-	<p class="notice">
-		本プロジェクトは試作版です。<br />
-		予告なくデータ削除・サービス停止する場合がございます。<br />あらかじめご了承ください。
-	</p>
 </div>
 
 <style>
@@ -77,10 +72,6 @@
 	.line {
 		display: flex;
 		flex-direction: column;
-	}
-
-	.notice {
-		width: 80%;
 	}
 
 	.container {
