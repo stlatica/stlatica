@@ -4,11 +4,16 @@
 	import '$lib/styles/global.css';
 	import '$lib/styles/utilities.css';
 	import { PAGES } from '$lib/routes/ROUTES';
+	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+
+	const queryClient = new QueryClient();
 </script>
 
 <div class="base">
 	<div class="slot">
-		<slot></slot>
+		<QueryClientProvider client={queryClient}>
+			<slot></slot>
+		</QueryClientProvider>
 	</div>
 </div>
 <footer>

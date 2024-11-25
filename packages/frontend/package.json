@@ -24,6 +24,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
 		"globals": "^15.0.0",
+		"orval": "^7.3.0",
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
 		"svelte": "^5.0.0",
@@ -38,6 +39,8 @@
 	"dependencies": {
 		"@iconify/json": "^2.2.275",
 		"@radix-ui/colors": "^3.0.0",
+		"@tanstack/svelte-query": "^5.61.3",
+		"axios": "^1.7.7",
 		"valibot": "1.0.0-beta.8"
 	},
 	"packageManager": "pnpm@9.13.2+sha512.88c9c3864450350e65a33587ab801acf946d7c814ed1134da4a924f6df5a2120fd36b46aab68f7cd1d413149112d53c7db3a4136624cfd00ff1846a0c6cef48a"
