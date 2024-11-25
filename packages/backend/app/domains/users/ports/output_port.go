@@ -7,7 +7,7 @@ import (
 )
 
 // UserCreateInPort is the interface for creating user.
-type UserCreateInPort interface {
+type UserCreateOutPort interface {
 	// CreateUser creates a new user.
 	CreateUser(ctx context.Context, user entities.UserBase) (*entities.User, error)
 }
