@@ -13,7 +13,7 @@ import (
 type PlatCreator interface {
 	// CreatePlat returns new plat.
 	CreatePlat(ctx context.Context, userID types.UserID, content string,
-		inPort ports.PlatCreateOutPort) (*entities.Plat, error)
+		outPort ports.PlatCreateOutPort) (*entities.Plat, error)
 }
 
 type platCreator struct {
@@ -21,6 +21,6 @@ type platCreator struct {
 }
 
 func (g *platCreator) CreatePlat(ctx context.Context, userID types.UserID,
-	content string, inPort ports.PlatCreateOutPort) (*entities.Plat, error) {
-	return inPort.CreatePlat(ctx, userID, content)
+	content string, outPort ports.PlatCreateOutPort) (*entities.Plat, error) {
+	return outPort.CreatePlat(ctx, userID, content)
 }
