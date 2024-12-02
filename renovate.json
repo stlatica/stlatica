@@ -10,7 +10,7 @@
   ],
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
-  "ignorepaths": [
+  "ignorePaths": [
     "packages/frontend/**",
     "packages/api-mock/**"
   ],
