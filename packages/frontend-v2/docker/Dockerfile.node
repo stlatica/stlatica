@@ -1,83 +1,30 @@
-FROM node:22.11.0-slim as node
-RUN corepack enable npm pnpm 
-
-FROM mcr.microsoft.com/playwright:v1.48.2-jammy as playwright
-FROM ubuntu:24.04 as ubuntu
-
-# RUN useradd -m -s /bin/bash ubuntu
-
-
-# ***** playwright を搭載した nodejs 環境を開発のベースとして使う *****
-FROM playwright as base
-
-ARG USERNAME=node
-ARG GROUPNAME=node
-ARG UID=1000
-ARG GID=1000
-
-RUN userdel pwuser
-RUN groupadd -g $GID $GROUPNAME && \
-  useradd -m -s /bin/bash -u $UID -g $GID $USERNAME
-
-# ***** nodejs の実行バイナリを載せ替え *****
-COPY --from=node /usr/local/include/ /usr/local/include/
-COPY --from=node /usr/local/lib/ /usr/local/lib/
-COPY --from=node /usr/local/bin/ /usr/local/bin/
-
-# # ***** corepack *****
-# # unlink が root で実施の必要あり
-# # yarn が原因でエラーが出る (消したくてもなぜか消えない)
-# # https://github.com/microsoft/playwright/blob/main/utils/docker/Dockerfile.jammy の npm install -g yarn が原因か
-# RUN corepack enable npm pnpm 
-
-USER node
-
-# ******************************************
-# * vrt 実行用
-# ******************************************
-FROM base as vrt
-
-WORKDIR /stlatica/packages/frontend
-
-COPY --chown=$USERNAME:$USERNAME pnpm-lock.yaml ./
-RUN pnpm fetch
-
-# COPY package.json pnpm-lock.yaml ./
-# 色々厄介な部分があるので一旦やっつけ実装
-COPY --chown=$USERNAME:$USERNAME . ./
-
-# pnpm fetch でキャッシュだけ切り離すと少し早くできるかも知れない
-RUN corepack enable pnpm \
-  && pnpm install
-
-# ******************************************
-# * 開発コンテナ設定 
-# ******************************************
-
-FROM base as dev
+FROM node:22.11.0-slim AS node
+FROM node AS dev
 
 WORKDIR /tmp/docker-builder
+
 USER root
 
-RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh 
+# RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh 
 
 # ***** apt *****
 # 開発に必要な依存関係類のインストール
-RUN apt update -y \
-  && apt install -y \
-  git \
-  git-lfs \
-  make \
-  bash-completion \
-  less \
-  # vim \
-  # x11-apps \
-  # language-pack-ja \
-  && apt clean \
-  && rm -rf /var/lib/apt/lists/*
+RUN \
+  --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  apt-get update -y \
+  && apt-get --no-install-recommends install -y \
+  git make bash-completion less vim 
+# x11-apps git-lfs language-pack-ja \
+
 
 # apt install したもの類のセットアップを実行
-RUN git lfs install
+# RUN git lfs install
+
+
+RUN  npm install -g pnpm@9.14.3 \
+  # for mac config 
+  && pnpm config set store-dir /home/node/.pnpm-store
 
 # ***** change general user *****
 USER node
@@ -88,12 +35,7 @@ USER node
 #   && git config --global sequence.editor 'code --wait'
 
 # ***** pnpm settings *****
-COPY --chown=$USERNAME:$USERNAME ./package.json .
 
-RUN corepack install \
-  # for mac config 
-  && pnpm config set store-dir /home/node/.pnpm-store \
-  && rm ./package.json
 
 # # ***** command alias *****
 COPY ./docker/.alias .
@@ -101,7 +43,7 @@ RUN cat ./.alias >> ~/.bashrc
 
 # ENV DEBUG=eslint:linter
 
-WORKDIR /stlatica/packages/frontend
+WORKDIR /stlatica/packages/frontend-v2
 
 EXPOSE 5173
 EXPOSE 51204
@@ -109,11 +51,12 @@ EXPOSE 61000
 EXPOSE 9323
 
 
-
 # ******************************************
 # * 以下本番用
 # ******************************************
-FROM ubuntu as ubuntu-node
+FROM ubuntu:24.04 AS ubuntu
+FROM ubuntu AS ubuntu-node
+
 
 # nodejs の実行バイナリを載せ替え
 COPY --from=node /usr/local/include/ /usr/local/include/
@@ -126,7 +69,7 @@ RUN corepack enable npm pnpm
 
 
 # ビルドコンテナ
-FROM node as builder
+FROM node AS builder
 
 WORKDIR /builder
 
@@ -148,7 +91,7 @@ ENTRYPOINT [ "pnpm", "start"]
 
 
 # ビルドしたものを移し替えた、最小構成の実行コンテナ
-FROM ubuntu-node as prod
+FROM ubuntu-node AS prod
 
 USER ubuntu
 WORKDIR /stlatica

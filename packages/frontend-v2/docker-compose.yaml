@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.node
       target: dev
-    working_dir: /stlatica/packages/frontend
+    working_dir: /stlatica/packages/frontend-v2
     volumes:
       - type: bind
         source: ../../
@@ -32,19 +32,19 @@ services:
       dockerfile: docker/Dockerfile.node
       target: prod
 
-  vrt:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.node
-      target: vrt
-    # working_dir: /stlatica/packages/frontend
-    ports:
-      # playwright
-      - 127.0.0.1:9323:9323
-    ipc: host
-    # volumes:
-    #   - type: bind
-    #     source: ./e2e/report
-    #     target: /stlatica/packages/frontend/e2e/report
-    tty: true
+  # vrt:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/Dockerfile.node
+  #     target: vrt
+  #   # working_dir: /stlatica/packages/frontend
+  #   ports:
+  #     # playwright
+  #     - 127.0.0.1:9323:9323
+  #   ipc: host
+  #   # volumes:
+  #   #   - type: bind
+  #   #     source: ./e2e/report
+  #   #     target: /stlatica/packages/frontend/e2e/report
+  #   tty: true
 
