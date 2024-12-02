@@ -1,0 +1,50 @@
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: dev
+    working_dir: /stlatica/packages/frontend
+    volumes:
+      - type: bind
+        source: ../../
+        target: /stlatica
+      # - type: bind
+      #   source: /tmp/.X11-unix
+      #   target: /tmp/.X11-unix
+    # ports:
+    #   # remix
+    #   - "127.0.0.1:5173:5173"
+    #   # vitest
+    #   - "127.0.0.1:51204:51204"
+    #   # ladle
+    #   - "127.0.0.1:61000:61000"
+    #   # playwright
+    #   - 127.0.0.1:9323:9323
+    environment:
+      LANG: ja_JP.UTF-8
+      LC_CTYPE: ja_JP.UTF-8
+    tty: true
+
+  prod:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: prod
+
+  vrt:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: vrt
+    # working_dir: /stlatica/packages/frontend
+    ports:
+      # playwright
+      - 127.0.0.1:9323:9323
+    ipc: host
+    # volumes:
+    #   - type: bind
+    #     source: ./e2e/report
+    #     target: /stlatica/packages/frontend/e2e/report
+    tty: true
+

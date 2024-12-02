@@ -1,0 +1,7 @@
+:root {
+	--border-width-0: solid 0px; /* border-0 */
+	--border-width-1: solid 1px; /* border */
+	--border-width-2: solid 2px; /* border-2 */
+	--border-width-4: solid 4px; /* border-4 */
+	--border-width-8: solid 8px; /* border-8 */
+}

@@ -1,0 +1,14 @@
+/* st = stlatica */
+
+@import '@radix-ui/colors/gray-dark.css';
+@import '@radix-ui/colors/blue-dark.css';
+@import '@radix-ui/colors/green-dark.css';
+@import '@radix-ui/colors/red-dark.css';
+
+:root {
+	/* colors */
+	--st-color-bg: var(--gray-3);
+
+	--st-color-text: var(--gray-12);
+	--st-color-text-red: var(--red-11);
+}

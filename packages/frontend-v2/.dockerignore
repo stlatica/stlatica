@@ -1,0 +1,5 @@
+node_modules
+build
+.pnpm-store
+e2e/report
+docker/Dockerfile.node

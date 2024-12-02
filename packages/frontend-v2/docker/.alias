@@ -1,0 +1,2 @@
+alias pn="pnpm"
+alias px="pnpm dlx"
