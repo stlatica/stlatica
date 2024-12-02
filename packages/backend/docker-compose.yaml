@@ -58,7 +58,7 @@ services:
     volumes:
       - ./:/app
   tbls:
-    image: ghcr.io/k1low/tbls:v1.79.3
+    image: ghcr.io/k1low/tbls:v1.79.4
     user: 1000:1000
     working_dir: /tbls
     volumes:
