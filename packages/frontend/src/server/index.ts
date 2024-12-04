@@ -1,27 +1,28 @@
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
-import { resolver } from "hono-openapi/valibot";
-import * as v from "valibot";
+// import { resolver } from "hono-openapi/valibot";
+// import * as v from "valibot";
 import { openAPISpecs } from "hono-openapi";
 import { apiReference } from "@scalar/hono-api-reference";
 
 const app = new Hono();
 
-const responseSchema = v.string();
+// const responseSchema = v.object({ message: v.string() });
 
 app.get(
   "bff/hono",
 
   describeRoute({
     description: "Say hello to the user",
-    responses: {
-      200: {
-        description: "Successful response",
-        content: {
-          "text/plain": { schema: resolver(responseSchema) },
-        },
-      },
-    },
+    // responses: {
+    //   200: {
+    //     description: "Successful response",
+    //     content: {
+    //       "text/plain": { schema: resolver(responseSchema) },
+    //     },
+    //   },
+    // },
+    validateResponse: true,
   }),
   (c) => c.text("Hono!"),
 );
