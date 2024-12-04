@@ -1,9 +1,9 @@
+import { apiReference } from "@scalar/hono-api-reference";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 // import { resolver } from "hono-openapi/valibot";
 // import * as v from "valibot";
 import { openAPISpecs } from "hono-openapi";
-import { apiReference } from "@scalar/hono-api-reference";
 
 const app = new Hono();
 
