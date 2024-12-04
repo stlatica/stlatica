@@ -29,9 +29,15 @@ importers:
       '@remix-run/serve':
         specifier: 2.13.1
         version: 2.13.1(typescript@5.6.3)
+      '@scalar/hono-api-reference':
+        specifier: ^0.5.162
+        version: 0.5.162(hono@4.6.12)
       '@tanstack/react-virtual':
         specifier: 3.10.8
         version: 3.10.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@valibot/to-json-schema':
+        specifier: 1.0.0-beta.3
+        version: 1.0.0-beta.3(valibot@0.42.1(typescript@5.6.3))
       '@vanilla-extract/css':
         specifier: 1.16.0
         version: 1.16.0
@@ -41,6 +47,15 @@ importers:
       axios:
         specifier: 1.7.7
         version: 1.7.7
+      hono:
+        specifier: ^4.6.12
+        version: 4.6.12
+      hono-openapi:
+        specifier: ^0.2.1
+        version: 0.2.1(typescript@5.6.3)
+      hono-remix-adapter:
+        specifier: ^0.5.3
+        version: 0.5.3(@cloudflare/workers-types@4.20241202.0)(hono@4.6.12)(typescript@5.6.3)
       isbot:
         specifier: 5.1.17
         version: 5.1.17
@@ -145,6 +160,10 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
+  '@apidevtools/json-schema-ref-parser@11.7.2':
+    resolution: {integrity: sha512-4gY54eEGEstClvEkGnwVkTkrx0sqwemEFG5OSRRn3tD91XH0+Q8XIkYIfo7IwEWPpJZwILb9GUXeShtplRc/eA==}
+    engines: {node: '>= 16'}
+
   '@apidevtools/json-schema-ref-parser@9.0.6':
     resolution: {integrity: sha512-M3YgsLjI0lZxvrpeGVk9Ap032W6TPQkH6pRAZz81Ac3WUNF79VQooAFnp8umjvVzUmD93NkogxEwbSce7qMsUg==}
 
@@ -159,6 +178,12 @@ packages:
     resolution: {integrity: sha512-9Kt7EuS/7WbMAUv2gSziqjvxwDbFSg3Xeyfuj5laUODX8o/k/CpsAKiQ8W7/R88eXFTMbJYg6+7uAmOWNKmwnw==}
     peerDependencies:
       openapi-types: '>=7'
+
+  '@ark/schema@0.25.0':
+    resolution: {integrity: sha512-1Air2M9Je8C/4+YNhJ1QPkoFbERX3PhulDVNW1RmpOpyUjUSM5lcuuyq357jp3a7+M3a5RV2PNdI1XZ/ah8l8Q==}
+
+  '@ark/util@0.25.0':
+    resolution: {integrity: sha512-yo2Me+tYnmr6E0E3maZzu643/rL07oR25yBHkH24gllssqYcd6EPCvZE23GEKgbk0iac9J73GlJ9pkgZj43Q2g==}
 
   '@asyncapi/specs@4.3.1':
     resolution: {integrity: sha512-EfexhJu/lwF8OdQDm28NKLJHFkx0Gb6O+rcezhZYLPIoNYKXJMh2J1vFGpwmfAcTTh+ffK44Oc2Hs1Q4sLBp+A==}
@@ -382,6 +407,12 @@ packages:
 
   '@bundled-es-modules/tough-cookie@0.1.6':
     resolution: {integrity: sha512-dvMHbL464C0zI+Yqxbz6kZ5TOEp7GLW+pry/RWndAR8MJQAXZ2rPmIs8tziTZjeIyhSNZgZbCePtfSbdWqStJw==}
+
+  '@cloudflare/kv-asset-handler@0.1.3':
+    resolution: {integrity: sha512-FNcunDuTmEfQTLRLtA6zz+buIXUHj1soPvSWzzQFBC+n2lsy+CGf/NIrR3SEPCmsVNQj70/Jx2lViCpq+09YpQ==}
+
+  '@cloudflare/workers-types@4.20241202.0':
+    resolution: {integrity: sha512-ts4JD6Wih62SDmlc+OcnN1Db/DgEBcl+BUpJr7ht7pgWP81PCLyPcomgDXIeAqt2NLiOIOMMkYQZ1ZtWDo3/8A==}
 
   '@emotion/hash@0.9.2':
     resolution: {integrity: sha512-MyqliTZGuOm3+5ZRSaaBGP3USLw6+EGykkwZns2EPC5g8jJ4z9OrdZY9apkl3+UP9+sdz76YYkwCKP5gh8iY3g==}
@@ -1106,6 +1137,49 @@ packages:
   '@floating-ui/utils@0.2.7':
     resolution: {integrity: sha512-X8R8Oj771YRl/w+c1HqAC1szL8zWQRwFvgDwT129k9ACdBoud/+/rX9V0qiMl6LWUdP9voC2nDVZYPMQQsb6eA==}
 
+  '@hono/arktype-validator@2.0.0':
+    resolution: {integrity: sha512-ICNZrK6Qcw6gyPfW53ONXI4JomRcks0fQhqzn9EWsfr6nlL6BNXQ96vIgVDU8qimcbJ2m3GJFAqgzOvWbZk3jw==}
+    peerDependencies:
+      arktype: ^2.0.0-dev.14
+      hono: '*'
+
+  '@hono/node-server@1.13.7':
+    resolution: {integrity: sha512-kTfUMsoloVKtRA2fLiGSd9qBddmru9KadNyhJCwgKBxTiNkaAJEwkVN9KV/rS4HtmmNRtUh6P+YpmjRMl0d9vQ==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      hono: ^4
+
+  '@hono/typebox-validator@0.2.6':
+    resolution: {integrity: sha512-x+Q7RWiw6rJmJs7MDgtvRbS7ViXXEzqimC0duY4or7y1f89f5Z3KCQSdUSVka+Uv0HZ/O0ZNt+ixNDxfJLi4hA==}
+    peerDependencies:
+      '@sinclair/typebox': '>=0.31.15 <1'
+      hono: '>=3.9.0'
+
+  '@hono/valibot-validator@0.5.1':
+    resolution: {integrity: sha512-TXNFh1jofWNCX9sOX2gyw6qCXuAKr4yk//hOf9Lc8vcdIhQXTRQY6RPkKwL/14EldoIngkLj3iMHTXXhjgMCWg==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      valibot: ^1.0.0 || ^1.0.0-beta.4 || ^1.0.0-rc
+
+  '@hono/vite-dev-server@0.17.0':
+    resolution: {integrity: sha512-EvGOIj1MoY9uV94onXXz88yWaTxzUK+Mv8LiIEsR/9eSFoVUnHVR0B7l7iNIsxfHYRN7tbPDMWBSnD2RQun3yw==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      hono: '*'
+      miniflare: '*'
+      wrangler: '*'
+    peerDependenciesMeta:
+      miniflare:
+        optional: true
+      wrangler:
+        optional: true
+
+  '@hono/zod-validator@0.4.1':
+    resolution: {integrity: sha512-I8LyfeJfvVmC5hPjZ2Iij7RjexlgSBT7QJudZ4JvNPLxn0JQ3sqclz2zydlwISAnw21D2n4LQ0nfZdoiv9fQQA==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.19.1
+
   '@hookform/resolvers@3.9.1':
     resolution: {integrity: sha512-ud2HqmGBM0P0IABqoskKWI6PEf6ZDDBZkFqe2Vnl+mTHCEHzr3ISjjZyCwTjC/qpL25JC9aIDkloQejvMeq0ug==}
     peerDependencies:
@@ -1302,6 +1376,16 @@ packages:
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
 
+  '@remix-run/cloudflare@2.15.0':
+    resolution: {integrity: sha512-X8Z3EDdlh/8Gjpu27gnJenN06Q9BtkxMEFt5op3y/qahCt0FH9A64DZQ5N47+WnFhySy6mOpzFwCAzPmGIuIeQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      '@cloudflare/workers-types': ^4.0.0
+      typescript: ^5.1.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   '@remix-run/dev@2.13.1':
     resolution: {integrity: sha512-7+06Dail6zMyRlRvgrZ4cmQjs2gUb+M24iP4jbmql+0B7VAAPwzCRU0x+BF5z8GSef13kDrH3iXv/BQ2O2yOgw==}
     engines: {node: '>=18.0.0'}
@@ -1356,6 +1440,10 @@ packages:
     resolution: {integrity: sha512-mUnk8rPJBI9loFDZ+YzPGdeniYK+FTmRD1TMCz7ev2SNIozyKKpnGgsxO34u6Z4z/t0ITuu7voi/AshfsGsgFg==}
     engines: {node: '>=14.0.0'}
 
+  '@remix-run/router@1.21.0':
+    resolution: {integrity: sha512-xfSkCAchbdG5PnbrKqFWwia4Bi61nH+wm8wLEqfHDyp7Y3dZzgqS2itV8i4gAq9pC2HsTpwyBC6Ds8VHZ96JlA==}
+    engines: {node: '>=14.0.0'}
+
   '@remix-run/serve@2.13.1':
     resolution: {integrity: sha512-lKCU1ZnHaGknRAYII5PQOGch9xzK3Q68mcyN8clN6WoKQTn5fvWVE1nEDd1L7vyt5LPVI2b7HNQtVMow1g1vHg==}
     engines: {node: '>=18.0.0'}
@@ -1363,6 +1451,15 @@ packages:
 
   '@remix-run/server-runtime@2.13.1':
     resolution: {integrity: sha512-2DfBPRcHKVzE4bCNsNkKB50BhCCKF73x+jiS836OyxSIAL+x0tguV2AEjmGXefEXc5AGGzoxkus0AUUEYa29Vg==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      typescript: ^5.1.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  '@remix-run/server-runtime@2.15.0':
+    resolution: {integrity: sha512-FuM8vAg1sPskf4wn0ivbuj/7s9Qdh2wnKu+sVXqYz0a95gH5b73TuMzk6n3NMSkFVKKc6+UmlG1WLYre7L2LTg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       typescript: ^5.1.0
@@ -1465,6 +1562,23 @@ packages:
     resolution: {integrity: sha512-fbMkAF7fufku0N2dE5TBXcNlg0pt0cJue4xBRE2Qc5Vqikxr4VCgKj/ht6SMdFcOacVA9rqF70APJ8RN/4vMJw==}
     cpu: [x64]
     os: [win32]
+
+  '@scalar/hono-api-reference@0.5.162':
+    resolution: {integrity: sha512-WoC6lLXLYSB6OxDuybtYe+5/EdU0M33DPsknjRsOImp+L6Qn64OZvKwyf7033rEHWvqqpwvEB9r+2zZ4F6KhoQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      hono: ^4.0.0
+
+  '@scalar/openapi-types@0.1.5':
+    resolution: {integrity: sha512-6geH9ehvQ/sG/xUyy3e0lyOw3BaY5s6nn22wHjEJhcobdmWyFER0O6m7AU0ZN4QTjle/gYvFJOjj552l/rsNSw==}
+    engines: {node: '>=18'}
+
+  '@scalar/types@0.0.22':
+    resolution: {integrity: sha512-+S1flivP58p2uiHM4dU5ZaAb20wbVcP0nV39KWoVjijvHDx1HWtAGg+PaDXRCRj2zM4QzBeg4olaso20Tm26fQ==}
+    engines: {node: '>=18'}
+
+  '@sinclair/typebox@0.34.10':
+    resolution: {integrity: sha512-bJ3mIrYjEwenwwt+xAUq3GnOf1O4r2sApPzmfmF90XYMiKxjDzFSWSpWxqzSlQq3pCXuHP2UPxVPKeUFGJxb+A==}
 
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
@@ -1764,6 +1878,14 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
+  '@unhead/schema@1.11.13':
+    resolution: {integrity: sha512-fIpQx6GCpl99l4qJXsPqkXxO7suMccuLADbhaMSkeXnVEi4ZIle+l+Ri0z+GHAEpJj17FMaQdO5n9FMSOMUxkw==}
+
+  '@valibot/to-json-schema@1.0.0-beta.3':
+    resolution: {integrity: sha512-20XQh1u5sOLwS3NOB7oHCo3clQ9h4GlavXgLKMux2PYpHowb7P97cND0dg8T3+fE1WoKVACcLppvzAPpSx0F+Q==}
+    peerDependencies:
+      valibot: ^1.0.0 || ^1.0.0-beta.5 || ^1.0.0-rc
+
   '@vanilla-extract/babel-plugin-debug-ids@1.1.0':
     resolution: {integrity: sha512-Zy9bKjaL2P5zsrFYQJ8IjWGlFODmZrpvFmjFE0Zv8om55Pz1JtpJtL6DvlxlWUxbVaP1HKCqsmEfFOZN8fX/ZQ==}
 
@@ -1948,6 +2070,9 @@ packages:
 
   aria-query@5.1.3:
     resolution: {integrity: sha512-R5iJ5lkuHybztUfuOAznmboyjWq8O6sqNqtK7CLOqdydi54VNbORp49mb14KbWgG1QD3JFO9hJdZ+y4KutfdOQ==}
+
+  arktype@2.0.0-rc.25:
+    resolution: {integrity: sha512-ck1kRLda55Pv6L3vIIjRb6A22LqUcjitxPGS3OscOKwFcxNReaj+ItJJiysebBbbUy+ESouXTJ+vvck33spGDQ==}
 
   array-buffer-byte-length@1.0.1:
     resolution: {integrity: sha512-ahC5W1xgou+KTXix4sAO8Ki12Q+jf4i0+tmk3sC+zgcynshkHxzpXdImBehiUYKKKDwvfFiJl1tZt6ewscS1Mg==}
@@ -2203,6 +2328,10 @@ packages:
 
   clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
+    engines: {node: '>=0.8'}
+
+  clone@2.1.2:
+    resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
 
   clsx@2.1.1:
@@ -3039,6 +3168,22 @@ packages:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
     engines: {node: '>=0.10.0'}
 
+  hono-openapi@0.2.1:
+    resolution: {integrity: sha512-UMvo8c9Mlms17kUMe5KIr+uZgulpZ6PhAKC6/yPywhH3Ih/hFi1bAxmt8iMrUc6Rl5Neh/QQYnMSAZBwkfF0Gw==}
+
+  hono-remix-adapter@0.5.3:
+    resolution: {integrity: sha512-nZYe9TTbrKWUJ1shuroo5UikYvyzbcMWbzPbgLZzOZCQQAtRvlBPtrVtW5eJSGOI1JtmsR/9uEyThi9P1aniqw==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      hono: '*'
+
+  hono@4.6.12:
+    resolution: {integrity: sha512-eHtf4kSDNw6VVrdbd5IQi16r22m3s7mWPLd7xOMhg1a/Yyb1A0qpUFq8xYMX4FMuDe1nTKeMX5rTx7Nmw+a+Ag==}
+    engines: {node: '>=16.9.0'}
+
+  hookable@5.5.3:
+    resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
+
   hosted-git-info@6.1.1:
     resolution: {integrity: sha512-r0EI+HBMcXadMrugk0GCQ+6BQV39PiWAZVfq7oIckeGiN7sjRGyQxPdft3nQekFTCQbYxLBH+/axZMeH8UX6+w==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
@@ -3442,6 +3587,10 @@ packages:
 
   json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
+
+  json-schema-walker@2.0.0:
+    resolution: {integrity: sha512-nXN2cMky0Iw7Af28w061hmxaPDaML5/bQD9nwm1lOoIKEGjHcRGxqWe4MfrkYThYAPjSUhmsp4bJNoLAyVn9Xw==}
+    engines: {node: '>=10'}
 
   json5@2.2.3:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
@@ -3939,6 +4088,11 @@ packages:
   mime@1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
+    hasBin: true
+
+  mime@2.6.0:
+    resolution: {integrity: sha512-USPkMeET31rOMiarsBNIHZKLGgvKc/LrjofAnBlOttf5ajRvqiRA8QsenbcooctK6d6Ts6aqZXBA+XbkKthiQg==}
+    engines: {node: '>=4.0.0'}
     hasBin: true
 
   mimic-fn@2.1.0:
@@ -5453,6 +5607,14 @@ packages:
       typescript:
         optional: true
 
+  valibot@1.0.0-beta.9:
+    resolution: {integrity: sha512-yEX8gMAZ2R1yI2uwOO4NCtVnJQx36zn3vD0omzzj9FhcoblvPukENIiRZXKZwCnqSeV80bMm8wNiGhQ0S8fiww==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
@@ -5730,6 +5892,18 @@ packages:
     resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
     engines: {node: '>=18'}
 
+  zhead@2.2.4:
+    resolution: {integrity: sha512-8F0OI5dpWIA5IGG5NHUg9staDwz/ZPxZtvGVf01j7vHqSyZ0raHY+78atOVxRqb73AotX22uV1pXt3gYSstGag==}
+
+  zod-openapi@4.1.0:
+    resolution: {integrity: sha512-bRCwRYhEO9CmFLyKgJX8h6j1dRtRiwOe+TLzMVPyV0pRW5vRIgb1rLgIGcuRZ5z3MmSVrZqbv3yva4IJrtZK4g==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.21.4
+
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -5739,6 +5913,12 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
+
+  '@apidevtools/json-schema-ref-parser@11.7.2':
+    dependencies:
+      '@jsdevtools/ono': 7.1.3
+      '@types/json-schema': 7.0.15
+      js-yaml: 4.1.0
 
   '@apidevtools/json-schema-ref-parser@9.0.6':
     dependencies:
@@ -5760,6 +5940,14 @@ snapshots:
       ajv-draft-04: 1.0.0(ajv@8.17.1)
       call-me-maybe: 1.0.2
       openapi-types: 12.1.3
+
+  '@ark/schema@0.25.0':
+    dependencies:
+      '@ark/util': 0.25.0
+    optional: true
+
+  '@ark/util@0.25.0':
+    optional: true
 
   '@asyncapi/specs@4.3.1':
     dependencies:
@@ -6032,6 +6220,14 @@ snapshots:
     dependencies:
       '@types/tough-cookie': 4.0.5
       tough-cookie: 4.1.4
+
+  '@cloudflare/kv-asset-handler@0.1.3':
+    dependencies:
+      mime: 2.6.0
+    optional: true
+
+  '@cloudflare/workers-types@4.20241202.0':
+    optional: true
 
   '@emotion/hash@0.9.2': {}
 
@@ -6409,6 +6605,40 @@ snapshots:
       tabbable: 6.2.0
 
   '@floating-ui/utils@0.2.7': {}
+
+  '@hono/arktype-validator@2.0.0(arktype@2.0.0-rc.25)(hono@4.6.12)':
+    dependencies:
+      arktype: 2.0.0-rc.25
+      hono: 4.6.12
+    optional: true
+
+  '@hono/node-server@1.13.7(hono@4.6.12)':
+    dependencies:
+      hono: 4.6.12
+
+  '@hono/typebox-validator@0.2.6(@sinclair/typebox@0.34.10)(hono@4.6.12)':
+    dependencies:
+      '@sinclair/typebox': 0.34.10
+      hono: 4.6.12
+    optional: true
+
+  '@hono/valibot-validator@0.5.1(hono@4.6.12)(valibot@1.0.0-beta.9(typescript@5.6.3))':
+    dependencies:
+      hono: 4.6.12
+      valibot: 1.0.0-beta.9(typescript@5.6.3)
+    optional: true
+
+  '@hono/vite-dev-server@0.17.0(hono@4.6.12)':
+    dependencies:
+      '@hono/node-server': 1.13.7(hono@4.6.12)
+      hono: 4.6.12
+      minimatch: 9.0.5
+
+  '@hono/zod-validator@0.4.1(hono@4.6.12)(zod@3.23.8)':
+    dependencies:
+      hono: 4.6.12
+      zod: 3.23.8
+    optional: true
 
   '@hookform/resolvers@3.9.1(react-hook-form@7.53.1(react@18.3.1))':
     dependencies:
@@ -6810,6 +7040,15 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
+  '@remix-run/cloudflare@2.15.0(@cloudflare/workers-types@4.20241202.0)(typescript@5.6.3)':
+    dependencies:
+      '@cloudflare/kv-asset-handler': 0.1.3
+      '@cloudflare/workers-types': 4.20241202.0
+      '@remix-run/server-runtime': 2.15.0(typescript@5.6.3)
+    optionalDependencies:
+      typescript: 5.6.3
+    optional: true
+
   '@remix-run/dev@2.13.1(@remix-run/react@2.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/serve@2.13.1(typescript@5.6.3))(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.47))(typescript@5.6.3)(vite@5.4.10(@types/node@20.14.12)(sugarss@4.0.1(postcss@8.4.47)))':
     dependencies:
       '@babel/core': 7.25.2
@@ -6919,6 +7158,8 @@ snapshots:
 
   '@remix-run/router@1.20.0': {}
 
+  '@remix-run/router@1.21.0': {}
+
   '@remix-run/serve@2.13.1(typescript@5.6.3)':
     dependencies:
       '@remix-run/express': 2.13.1(express@4.21.0)(typescript@5.6.3)
@@ -6936,6 +7177,18 @@ snapshots:
   '@remix-run/server-runtime@2.13.1(typescript@5.6.3)':
     dependencies:
       '@remix-run/router': 1.20.0
+      '@types/cookie': 0.6.0
+      '@web3-storage/multipart-parser': 1.0.0
+      cookie: 0.6.0
+      set-cookie-parser: 2.7.0
+      source-map: 0.7.4
+      turbo-stream: 2.4.0
+    optionalDependencies:
+      typescript: 5.6.3
+
+  '@remix-run/server-runtime@2.15.0(typescript@5.6.3)':
+    dependencies:
+      '@remix-run/router': 1.21.0
       '@types/cookie': 0.6.0
       '@web3-storage/multipart-parser': 1.0.0
       cookie: 0.6.0
@@ -7019,6 +7272,21 @@ snapshots:
     optional: true
 
   '@rollup/rollup-win32-x64-msvc@4.24.0':
+    optional: true
+
+  '@scalar/hono-api-reference@0.5.162(hono@4.6.12)':
+    dependencies:
+      '@scalar/types': 0.0.22
+      hono: 4.6.12
+
+  '@scalar/openapi-types@0.1.5': {}
+
+  '@scalar/types@0.0.22':
+    dependencies:
+      '@scalar/openapi-types': 0.1.5
+      '@unhead/schema': 1.11.13
+
+  '@sinclair/typebox@0.34.10':
     optional: true
 
   '@sindresorhus/merge-streams@2.3.0': {}
@@ -7401,6 +7669,20 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
+  '@unhead/schema@1.11.13':
+    dependencies:
+      hookable: 5.5.3
+      zhead: 2.2.4
+
+  '@valibot/to-json-schema@1.0.0-beta.3(valibot@0.42.1(typescript@5.6.3))':
+    dependencies:
+      valibot: 0.42.1(typescript@5.6.3)
+
+  '@valibot/to-json-schema@1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.6.3))':
+    dependencies:
+      valibot: 1.0.0-beta.9(typescript@5.6.3)
+    optional: true
+
   '@vanilla-extract/babel-plugin-debug-ids@1.1.0':
     dependencies:
       '@babel/core': 7.25.2
@@ -7679,6 +7961,12 @@ snapshots:
   aria-query@5.1.3:
     dependencies:
       deep-equal: 2.2.3
+
+  arktype@2.0.0-rc.25:
+    dependencies:
+      '@ark/schema': 0.25.0
+      '@ark/util': 0.25.0
+    optional: true
 
   array-buffer-byte-length@1.0.1:
     dependencies:
@@ -7973,6 +8261,8 @@ snapshots:
       wrap-ansi: 7.0.0
 
   clone@1.0.4: {}
+
+  clone@2.1.2: {}
 
   clsx@2.1.1: {}
 
@@ -9096,6 +9386,44 @@ snapshots:
     dependencies:
       parse-passwd: 1.0.0
 
+  hono-openapi@0.2.1(typescript@5.6.3):
+    dependencies:
+      json-schema-walker: 2.0.0
+    optionalDependencies:
+      '@hono/arktype-validator': 2.0.0(arktype@2.0.0-rc.25)(hono@4.6.12)
+      '@hono/typebox-validator': 0.2.6(@sinclair/typebox@0.34.10)(hono@4.6.12)
+      '@hono/valibot-validator': 0.5.1(hono@4.6.12)(valibot@1.0.0-beta.9(typescript@5.6.3))
+      '@hono/zod-validator': 0.4.1(hono@4.6.12)(zod@3.23.8)
+      '@sinclair/typebox': 0.34.10
+      '@valibot/to-json-schema': 1.0.0-beta.3(valibot@1.0.0-beta.9(typescript@5.6.3))
+      arktype: 2.0.0-rc.25
+      hono: 4.6.12
+      openapi-types: 12.1.3
+      valibot: 1.0.0-beta.9(typescript@5.6.3)
+      zod: 3.23.8
+      zod-openapi: 4.1.0(zod@3.23.8)
+    transitivePeerDependencies:
+      - typescript
+
+  hono-remix-adapter@0.5.3(@cloudflare/workers-types@4.20241202.0)(hono@4.6.12)(typescript@5.6.3):
+    dependencies:
+      '@hono/vite-dev-server': 0.17.0(hono@4.6.12)
+      '@remix-run/server-runtime': 2.15.0(typescript@5.6.3)
+      hono: 4.6.12
+    optionalDependencies:
+      '@hono/node-server': 1.13.7(hono@4.6.12)
+      '@remix-run/cloudflare': 2.15.0(@cloudflare/workers-types@4.20241202.0)(typescript@5.6.3)
+      '@remix-run/node': 2.13.1(typescript@5.6.3)
+    transitivePeerDependencies:
+      - '@cloudflare/workers-types'
+      - miniflare
+      - typescript
+      - wrangler
+
+  hono@4.6.12: {}
+
+  hookable@5.5.3: {}
+
   hosted-git-info@6.1.1:
     dependencies:
       lru-cache: 7.18.3
@@ -9467,6 +9795,11 @@ snapshots:
   json-parse-even-better-errors@3.0.2: {}
 
   json-schema-traverse@1.0.0: {}
+
+  json-schema-walker@2.0.0:
+    dependencies:
+      '@apidevtools/json-schema-ref-parser': 11.7.2
+      clone: 2.1.2
 
   json5@2.2.3: {}
 
@@ -10421,6 +10754,9 @@ snapshots:
       mime-db: 1.52.0
 
   mime@1.6.0: {}
+
+  mime@2.6.0:
+    optional: true
 
   mimic-fn@2.1.0: {}
 
@@ -12085,6 +12421,11 @@ snapshots:
     optionalDependencies:
       typescript: 5.6.3
 
+  valibot@1.0.0-beta.9(typescript@5.6.3):
+    optionalDependencies:
+      typescript: 5.6.3
+    optional: true
+
   validate-npm-package-license@3.0.4:
     dependencies:
       spdx-correct: 3.2.0
@@ -12369,5 +12710,15 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yoctocolors-cjs@2.1.2: {}
+
+  zhead@2.2.4: {}
+
+  zod-openapi@4.1.0(zod@3.23.8):
+    dependencies:
+      zod: 3.23.8
+    optional: true
+
+  zod@3.23.8:
+    optional: true
 
   zwitch@2.0.4: {}
