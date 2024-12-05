@@ -10,6 +10,9 @@
   ],
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
+  "ignorePaths": [
+    "packages/api-mock/**"
+  ],
   "packageRules": [
     {
       "matchManagers": [

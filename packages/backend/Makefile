@@ -8,9 +8,6 @@ set-go-env:
 local/install-tools: set-go-env ## install tools on local
 	@./tools/install_tools.sh "./tools/tools.go"
 
-docker/start-db: ## start db on docker
-	docker compose up -d stlatica_db
-
 local/create-migration-file: set-go-env ## create migration file on local
 	$(GOBIN)/goose -dir=db/migrations create new_migration sql
 
@@ -37,9 +34,6 @@ local/codegen-from-oapi: set-go-env ## generate code from openapi on local
 	$(GOBIN)/oapi-codegen -generate spec -package openapi ../shared/openapi/tmp/internalapi/openapi.yaml > app/controllers/internalapi/v1/openapi/internalapi_spec.gen.go
 	rm -r ../shared/openapi/tmp
 
-local/generate-db-docs: ## generate DB documentation from db schema on local
-	docker compose up tbls
-
 local/lint: set-go-env ## lint on local
 	$(GOBIN)/golangci-lint run ./...
 
@@ -51,6 +45,12 @@ docker/start-internalapi: ## start internalapi on docker
 
 docker/stop-internalapi: ## stop internalapi on docker
 	SOURCE_DIR=./app/cmd/internalapi docker compose down stlatica_server
+
+docker/start-db: ## start db on docker
+	docker compose up -d stlatica_db
+
+docker/stop-db: ## stop db on docker
+	docker compose down stlatica_db
 
 docker/start-minio: ## start object storage on docker
 	docker compose up -d minio
@@ -66,6 +66,9 @@ docker/stop-valkey: ## stop valkey server on docker
 
 docker/start-mock-internalapi: ## start mock internalapi on docker
 	docker run --rm -p 127.0.0.1:8080:8080 --mount type=bind,source="./",target="/go/src" -w /go/src -it golang:1.20.6 /bin/sh -c "go run mock/cmd/internalapi/main.go"
+
+docker/generate-db-docs: ## generate DB documentation from db schema on local
+	docker compose up tbls
 
 help: ## print this message ## make
 	@printf "\033[36m%-30s\033[0m %-50s %s\n" "[command]" "[Description]"

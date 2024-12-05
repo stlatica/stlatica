@@ -166,7 +166,7 @@ func (p *userPortImpl) GetUser(ctx context.Context, userID types.UserID) (*entit
 	return p.userDAO.GetUser(ctx, userID)
 }
 
-// CreateUser implements ports.UserCreateInPort.
+// CreateUser implements ports.UserCreateOutPort.
 func (p *userPortImpl) CreateUser(ctx context.Context, user entities.UserBase) (
 	*entities.User, error) {
 	return p.userDAO.CreateUser(ctx, user)

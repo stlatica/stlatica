@@ -19,7 +19,6 @@ import {
 
 type LeftUserViewProps = {
   readonly userID: string;
-  // children: React.ReactNode;
 };
 
 /**

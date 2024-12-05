@@ -22,7 +22,7 @@ type userCreator struct {
 }
 
 func (g *userCreator) CreateUser(ctx context.Context, userName string, preferredUserID string,
-	mailAddress string, iconImageID types.ImageID, inPort ports.UserCreateOutPort) (*entities.User, error) {
+	mailAddress string, iconImageID types.ImageID, outPort ports.UserCreateOutPort) (*entities.User, error) {
 	// TODO: mail addressのvalidationを実装する https://github.com/stlatica/stlatica/issues/604
 	userID := types.NewUserID()
 	user := entities.UserBase{
@@ -32,7 +32,7 @@ func (g *userCreator) CreateUser(ctx context.Context, userName string, preferred
 		MailAddress:       mailAddress,
 		IconImageID:       iconImageID,
 	}
-	return inPort.CreateUser(ctx, user)
+	return outPort.CreateUser(ctx, user)
 }
 
 func (g *userCreator) FollowUser(ctx context.Context, userID types.UserID,

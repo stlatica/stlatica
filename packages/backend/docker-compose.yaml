@@ -4,6 +4,7 @@ services:
   stlatica_db:
     container_name: stlatica_db
     image: mysql:8.4.2
+    restart: always
     env_file:
       ./.env.local.docker
     ports:
@@ -16,6 +17,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile_air
+    restart: always
     ports:
       - "8080:8080"
     volumes:
@@ -31,6 +33,7 @@ services:
       - ../shared/openapi/tmp:/openapi/tmp
   valkey:
     image: valkey/valkey:latest
+    restart: always
     command: valkey-server --port 6380
     ports:
       - "6380:6380"
@@ -40,6 +43,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile_Minio
+    restart: always
     env_file:
       ./.env.local.docker
     ports:
@@ -54,7 +58,7 @@ services:
     volumes:
       - ./:/app
   tbls:
-    image: ghcr.io/k1low/tbls 
+    image: ghcr.io/k1low/tbls:v1.79.4
     user: 1000:1000
     working_dir: /tbls
     volumes:

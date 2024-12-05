@@ -21,12 +21,15 @@
 ![Remix](https://img.shields.io/badge/remix-%23000.svg?style=for-the-badge&logo=remix&logoColor=white)
 ![Mantine](https://img.shields.io/badge/Mantine-ffffff?style=for-the-badge&logo=Mantine&logoColor=339af0)
 
-
 SNS to support community activities
 
 ## features
 
 - Activity Pub
+
+## Tech / Information Blog
+
+https://stlatica.github.io/blog/
 
 ## Set Up
 
