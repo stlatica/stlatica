@@ -26,7 +26,7 @@ type UserUseCase interface {
 	// GetFollows returns follows of user.
 	GetFollows(ctx context.Context, params ports.FollowsGetParams) ([]*entities.User, error)
 	// FollowUser follows user.
-	FollowUser(ctx context.Context, userID types.UserID, followUserID types.UserID) error
+	FollowUser(ctx context.Context, params ports.FollowPostParams) error
 	// GetFollowers returns followers of user.
 	GetFollowers(ctx context.Context, params ports.FollowersGetParams) ([]*entities.User, error)
 	// GetUserIcon returns user icon.
@@ -107,12 +107,12 @@ func (u *userUseCase) GetFollows(ctx context.Context, params ports.FollowsGetPar
 	return getter.GetFollows(ctx, domainParams, portImpl)
 }
 
-func (u *userUseCase) FollowUser(ctx context.Context, userID types.UserID, followUserID types.UserID) error {
+func (u *userUseCase) FollowUser(ctx context.Context, params ports.FollowPostParams) error {
 	creator := u.userDomainFactory.NewUserCreator()
 	portImpl := &userPortImpl{
 		userDAO: u.userDAO,
 	}
-	return creator.FollowUser(ctx, userID, followUserID, portImpl)
+	return creator.FollowUser(ctx, params.UserID, params.FollowUserID, portImpl)
 }
 
 func (u *userUseCase) GetFollowers(ctx context.Context, params ports.FollowersGetParams) ([]*entities.User, error) {
@@ -184,6 +184,10 @@ func (p *userPortImpl) GetFollows(ctx context.Context,
 func (p *userPortImpl) GetFollowers(ctx context.Context,
 	getParams domainports.FollowersGetParams) ([]*entities.User, error) {
 	return p.userDAO.GetFollowers(ctx, getParams)
+}
+
+func (p *userPortImpl) FollowUser(ctx context.Context, postParams entities.UserRelationBase) error {
+	return p.userDAO.FollowUser(ctx, postParams)
 }
 
 type imagePortImpl struct {
