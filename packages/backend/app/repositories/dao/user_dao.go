@@ -6,6 +6,7 @@ import (
 	"reflect"
 
 	"github.com/friendsofgo/errors"
+	"github.com/go-sql-driver/mysql"
 	domainentities "github.com/stlatica/stlatica/packages/backend/app/domains/entities"
 	domainerrors "github.com/stlatica/stlatica/packages/backend/app/domains/errors"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
@@ -29,6 +30,8 @@ type UserDAO interface {
 	GetFollows(ctx context.Context, params domainports.FollowsGetParams) ([]*domainentities.User, error)
 	// GetFollowers returns followers of user.
 	GetFollowers(ctx context.Context, params domainports.FollowersGetParams) ([]*domainentities.User, error)
+	// FollowUser creates a state where one user is following another user.
+	FollowUser(ctx context.Context, params domainentities.UserRelationBase) error
 }
 
 // NewUserDAO returns UserDAO.
@@ -205,6 +208,27 @@ func (dao *userDAO) GetFollowers(ctx context.Context,
 		followers = append(followers, convertUserEntityToDomainEntity(user))
 	}
 	return followers, nil
+}
+
+func (dao *userDAO) FollowUser(ctx context.Context, params domainentities.UserRelationBase) error {
+	ctx = boil.SkipTimestamps(ctx)
+	repositoriesUserRelationBase := entities.UserRelationBase{
+		FollowUserID:   params.FollowUserID,
+		FollowerUserID: params.FollowerUserID,
+		CreatedAt:      params.CreatedAt,
+		UpdatedAt:      params.UpdatedAt,
+	}
+	err := repositoriesUserRelationBase.Insert(ctx, dao.ctxExecutor, boil.Infer())
+	if err != nil {
+		e := errors.Cause(err)
+		if e != nil {
+			var mySQLError *mysql.MySQLError
+			if errors.As(e, &mySQLError) && mySQLError.Number == 1062 {
+				return nil
+			}
+		}
+	}
+	return err
 }
 
 func convertUserEntityToDomainEntity(entity *entities.UserBase) *domainentities.User {
