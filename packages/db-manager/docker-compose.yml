@@ -21,8 +21,7 @@ services:
     ports:
       - '127.0.0.1:5100:5100'
 
-# バックエンドリポジトリのDBに接続
 networks:
   default:
-    name: backend_default
+    name: stlatica_network
     external: true
