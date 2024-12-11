@@ -100,6 +100,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: pull lfs snapshots
         run: git lfs pull
+      - name: create docker network
+        run: docker network create stlatica_network
       - name: Run vrt tests in container
         run: make docker/vrt
         timeout-minutes: 2
