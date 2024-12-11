@@ -48,3 +48,7 @@ services:
     #     target: /stlatica/packages/frontend/e2e/report
     tty: true
 
+networks:
+  default:
+    name: stlatica_network
+    external: true
