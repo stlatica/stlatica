@@ -2,8 +2,10 @@ package users
 
 import (
 	"context"
+	"errors"
 
 	"github.com/stlatica/stlatica/packages/backend/app/domains/entities"
+	domainerrors "github.com/stlatica/stlatica/packages/backend/app/domains/errors"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/types"
 	"github.com/stlatica/stlatica/packages/backend/app/domains/users/ports"
 	"github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
@@ -41,5 +43,11 @@ func (g *userCreator) FollowUser(ctx context.Context, userID types.UserID,
 		FollowerUserID: userID,
 		FollowUserID:   followUserID,
 	}
-	return outPort.FollowUser(ctx, followUser)
+	err := outPort.FollowUser(ctx, followUser)
+	var domainError domainerrors.DomainError
+	if errors.As(err, &domainError) &&
+		domainError.DomainErrorType() == domainerrors.DomainErrorTypeDuplicateEntry {
+		return nil
+	}
+	return err
 }

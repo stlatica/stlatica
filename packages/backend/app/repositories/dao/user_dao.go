@@ -16,6 +16,11 @@ import (
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 )
 
+const (
+	// DuplicateEntry in database
+	DuplicateEntry = 1062
+)
+
 // UserDAO is the interface for getting user.
 type UserDAO interface {
 	// GetUser returns user.
@@ -223,8 +228,9 @@ func (dao *userDAO) FollowUser(ctx context.Context, params domainentities.UserRe
 		e := errors.Cause(err)
 		if e != nil {
 			var mySQLError *mysql.MySQLError
-			if errors.As(e, &mySQLError) && mySQLError.Number == 1062 {
-				return nil
+			if errors.As(e, &mySQLError) && mySQLError.Number == DuplicateEntry {
+				return domainerrors.NewDomainError(err,
+					domainerrors.DomainErrorTypeDuplicateEntry, "already following")
 			}
 		}
 	}
