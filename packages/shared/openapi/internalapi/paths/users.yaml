@@ -22,6 +22,49 @@ users_{user_id}:
         $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E500'
       503:
         $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E503'
+  patch:
+    operationId: updateUser
+    tags:
+      - User
+    summery: update user
+    description: update user
+    parameters:
+      - $ref: '../parameters/user_id.yaml#/user_id'
+    requestBody:
+      description: 新規ユーザーのユーザ名とUserIDとメールアドレス
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+              - email
+              - icon_image_id
+            properties:
+              name:
+                type: string
+                example: 'stlatica taro'
+              email:
+                type: string
+                example: 'stlatica.taro@example.com'
+              icon_image_id:
+                type: string
+                example: '01J6YVDDN1RB68E2Z5SXZGHNXF'
+    responses:
+      200:
+        description: success
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/User.yaml#/User'
+      400:
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E400'
+      404:
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E404'
+      500:
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E500'
+      503:
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E503'
   delete:
     tags:
       - User
