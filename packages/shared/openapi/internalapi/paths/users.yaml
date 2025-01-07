@@ -38,12 +38,15 @@ users_{user_id}:
             type: object
             required:
               - name
+              - user_id
               - email
               - icon_image_id
             properties:
               name:
                 type: string
                 example: 'stlatica taro'
+              user_id:
+                $ref: '../schemas/UserID.yaml#/UserID'
               email:
                 type: string
                 example: 'stlatica.taro@example.com'
