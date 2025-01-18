@@ -31,22 +31,19 @@ users_{user_id}:
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
     requestBody:
-      description: 新規ユーザーのユーザ名とUserIDとメールアドレス
+      description: 更新するユーザーのユーザ名とUserIDとメールアドレス
       content:
         application/json:
           schema:
             type: object
             required:
               - name
-              - user_id
               - email
               - icon_image_id
             properties:
               name:
                 type: string
                 example: 'stlatica taro'
-              user_id:
-                $ref: '../schemas/UserID.yaml#/UserID'
               email:
                 type: string
                 example: 'stlatica.taro@example.com'
@@ -64,6 +61,8 @@ users_{user_id}:
         $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E400'
       404:
         $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E404'
+      409:
+        $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E409'
       500:
         $ref: '../schemas/ErrorResponse.yaml#/ErrorCodes/E500'
       503:
