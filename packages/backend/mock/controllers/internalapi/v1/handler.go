@@ -47,6 +47,10 @@ func (h *handler) CreateUser(_ echo.Context) error {
 	panic("implement me")
 }
 
+func (h *handler) UpdateUser(_ echo.Context, _ openapi.UserId) error {
+	panic("implement me")
+}
+
 func (h *handler) DeleteUser(_ echo.Context, _ openapi.UserId) error {
 	panic("implement me")
 }

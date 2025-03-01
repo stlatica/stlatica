@@ -8,6 +8,8 @@ type Factory interface {
 	NewUserGetter() UserGetter
 	// NewUserCreator returns a new user creator.
 	NewUserCreator() UserCreator
+	// NewUserUpdater returns a new user updater.
+	NewUserUpdater() UserUpdater
 }
 
 // NewFactory returns a new factory of users package.
@@ -29,6 +31,12 @@ func (f *factory) NewUserGetter() UserGetter {
 
 func (f *factory) NewUserCreator() UserCreator {
 	return &userCreator{
+		appLogger: f.appLogger,
+	}
+}
+
+func (f *factory) NewUserUpdater() UserUpdater {
+	return &userUpdater{
 		appLogger: f.appLogger,
 	}
 }
