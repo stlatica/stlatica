@@ -12,6 +12,7 @@ type UserCreateOutPort interface {
 	CreateUser(ctx context.Context, user entities.UserBase) (*entities.User, error)
 }
 
+// UserUpdateOutPort is the interface for updating user.
 type UserUpdateOutPort interface {
 	// updateUser updates a user information.
 	UpdateUser(ctx context.Context, user entities.UserBase) (*entities.User, error)

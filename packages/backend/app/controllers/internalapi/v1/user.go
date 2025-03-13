@@ -33,7 +33,7 @@ type CreateUserResponse struct {
 type UpdateUserResponse struct {
 	Username    string `json:"username"`
 	MailAddress string `json:"mail_address"`
-	IconImageId string `json:"icon_image_id"`
+	IconImageID string `json:"icon_image_id"`
 }
 
 // GetFollowResponse is the response of GetFollows.
@@ -89,7 +89,8 @@ func (c *userController) CreateUser(ectx echo.Context, userName string, preferre
 	}, nil
 }
 
-func (c *userController) UpdateUser(ectx echo.Context, userIDStr string, userName string, mailAddress string, iconImageIDStr string) (*UpdateUserResponse, error) {
+func (c *userController) UpdateUser(ectx echo.Context, userIDStr string, userName string, mailAddress string,
+	iconImageIDStr string) (*UpdateUserResponse, error) {
 	user, err := c.userUseCase.GetUserByPreferredUserID(ectx.Request().Context(), userIDStr)
 	if err != nil {
 		return nil, err
@@ -105,7 +106,7 @@ func (c *userController) UpdateUser(ectx echo.Context, userIDStr string, userNam
 	return &UpdateUserResponse{
 		Username:    user.GetPreferredUserName(),
 		MailAddress: user.GetMailAddress(),
-		IconImageId: user.GetIconImageID().String(),
+		IconImageID: user.GetIconImageID().String(),
 	}, nil
 }
 

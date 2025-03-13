@@ -105,7 +105,8 @@ func (dao *userDAO) UpdateUser(ctx context.Context, user domainentities.UserBase
 		IconImageID:       user.IconImageID,
 		UpdatedAt:         user.UpdatedAt,
 	}
-	err := repositoriesUser.Update(ctx, dao.ctxExecutor, boil.Whitelist("preferred_user_name", "mail_address", "icon_image_id", "updated_at"))
+	err := repositoriesUser.Update(ctx, dao.ctxExecutor,
+		boil.Whitelist("preferred_user_name", "mail_address", "icon_image_id", "updated_at"))
 	return &domainentities.User{
 		UserBase: domainentities.UserBase{
 			UserID:            user.UserID,
