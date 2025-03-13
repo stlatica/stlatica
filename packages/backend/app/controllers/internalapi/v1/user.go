@@ -29,6 +29,13 @@ type CreateUserResponse struct {
 	UserID string `json:"user_id"`
 }
 
+// UpdateUserResponse is the response of UpdateUser.
+type UpdateUserResponse struct {
+	Username    string `json:"username"`
+	MailAddress string `json:"mail_address"`
+	IconImageID string `json:"icon_image_id"`
+}
+
 // GetFollowResponse is the response of GetFollows.
 type GetFollowResponse struct {
 	UserID   string `json:"user_id"`
@@ -79,6 +86,27 @@ func (c *userController) CreateUser(ectx echo.Context, userName string, preferre
 	}
 	return &CreateUserResponse{
 		UserID: user.GetPreferredUserID(),
+	}, nil
+}
+
+func (c *userController) UpdateUser(ectx echo.Context, userIDStr string, userName string, mailAddress string,
+	iconImageIDStr string) (*UpdateUserResponse, error) {
+	user, err := c.userUseCase.GetUserByPreferredUserID(ectx.Request().Context(), userIDStr)
+	if err != nil {
+		return nil, err
+	}
+	iconImageID, err := types.NewImageIDFromString(iconImageIDStr)
+	if err != nil {
+		return nil, err
+	}
+	user, err = c.userUseCase.UpdateUser(ectx.Request().Context(), user.GetUserID(), userName, mailAddress, iconImageID)
+	if err != nil {
+		return nil, err
+	}
+	return &UpdateUserResponse{
+		Username:    user.GetPreferredUserName(),
+		MailAddress: user.GetMailAddress(),
+		IconImageID: user.GetIconImageID().String(),
 	}, nil
 }
 

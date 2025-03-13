@@ -21,6 +21,9 @@ type UserUseCase interface {
 	// CreateUser creates a new user.
 	CreateUser(ctx context.Context, userName string, preferredUserID string, mailAddress string,
 		iconImageID types.ImageID) (*entities.User, error)
+	// UpdateUser updates a user information.
+	UpdateUser(ctx context.Context, userID types.UserID,
+		userName string, mailAddress string, iconImageID types.ImageID) (*entities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error)
 	// GetFollows returns follows of user.
@@ -68,6 +71,15 @@ func (u *userUseCase) CreateUser(ctx context.Context, userName string, preferred
 		userDAO: u.userDAO,
 	}
 	return creator.CreateUser(ctx, userName, preferredUserID, mailAddress, iconImageID, portImpl)
+}
+
+func (u *userUseCase) UpdateUser(ctx context.Context, userID types.UserID, userName string, mailAddress string,
+	iconImageID types.ImageID) (*entities.User, error) {
+	updater := u.userDomainFactory.NewUserUpdater()
+	portImpl := &userPortImpl{
+		userDAO: u.userDAO,
+	}
+	return updater.UpdateUser(ctx, userID, userName, mailAddress, iconImageID, portImpl)
 }
 
 func (u *userUseCase) GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error) {
@@ -160,6 +172,11 @@ func (p *userPortImpl) GetUser(ctx context.Context, userID types.UserID) (*entit
 func (p *userPortImpl) CreateUser(ctx context.Context, user entities.UserBase) (
 	*entities.User, error) {
 	return p.userDAO.CreateUser(ctx, user)
+}
+
+// UpdateUser implements ports.UserUpdateOutPort.
+func (p *userPortImpl) UpdateUser(ctx context.Context, user entities.UserBase) (*entities.User, error) {
+	return p.userDAO.UpdateUser(ctx, user)
 }
 
 func (p *userPortImpl) GetUserByPreferredUserID(ctx context.Context, preferredUserID string) (*entities.User, error) {

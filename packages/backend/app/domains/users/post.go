@@ -16,7 +16,18 @@ type UserCreator interface {
 		mailAddress string, iconImageID types.ImageID, outPort ports.UserCreateOutPort) (*entities.User, error)
 }
 
+// UserUpdater is the interface for updating user.
+type UserUpdater interface {
+	// UpdateUser updates a user information.
+	UpdateUser(ctx context.Context, userID types.UserID, userName string, mailAddress string,
+		iconImageID types.ImageID, outPort ports.UserUpdateOutPort) (*entities.User, error)
+}
+
 type userCreator struct {
+	appLogger *logger.AppLogger
+}
+
+type userUpdater struct {
 	appLogger *logger.AppLogger
 }
 
@@ -32,4 +43,15 @@ func (g *userCreator) CreateUser(ctx context.Context, userName string, preferred
 		IconImageID:       iconImageID,
 	}
 	return outPort.CreateUser(ctx, user)
+}
+
+func (g *userUpdater) UpdateUser(ctx context.Context, userID types.UserID, userName string,
+	mailAddress string, iconImageID types.ImageID, outPort ports.UserUpdateOutPort) (*entities.User, error) {
+	userBase := entities.UserBase{
+		UserID:            userID,
+		PreferredUserName: userName,
+		MailAddress:       mailAddress,
+		IconImageID:       iconImageID,
+	}
+	return outPort.UpdateUser(ctx, userBase)
 }

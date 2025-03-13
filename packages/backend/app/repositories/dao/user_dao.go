@@ -21,6 +21,8 @@ type UserDAO interface {
 	GetUser(ctx context.Context, userID types.UserID) (*domainentities.User, error)
 	// CreateUser creates user.
 	CreateUser(ctx context.Context, user domainentities.UserBase) (*domainentities.User, error)
+	// UpdateUser updates user.
+	UpdateUser(ctx context.Context, user domainentities.UserBase) (*domainentities.User, error)
 	// GetUserByPreferredUserID returns user by preferred user ID.
 	GetUserByPreferredUserID(ctx context.Context, preferredUserName string) (*domainentities.User, error)
 	// GetUserByMailAddress returns user by mail address.
@@ -90,6 +92,28 @@ func (dao *userDAO) CreateUser(ctx context.Context, user domainentities.UserBase
 			IconImageID:       user.IconImageID,
 			CreatedAt:         user.RegisteredAt,
 			UpdatedAt:         user.RegisteredAt,
+		},
+	}, err
+}
+
+func (dao *userDAO) UpdateUser(ctx context.Context, user domainentities.UserBase) (*domainentities.User, error) {
+	ctx = boil.SkipTimestamps(ctx)
+	repositoriesUser := entities.UserBase{
+		UserID:            user.UserID,
+		PreferredUserName: user.PreferredUserName,
+		MailAddress:       user.MailAddress,
+		IconImageID:       user.IconImageID,
+		UpdatedAt:         user.UpdatedAt,
+	}
+	err := repositoriesUser.Update(ctx, dao.ctxExecutor,
+		boil.Whitelist("preferred_user_name", "mail_address", "icon_image_id", "updated_at"))
+	return &domainentities.User{
+		UserBase: domainentities.UserBase{
+			UserID:            user.UserID,
+			PreferredUserName: user.PreferredUserName,
+			MailAddress:       user.MailAddress,
+			IconImageID:       user.IconImageID,
+			UpdatedAt:         user.UpdatedAt,
 		},
 	}, err
 }

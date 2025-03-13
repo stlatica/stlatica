@@ -66,6 +66,19 @@ func (h *handler) CreateUser(ectx echo.Context) error {
 	return ectx.JSON(http.StatusCreated, response)
 }
 
+func (h *handler) UpdateUser(ectx echo.Context, userIDStr string) error {
+	var user openapi.UpdateUserJSONBody
+	err := ectx.Bind(&user)
+	if err != nil {
+		return err
+	}
+	response, err := h.userController.UpdateUser(ectx, userIDStr, user.Name, user.Email, user.IconImageId)
+	if err != nil {
+		return err
+	}
+	return ectx.JSON(http.StatusOK, response)
+}
+
 func (h *handler) DeleteUser(_ echo.Context, _ openapi.UserId) error {
 	panic("implement me")
 }
