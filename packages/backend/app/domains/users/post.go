@@ -27,7 +27,7 @@ type userCreator struct {
 }
 
 type userUpdater struct {
-	appLogger *logger.AppLogger
+	appLogger  *logger.AppLogger
 	userGetter userGetter
 }
 

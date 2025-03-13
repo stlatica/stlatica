@@ -103,7 +103,7 @@ func (c *userController) UpdateUser(ectx echo.Context, userIDStr string, userNam
 		return nil, err
 	}
 	return &UpdateUserResponse{
-		Username: user.GetPreferredUserName(),
+		Username:    user.GetPreferredUserName(),
 		MailAddress: user.GetMailAddress(),
 		IconImageId: user.GetIconImageID().String(),
 	}, nil
