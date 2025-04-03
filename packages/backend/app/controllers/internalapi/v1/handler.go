@@ -157,8 +157,17 @@ func (h *handler) GetFollows(ctx echo.Context, userID openapi.UserId, params ope
 	return ctx.JSON(http.StatusOK, response)
 }
 
-func (h *handler) PostFollow(_ echo.Context, _ openapi.UserId) error {
-	panic("implement me")
+func (h *handler) PostFollow(ectx echo.Context, userID openapi.UserId) error {
+	var followUserParams openapi.PostFollowParams
+	err := ectx.Bind(&followUserParams)
+	if err != nil {
+		return err
+	}
+	err = h.userController.PostFollow(ectx, userID, followUserParams.FollowUserId)
+	if err != nil {
+		return err
+	}
+	return ectx.NoContent(http.StatusOK)
 }
 
 func (h *handler) DeleteFollow(_ echo.Context, _ openapi.UserId) error {

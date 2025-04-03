@@ -247,6 +247,12 @@ type GetFollowsParams struct {
 	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
+// PostFollowParams defines parameters for PostFollow.
+type PostFollowParams struct {
+	// UserId userを識別するための一意のID
+	FollowUserId UserID `json:"user_id"`
+}
+
 // UploadImageTextRequestBody defines body for UploadImage for text/plain ContentType.
 type UploadImageTextRequestBody = UploadImageTextBody
 

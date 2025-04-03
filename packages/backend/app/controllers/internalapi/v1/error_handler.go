@@ -33,6 +33,8 @@ func NewErrorHandler(_ *echo.Echo, appLogger *logger.AppLogger) echo.HTTPErrorHa
 			case domainerrors.DomainErrorTypeInvalidData:
 				responseStatusCode = http.StatusBadRequest
 				responseErrorCode = openapi.BADREQUEST
+			case domainerrors.DomainErrorTypeDuplicateEntry:
+				responseStatusCode = http.StatusOK
 			default:
 				responseStatusCode = http.StatusInternalServerError
 				responseErrorCode = openapi.INTERNALSERVERERROR
