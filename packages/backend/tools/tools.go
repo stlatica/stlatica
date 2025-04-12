@@ -12,4 +12,5 @@ import (
 	_ "github.com/volatiletech/sqlboiler/v4"
 	_ "github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql"
 	_ "golang.org/x/tools/cmd/goimports"
+	_ "github.com/go-playground/validator/v10"
 )
