@@ -304,7 +304,7 @@ require (
 	github.com/klauspost/compress v1.17.6 // indirect
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
-	github.com/redis/go-redis/v9 v9.6.1
+	github.com/redis/go-redis/v9 v9.6.3
 	github.com/rivo/uniseg v0.4.7 // indirect
 	go.uber.org/zap v1.27.0
 )
