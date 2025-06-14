@@ -238,30 +238,23 @@ func (userAuthCredentialL) LoadUser(ctx context.Context, e boil.ContextExecutor,
 		}
 	}
 
-	args := make([]interface{}, 0, 1)
+	args := make(map[interface{}]struct{})
 	if singular {
 		if object.R == nil {
 			object.R = &userAuthCredentialR{}
 		}
 		if !queries.IsNil(object.UserID) {
-			args = append(args, object.UserID)
+			args[object.UserID] = struct{}{}
 		}
 
 	} else {
-	Outer:
 		for _, obj := range slice {
 			if obj.R == nil {
 				obj.R = &userAuthCredentialR{}
 			}
 
-			for _, a := range args {
-				if queries.Equal(a, obj.UserID) {
-					continue Outer
-				}
-			}
-
 			if !queries.IsNil(obj.UserID) {
-				args = append(args, obj.UserID)
+				args[obj.UserID] = struct{}{}
 			}
 
 		}
@@ -271,9 +264,16 @@ func (userAuthCredentialL) LoadUser(ctx context.Context, e boil.ContextExecutor,
 		return nil
 	}
 
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
 	query := NewQuery(
 		qm.From(`users`),
-		qm.WhereIn(`users.user_id in ?`, args...),
+		qm.WhereIn(`users.user_id in ?`, argsSlice...),
 	)
 	if mods != nil {
 		mods.Apply(query)
