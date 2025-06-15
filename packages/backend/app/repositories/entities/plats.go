@@ -67,56 +67,16 @@ var PlatBaseTableColumns = struct {
 
 // Generated where
 
-type whereHelpertypes_PlatID struct{ field string }
-
-func (w whereHelpertypes_PlatID) EQ(x types.PlatID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.EQ, x)
-}
-func (w whereHelpertypes_PlatID) NEQ(x types.PlatID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.NEQ, x)
-}
-func (w whereHelpertypes_PlatID) LT(x types.PlatID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LT, x)
-}
-func (w whereHelpertypes_PlatID) LTE(x types.PlatID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LTE, x)
-}
-func (w whereHelpertypes_PlatID) GT(x types.PlatID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GT, x)
-}
-func (w whereHelpertypes_PlatID) GTE(x types.PlatID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GTE, x)
-}
-
-type whereHelpertypes_UserID struct{ field string }
-
-func (w whereHelpertypes_UserID) EQ(x types.UserID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.EQ, x)
-}
-func (w whereHelpertypes_UserID) NEQ(x types.UserID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.NEQ, x)
-}
-func (w whereHelpertypes_UserID) LT(x types.UserID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LT, x)
-}
-func (w whereHelpertypes_UserID) LTE(x types.UserID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LTE, x)
-}
-func (w whereHelpertypes_UserID) GT(x types.UserID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GT, x)
-}
-func (w whereHelpertypes_UserID) GTE(x types.UserID) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GTE, x)
-}
-
 type whereHelperstring struct{ field string }
 
-func (w whereHelperstring) EQ(x string) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
-func (w whereHelperstring) NEQ(x string) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
-func (w whereHelperstring) LT(x string) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
-func (w whereHelperstring) LTE(x string) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
-func (w whereHelperstring) GT(x string) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
-func (w whereHelperstring) GTE(x string) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
+func (w whereHelperstring) EQ(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.EQ, x) }
+func (w whereHelperstring) NEQ(x string) qm.QueryMod   { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
+func (w whereHelperstring) LT(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.LT, x) }
+func (w whereHelperstring) LTE(x string) qm.QueryMod   { return qmhelper.Where(w.field, qmhelper.LTE, x) }
+func (w whereHelperstring) GT(x string) qm.QueryMod    { return qmhelper.Where(w.field, qmhelper.GT, x) }
+func (w whereHelperstring) GTE(x string) qm.QueryMod   { return qmhelper.Where(w.field, qmhelper.GTE, x) }
+func (w whereHelperstring) LIKE(x string) qm.QueryMod  { return qm.Where(w.field+" LIKE ?", x) }
+func (w whereHelperstring) NLIKE(x string) qm.QueryMod { return qm.Where(w.field+" NOT LIKE ?", x) }
 func (w whereHelperstring) IN(slice []string) qm.QueryMod {
 	values := make([]interface{}, 0, len(slice))
 	for _, value := range slice {
@@ -130,27 +90,6 @@ func (w whereHelperstring) NIN(slice []string) qm.QueryMod {
 		values = append(values, value)
 	}
 	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
-}
-
-type whereHelpertypes_UnixTime struct{ field string }
-
-func (w whereHelpertypes_UnixTime) EQ(x types.UnixTime) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.EQ, x)
-}
-func (w whereHelpertypes_UnixTime) NEQ(x types.UnixTime) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.NEQ, x)
-}
-func (w whereHelpertypes_UnixTime) LT(x types.UnixTime) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LT, x)
-}
-func (w whereHelpertypes_UnixTime) LTE(x types.UnixTime) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LTE, x)
-}
-func (w whereHelpertypes_UnixTime) GT(x types.UnixTime) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GT, x)
-}
-func (w whereHelpertypes_UnixTime) GTE(x types.UnixTime) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GTE, x)
 }
 
 var PlatBaseWhere = struct {
@@ -169,14 +108,17 @@ var PlatBaseWhere = struct {
 
 // PlatBaseRels is where relationship names are stored.
 var PlatBaseRels = struct {
-	User string
+	User      string
+	Favorites string
 }{
-	User: "User",
+	User:      "User",
+	Favorites: "Favorites",
 }
 
 // platR is where relationships are stored.
 type platR struct {
-	User *UserBase `boil:"User" json:"User" toml:"User" yaml:"User"`
+	User      *UserBase         `boil:"User" json:"User" toml:"User" yaml:"User"`
+	Favorites FavoriteBaseSlice `boil:"Favorites" json:"Favorites" toml:"Favorites" yaml:"Favorites"`
 }
 
 // NewStruct creates a new relationship struct
@@ -189,6 +131,13 @@ func (r *platR) GetUser() *UserBase {
 		return nil
 	}
 	return r.User
+}
+
+func (r *platR) GetFavorites() FavoriteBaseSlice {
+	if r == nil {
+		return nil
+	}
+	return r.Favorites
 }
 
 // platL is where Load methods for each relationship are stored.
@@ -304,6 +253,20 @@ func (o *PlatBase) User(mods ...qm.QueryMod) userQuery {
 	return Users(queryMods...)
 }
 
+// Favorites retrieves all the favorite's Favorites with an executor.
+func (o *PlatBase) Favorites(mods ...qm.QueryMod) favoriteQuery {
+	var queryMods []qm.QueryMod
+	if len(mods) != 0 {
+		queryMods = append(queryMods, mods...)
+	}
+
+	queryMods = append(queryMods,
+		qm.Where("`favorites`.`plat_id`=?", o.PlatID),
+	)
+
+	return Favorites(queryMods...)
+}
+
 // LoadUser allows an eager lookup of values, cached into the
 // loaded structs of the objects. This is for an N-1 relationship.
 func (platL) LoadUser(ctx context.Context, e boil.ContextExecutor, singular bool, maybePlatBase interface{}, mods queries.Applicator) error {
@@ -332,30 +295,23 @@ func (platL) LoadUser(ctx context.Context, e boil.ContextExecutor, singular bool
 		}
 	}
 
-	args := make([]interface{}, 0, 1)
+	args := make(map[interface{}]struct{})
 	if singular {
 		if object.R == nil {
 			object.R = &platR{}
 		}
 		if !queries.IsNil(object.UserID) {
-			args = append(args, object.UserID)
+			args[object.UserID] = struct{}{}
 		}
 
 	} else {
-	Outer:
 		for _, obj := range slice {
 			if obj.R == nil {
 				obj.R = &platR{}
 			}
 
-			for _, a := range args {
-				if queries.Equal(a, obj.UserID) {
-					continue Outer
-				}
-			}
-
 			if !queries.IsNil(obj.UserID) {
-				args = append(args, obj.UserID)
+				args[obj.UserID] = struct{}{}
 			}
 
 		}
@@ -365,9 +321,16 @@ func (platL) LoadUser(ctx context.Context, e boil.ContextExecutor, singular bool
 		return nil
 	}
 
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
 	query := NewQuery(
 		qm.From(`users`),
-		qm.WhereIn(`users.user_id in ?`, args...),
+		qm.WhereIn(`users.user_id in ?`, argsSlice...),
 	)
 	if mods != nil {
 		mods.Apply(query)
@@ -420,6 +383,112 @@ func (platL) LoadUser(ctx context.Context, e boil.ContextExecutor, singular bool
 	return nil
 }
 
+// LoadFavorites allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for a 1-M or N-M relationship.
+func (platL) LoadFavorites(ctx context.Context, e boil.ContextExecutor, singular bool, maybePlatBase interface{}, mods queries.Applicator) error {
+	var slice []*PlatBase
+	var object *PlatBase
+
+	if singular {
+		var ok bool
+		object, ok = maybePlatBase.(*PlatBase)
+		if !ok {
+			object = new(PlatBase)
+			ok = queries.SetFromEmbeddedStruct(&object, &maybePlatBase)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", object, maybePlatBase))
+			}
+		}
+	} else {
+		s, ok := maybePlatBase.(*[]*PlatBase)
+		if ok {
+			slice = *s
+		} else {
+			ok = queries.SetFromEmbeddedStruct(&slice, maybePlatBase)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", slice, maybePlatBase))
+			}
+		}
+	}
+
+	args := make(map[interface{}]struct{})
+	if singular {
+		if object.R == nil {
+			object.R = &platR{}
+		}
+		args[object.PlatID] = struct{}{}
+	} else {
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &platR{}
+			}
+			args[obj.PlatID] = struct{}{}
+		}
+	}
+
+	if len(args) == 0 {
+		return nil
+	}
+
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
+	query := NewQuery(
+		qm.From(`favorites`),
+		qm.WhereIn(`favorites.plat_id in ?`, argsSlice...),
+	)
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load favorites")
+	}
+
+	var resultSlice []*FavoriteBase
+	if err = queries.Bind(results, &resultSlice); err != nil {
+		return errors.Wrap(err, "failed to bind eager loaded slice favorites")
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results in eager load on favorites")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for favorites")
+	}
+
+	if singular {
+		object.R.Favorites = resultSlice
+		for _, foreign := range resultSlice {
+			if foreign.R == nil {
+				foreign.R = &favoriteR{}
+			}
+			foreign.R.Plat = object
+		}
+		return nil
+	}
+
+	for _, foreign := range resultSlice {
+		for _, local := range slice {
+			if queries.Equal(local.PlatID, foreign.PlatID) {
+				local.R.Favorites = append(local.R.Favorites, foreign)
+				if foreign.R == nil {
+					foreign.R = &favoriteR{}
+				}
+				foreign.R.Plat = local
+				break
+			}
+		}
+	}
+
+	return nil
+}
+
 // SetUser of the plat to the related item.
 // Sets o.R.User to related.
 // Adds o to related.R.Plats.
@@ -464,6 +533,59 @@ func (o *PlatBase) SetUser(ctx context.Context, exec boil.ContextExecutor, inser
 		related.R.Plats = append(related.R.Plats, o)
 	}
 
+	return nil
+}
+
+// AddFavorites adds the given related objects to the existing relationships
+// of the plat, optionally inserting them as new records.
+// Appends related to o.R.Favorites.
+// Sets related.R.Plat appropriately.
+func (o *PlatBase) AddFavorites(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*FavoriteBase) error {
+	var err error
+	for _, rel := range related {
+		if insert {
+			queries.Assign(&rel.PlatID, o.PlatID)
+			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
+				return errors.Wrap(err, "failed to insert into foreign table")
+			}
+		} else {
+			updateQuery := fmt.Sprintf(
+				"UPDATE `favorites` SET %s WHERE %s",
+				strmangle.SetParamNames("`", "`", 0, []string{"plat_id"}),
+				strmangle.WhereClause("`", "`", 0, favoritePrimaryKeyColumns),
+			)
+			values := []interface{}{o.PlatID, rel.PlatID, rel.UserID}
+
+			if boil.IsDebug(ctx) {
+				writer := boil.DebugWriterFrom(ctx)
+				fmt.Fprintln(writer, updateQuery)
+				fmt.Fprintln(writer, values)
+			}
+			if _, err = exec.ExecContext(ctx, updateQuery, values...); err != nil {
+				return errors.Wrap(err, "failed to update foreign table")
+			}
+
+			queries.Assign(&rel.PlatID, o.PlatID)
+		}
+	}
+
+	if o.R == nil {
+		o.R = &platR{
+			Favorites: related,
+		}
+	} else {
+		o.R.Favorites = append(o.R.Favorites, related...)
+	}
+
+	for _, rel := range related {
+		if rel.R == nil {
+			rel.R = &favoriteR{
+				Plat: o,
+			}
+		} else {
+			rel.R.Plat = o
+		}
+	}
 	return nil
 }
 
