@@ -20,7 +20,6 @@
       ],
       "additionalBranchPrefix": "{{parentDir}}-",
       "assignees": [
-        "para7"
       ],
       "commitMessagePrefix": "npm - ",
       "ignoreDeps": [
@@ -37,7 +36,6 @@
         "@types/node"
       ],
       "assignees": [
-        "para7"
       ],
       "commitMessagePrefix": "node - ",
       "additionalBranchPrefix": "{{parentDir}}-"
@@ -47,7 +45,6 @@
         "pnpm"
       ],
       "assignees": [
-        "para7"
       ],
       "commitMessagePrefix": "pnpm - ",
       "additionalBranchPrefix": "{{parentDir}}-"
@@ -59,7 +56,6 @@
         "devcontainer"
       ],
       "assignees": [
-        "para7"
       ],
       "matchPackageNames": [
         "@playwright/test",
