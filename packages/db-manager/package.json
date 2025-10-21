@@ -37,7 +37,7 @@
 		"ulidx": "2.4.1",
 		"valibot": "0.42.1",
 		"vite": "5.4.11",
-		"vite-plugin-kit-routes": "0.7.0",
+		"vite-plugin-kit-routes": "1.0.2",
 		"vitest": "2.1.8"
 	},
 	"type": "module",
