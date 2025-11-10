@@ -19,7 +19,7 @@
     "vrt:update": "playwright test --project=visual-snapshot -u"
   },
   "dependencies": {
-    "@hookform/resolvers": "3.9.1",
+    "@hookform/resolvers": "5.2.2",
     "@mantine/core": "7.14.3",
     "@mantine/hooks": "7.14.3",
     "@mantine/vanilla-extract": "7.14.3",
