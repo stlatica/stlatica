@@ -47,7 +47,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@ladle/react": "4.1.2",
-    "@playwright/test": "1.49.0",
+    "@playwright/test": "1.56.1",
     "@remix-run/dev": "2.15.0",
     "@testing-library/react": "16.0.1",
     "@types/node": "^20.14.11",
