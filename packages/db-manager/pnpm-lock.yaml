@@ -94,8 +94,8 @@ importers:
         specifier: 5.4.11
         version: 5.4.11(@types/node@22.5.2)
       vite-plugin-kit-routes:
-        specifier: 0.7.0
-        version: 0.7.0(@sveltejs/kit@2.9.0(@sveltejs/vite-plugin-svelte@4.0.2(svelte@5.6.2)(vite@5.4.11(@types/node@22.5.2)))(svelte@5.6.2)(vite@5.4.11(@types/node@22.5.2)))
+        specifier: 1.0.2
+        version: 1.0.2(@sveltejs/kit@2.9.0(@sveltejs/vite-plugin-svelte@4.0.2(svelte@5.6.2)(vite@5.4.11(@types/node@22.5.2)))(svelte@5.6.2)(vite@5.4.11(@types/node@22.5.2)))
       vitest:
         specifier: 2.1.8
         version: 2.1.8(@types/node@22.5.2)
@@ -130,16 +130,16 @@ packages:
   '@asyncapi/specs@6.8.0':
     resolution: {integrity: sha512-1i6xs8+IOh6U5T7yH+bCMGQBF+m7kP/NpwyAlt++XaDQutoGCgACf24mQBgcDVqDWWoY81evQv+9ABvw0BviVg==}
 
-  '@babel/helper-string-parser@7.24.8':
-    resolution: {integrity: sha512-pO9KhhRcuUyGnJWwyEgnRJTSIZHiT+vMD0kPeD+so0l7mxkMT19g3pjY9GTnHySck/hDzq+dtW/4VgnMkippsQ==}
+  '@babel/helper-string-parser@7.27.1':
+    resolution: {integrity: sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-validator-identifier@7.24.7':
-    resolution: {integrity: sha512-rR+PBcQ1SMQDDyF6X0wxtG8QyLCgUB0eRAGguqRLfkCA87l7yAP7ehq8SNj96OOGTO8OBV70KhuFYcIkHXOg0w==}
+  '@babel/helper-validator-identifier@7.28.5':
+    resolution: {integrity: sha512-qSs4ifwzKJSV39ucNjsvc6WVHs6b7S03sOh2OcHF9UHfVPqWWALUsNUVzhSBiItjRZoLHx7nIarVjqKVusUZ1Q==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/parser@7.25.6':
-    resolution: {integrity: sha512-trGdfBdbD0l1ZPmcJ83eNxB9rbEax4ALFTF7fN386TMYbeCQbyme5cOEXQhbGXKebwGaB/J52w1mrklMcbgy6Q==}
+  '@babel/parser@7.27.0':
+    resolution: {integrity: sha512-iaepho73/2Pz7w2eMS0Q5f83+0RKI7i4xmiYeBmDzfRVbQtTOG7Ts0S4HzJVsTMGI9keU8rNfuZr8DKfSt7Yyg==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -147,12 +147,13 @@ packages:
     resolution: {integrity: sha512-VBj9MYyDb9tuLq7yzqjgzt6Q+IBQLrGZfdjOekyEirZPHxXWoTSGUTMrpsfi58Up73d13NfYLv8HT9vmznjzhQ==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/types@7.25.6':
-    resolution: {integrity: sha512-/l42B1qxpG6RdfYf343Uw1vmDjeNhneUXtzhojE7pDgfpEypmRhI6j1kr17XCVv4Cgl9HdAiQY2x0GwKm7rWCw==}
+  '@babel/types@7.27.0':
+    resolution: {integrity: sha512-H45s8fVLYjbhFH62dIJ3WtmJ6RSPt/3DRO0ZcT2SUiYiQyz3BLVb9ADEnLl91m74aQPS3AzzeajZHYOalWe3bg==}
     engines: {node: '>=6.9.0'}
 
   '@effect/schema@0.75.5':
     resolution: {integrity: sha512-TQInulTVCuF+9EIbJpyLP6dvxbQJMphrnRqgexm/Ze39rSjfhJuufF7XvU3SxTgg3HnL7B/kpORTJbHhlE6thw==}
+    deprecated: this package has been merged into the main effect package
     peerDependencies:
       effect: ^3.9.2
 
@@ -478,6 +479,7 @@ packages:
   '@faker-js/faker@9.3.0':
     resolution: {integrity: sha512-r0tJ3ZOkMd9xsu3VRfqlFR6cz0V/jFYRswAIpC+m/DIfAUXq7g8N7wTAlhSANySXYGKzGryfDXwtwsY8TxEIDw==}
     engines: {node: '>=18.0.0', npm: '>=9.0.0'}
+    deprecated: Please update to a newer version
 
   '@gcornut/valibot-json-schema@0.31.0':
     resolution: {integrity: sha512-3xGptCurm23e7nuPQkdrE5rEs1FeTPHhAUsBuwwqG4/YeZLwJOoYZv+fmsppUEfo5y9lzUwNQrNqLS/q7HMc7g==}
@@ -568,16 +570,17 @@ packages:
     peerDependencies:
       jsep: ^0.4.0||^1.0.0
 
-  '@kitql/helpers@0.8.10':
-    resolution: {integrity: sha512-r9m0eQyjy3Z2sdeXA8wRGl2tgKtZ9puPuZ3vm9Cv3WMMWVmbKVzUJvF+4UucsHzT9xECFbO9lcQu7lIb774PPQ==}
+  '@kitql/helpers@0.8.13':
+    resolution: {integrity: sha512-8Om4jxF3XLTrpCkrZ8q6kHco4o6u/zKisA7XjLdiUDeSX7VSprlq6fnG2xayrbrc1He+pHQkgj2cHqqUvEHTGg==}
     engines: {node: ^16.14 || >=18}
 
-  '@kitql/internals@0.10.0':
-    resolution: {integrity: sha512-qInqbwFkJpoyHg3zAzZhrXnMEpQQY133LjCbOCior8OOnuaZkGju3M7wIZTkYNAUAX7RvNvtYnCOL6gq4Xs90Q==}
+  '@kitql/internals@0.10.5':
+    resolution: {integrity: sha512-2v75bu2vJB0xf7+qSAu0xcUyCYqzc7KeRE1RcKSpOGQTV9UpCqCs/xCsFWLUGnZRWb1VU6XYf+l6GJsDUW9pRQ==}
     engines: {node: ^16.14 || >=18}
 
   '@mojojoejo/vite-plugin-purgecss@1.1.0':
     resolution: {integrity: sha512-J9hgBEsvP5f1XvejZVynO1gVZn6ruin5dLjr3FSjtf7Z6f8A9VqOJr2pZVGzP6Nc9ih5HSTuw3cPAOg8DzgZTQ==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       vite: ^3 || ^4
 
@@ -1177,6 +1180,10 @@ packages:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
 
+  commander@14.0.0:
+    resolution: {integrity: sha512-2uM9rYjPvyq39NwLRqaiLtWHyDC1FvryJDa2ATTVims5YAS4PupsEQsDvP14FqhFr0P49CYDugi59xaxJlTXRA==}
+    engines: {node: '>=20'}
+
   commander@9.5.0:
     resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
     engines: {node: ^12.20.0 || >=14}
@@ -1377,11 +1384,11 @@ packages:
       jiti:
         optional: true
 
-  esm-env@1.0.0:
-    resolution: {integrity: sha512-Cf6VksWPsTuW01vU9Mk/3vRue91Zevka5SjyNf3nEpokFRuqt/KjUQoGAwq9qMmhpLTHmXzSIrFRw8zxWzmFBA==}
-
   esm-env@1.2.1:
     resolution: {integrity: sha512-U9JedYYjCnadUlXk7e1Kr+aENQhtUaoaV9+gZm1T8LC/YBAPJx3NSPIAurFOC0U5vrdSevnUJS2/wUVxGwPhng==}
+
+  esm-env@1.2.2:
+    resolution: {integrity: sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==}
 
   espree@10.3.0:
     resolution: {integrity: sha512-0QYC8b24HWY8zjRnDTL6RiHfDbAWn63qb4LMj1Z4b076A4une81+z03Kg7l7mn/48PUTqoLptSXez8oknU8Clg==}
@@ -1823,6 +1830,7 @@ packages:
 
   lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
 
   lodash.isempty@4.4.0:
     resolution: {integrity: sha512-oKMuF3xEeqDltrGMfDxAPGIVMSSRv8tbRSODbrs4KGsRRLEhrW8N8Rd4DRgB2+621hY8A8XwwrTVhXWpxFvMzg==}
@@ -1832,6 +1840,7 @@ packages:
 
   lodash.omit@4.5.0:
     resolution: {integrity: sha512-XeqSp49hNGmlkj2EJlfrQFIzQ6lXdNro9sddtQzcJY8QaoC2GO0DT7xaIokHeyM+mIT0mPMlPvkYzg2xCuHdZg==}
+    deprecated: This package is deprecated. Use destructuring assignment syntax instead.
 
   lodash.omitby@4.6.0:
     resolution: {integrity: sha512-5OrRcIVR75M288p4nbI2WLAf3ndw2GD9fyNv3Bc15+WCxJDdZ4lYndSxGd7hnG6PVjiJTeJE2dHEGhIuKGicIQ==}
@@ -2360,10 +2369,6 @@ packages:
     resolution: {integrity: sha512-n1cw8k1k0x4pgA2+9XrOkFydTerNcJ1zWCO5Nn9scWHTD+5tp8dghT2x1uduQePZTZgd3Tupf+x9BxJjeJi77Q==}
     engines: {node: '>=14.0.0'}
 
-  to-fast-properties@2.0.0:
-    resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
-    engines: {node: '>=4'}
-
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
@@ -2406,9 +2411,6 @@ packages:
 
   tslib@2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
-
-  tslib@2.7.0:
-    resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
@@ -2507,14 +2509,15 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite-plugin-kit-routes@0.7.0:
-    resolution: {integrity: sha512-rHUVv/hZitsfoxIWgcR2KVJCt8Z+h5V5bZ+IOWj2r2nDkl3sEfuq9w9gaUYagNxQCKGmFVDQ3H8wJv5Qk5rkGA==}
+  vite-plugin-kit-routes@1.0.2:
+    resolution: {integrity: sha512-opKUkP0Ou8cjF/+SDJ4ePQY6HouqnJacxqEldiYdl/5tCpGspG5Khycq9wA+752F5tcfX4y4WJ34CMIYEYyaYg==}
     engines: {node: ^16.14 || >=18}
+    hasBin: true
     peerDependencies:
       '@sveltejs/kit': ^2.4.0
 
-  vite-plugin-watch-and-run@1.7.1:
-    resolution: {integrity: sha512-knLbovXBUwVrm0q4+LcpIhqTAZRoWVv5m8xRn42dy8hrF3rgJ7ucxm1d99KecED87NZI7v5oH3Pc2sPDcwJKEQ==}
+  vite-plugin-watch-and-run@1.7.5:
+    resolution: {integrity: sha512-IISx6Cw+w/9HhxaovnJlXaEAnPlA5wLY8lk0CMrFkBgdJdhKElH0jGSjf6gCPti/Z9F4kMM8WUMGx8CQm1BpHQ==}
     engines: {node: ^16.14 || >=18}
 
   vite@5.4.11:
@@ -2694,24 +2697,23 @@ snapshots:
     dependencies:
       '@types/json-schema': 7.0.15
 
-  '@babel/helper-string-parser@7.24.8': {}
+  '@babel/helper-string-parser@7.27.1': {}
 
-  '@babel/helper-validator-identifier@7.24.7': {}
+  '@babel/helper-validator-identifier@7.28.5': {}
 
-  '@babel/parser@7.25.6':
+  '@babel/parser@7.27.0':
     dependencies:
-      '@babel/types': 7.25.6
+      '@babel/types': 7.27.0
 
   '@babel/runtime@7.25.6':
     dependencies:
       regenerator-runtime: 0.14.1
     optional: true
 
-  '@babel/types@7.25.6':
+  '@babel/types@7.27.0':
     dependencies:
-      '@babel/helper-string-parser': 7.24.8
-      '@babel/helper-validator-identifier': 7.24.7
-      to-fast-properties: 2.0.0
+      '@babel/helper-string-parser': 7.27.1
+      '@babel/helper-validator-identifier': 7.28.5
 
   '@effect/schema@0.75.5(effect@3.10.8)':
     dependencies:
@@ -2992,14 +2994,15 @@ snapshots:
     dependencies:
       jsep: 1.3.9
 
-  '@kitql/helpers@0.8.10':
+  '@kitql/helpers@0.8.13':
     dependencies:
-      esm-env: 1.0.0
+      esm-env: 1.2.2
 
-  '@kitql/internals@0.10.0':
+  '@kitql/internals@0.10.5':
     dependencies:
-      '@babel/parser': 7.25.6
-      '@kitql/helpers': 0.8.10
+      '@babel/parser': 7.27.0
+      '@babel/types': 7.27.0
+      '@kitql/helpers': 0.8.13
       recast: 0.23.9
       svelte: 5.6.2
 
@@ -3691,7 +3694,7 @@ snapshots:
 
   ast-types@0.16.1:
     dependencies:
-      tslib: 2.7.0
+      tslib: 2.8.1
 
   astring@1.9.0: {}
 
@@ -3789,6 +3792,8 @@ snapshots:
   combined-stream@1.0.8:
     dependencies:
       delayed-stream: 1.0.0
+
+  commander@14.0.0: {}
 
   commander@9.5.0: {}
 
@@ -4105,9 +4110,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  esm-env@1.0.0: {}
-
   esm-env@1.2.1: {}
+
+  esm-env@1.2.2: {}
 
   espree@10.3.0:
     dependencies:
@@ -4819,7 +4824,7 @@ snapshots:
       esprima: 4.0.1
       source-map: 0.6.1
       tiny-invariant: 1.3.3
-      tslib: 2.7.0
+      tslib: 2.8.1
 
   reftools@1.1.9: {}
 
@@ -5122,8 +5127,6 @@ snapshots:
 
   tinyspy@3.0.2: {}
 
-  to-fast-properties@2.0.0: {}
-
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
@@ -5152,8 +5155,6 @@ snapshots:
 
   tslib@2.4.0:
     optional: true
-
-  tslib@2.7.0: {}
 
   tslib@2.8.1: {}
 
@@ -5266,16 +5267,17 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-kit-routes@0.7.0(@sveltejs/kit@2.9.0(@sveltejs/vite-plugin-svelte@4.0.2(svelte@5.6.2)(vite@5.4.11(@types/node@22.5.2)))(svelte@5.6.2)(vite@5.4.11(@types/node@22.5.2))):
+  vite-plugin-kit-routes@1.0.2(@sveltejs/kit@2.9.0(@sveltejs/vite-plugin-svelte@4.0.2(svelte@5.6.2)(vite@5.4.11(@types/node@22.5.2)))(svelte@5.6.2)(vite@5.4.11(@types/node@22.5.2))):
     dependencies:
-      '@kitql/helpers': 0.8.10
-      '@kitql/internals': 0.10.0
+      '@kitql/helpers': 0.8.13
+      '@kitql/internals': 0.10.5
       '@sveltejs/kit': 2.9.0(@sveltejs/vite-plugin-svelte@4.0.2(svelte@5.6.2)(vite@5.4.11(@types/node@22.5.2)))(svelte@5.6.2)(vite@5.4.11(@types/node@22.5.2))
-      vite-plugin-watch-and-run: 1.7.1
+      commander: 14.0.0
+      vite-plugin-watch-and-run: 1.7.5
 
-  vite-plugin-watch-and-run@1.7.1:
+  vite-plugin-watch-and-run@1.7.5:
     dependencies:
-      '@kitql/helpers': 0.8.10
+      '@kitql/helpers': 0.8.13
       micromatch: 4.0.8
 
   vite@5.4.11(@types/node@22.5.2):
