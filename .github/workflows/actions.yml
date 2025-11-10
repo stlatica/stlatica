@@ -52,7 +52,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       # pnpm 8をインストール
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
           version: 9
 
