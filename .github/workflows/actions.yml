@@ -18,7 +18,7 @@ jobs:
       is_openapi: ${{ steps.filter.outputs.is_openapi }}
       is_main: ${{ github.ref == 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.head_ref }}
       - uses: dorny/paths-filter@v3
@@ -48,7 +48,7 @@ jobs:
         working-directory: packages/frontend
     steps:
       # リポジトリをチェックアウト
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.head_ref }}
       # pnpm 8をインストール
@@ -97,7 +97,7 @@ jobs:
         working-directory: packages/frontend
     steps:
       # リポジトリをチェックアウト
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: pull lfs snapshots
         run: git lfs pull
       - name: create docker network
@@ -116,7 +116,7 @@ jobs:
         working-directory: packages/db-manager
     steps:
       # リポジトリをチェックアウト
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.head_ref }}
       # pnpm 8をインストール
@@ -162,7 +162,7 @@ jobs:
         working-directory: packages/backend
     steps:
       # リポジトリをチェックアウト
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.head_ref }}
       # setup go install
@@ -202,7 +202,7 @@ jobs:
         working-directory: packages/shared/openapi
     steps:
       # リポジトリをチェックアウト
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: internal api lint
         run: make internal/lint
       - name: external api lint
