@@ -1,7 +1,7 @@
 FROM node:22.12.0-slim as node
 RUN corepack enable npm pnpm 
 
-FROM mcr.microsoft.com/playwright:v1.49.0-jammy as playwright
+FROM mcr.microsoft.com/playwright:v1.56.1-jammy as playwright
 FROM ubuntu:24.04 as ubuntu
 
 # RUN useradd -m -s /bin/bash ubuntu
