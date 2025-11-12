@@ -1,4 +1,4 @@
-FROM node:22.12.0-slim as node
+FROM node:24.11.1-slim as node
 RUN corepack enable npm pnpm \
   && corepack use pnpm@9 \
   && pnpm config set store-dir /home/node/.pnpm-store
