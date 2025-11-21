@@ -3,22 +3,22 @@ module github.com/stlatica/stlatica/packages/backend
 go 1.23
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.30.4
-	github.com/aws/aws-sdk-go-v2/config v1.27.27
-	github.com/aws/aws-sdk-go-v2/credentials v1.17.27
-	github.com/aws/aws-sdk-go-v2/service/s3 v1.58.2
+	github.com/aws/aws-sdk-go-v2 v1.40.0
+	github.com/aws/aws-sdk-go-v2/config v1.32.1
+	github.com/aws/aws-sdk-go-v2/credentials v1.19.1
+	github.com/aws/aws-sdk-go-v2/service/s3 v1.92.0
 	github.com/friendsofgo/errors v0.9.2
 	github.com/getkin/kin-openapi v0.127.0
-	github.com/golangci/golangci-lint v1.62.0
+	github.com/golangci/golangci-lint v1.64.8
 	github.com/joho/godotenv v1.5.1
-	github.com/labstack/echo/v4 v4.12.0
-	github.com/lestrrat-go/jwx v1.2.30
-	github.com/oapi-codegen/oapi-codegen/v2 v2.4.1
-	github.com/oapi-codegen/runtime v1.1.1
-	github.com/pressly/goose/v3 v3.21.1
-	github.com/volatiletech/sqlboiler/v4 v4.16.2
-	github.com/volatiletech/strmangle v0.0.6
-	golang.org/x/tools v0.27.0
+	github.com/labstack/echo/v4 v4.13.4
+	github.com/lestrrat-go/jwx v1.2.31
+	github.com/oapi-codegen/oapi-codegen/v2 v2.5.1
+	github.com/oapi-codegen/runtime v1.1.2
+	github.com/pressly/goose/v3 v3.26.0
+	github.com/volatiletech/sqlboiler/v4 v4.19.5
+	github.com/volatiletech/strmangle v0.0.9
+	golang.org/x/tools v0.39.0
 )
 
 require (
@@ -302,9 +302,9 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/imdario/mergo v0.3.16 // indirect
 	github.com/klauspost/compress v1.17.6 // indirect
-	github.com/oklog/ulid/v2 v2.1.0
+	github.com/oklog/ulid/v2 v2.1.1
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
 	github.com/redis/go-redis/v9 v9.6.1
 	github.com/rivo/uniseg v0.4.7 // indirect
-	go.uber.org/zap v1.27.0
+	go.uber.org/zap v1.27.1
 )
