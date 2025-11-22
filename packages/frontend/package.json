@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "@hookform/resolvers": "3.9.1",
-    "@mantine/core": "7.14.3",
-    "@mantine/hooks": "7.14.3",
-    "@mantine/vanilla-extract": "7.14.3",
+    "@mantine/core": "8.3.9",
+    "@mantine/hooks": "8.3.9",
+    "@mantine/vanilla-extract": "8.3.9",
     "@remix-run/node": "2.15.0",
     "@remix-run/react": "2.15.0",
     "@remix-run/serve": "2.15.0",
