@@ -39,10 +39,10 @@ FROM base as vrt
 
 WORKDIR /stlatica/packages/frontend
 
+COPY --chown=$USERNAME:$USERNAME package.json ./
 COPY --chown=$USERNAME:$USERNAME pnpm-lock.yaml ./
 RUN pnpm fetch
 
-# COPY package.json pnpm-lock.yaml ./
 # 色々厄介な部分があるので一旦やっつけ実装
 COPY --chown=$USERNAME:$USERNAME . ./
 
@@ -130,6 +130,7 @@ FROM node as builder
 
 WORKDIR /builder
 
+COPY ./package.json .
 COPY ./pnpm-lock.yaml .
 RUN pnpm fetch
 
@@ -153,9 +154,9 @@ FROM ubuntu-node as prod
 USER ubuntu
 WORKDIR /stlatica
 
+COPY ./package.json ./
 COPY ./pnpm-lock.yaml .
 RUN pnpm fetch --production
-COPY ./package.json ./
 
 COPY --from=builder /builder/build ./build
 RUN pnpm install --production --frozen-lockfile --offline && pnpm store prune
