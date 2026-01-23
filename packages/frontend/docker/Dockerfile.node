@@ -41,13 +41,14 @@ WORKDIR /stlatica/packages/frontend
 
 COPY --chown=$USERNAME:$USERNAME package.json ./
 COPY --chown=$USERNAME:$USERNAME pnpm-lock.yaml ./
-RUN pnpm fetch
+RUN corepack prepare pnpm@9.14.4 --activate \
+  && pnpm fetch
 
 # 色々厄介な部分があるので一旦やっつけ実装
 COPY --chown=$USERNAME:$USERNAME . ./
 
 # pnpm fetch でキャッシュだけ切り離すと少し早くできるかも知れない
-RUN corepack enable pnpm \
+RUN corepack prepare pnpm@9.14.4 --activate \
   && pnpm install
 
 # ******************************************
@@ -90,7 +91,7 @@ USER node
 # ***** pnpm settings *****
 COPY --chown=$USERNAME:$USERNAME ./package.json .
 
-RUN corepack install \
+RUN corepack prepare pnpm@9.14.4 --activate \
   # for mac config 
   && pnpm config set store-dir /home/node/.pnpm-store \
   && rm ./package.json
@@ -132,17 +133,18 @@ WORKDIR /builder
 
 COPY ./package.json .
 COPY ./pnpm-lock.yaml .
-RUN pnpm fetch
+RUN corepack prepare pnpm@9.14.4 --activate \
+  && pnpm fetch
 
 COPY --chown=$USERNAME:$USERNAME . .
 RUN pnpm install --frozen-lockfile \
-  && corepack install \
+  && corepack prepare pnpm@9.14.4 --activate \
   && pnpm build \
   && pnpm store prune
 
 USER node
 
-RUN corepack install 
+RUN corepack prepare pnpm@9.14.4 --activate
 
 ENTRYPOINT [ "pnpm", "start"]
 
@@ -156,7 +158,8 @@ WORKDIR /stlatica
 
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml .
-RUN pnpm fetch --production
+RUN corepack prepare pnpm@9.14.4 --activate \
+  && pnpm fetch --production
 
 COPY --from=builder /builder/build ./build
 RUN pnpm install --production --frozen-lockfile --offline && pnpm store prune
