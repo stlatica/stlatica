@@ -35,6 +35,7 @@ RUN apt update -y \
   && apt clean \
   && rm -rf /var/lib/apt/lists/* 
 
+COPY package.json .
 COPY pnpm-lock.yaml .
 RUN pnpm fetch
 

@@ -3,11 +3,18 @@
   "vcs": {
     "enabled": false,
     "clientKind": "git",
-    "useIgnoreFile": false
+    "useIgnoreFile": true
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["src/openapi/", "plop/", "build/", "e2e/**/output/**", "ladle-build"]
+    "ignore": [
+      ".pnpm-store/**",
+      "src/openapi/",
+      "plop/",
+      "build/",
+      "e2e/**/output/**",
+      "ladle-build"
+    ]
   },
   "formatter": {
     "enabled": true,
