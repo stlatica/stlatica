@@ -24,7 +24,8 @@ type PlatBase struct { // ulid
 
 // PlatBaseR is where relationships are stored.
 type PlatBaseR struct {
-	User *UserBase `json:"User"`
+	User      *UserBase         `json:"User"`
+	Favorites FavoriteBaseSlice `json:"Favorites"`
 }
 
 // PlatBaseSlice is an alias for a slice of pointers to PlatBase.
@@ -69,4 +70,12 @@ func (m *PlatBase) GetUpdatedAt() types.UnixTime {
 		return types.UnixTime(0)
 	}
 	return m.UpdatedAt
+}
+
+// Favorites is get Favorites relationship, if receiver is nil, returns empty FavoriteBaseSlice.
+func (o *PlatBase) Favorites() FavoriteBaseSlice {
+	if o == nil {
+		return FavoriteBaseSlice{}
+	}
+	return o.R.Favorites
 }

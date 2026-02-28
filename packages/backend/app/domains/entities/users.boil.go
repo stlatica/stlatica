@@ -33,6 +33,7 @@ type UserBase struct { // ulid
 // UserBaseR is where relationships are stored.
 type UserBaseR struct {
 	UserAuthCredential        *UserAuthCredentialBase `json:"UserAuthCredential"`
+	Favorites                 FavoriteBaseSlice       `json:"Favorites"`
 	Plats                     PlatBaseSlice           `json:"Plats"`
 	Timelines                 TimelineBaseSlice       `json:"Timelines"`
 	FollowUserUserRelations   UserRelationBaseSlice   `json:"FollowUserUserRelations"`
@@ -113,6 +114,14 @@ func (m *UserBase) GetUpdatedAt() types.UnixTime {
 		return types.UnixTime(0)
 	}
 	return m.UpdatedAt
+}
+
+// Favorites is get Favorites relationship, if receiver is nil, returns empty FavoriteBaseSlice.
+func (o *UserBase) Favorites() FavoriteBaseSlice {
+	if o == nil {
+		return FavoriteBaseSlice{}
+	}
+	return o.R.Favorites
 }
 
 // Plats is get Plats relationship, if receiver is nil, returns empty PlatBaseSlice.

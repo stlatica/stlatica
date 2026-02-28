@@ -12,8 +12,8 @@ ENTITIES_TEMPLATE='["db\/sqlboiler\/templates"]'
 REPOSITORIES_OUTPUT_PATH="app\/repositories\/entities"
 REPOSITORIES_OUTPUT_PACKAGE="entities"
 REPOSITORIES_TEMPLATE=\
-"['$(echo $GOPATH | cut -d: -f1 | sed 's/\//\\\//g')\/pkg\/mod\/github.com\/volatiletech\/sqlboiler\/v4@v4.14.2\/templates\/main',\
-'$(echo $GOPATH | cut -d: -f1 | sed 's/\//\\\//g')\/pkg\/mod\/github.com\/volatiletech\/sqlboiler\/v4@v4.14.2\/templates\/test']"
+"['$(echo $GOPATH | cut -d: -f1 | sed 's/\//\\\//g')\/pkg\/mod\/github.com\/volatiletech\/sqlboiler\/v4@v4.16.2\/templates\/main',\
+'$(echo $GOPATH | cut -d: -f1 | sed 's/\//\\\//g')\/pkg\/mod\/github.com\/volatiletech\/sqlboiler\/v4@v4.16.2\/templates\/test']"
 
 SQLBOILER_TOML=$(cat db/sqlboiler/sqlboiler.toml)
 
