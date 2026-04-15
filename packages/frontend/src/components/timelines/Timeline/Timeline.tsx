@@ -27,12 +27,6 @@ export const ProfileTimeline: React.FC<TimelineProps> = ({ url, user_id }) => {
   const { data: tl } = useGetTimelineByQuery(
     { user_id, type: "home", to_date: date },
     {
-      // 認証ヘッダー仮置き
-      axios: {
-        headers: {
-          Authorization: "Bearer aaaa",
-        },
-      },
       // これだと時刻を変更して再取得が出来ないので要修正
       swr: { refreshInterval: 1000 },
     },

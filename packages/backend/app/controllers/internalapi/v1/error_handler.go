@@ -35,6 +35,9 @@ func NewErrorHandler(_ *echo.Echo, appLogger *logger.AppLogger) echo.HTTPErrorHa
 				responseErrorCode = openapi.BADREQUEST
 			case domainerrors.DomainErrorTypeDuplicateEntry:
 				responseStatusCode = http.StatusOK
+			case domainerrors.DomainErrorTypeUnauthorized:
+				responseStatusCode = http.StatusUnauthorized
+				responseErrorCode = openapi.UNAUTHORIZED
 			default:
 				responseStatusCode = http.StatusInternalServerError
 				responseErrorCode = openapi.INTERNALSERVERERROR

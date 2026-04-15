@@ -119,17 +119,13 @@ func (c *userController) GetFollows(ectx echo.Context,
 }
 
 func (c *userController) PostFollow(ectx echo.Context, userIDStr string,
-	followUserIDStr string) error {
-	user, err := c.userUseCase.GetUserByPreferredUserID(ectx.Request().Context(), userIDStr)
-	if err != nil {
-		return err
-	}
-	followUser, err := c.userUseCase.GetUserByPreferredUserID(ectx.Request().Context(), followUserIDStr)
+	actorUserID types.UserID) error {
+	followUser, err := c.userUseCase.GetUserByPreferredUserID(ectx.Request().Context(), userIDStr)
 	if err != nil {
 		return err
 	}
 	postParams := ports.FollowPostParams{
-		UserID:       user.UserID,
+		UserID:       actorUserID,
 		FollowUserID: followUser.UserID,
 	}
 	return c.userUseCase.FollowUser(ectx.Request().Context(), postParams)

@@ -68,6 +68,8 @@ users_{user_id}_follow:
     summary: Add new follow user.
     description: Add new follow user.
     operationId: postFollow
+    security:
+      - AccessTokenCookie: []
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
     responses:
@@ -89,6 +91,8 @@ users_{user_id}_follow:
     summary: Delete follow user.
     description: Delete follow user.
     operationId: deleteFollow
+    security:
+      - AccessTokenCookie: []
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
     responses:

@@ -12,10 +12,9 @@ export const loader = ({ params, request }: LoaderFunctionArgs) => {
     return redirect("/");
   }
 
-  // このページを直接開いていたらリダイレクトする
-  const lastPath = request.url.split("/").at(-1);
-  if (lastPath === id) {
-    return redirect(`${request.url}/timeline`);
+  const { pathname } = new URL(request.url);
+  if (pathname === `/user/${id}`) {
+    return redirect(`/user/${id}/timeline`);
   }
 
   return { id };

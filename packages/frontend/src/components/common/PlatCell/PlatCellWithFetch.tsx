@@ -8,14 +8,7 @@ type Props = {
 };
 
 export const PlatCellWithFetch: React.FC<Props> = ({ id }) => {
-  const { data } = useGetPlat(id, {
-    // 認証ヘッダー仮置き
-    axios: {
-      headers: {
-        Authorization: "Bearer aaaa",
-      },
-    },
-  });
+  const { data } = useGetPlat(id);
 
   if (data === undefined) {
     return <></>;

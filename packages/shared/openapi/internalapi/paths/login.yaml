@@ -12,12 +12,17 @@ login:
           schema:
             type: object
             properties:
+              mail_address:
+                type: string
+                example: 'sample@example.com'
               preferred_user_id:
                 type: string
                 example: 'sample_userId'
               password:
                 type: string
                 example: 'password'
+            required:
+              - password
     responses:
       200:
         description: success
@@ -38,6 +43,16 @@ login:
             schema:
               type: string
               example: 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c; Max-Age=3600; Secure; HttpOnly; SameSite=Strict'
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user_id
+              properties:
+                user_id:
+                  type: string
+                  example: 'sample_userId'
       400:
         description: |
           bad request \

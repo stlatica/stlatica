@@ -13,6 +13,9 @@ import (
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// refresh auth token
+	// (POST /internal/v1/auth/refresh)
+	RefreshAuth(ctx echo.Context) error
 	// upload image
 	// (POST /internal/v1/images)
 	UploadImage(ctx echo.Context) error
@@ -78,6 +81,16 @@ type ServerInterface interface {
 // ServerInterfaceWrapper converts echo contexts to parameters.
 type ServerInterfaceWrapper struct {
 	Handler ServerInterface
+}
+
+// RefreshAuth converts echo context to params.
+func (w *ServerInterfaceWrapper) RefreshAuth(ctx echo.Context) error {
+	var err error
+
+	ctx.Set(BearerScopes, []string{})
+
+	err = w.Handler.RefreshAuth(ctx)
+	return err
 }
 
 // UploadImage converts echo context to params.
@@ -504,6 +517,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
+	router.POST(baseURL+"/internal/v1/auth/refresh", wrapper.RefreshAuth)
 	router.POST(baseURL+"/internal/v1/images", wrapper.UploadImage)
 	router.DELETE(baseURL+"/internal/v1/images/:image_id", wrapper.DeleteImage)
 	router.GET(baseURL+"/internal/v1/images/:image_id", wrapper.GetImage)

@@ -12,7 +12,7 @@ export default defineConfig({
       baseUrl: "http://localhost:8080",
     },
     input: {
-      target: "../shared/openapi/build/openapi-bundled-internal.yaml",
+      target: "../shared/openapi/internalapi/openapi.yaml",
     },
   },
 });

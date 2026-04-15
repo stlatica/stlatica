@@ -18,3 +18,5 @@ next-env.d.ts
 packages/backend/tmp/*
 
 .pnpm-store
+packages/backend/data/valkey/dump.rdb
+.codex

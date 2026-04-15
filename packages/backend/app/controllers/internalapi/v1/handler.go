@@ -7,12 +7,14 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/stlatica/stlatica/packages/backend/app/controllers/internalapi/v1/openapi"
 	"github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
+	authusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/auth"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/images"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/plats"
 	"github.com/stlatica/stlatica/packages/backend/app/usecases/users"
 )
 
 type handler struct {
+	*authController
 	*userController
 	*platController
 	*imageController
@@ -20,6 +22,9 @@ type handler struct {
 
 func newHandler(initContent ControllerInitContents) openapi.ServerInterface {
 	return &handler{
+		authController: &authController{
+			authUseCase: initContent.AuthUseCase,
+		},
 		userController: &userController{
 			userUseCase: initContent.UserUseCase,
 		},
@@ -34,8 +39,32 @@ func newHandler(initContent ControllerInitContents) openapi.ServerInterface {
 
 // RegisterHandlers adds each server route to the EchoRouter.
 func RegisterHandlers(initContent ControllerInitContents, server *echo.Echo, appLogger *logger.AppLogger) {
-	handler := newHandler(initContent)
-	openapi.RegisterHandlers(server, handler)
+	serverHandler := newHandler(initContent).(*handler)
+	wrapper := openapi.ServerInterfaceWrapper{Handler: serverHandler}
+	protectedRoutes := server.Group("", requireAuthentication(serverHandler.authController))
+
+	server.POST("/internal/v1/auth/refresh", wrapper.RefreshAuth)
+	server.GET("/internal/v1/images/:image_id", wrapper.GetImage)
+	server.POST("/internal/v1/login", wrapper.Login)
+	server.GET("/internal/v1/plats/:plat_id", wrapper.GetPlat)
+	server.GET("/internal/v1/timelines", wrapper.GetTimelineByQuery)
+	server.GET("/internal/v1/timelines/:timeline_id", wrapper.GetTimeline)
+	server.GET("/internal/v1/users", wrapper.GetUsers)
+	server.POST("/internal/v1/users", wrapper.CreateUser)
+	server.GET("/internal/v1/users/:user_id", wrapper.GetUser)
+	server.GET("/internal/v1/users/:user_id/followers", wrapper.GetFollowers)
+	server.GET("/internal/v1/users/:user_id/follows", wrapper.GetFollows)
+	server.GET("/internal/v1/users/:user_id/icon", wrapper.GetUserIcon)
+
+	protectedRoutes.POST("/internal/v1/images", wrapper.UploadImage)
+	protectedRoutes.DELETE("/internal/v1/images/:image_id", wrapper.DeleteImage)
+	protectedRoutes.POST("/internal/v1/plats", wrapper.PostPlat)
+	protectedRoutes.DELETE("/internal/v1/plats/:plat_id", wrapper.DeletePlat)
+	protectedRoutes.DELETE("/internal/v1/plats/:plat_id/favorites", wrapper.DeleteFavorite)
+	protectedRoutes.POST("/internal/v1/plats/:plat_id/favorites", wrapper.PostFavorite)
+	protectedRoutes.DELETE("/internal/v1/users/:user_id", wrapper.DeleteUser)
+	protectedRoutes.DELETE("/internal/v1/users/:user_id/follow", wrapper.DeleteFollow)
+	protectedRoutes.POST("/internal/v1/users/:user_id/follow", wrapper.PostFollow)
 
 	server.HTTPErrorHandler = NewErrorHandler(server, appLogger)
 }
@@ -76,7 +105,11 @@ func (h *handler) PostPlat(ectx echo.Context) error {
 	if err != nil {
 		return err
 	}
-	response, err := h.platController.PostPlat(ectx, plat.UserId, plat.Content)
+	userID, err := authenticatedUserID(ectx)
+	if err != nil {
+		return err
+	}
+	response, err := h.platController.PostPlat(ectx, userID, plat.Content)
 	if err != nil {
 		return err
 	}
@@ -158,12 +191,11 @@ func (h *handler) GetFollows(ctx echo.Context, userID openapi.UserId, params ope
 }
 
 func (h *handler) PostFollow(ectx echo.Context, userID openapi.UserId) error {
-	var followUserParams openapi.PostFollowParams
-	err := ectx.Bind(&followUserParams)
+	authenticatedActorID, err := authenticatedUserID(ectx)
 	if err != nil {
 		return err
 	}
-	err = h.userController.PostFollow(ectx, userID, followUserParams.FollowUserId)
+	err = h.userController.PostFollow(ectx, userID, authenticatedActorID)
 	if err != nil {
 		return err
 	}
@@ -182,8 +214,30 @@ func (h *handler) GetFollowers(ctx echo.Context, userID openapi.UserId, params o
 	return ctx.JSON(http.StatusOK, response)
 }
 
-func (h *handler) Login(_ echo.Context) error {
-	panic("implement me")
+func (h *handler) Login(ectx echo.Context) error {
+	var loginParams openapi.LoginJSONBody
+	err := ectx.Bind(&loginParams)
+	if err != nil {
+		return err
+	}
+
+	response, err := h.authController.Login(
+		ectx,
+		stringValue(loginParams.MailAddress),
+		stringValue(loginParams.PreferredUserId),
+		stringValue(loginParams.Password),
+	)
+	if err != nil {
+		return err
+	}
+	return ectx.JSON(http.StatusOK, response)
+}
+
+func (h *handler) RefreshAuth(ectx echo.Context) error {
+	if err := h.authController.Refresh(ectx); err != nil {
+		return err
+	}
+	return ectx.NoContent(http.StatusNoContent)
 }
 
 func (h *handler) GetUserIcon(ectx echo.Context, userID openapi.UserId) error {
@@ -201,7 +255,15 @@ func (h *handler) GetUserIcon(ectx echo.Context, userID openapi.UserId) error {
 
 // ControllerInitContents is the struct to hold the dependencies for the controller.
 type ControllerInitContents struct {
+	AuthUseCase  authusecase.AuthenticationUseCase
 	UserUseCase  users.UserUseCase
 	PlatUseCase  plats.PlatUseCase
 	ImageUseCase images.ImageUseCase
+}
+
+func stringValue(value *string) string {
+	if value == nil {
+		return ""
+	}
+	return *value
 }

@@ -7,6 +7,21 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 installGlobals();
 
+// Keep Vite-owned module requests away from the Hono dev middleware.
+const serverAdapterExclude = [
+  /.*\.css(\?.*)?$/,
+  /.*\.ts(\?.*)?$/,
+  /.*\.tsx(\?.*)?$/,
+  /^\/@.+$/,
+  /\?t=\d+$/,
+  /^\/favicon\.ico$/,
+  /^\/static\/.+/,
+  /^\/node_modules\/.*/,
+  "/assets/**",
+  "/app/**",
+  "/src/app/**",
+];
+
 export default defineConfig({
   plugins: [
     remix({
@@ -15,6 +30,7 @@ export default defineConfig({
     }),
     serverAdapter({
       entry: "./src/server/index.ts",
+      exclude: serverAdapterExclude,
     }),
     tsconfigPaths(),
     vanillaExtractPlugin(),

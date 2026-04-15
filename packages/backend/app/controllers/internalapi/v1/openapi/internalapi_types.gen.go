@@ -80,9 +80,6 @@ type PlatID = string
 type PlatPost struct {
 	// Content platの本文
 	Content string `json:"content"`
-
-	// UserId userを識別するための一意のID
-	UserId UserID `json:"user_id"`
 }
 
 // User user
@@ -197,6 +194,7 @@ type UploadImageTextBody = string
 
 // LoginJSONBody defines parameters for Login.
 type LoginJSONBody struct {
+	MailAddress     *string `json:"mail_address,omitempty"`
 	Password        *string `json:"password,omitempty"`
 	PreferredUserId *string `json:"preferred_user_id,omitempty"`
 }

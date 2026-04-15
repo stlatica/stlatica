@@ -3,7 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -15,6 +17,7 @@ import (
 	platdomain "github.com/stlatica/stlatica/packages/backend/app/domains/plats"
 	userdomain "github.com/stlatica/stlatica/packages/backend/app/domains/users"
 	"github.com/stlatica/stlatica/packages/backend/app/repositories/dao"
+	authusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/auth"
 	imageusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/images"
 	platusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/plats"
 	userusecase "github.com/stlatica/stlatica/packages/backend/app/usecases/users"
@@ -43,21 +46,57 @@ func main() {
 
 	// CORS
 	if os.Getenv("GO_ENV") == "local" || os.Getenv("GO_ENV") == "local.docker" {
-		e.Use(middleware.CORS())
+		e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+			AllowOrigins: []string{
+				"http://localhost:3000",
+				"http://127.0.0.1:3000",
+				"http://localhost:5173",
+				"http://127.0.0.1:5173",
+			},
+			AllowMethods: []string{
+				http.MethodGet,
+				http.MethodPost,
+				http.MethodPut,
+				http.MethodPatch,
+				http.MethodDelete,
+				http.MethodOptions,
+			},
+			AllowHeaders: []string{
+				echo.HeaderOrigin,
+				echo.HeaderContentType,
+				echo.HeaderAccept,
+				echo.HeaderCookie,
+				echo.HeaderAuthorization,
+			},
+			AllowCredentials: true,
+		}))
 	}
 
 	// initialize database
 	inits.NewDB()
 
 	// initialize controllers
+	kvsClient := inits.NewKvsClient(ctx, appLogger)
 	userDAO := dao.NewUserDAO()
+	userAuthCredentialDAO := dao.NewUserAuthCredentialDAO()
 	platDAO := dao.NewPlatDAO()
 	objectStorageClient := inits.NewObjectStorageClient(ctx, appLogger)
 	imageAdapter := images.NewAdapter(objectStorageClient)
 	userFactory := userdomain.NewFactory(appLogger)
 	platFactory := platdomain.NewFactory(appLogger)
 	imageFactory := imagedomain.NewFactory(appLogger)
+	authConfig := authusecase.Config{
+		JWTSecret:       authSecret(),
+		AccessTokenTTL:  15 * time.Minute,
+		RefreshTokenTTL: 30 * 24 * time.Hour,
+	}
 	initContent := &v1controllers.ControllerInitContents{
+		AuthUseCase: authusecase.NewAuthenticationUseCase(
+			userDAO,
+			userAuthCredentialDAO,
+			kvsClient,
+			authConfig,
+		),
 		UserUseCase:  userusecase.NewUserUseCase(appLogger, userFactory, imageFactory, userDAO, imageAdapter),
 		PlatUseCase:  platusecase.NewPlatUseCase(appLogger, platFactory, platDAO),
 		ImageUseCase: imageusecase.NewImageUseCase(appLogger, imageAdapter, imageFactory),
@@ -68,4 +107,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func authSecret() string {
+	secret := os.Getenv("STLATICA_AUTH_JWT_SECRET")
+	if secret != "" {
+		return secret
+	}
+	panic("STLATICA_AUTH_JWT_SECRET is required")
 }
