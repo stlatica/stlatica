@@ -1,5 +1,5 @@
-import axios from "axios";
 import { MantineProvider } from "@mantine/core";
+import axios from "axios";
 import { SWRConfig } from "swr";
 
 import type { OnlyChildren } from "./utilities/utilities";
