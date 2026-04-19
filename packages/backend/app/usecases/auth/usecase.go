@@ -117,11 +117,12 @@ func (u *authenticationUseCase) Login(ctx context.Context, params LoginParams) (
 	if err != nil {
 		return nil, u.toUnauthorizedError(err)
 	}
-	if err := bcrypt.CompareHashAndPassword(
+	passwordErr := bcrypt.CompareHashAndPassword(
 		[]byte(credential.GetEncryptedPassword()),
 		[]byte(params.Password),
-	); err != nil {
-		return nil, u.toUnauthorizedError(err)
+	)
+	if passwordErr != nil {
+		return nil, u.toUnauthorizedError(passwordErr)
 	}
 
 	tokenPair, err := u.issueTokenPair(ctx, user.GetUserID().String())
@@ -152,8 +153,9 @@ func (u *authenticationUseCase) Refresh(ctx context.Context, refreshToken string
 	if err != nil {
 		return nil, u.toUnauthorizedError(err)
 	}
-	if err := u.validateSession(session, claims, true); err != nil {
-		return nil, u.toUnauthorizedError(err)
+	sessionErr := u.validateSession(session, claims, true)
+	if sessionErr != nil {
+		return nil, u.toUnauthorizedError(sessionErr)
 	}
 
 	tokenPair, err := u.issueTokenPairForSession(ctx, session.UserID, claims.SessionID)
@@ -183,8 +185,9 @@ func (u *authenticationUseCase) AuthenticateAccessToken(ctx context.Context, acc
 	if err != nil {
 		return "", u.toUnauthorizedError(err)
 	}
-	if err := u.validateSession(session, claims, false); err != nil {
-		return "", u.toUnauthorizedError(err)
+	sessionErr := u.validateSession(session, claims, false)
+	if sessionErr != nil {
+		return "", u.toUnauthorizedError(sessionErr)
 	}
 
 	return claims.Subject, nil
@@ -284,12 +287,13 @@ func (u *authenticationUseCase) issueTokenPairForSession(
 		return nil, err
 	}
 
-	if err := u.saveSession(ctx, sessionID, sessionState{
+	saveErr := u.saveSession(ctx, sessionID, sessionState{
 		UserID:         userID,
 		RefreshTokenID: refreshTokenID,
 		ExpiresAtUnix:  refreshExpiresAt.Unix(),
-	}); err != nil {
-		return nil, err
+	})
+	if saveErr != nil {
+		return nil, saveErr
 	}
 
 	return &issuedTokenPair{
@@ -363,8 +367,9 @@ func (u *authenticationUseCase) loadSession(ctx context.Context, sessionID strin
 	}
 
 	var session sessionState
-	if err := json.Unmarshal([]byte(payload), &session); err != nil {
-		return nil, err
+	unmarshalErr := json.Unmarshal([]byte(payload), &session)
+	if unmarshalErr != nil {
+		return nil, unmarshalErr
 	}
 	return &session, nil
 }

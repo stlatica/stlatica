@@ -20,7 +20,7 @@ type handler struct {
 	*imageController
 }
 
-func newHandler(initContent ControllerInitContents) openapi.ServerInterface {
+func newHandler(initContent ControllerInitContents) *handler {
 	return &handler{
 		authController: &authController{
 			authUseCase: initContent.AuthUseCase,
@@ -39,7 +39,7 @@ func newHandler(initContent ControllerInitContents) openapi.ServerInterface {
 
 // RegisterHandlers adds each server route to the EchoRouter.
 func RegisterHandlers(initContent ControllerInitContents, server *echo.Echo, appLogger *logger.AppLogger) {
-	serverHandler := newHandler(initContent).(*handler)
+	serverHandler := newHandler(initContent)
 	wrapper := openapi.ServerInterfaceWrapper{Handler: serverHandler}
 	protectedRoutes := server.Group("", requireAuthentication(serverHandler.authController))
 

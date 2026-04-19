@@ -25,6 +25,11 @@ import (
 	_ "github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql/driver"
 )
 
+const (
+	defaultAccessTokenTTL  = 15 * time.Minute
+	defaultRefreshTokenTTL = 30 * 24 * time.Hour
+)
+
 func main() {
 	// load environment variables
 	err := godotenv.Load(fmt.Sprintf(".env.%s", os.Getenv("GO_ENV")))
@@ -87,8 +92,8 @@ func main() {
 	imageFactory := imagedomain.NewFactory(appLogger)
 	authConfig := authusecase.Config{
 		JWTSecret:       authSecret(),
-		AccessTokenTTL:  15 * time.Minute,
-		RefreshTokenTTL: 30 * 24 * time.Hour,
+		AccessTokenTTL:  defaultAccessTokenTTL,
+		RefreshTokenTTL: defaultRefreshTokenTTL,
 	}
 	initContent := &v1controllers.ControllerInitContents{
 		AuthUseCase: authusecase.NewAuthenticationUseCase(
