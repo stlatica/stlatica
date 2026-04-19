@@ -18,13 +18,17 @@ external/lint: ## lintチェックします
 	${DOCKER_RUN} redocly-cli redocly lint externalapi/openapi.yaml
 
 internal/bundle: ## 1ファイルにバンドルします
+	mkdir -p build
 	${DOCKER_RUN} redocly-cli redocly bundle internalapi/openapi.yaml --output=build/openapi-bundled-internal.yaml
 external/bundle: ## 1ファイルにバンドルします
+	mkdir -p build
 	${DOCKER_RUN} redocly-cli redocly bundle externalapi/openapi.yaml --output=build/openapi-bundled-external.yaml
 
 internal/build: ## 定義をhtmlのドキュメントで出力します
+	mkdir -p build
 	${DOCKER_RUN} redocly-cli redocly build-docs internalapi/openapi.yaml --output=build/internal.html
 external/build: ## 定義をhtmlのドキュメントで出力します
+	mkdir -p build
 	${DOCKER_RUN} redocly-cli redocly build-docs externalapi/openapi.yaml --output=build/external.html
 
 internal/mock: internal/bundle ## prismでモックサーバーを起動します
