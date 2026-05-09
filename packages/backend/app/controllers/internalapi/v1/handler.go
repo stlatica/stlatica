@@ -225,7 +225,7 @@ func (h *handler) Login(ectx echo.Context) error {
 		ectx,
 		stringValue(loginParams.MailAddress),
 		stringValue(loginParams.PreferredUserId),
-		stringValue(loginParams.Password),
+		loginParams.Password,
 	)
 	if err != nil {
 		return err

@@ -151,7 +151,7 @@ func (u *authenticationUseCase) Refresh(ctx context.Context, refreshToken string
 
 	session, err := u.loadSession(ctx, claims.SessionID)
 	if err != nil {
-		return nil, u.toUnauthorizedError(err)
+		return nil, u.toSessionLoadError(err)
 	}
 	sessionErr := u.validateSession(session, claims, true)
 	if sessionErr != nil {
@@ -183,7 +183,7 @@ func (u *authenticationUseCase) AuthenticateAccessToken(ctx context.Context, acc
 
 	session, err := u.loadSession(ctx, claims.SessionID)
 	if err != nil {
-		return "", u.toUnauthorizedError(err)
+		return "", u.toSessionLoadError(err)
 	}
 	sessionErr := u.validateSession(session, claims, false)
 	if sessionErr != nil {
@@ -293,7 +293,7 @@ func (u *authenticationUseCase) issueTokenPairForSession(
 		ExpiresAtUnix:  refreshExpiresAt.Unix(),
 	})
 	if saveErr != nil {
-		return nil, saveErr
+		return nil, u.toServiceUnavailableError(saveErr)
 	}
 
 	return &issuedTokenPair{
@@ -378,6 +378,21 @@ func sessionKey(sessionID string) string {
 	return fmt.Sprintf("auth:session:%s", sessionID)
 }
 
+func (u *authenticationUseCase) toSessionLoadError(err error) error {
+	if errors.Is(err, kvs.ErrValueNotFound) {
+		return u.toUnauthorizedError(err)
+	}
+	return u.toServiceUnavailableError(err)
+}
+
 func (u *authenticationUseCase) toUnauthorizedError(err error) error {
 	return domainerrors.NewDomainError(err, domainerrors.DomainErrorTypeUnauthorized, "unauthorized")
+}
+
+func (u *authenticationUseCase) toServiceUnavailableError(err error) error {
+	return domainerrors.NewDomainError(
+		err,
+		domainerrors.DomainErrorTypeServiceUnavailable,
+		"service unavailable",
+	)
 }

@@ -2,11 +2,15 @@ package kvs
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/redis/go-redis/v9"
 	"github.com/stlatica/stlatica/packages/backend/app/pkg/logger"
 )
+
+// ErrValueNotFound indicates that the requested key does not exist.
+var ErrValueNotFound = errors.New("value not found")
 
 // Client is an interface for key-value store.
 type Client interface {
@@ -55,7 +59,14 @@ func (c *client) SetValue(ctx context.Context, key string, value string) error {
 func (c *client) GetValue(ctx context.Context, key string) (string, error) {
 	val, err := c.orgClient.Get(ctx, key).Result()
 	if err != nil {
-		return "", fmt.Errorf("failed to get value: %w", err)
+		return "", toGetValueError(err)
 	}
 	return val, nil
+}
+
+func toGetValueError(err error) error {
+	if errors.Is(err, redis.Nil) {
+		return fmt.Errorf("failed to get value: %w", ErrValueNotFound)
+	}
+	return fmt.Errorf("failed to get value: %w", err)
 }

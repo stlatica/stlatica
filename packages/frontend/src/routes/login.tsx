@@ -69,8 +69,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   const headers = new Headers();
   appendSetCookieHeaders(headers, response.headers);
-  return redirect(`/user/${responseBody.user_id}/timeline`);
-  // return redirect("/");
+  return redirect(`/user/${responseBody.user_id}/timeline`, { headers });
 };
 
 export default function LoginScene() {

@@ -11,6 +11,8 @@ const (
 	DomainErrorTypeInvalidData
 	// DomainErrorTypeDuplicateEntry is a domain error type for duplicate entry
 	DomainErrorTypeDuplicateEntry
+	// DomainErrorTypeServiceUnavailable is a domain error type for unavailable upstream services
+	DomainErrorTypeServiceUnavailable
 	// DomainErrorTypeUnauthorized is a domain error type for unauthorized access
 	DomainErrorTypeUnauthorized
 )

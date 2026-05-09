@@ -35,3 +35,12 @@ auth_refresh:
           application/json:
             schema:
               $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
