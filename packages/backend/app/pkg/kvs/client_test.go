@@ -1,3 +1,4 @@
+//nolint:testpackage // Tests exercise the package-private error mapping helper directly.
 package kvs
 
 import (

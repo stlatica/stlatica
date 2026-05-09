@@ -3,6 +3,7 @@ FROM node:22.22.2-slim
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-RUN corepack enable
-# RUN pnpm config set store-dir /home/node/.pnpm-store
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm add --global @redocly/cli@1.12.0 @stoplight/prism-cli@5.8.1
+RUN corepack enable npm pnpm \
+  && corepack prepare pnpm@9.14.4 --activate \
+  && pnpm config set store-dir /pnpm/store \
+  && pnpm add --global @redocly/cli@1.12.0 @stoplight/prism-cli@5.8.1
