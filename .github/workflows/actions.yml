@@ -58,7 +58,7 @@ jobs:
 
       # node.jsをインストール
       - name: Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           cache: "pnpm"
           cache-dependency-path: packages/frontend/
@@ -126,7 +126,7 @@ jobs:
           version: 9
       # node.jsをインストール
       - name: Use Node.js 20
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: "pnpm"
