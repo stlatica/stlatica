@@ -7,7 +7,6 @@ import { usePostPlat } from "@/openapi/stlaticaInternalApi";
 
 const schema = v.object({
   content: v.string(),
-  user_id: v.string(),
 });
 
 type SchemaType = v.InferOutput<typeof schema>;
@@ -19,14 +18,12 @@ export default function LoginScene() {
     resolver: valibotResolver(schema),
     defaultValues: {
       content: "",
-      user_id: "",
     },
   });
 
   const onSubmit = handleSubmit(async (val) => {
     await trigger({
       content: val.content,
-      user_id: val.user_id,
     });
   });
 
@@ -35,7 +32,6 @@ export default function LoginScene() {
       <form onSubmit={onSubmit}>
         <Stack>
           <TextInput {...register("content")} label="content" />
-          <TextInput {...register("user_id")} label="user_id" />
           <Button type="submit">Plat</Button>
         </Stack>
       </form>

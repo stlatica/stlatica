@@ -26,12 +26,8 @@ type GetPlatResponse struct {
 	CreatedAt     time.Time `json:"created_at"`
 }
 
-func (c *platController) PostPlat(ectx echo.Context, userIDStr string, content string) (*GetPlatResponse, error) {
-	userID, err := ulid.Parse(userIDStr)
-	if err != nil {
-		return nil, err
-	}
-	plat, err := c.platUseCase.CreatePlat(ectx.Request().Context(), types.UserID(userID), content)
+func (c *platController) PostPlat(ectx echo.Context, userID types.UserID, content string) (*GetPlatResponse, error) {
+	plat, err := c.platUseCase.CreatePlat(ectx.Request().Context(), userID, content)
 	if err != nil {
 		return nil, err
 	}

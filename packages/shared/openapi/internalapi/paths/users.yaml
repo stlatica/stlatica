@@ -28,6 +28,8 @@ users_{user_id}:
     summary: Delete User by ID.
     description: Delete User
     operationId: deleteUser
+    security:
+      - AccessTokenCookie: []
     parameters:
       - $ref: '../parameters/user_id.yaml#/user_id'
     responses:

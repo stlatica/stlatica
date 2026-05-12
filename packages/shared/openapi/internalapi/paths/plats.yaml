@@ -62,6 +62,8 @@ plat_{plat_id}:
     summary: Delete plat by ID.
     description: Delete plat.
     operationId: deletePlat
+    security:
+      - AccessTokenCookie: []
     parameters:
       - $ref: '../parameters/plat_id.yaml#/plat_id'
     responses:
@@ -116,6 +118,8 @@ plats:
     summary: Post plat.
     description: Post plat.
     operationId: postPlat
+    security:
+      - AccessTokenCookie: []
     requestBody:
       description: 投稿内容
       content:
@@ -171,6 +175,8 @@ favorite_{plat_id}:
   post:
     summary: Add "favorite" to a specific plat by ID.
     operationId: postFavorite
+    security:
+      - AccessTokenCookie: []
     parameters:
       - $ref: '../parameters/plat_id.yaml#/plat_id'
     responses:
@@ -221,6 +227,8 @@ favorite_{plat_id}:
   delete:
     summary: Delete "favorite" to a specific plat by ID.
     operationId: deleteFavorite
+    security:
+      - AccessTokenCookie: []
     parameters:
       - $ref: '../parameters/plat_id.yaml#/plat_id'
     responses:
@@ -268,4 +276,3 @@ favorite_{plat_id}:
           application/json:
             schema:
               $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
-

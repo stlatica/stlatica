@@ -1,6 +1,8 @@
 .DEFAULT_GOAL := help
 
 export GOBIN := $(PWD)/bin
+export GOCACHE := /tmp/stlatica-backend-go-build
+export GOLANGCI_LINT_CACHE := /tmp/stlatica-backend-golangci-lint
 
 set-go-env:
 	$(eval PATH=$(GOBIN):$(shell go env GOPATH):$(PATH))
@@ -35,6 +37,7 @@ local/codegen-from-oapi: set-go-env ## generate code from openapi on local
 	rm -r ../shared/openapi/tmp
 
 local/lint: set-go-env ## lint on local
+	mkdir -p $(GOCACHE) $(GOLANGCI_LINT_CACHE)
 	$(GOBIN)/golangci-lint run ./...
 
 local/start-internalapi: set-go-env ## start internalapi on local

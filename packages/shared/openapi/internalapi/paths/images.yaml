@@ -7,6 +7,8 @@ images:
       upload image \
       base64形式で受け取る
     operationId: uploadImage
+    security:
+      - AccessTokenCookie: []
     requestBody:
       required: true
       content:
@@ -140,6 +142,8 @@ images_{image_id}:
       delete image \
       ステータスコードのみを返す
     operationId: deleteImage
+    security:
+      - AccessTokenCookie: []
     parameters:
       - name: image_id
         in: path

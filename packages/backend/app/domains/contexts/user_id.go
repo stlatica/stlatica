@@ -27,7 +27,7 @@ func UserIDValue(ctx context.Context) (userID types.UserID, isExists bool) {
 	}
 
 	ctxUserID, isExist := ctx.Value(userIDKey).(types.UserID)
-	if isExist {
+	if isExist && ctxUserID != (types.UserID{}) {
 		return ctxUserID, true
 	}
 

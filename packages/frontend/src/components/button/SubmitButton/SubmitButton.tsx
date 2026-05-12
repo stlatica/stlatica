@@ -3,6 +3,7 @@ import type { MouseEventHandler } from "react";
 
 export type SubmitButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+  type?: "button" | "submit" | "reset";
 } & ButtonProps;
 
 /**

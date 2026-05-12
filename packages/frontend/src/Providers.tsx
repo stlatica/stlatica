@@ -1,7 +1,10 @@
 import { MantineProvider } from "@mantine/core";
+import axios from "axios";
 import { SWRConfig } from "swr";
 
 import type { OnlyChildren } from "./utilities/utilities";
+
+axios.defaults.withCredentials = true;
 
 export const Providers: React.FC<OnlyChildren> = ({ children }) => {
   return (

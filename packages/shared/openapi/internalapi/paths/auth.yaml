@@ -1,0 +1,46 @@
+auth_refresh:
+  post:
+    operationId: refreshAuth
+    tags:
+      - Auth
+    summary: refresh auth token
+    description: refresh auth token
+    security:
+      - RefreshTokenCookie: []
+    responses:
+      204:
+        description: success
+        headers:
+          Set-Cookie:
+            description: |
+              Set-Cookieヘッダ \
+              access_token, refresh_token を再発行する
+            schema:
+              type: string
+      401:
+        description: |
+          unauthorized \
+          error code:
+          - 'UNAUTHORIZED'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      500:
+        description: |
+          internal server error \
+          error code:
+          - 'INTERNAL_SERVER_ERROR'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'
+      503:
+        description: |
+          service unavailable \
+          error code:
+          - 'SERVICE_UNAVAILABLE'
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/ErrorResponse.yaml#/ErrorResponse'

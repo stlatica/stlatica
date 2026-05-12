@@ -1,4 +1,4 @@
-package context_test
+package contexts_test
 
 import (
 	"context"
@@ -15,6 +15,7 @@ func TestUserIDValue(t *testing.T) {
 		ctx    context.Context
 		userID string
 	}
+
 	tests := []struct {
 		name         string
 		args         args
@@ -49,6 +50,7 @@ func TestUserIDValue(t *testing.T) {
 			wantIsExists: false,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			argsUserID, _ := types.NewUserIDFromString(tt.args.userID)
@@ -63,6 +65,7 @@ func TestUserIDValue(t *testing.T) {
 			if !reflect.DeepEqual(gotID, wantUserID) {
 				t.Errorf("UserIDValue() gotID = %v, want %v", gotID, tt.wantID)
 			}
+
 			if gotIsExists != tt.wantIsExists {
 				t.Errorf("UserIDValue() gotIsExists = %v, want %v", gotIsExists, tt.wantIsExists)
 			}
@@ -76,6 +79,7 @@ func TestDeleteUserID(t *testing.T) {
 		ctx    context.Context
 		userID string
 	}
+
 	tests := []struct {
 		name         string
 		args         args
@@ -92,6 +96,7 @@ func TestDeleteUserID(t *testing.T) {
 			wantIsExists: false,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			argsUserID, _ := types.NewUserIDFromString(tt.args.userID)
@@ -101,6 +106,7 @@ func TestDeleteUserID(t *testing.T) {
 			if gotID.String() != tt.wantValue {
 				t.Errorf("DeleteUserID() gotID = %v, want %v", gotID, tt.wantValue)
 			}
+
 			if gotIsExists != tt.wantIsExists {
 				t.Errorf("DeleteUserID() gotIsExists = %v, want %v", gotIsExists, tt.wantIsExists)
 			}
