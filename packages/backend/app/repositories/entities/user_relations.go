@@ -259,30 +259,23 @@ func (userRelationL) LoadFollowUser(ctx context.Context, e boil.ContextExecutor,
 		}
 	}
 
-	args := make([]interface{}, 0, 1)
+	args := make(map[interface{}]struct{})
 	if singular {
 		if object.R == nil {
 			object.R = &userRelationR{}
 		}
 		if !queries.IsNil(object.FollowUserID) {
-			args = append(args, object.FollowUserID)
+			args[object.FollowUserID] = struct{}{}
 		}
 
 	} else {
-	Outer:
 		for _, obj := range slice {
 			if obj.R == nil {
 				obj.R = &userRelationR{}
 			}
 
-			for _, a := range args {
-				if queries.Equal(a, obj.FollowUserID) {
-					continue Outer
-				}
-			}
-
 			if !queries.IsNil(obj.FollowUserID) {
-				args = append(args, obj.FollowUserID)
+				args[obj.FollowUserID] = struct{}{}
 			}
 
 		}
@@ -292,9 +285,16 @@ func (userRelationL) LoadFollowUser(ctx context.Context, e boil.ContextExecutor,
 		return nil
 	}
 
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
 	query := NewQuery(
 		qm.From(`users`),
-		qm.WhereIn(`users.user_id in ?`, args...),
+		qm.WhereIn(`users.user_id in ?`, argsSlice...),
 	)
 	if mods != nil {
 		mods.Apply(query)
@@ -375,30 +375,23 @@ func (userRelationL) LoadFollowerUser(ctx context.Context, e boil.ContextExecuto
 		}
 	}
 
-	args := make([]interface{}, 0, 1)
+	args := make(map[interface{}]struct{})
 	if singular {
 		if object.R == nil {
 			object.R = &userRelationR{}
 		}
 		if !queries.IsNil(object.FollowerUserID) {
-			args = append(args, object.FollowerUserID)
+			args[object.FollowerUserID] = struct{}{}
 		}
 
 	} else {
-	Outer:
 		for _, obj := range slice {
 			if obj.R == nil {
 				obj.R = &userRelationR{}
 			}
 
-			for _, a := range args {
-				if queries.Equal(a, obj.FollowerUserID) {
-					continue Outer
-				}
-			}
-
 			if !queries.IsNil(obj.FollowerUserID) {
-				args = append(args, obj.FollowerUserID)
+				args[obj.FollowerUserID] = struct{}{}
 			}
 
 		}
@@ -408,9 +401,16 @@ func (userRelationL) LoadFollowerUser(ctx context.Context, e boil.ContextExecuto
 		return nil
 	}
 
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
 	query := NewQuery(
 		qm.From(`users`),
-		qm.WhereIn(`users.user_id in ?`, args...),
+		qm.WhereIn(`users.user_id in ?`, argsSlice...),
 	)
 	if mods != nil {
 		mods.Apply(query)

@@ -146,12 +146,14 @@ var UserBaseWhere = struct {
 // UserBaseRels is where relationship names are stored.
 var UserBaseRels = struct {
 	UserAuthCredential        string
+	Favorites                 string
 	Plats                     string
 	Timelines                 string
 	FollowUserUserRelations   string
 	FollowerUserUserRelations string
 }{
 	UserAuthCredential:        "UserAuthCredential",
+	Favorites:                 "Favorites",
 	Plats:                     "Plats",
 	Timelines:                 "Timelines",
 	FollowUserUserRelations:   "FollowUserUserRelations",
@@ -161,6 +163,7 @@ var UserBaseRels = struct {
 // userR is where relationships are stored.
 type userR struct {
 	UserAuthCredential        *UserAuthCredentialBase `boil:"UserAuthCredential" json:"UserAuthCredential" toml:"UserAuthCredential" yaml:"UserAuthCredential"`
+	Favorites                 FavoriteBaseSlice       `boil:"Favorites" json:"Favorites" toml:"Favorites" yaml:"Favorites"`
 	Plats                     PlatBaseSlice           `boil:"Plats" json:"Plats" toml:"Plats" yaml:"Plats"`
 	Timelines                 TimelineBaseSlice       `boil:"Timelines" json:"Timelines" toml:"Timelines" yaml:"Timelines"`
 	FollowUserUserRelations   UserRelationBaseSlice   `boil:"FollowUserUserRelations" json:"FollowUserUserRelations" toml:"FollowUserUserRelations" yaml:"FollowUserUserRelations"`
@@ -177,6 +180,13 @@ func (r *userR) GetUserAuthCredential() *UserAuthCredentialBase {
 		return nil
 	}
 	return r.UserAuthCredential
+}
+
+func (r *userR) GetFavorites() FavoriteBaseSlice {
+	if r == nil {
+		return nil
+	}
+	return r.Favorites
 }
 
 func (r *userR) GetPlats() PlatBaseSlice {
@@ -320,6 +330,20 @@ func (o *UserBase) UserAuthCredential(mods ...qm.QueryMod) userAuthCredentialQue
 	return UserAuthCredentials(queryMods...)
 }
 
+// Favorites retrieves all the favorite's Favorites with an executor.
+func (o *UserBase) Favorites(mods ...qm.QueryMod) favoriteQuery {
+	var queryMods []qm.QueryMod
+	if len(mods) != 0 {
+		queryMods = append(queryMods, mods...)
+	}
+
+	queryMods = append(queryMods,
+		qm.Where("`favorites`.`user_id`=?", o.UserID),
+	)
+
+	return Favorites(queryMods...)
+}
+
 // Plats retrieves all the plat's Plats with an executor.
 func (o *UserBase) Plats(mods ...qm.QueryMod) platQuery {
 	var queryMods []qm.QueryMod
@@ -404,26 +428,19 @@ func (userL) LoadUserAuthCredential(ctx context.Context, e boil.ContextExecutor,
 		}
 	}
 
-	args := make([]interface{}, 0, 1)
+	args := make(map[interface{}]struct{})
 	if singular {
 		if object.R == nil {
 			object.R = &userR{}
 		}
-		args = append(args, object.UserID)
+		args[object.UserID] = struct{}{}
 	} else {
-	Outer:
 		for _, obj := range slice {
 			if obj.R == nil {
 				obj.R = &userR{}
 			}
 
-			for _, a := range args {
-				if queries.Equal(a, obj.UserID) {
-					continue Outer
-				}
-			}
-
-			args = append(args, obj.UserID)
+			args[obj.UserID] = struct{}{}
 		}
 	}
 
@@ -431,9 +448,16 @@ func (userL) LoadUserAuthCredential(ctx context.Context, e boil.ContextExecutor,
 		return nil
 	}
 
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
 	query := NewQuery(
 		qm.From(`user_auth_credentials`),
-		qm.WhereIn(`user_auth_credentials.user_id in ?`, args...),
+		qm.WhereIn(`user_auth_credentials.user_id in ?`, argsSlice...),
 	)
 	if mods != nil {
 		mods.Apply(query)
@@ -485,6 +509,112 @@ func (userL) LoadUserAuthCredential(ctx context.Context, e boil.ContextExecutor,
 	return nil
 }
 
+// LoadFavorites allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for a 1-M or N-M relationship.
+func (userL) LoadFavorites(ctx context.Context, e boil.ContextExecutor, singular bool, maybeUserBase interface{}, mods queries.Applicator) error {
+	var slice []*UserBase
+	var object *UserBase
+
+	if singular {
+		var ok bool
+		object, ok = maybeUserBase.(*UserBase)
+		if !ok {
+			object = new(UserBase)
+			ok = queries.SetFromEmbeddedStruct(&object, &maybeUserBase)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", object, maybeUserBase))
+			}
+		}
+	} else {
+		s, ok := maybeUserBase.(*[]*UserBase)
+		if ok {
+			slice = *s
+		} else {
+			ok = queries.SetFromEmbeddedStruct(&slice, maybeUserBase)
+			if !ok {
+				return errors.New(fmt.Sprintf("failed to set %T from embedded struct %T", slice, maybeUserBase))
+			}
+		}
+	}
+
+	args := make(map[interface{}]struct{})
+	if singular {
+		if object.R == nil {
+			object.R = &userR{}
+		}
+		args[object.UserID] = struct{}{}
+	} else {
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &userR{}
+			}
+			args[obj.UserID] = struct{}{}
+		}
+	}
+
+	if len(args) == 0 {
+		return nil
+	}
+
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
+	query := NewQuery(
+		qm.From(`favorites`),
+		qm.WhereIn(`favorites.user_id in ?`, argsSlice...),
+	)
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load favorites")
+	}
+
+	var resultSlice []*FavoriteBase
+	if err = queries.Bind(results, &resultSlice); err != nil {
+		return errors.Wrap(err, "failed to bind eager loaded slice favorites")
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results in eager load on favorites")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for favorites")
+	}
+
+	if singular {
+		object.R.Favorites = resultSlice
+		for _, foreign := range resultSlice {
+			if foreign.R == nil {
+				foreign.R = &favoriteR{}
+			}
+			foreign.R.User = object
+		}
+		return nil
+	}
+
+	for _, foreign := range resultSlice {
+		for _, local := range slice {
+			if queries.Equal(local.UserID, foreign.UserID) {
+				local.R.Favorites = append(local.R.Favorites, foreign)
+				if foreign.R == nil {
+					foreign.R = &favoriteR{}
+				}
+				foreign.R.User = local
+				break
+			}
+		}
+	}
+
+	return nil
+}
+
 // LoadPlats allows an eager lookup of values, cached into the
 // loaded structs of the objects. This is for a 1-M or N-M relationship.
 func (userL) LoadPlats(ctx context.Context, e boil.ContextExecutor, singular bool, maybeUserBase interface{}, mods queries.Applicator) error {
@@ -513,26 +643,18 @@ func (userL) LoadPlats(ctx context.Context, e boil.ContextExecutor, singular boo
 		}
 	}
 
-	args := make([]interface{}, 0, 1)
+	args := make(map[interface{}]struct{})
 	if singular {
 		if object.R == nil {
 			object.R = &userR{}
 		}
-		args = append(args, object.UserID)
+		args[object.UserID] = struct{}{}
 	} else {
-	Outer:
 		for _, obj := range slice {
 			if obj.R == nil {
 				obj.R = &userR{}
 			}
-
-			for _, a := range args {
-				if queries.Equal(a, obj.UserID) {
-					continue Outer
-				}
-			}
-
-			args = append(args, obj.UserID)
+			args[obj.UserID] = struct{}{}
 		}
 	}
 
@@ -540,9 +662,16 @@ func (userL) LoadPlats(ctx context.Context, e boil.ContextExecutor, singular boo
 		return nil
 	}
 
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
 	query := NewQuery(
 		qm.From(`plats`),
-		qm.WhereIn(`plats.user_id in ?`, args...),
+		qm.WhereIn(`plats.user_id in ?`, argsSlice...),
 	)
 	if mods != nil {
 		mods.Apply(query)
@@ -620,26 +749,18 @@ func (userL) LoadTimelines(ctx context.Context, e boil.ContextExecutor, singular
 		}
 	}
 
-	args := make([]interface{}, 0, 1)
+	args := make(map[interface{}]struct{})
 	if singular {
 		if object.R == nil {
 			object.R = &userR{}
 		}
-		args = append(args, object.UserID)
+		args[object.UserID] = struct{}{}
 	} else {
-	Outer:
 		for _, obj := range slice {
 			if obj.R == nil {
 				obj.R = &userR{}
 			}
-
-			for _, a := range args {
-				if queries.Equal(a, obj.UserID) {
-					continue Outer
-				}
-			}
-
-			args = append(args, obj.UserID)
+			args[obj.UserID] = struct{}{}
 		}
 	}
 
@@ -647,9 +768,16 @@ func (userL) LoadTimelines(ctx context.Context, e boil.ContextExecutor, singular
 		return nil
 	}
 
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
 	query := NewQuery(
 		qm.From(`timelines`),
-		qm.WhereIn(`timelines.user_id in ?`, args...),
+		qm.WhereIn(`timelines.user_id in ?`, argsSlice...),
 	)
 	if mods != nil {
 		mods.Apply(query)
@@ -727,26 +855,18 @@ func (userL) LoadFollowUserUserRelations(ctx context.Context, e boil.ContextExec
 		}
 	}
 
-	args := make([]interface{}, 0, 1)
+	args := make(map[interface{}]struct{})
 	if singular {
 		if object.R == nil {
 			object.R = &userR{}
 		}
-		args = append(args, object.UserID)
+		args[object.UserID] = struct{}{}
 	} else {
-	Outer:
 		for _, obj := range slice {
 			if obj.R == nil {
 				obj.R = &userR{}
 			}
-
-			for _, a := range args {
-				if queries.Equal(a, obj.UserID) {
-					continue Outer
-				}
-			}
-
-			args = append(args, obj.UserID)
+			args[obj.UserID] = struct{}{}
 		}
 	}
 
@@ -754,9 +874,16 @@ func (userL) LoadFollowUserUserRelations(ctx context.Context, e boil.ContextExec
 		return nil
 	}
 
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
 	query := NewQuery(
 		qm.From(`user_relations`),
-		qm.WhereIn(`user_relations.follow_user_id in ?`, args...),
+		qm.WhereIn(`user_relations.follow_user_id in ?`, argsSlice...),
 	)
 	if mods != nil {
 		mods.Apply(query)
@@ -834,26 +961,18 @@ func (userL) LoadFollowerUserUserRelations(ctx context.Context, e boil.ContextEx
 		}
 	}
 
-	args := make([]interface{}, 0, 1)
+	args := make(map[interface{}]struct{})
 	if singular {
 		if object.R == nil {
 			object.R = &userR{}
 		}
-		args = append(args, object.UserID)
+		args[object.UserID] = struct{}{}
 	} else {
-	Outer:
 		for _, obj := range slice {
 			if obj.R == nil {
 				obj.R = &userR{}
 			}
-
-			for _, a := range args {
-				if queries.Equal(a, obj.UserID) {
-					continue Outer
-				}
-			}
-
-			args = append(args, obj.UserID)
+			args[obj.UserID] = struct{}{}
 		}
 	}
 
@@ -861,9 +980,16 @@ func (userL) LoadFollowerUserUserRelations(ctx context.Context, e boil.ContextEx
 		return nil
 	}
 
+	argsSlice := make([]interface{}, len(args))
+	i := 0
+	for arg := range args {
+		argsSlice[i] = arg
+		i++
+	}
+
 	query := NewQuery(
 		qm.From(`user_relations`),
-		qm.WhereIn(`user_relations.follower_user_id in ?`, args...),
+		qm.WhereIn(`user_relations.follower_user_id in ?`, argsSlice...),
 	)
 	if mods != nil {
 		mods.Apply(query)
@@ -959,6 +1085,59 @@ func (o *UserBase) SetUserAuthCredential(ctx context.Context, exec boil.ContextE
 		}
 	} else {
 		related.R.User = o
+	}
+	return nil
+}
+
+// AddFavorites adds the given related objects to the existing relationships
+// of the user, optionally inserting them as new records.
+// Appends related to o.R.Favorites.
+// Sets related.R.User appropriately.
+func (o *UserBase) AddFavorites(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*FavoriteBase) error {
+	var err error
+	for _, rel := range related {
+		if insert {
+			queries.Assign(&rel.UserID, o.UserID)
+			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
+				return errors.Wrap(err, "failed to insert into foreign table")
+			}
+		} else {
+			updateQuery := fmt.Sprintf(
+				"UPDATE `favorites` SET %s WHERE %s",
+				strmangle.SetParamNames("`", "`", 0, []string{"user_id"}),
+				strmangle.WhereClause("`", "`", 0, favoritePrimaryKeyColumns),
+			)
+			values := []interface{}{o.UserID, rel.PlatID, rel.UserID}
+
+			if boil.IsDebug(ctx) {
+				writer := boil.DebugWriterFrom(ctx)
+				fmt.Fprintln(writer, updateQuery)
+				fmt.Fprintln(writer, values)
+			}
+			if _, err = exec.ExecContext(ctx, updateQuery, values...); err != nil {
+				return errors.Wrap(err, "failed to update foreign table")
+			}
+
+			queries.Assign(&rel.UserID, o.UserID)
+		}
+	}
+
+	if o.R == nil {
+		o.R = &userR{
+			Favorites: related,
+		}
+	} else {
+		o.R.Favorites = append(o.R.Favorites, related...)
+	}
+
+	for _, rel := range related {
+		if rel.R == nil {
+			rel.R = &favoriteR{
+				User: o,
+			}
+		} else {
+			rel.R.User = o
+		}
 	}
 	return nil
 }
