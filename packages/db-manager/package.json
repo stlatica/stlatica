@@ -36,7 +36,7 @@
 		"typescript-eslint": "8.17.0",
 		"ulidx": "2.4.1",
 		"valibot": "0.42.1",
-		"vite": "5.4.11",
+		"vite": "5.4.12",
 		"vite-plugin-kit-routes": "0.7.0",
 		"vitest": "2.1.8"
 	},
