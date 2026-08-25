@@ -42,7 +42,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@prisma/client": "5.22.0",
+		"@prisma/client": "7.10.0",
 		"@tanstack/svelte-query": "5.62.2",
 		"axios": "1.7.9",
 		"bulma": "1.0.2"
