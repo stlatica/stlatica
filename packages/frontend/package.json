@@ -33,7 +33,7 @@
     "autoprefixer": "10.4.20",
     "axios": "1.7.9",
     "hono": "^4.6.12",
-    "hono-openapi": "^0.2.1",
+    "hono-openapi": "^1.0.0",
     "hono-remix-adapter": "^0.5.3",
     "isbot": "5.1.17",
     "react": "18.3.1",
