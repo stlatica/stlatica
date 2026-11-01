@@ -9,7 +9,7 @@ on:
 
 jobs:
   changes:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 20
     outputs:
       is_frontend: ${{ steps.filter.outputs.is_frontend }}
@@ -41,7 +41,7 @@ jobs:
   build_frontend:
     needs: changes
     if: needs.changes.outputs.is_frontend == 'true' || needs.changes.outputs.is_main == 'true'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 20
     defaults:
       run:
@@ -90,7 +90,7 @@ jobs:
   visual-regression-testing:
     needs: changes
     if: needs.changes.outputs.is_frontend == 'true' || needs.changes.outputs.is_main == 'true'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 20
     defaults:
       run:
@@ -109,7 +109,7 @@ jobs:
   build_sdmt:
     needs: changes
     if: needs.changes.outputs.is_sdmt == 'true' || needs.changes.outputs.is_main == 'true'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 20
     defaults:
       run:
@@ -155,7 +155,7 @@ jobs:
   build_backend:
     needs: changes
     if: needs.changes.outputs.is_backend == 'true' || needs.changes.outputs.is_main == 'true'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 20
     defaults:
       run:
@@ -195,7 +195,7 @@ jobs:
   lint_openapi:
     needs: changes
     if: needs.changes.outputs.is_openapi == 'true' || needs.changes.outputs.is_main == 'true'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 20
     defaults:
       run:
