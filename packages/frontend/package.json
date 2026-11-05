@@ -61,7 +61,7 @@
     "jsdom": "25.0.1",
     "orval": "7.3.0",
     "plop": "4.0.1",
-    "postcss": "8.4.49",
+    "postcss": "8.5.23",
     "postcss-preset-mantine": "1.17.0",
     "postcss-simple-vars": "7.0.1",
     "sync-fetch": "0.5.2",
